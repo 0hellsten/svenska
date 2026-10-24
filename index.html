@@ -195,11 +195,24 @@ body {
   font-weight: 800;
   font-size: 0.95rem;
   cursor: pointer;
-  transition: transform 0.12s ease;
+  transition: transform 0.12s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.stat-pill:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 }
 
 .stat-pill:active {
   transform: translateY(2px);
+  box-shadow: 0 1px 0 var(--border-light);
+}
+
+.stat-pill:focus-visible {
+  outline: 2px solid var(--sky);
+  outline-offset: 2px;
 }
 
 .stat-pill.streak-pill {
@@ -2536,35 +2549,38 @@ body {
 .pronun-feedback-card {
   width: 100%;
   border-radius: 20px;
-  padding: 14px 16px;
-  margin-top: 10px;
+  padding: 16px 18px;
+  margin-top: 12px;
   text-align: left;
-  border: 2.5px solid transparent;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-sizing: border-box;
   animation: speechPopIn 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* >= 75%: GODKÄNT! (Grön vy) */
+/* >= 75%: GODKÄNT! (Mjuk modern grön ton utan skarp lime eller tjock bottenram) */
 .pronun-feedback-card.tier-passed {
-  background: linear-gradient(135deg, #E8FFD6 0%, #D7FFB8 100%);
-  border-color: var(--emerald);
-  color: #1F5E00;
-  box-shadow: 0 4px 0 var(--emerald-dark);
+  background: #F4FBF7;
+  border: 1px solid #C6F6D5;
+  color: #1A3626;
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.08), 0 1px 3px rgba(0, 0, 0, 0.03);
 }
 
-/* 50% - 74%: NÄSTAN RÄTT! (Gul/varm vy) */
+/* 50% - 74%: NÄSTAN RÄTT! (Mjuk varm vy) */
 .pronun-feedback-card.tier-almost {
-  background: linear-gradient(135deg, #FFFBEB 0%, #FFF0C2 100%);
-  border-color: var(--gold);
-  color: #6B4700;
-  box-shadow: 0 4px 0 var(--gold-dark);
+  background: #FFFDF5;
+  border: 1px solid #FDE68A;
+  color: #451A03;
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.08), 0 1px 3px rgba(0, 0, 0, 0.03);
 }
 
 /* < 50%: PROVA IGEN (Mjuk korallvy) */
 .pronun-feedback-card.tier-retry {
-  background: linear-gradient(135deg, #FFF0F0 0%, #FFE2E2 100%);
-  border-color: #FF8080;
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
   color: #7F1D1D;
-  box-shadow: 0 4px 0 #E05252;
+  box-shadow: 0 4px 20px rgba(239, 68, 68, 0.08), 0 1px 3px rgba(0, 0, 0, 0.03);
 }
 
 .pronun-score-badge {
@@ -2770,50 +2786,60 @@ body.app-theme-sunset {
 .azure-scores-hud {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 6px;
-  background: rgba(255, 255, 255, 0.95);
+  background: #FFFFFF;
   border-radius: 14px;
-  padding: 8px 6px;
-  border: 1.5px solid var(--border-light);
-  margin-top: 8px;
-  text-align: center;
+  padding: 10px 4px;
+  border: 1px solid #EDF2F7;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  margin: 2px 0;
 }
 
 .azure-score-box {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2px 4px;
+}
+
+.azure-score-box:not(:last-child) {
+  border-right: 1px solid #EDF2F7;
 }
 
 .azure-score-num {
-  font-weight: 900;
-  font-size: 1.05rem;
-  color: var(--text-main);
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.2;
+  color: #1E293B;
 }
 
 .azure-score-label {
-  font-size: 0.66rem;
-  font-weight: 800;
-  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #64748B;
+  margin-top: 3px;
+  white-space: nowrap;
 }
 
 .azure-words-row {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-top: 8px;
   justify-content: center;
+  margin: 2px 0;
 }
 
 .azure-word-chip {
-  padding: 4px 10px;
-  border-radius: 10px;
+  padding: 5px 12px;
+  border-radius: 12px;
   font-weight: 800;
-  font-size: 0.86rem;
+  font-size: 0.88rem;
   border: 1.5px solid transparent;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
 }
 
 .azure-word-chip.word-green {
@@ -2828,19 +2854,82 @@ body.app-theme-sunset {
   border-color: #FDE047;
 }
 
+.azure-word-chip.word-amber {
+  background: #FEF3C7;
+  color: #92400E;
+  border-color: #FCD34D;
+}
+
 .azure-word-chip.word-red {
   background: #FEE2E2;
   color: #991B1B;
   border-color: #FCA5A5;
 }
 
+/* 3. Stjärnanimering: Sekventiell fjädrande pop-in (0.1s, 0.25s, 0.4s) */
 .azure-stars-row {
   display: flex;
-  gap: 6px;
-  font-size: 1.6rem;
-  margin-top: 4px;
   justify-content: center;
-  animation: speechPopIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  align-items: center;
+  gap: 14px;
+  padding: 4px 0 6px 0;
+}
+
+.azure-star-item {
+  display: inline-flex;
+  font-size: 2.1rem;
+  line-height: 1;
+  filter: drop-shadow(0 3px 6px rgba(234, 179, 8, 0.45));
+  will-change: transform, opacity;
+}
+
+.azure-star-item.earned {
+  opacity: 0;
+  animation: starPopInSpring 0.52s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.azure-star-item.unearned {
+  opacity: 0.22;
+  filter: grayscale(1);
+  transform: scale(0.85);
+}
+
+.azure-star-item.star-1 {
+  animation-delay: 0.1s;
+}
+
+.azure-star-item.star-2 {
+  font-size: 2.5rem; /* ~19% större, upphöjd båge för visuell hierarki */
+  margin-bottom: 6px;
+  animation-delay: 0.25s;
+}
+
+.azure-star-item.star-3 {
+  animation-delay: 0.4s;
+}
+
+@keyframes starPopInSpring {
+  0% {
+    opacity: 0;
+    transform: scale(0) rotate(-25deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.azure-stars-row.all-three {
+  animation: starsPulseGlow 1.2s ease-in-out 0.9s infinite alternate;
+}
+
+@keyframes starsPulseGlow {
+  0% {
+    filter: drop-shadow(0 3px 6px rgba(234, 179, 8, 0.3));
+  }
+  100% {
+    filter: drop-shadow(0 6px 14px rgba(245, 158, 11, 0.6));
+  }
 }
 
 .azure-phoneme-badge {
@@ -3206,6 +3295,80 @@ body.app-theme-sunset {
   background: var(--sky-soft);
 }
 
+.settings-speed-btn {
+  background: var(--surface-muted);
+  border: 2px solid var(--border-light);
+  border-radius: 14px;
+  padding: 10px 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--text-main);
+  text-align: center;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.04);
+}
+
+.settings-speed-btn:hover {
+  border-color: var(--sky);
+}
+
+.settings-speed-btn.selected {
+  border-color: var(--sky) !important;
+  background: var(--sky-soft) !important;
+  box-shadow: 0 3px 0 var(--sky) !important;
+  transform: translateY(-1px);
+}
+
+/* Gamification Modals (Stats, Juvel-Boutique & Samlaralbum/XP) */
+.gamification-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 285;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.gamification-modal-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.gamification-modal-card {
+  width: 100%;
+  max-width: 480px;
+  max-height: 88dvh;
+  overflow-y: auto;
+  background: var(--surface);
+  border: 3px solid var(--border-medium);
+  border-radius: 26px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+  padding: 20px 18px calc(var(--safe-bottom) + 16px) 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.gamification-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--border-light);
+  padding-bottom: 10px;
+}
+
+@keyframes flameFlicker {
+  0% { transform: scale(1) rotate(-2deg); }
+  100% { transform: scale(1.08) rotate(3deg); }
+}
+
+
 
 
 
@@ -3225,21 +3388,21 @@ body.app-theme-sunset {
     <!-- TOPPBAR: Streak, Juveler/Poäng & Daglig XP-mätare -->
     <header class="app-topbar" aria-label="Status och dagliga mål">
       <div class="topbar-stats">
-        <button type="button" class="stat-pill streak-pill" id="streak-pill" title="Dagar i rad / วันต่อเนื่อง">
+        <button type="button" class="stat-pill streak-pill" id="streak-pill" title="Visa träningsstatistik & streak" aria-label="Träningsstatistik och streak">
           <span class="stat-icon-svg" aria-hidden="true">
             <svg viewBox="0 0 32 32" fill="none"><path d="M16 2C16 7 21 11 21 17C21 23 17 28 12 28C7 28 4 23 4 18C4 13 8 9 9 7C9 12 12 15 15 15C13 10 16 2 16 2Z" fill="url(#flame-grad-top)"/><path d="M16 14C16 17 19 19 19 23C19 26 17 28 14 28C11 28 10 25 10 23C10 19 14 16 16 14Z" fill="#FFF275"/><defs><linearGradient id="flame-grad-top" x1="4" y1="2" x2="21" y2="28" gradientUnits="userSpaceOnUse"><stop stop-color="#FF4B4B"/><stop offset="0.6" stop-color="#FF9600"/><stop offset="1" stop-color="#FFD600"/></linearGradient></defs></svg>
           </span>
           <span id="streak-count">1</span>
         </button>
 
-        <button type="button" class="stat-pill gems-pill" id="gems-pill" title="Juveler / เพชรสะสม">
+        <button type="button" class="stat-pill gems-pill" id="gems-pill" title="Öppna Juvel-Boutique (Köp färgteman & lull-lull)" aria-label="Juvel-Boutique och färgteman">
           <span class="stat-icon-svg" aria-hidden="true">
             <svg viewBox="0 0 32 32" fill="none"><polygon points="10,6 22,6 28,13 16,27 4,13" fill="#38BDF8" stroke="#0284C7" stroke-width="1.8" stroke-linejoin="round"/><polygon points="10,6 16,13 22,6" fill="#BAE6FD"/><polygon points="4,13 16,13 16,27" fill="#0284C7" opacity="0.4"/><polygon points="28,13 16,13 16,27" fill="#0369A1" opacity="0.6"/><polygon points="10,6 16,13 4,13" fill="#E0F2FE"/><polygon points="22,6 16,13 28,13" fill="#7DD3FC"/><circle cx="12" cy="10" r="1.5" fill="#FFF"/></svg>
           </span>
           <span id="gems-count">50</span>
         </button>
 
-        <button type="button" class="stat-pill xp-pill" id="xp-pill" title="Total XP & Stjärnor / คะแนนสะสม">
+        <button type="button" class="stat-pill xp-pill" id="xp-pill" title="Öppna Samlaralbum & XP-nivåer" aria-label="Samlaralbum och XP-nivåer">
           <span class="stat-icon-svg" aria-hidden="true">
             <svg viewBox="0 0 32 32" fill="none"><polygon points="16,2 20.3,10.7 29.8,12.1 23,18.7 24.6,28.2 16,23.7 7.4,28.2 9,18.7 2.2,12.1 11.7,10.7" fill="#FFC800" stroke="#D97706" stroke-width="1.8" stroke-linejoin="round"/><polygon points="16,5 19,11.5 26,12.5 21,17.4 22.2,24.4 16,21" fill="#FFE066"/></svg>
           </span>
@@ -3254,8 +3417,8 @@ body.app-theme-sunset {
       </div>
 
       <div class="daily-xp-bar-row">
-        <span class="daily-xp-label" id="daily-xp-label">Dagens mål • เป้าหมายวันนี้: 0 / 50 XP</span>
-        <div class="daily-xp-track" role="progressbar" aria-valuemin="0" aria-valuemax="50" aria-valuenow="0">
+        <span class="daily-xp-label" id="daily-xp-label">Dagens mål • เป้าหมายวันนี้: 0 / 100 XP</span>
+        <div class="daily-xp-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
           <div class="daily-xp-fill" id="daily-xp-fill"></div>
         </div>
       </div>
@@ -4604,7 +4767,7 @@ body.app-theme-sunset {
     return {
       totalXP: 0,
       dailyXP: 0,
-      dailyGoalXP: 50,
+      dailyGoalXP: 100,
       gems: 50,
       streakDays: 1,
       lastActiveDate: getTodayISO(),
@@ -4645,6 +4808,7 @@ body.app-theme-sunset {
           this.state = {
             ...createDefaultState(),
             ...parsed,
+            dailyGoalXP: Math.max(100, parsed.dailyGoalXP || 100),
             themeStars: { ...createDefaultState().themeStars, ...(parsed.themeStars || {}) },
             srsData: { ...(parsed.srsData || {}) },
             competition: {
@@ -6185,6 +6349,25 @@ body.app-theme-sunset {
         window.SpeechEngine?.playSound?.('tap');
         window.VisualEngine?.haptic?.('light', e.currentTarget);
         window.SettingsUI?.open();
+      });
+
+      // Översta radens interaktiva statusikoner (Flamman för Stats, Diamanterna för Shop/Lull-lull, XP för Samlaralbum)
+      document.getElementById('streak-pill')?.addEventListener('click', (e) => {
+        window.SpeechEngine?.playSound?.('tap');
+        window.VisualEngine?.haptic?.('light', e.currentTarget);
+        window.GamificationModals?.openStatsModal?.();
+      });
+
+      document.getElementById('gems-pill')?.addEventListener('click', (e) => {
+        window.SpeechEngine?.playSound?.('tap');
+        window.VisualEngine?.haptic?.('light', e.currentTarget);
+        window.GamificationModals?.openShopModal?.();
+      });
+
+      document.getElementById('xp-pill')?.addEventListener('click', (e) => {
+        window.SpeechEngine?.playSound?.('tap');
+        window.VisualEngine?.haptic?.('light', e.currentTarget);
+        window.GamificationModals?.openXPModal?.();
       });
     },
 
@@ -9264,24 +9447,43 @@ body.app-theme-sunset {
     },
 
     /**
+     * Hämtar sparad talhastighet (Standard: 0.88x, Snabbt: 1.0x, Extra snabbt: 1.15x)
+     */
+    getSpeechRate() {
+      const stored = localStorage.getItem('swedish_speech_rate');
+      if (stored) {
+        const val = parseFloat(stored);
+        if (!isNaN(val) && val >= 0.5 && val <= 2.0) return val;
+      }
+      return 0.88;
+    },
+
+    setSpeechRate(rate) {
+      const val = parseFloat(rate) || 0.88;
+      localStorage.setItem('swedish_speech_rate', String(val));
+    },
+
+    /**
      * Huvudmetod för svenskt tal:
      * - Körs direkt i användarens touch-interaktion
      * - Återanvänder permanent <audio> element i DOM (undviker WebKit memory leaks)
      * - Använder no-referrer och HTTPS för att undvika 404/rate-limit
      * - Faller sömlöst och omedelbart tillbaka på lokal Web Speech API vid behov
      */
-    speakSwedish(text, rate = 0.88, onEnd = null) {
+    speakSwedish(text, rate = null, onEnd = null) {
       const clean = String(text || '').trim();
       if (!clean) {
         if (onEnd) onEnd();
         return;
       }
 
+      const activeRate = (rate !== null && rate !== undefined) ? rate : this.getSpeechRate();
+
       SoundFX.unlockiOSAudio();
 
       const nonce = ++this._playNonce;
       const audio = this.getAudioElement();
-      const isSlow = rate <= 0.70;
+      const isSlow = activeRate <= 0.70;
       const speedParam = isSlow ? '&ttsspeed=0.3' : '';
       const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=sv${speedParam}&client=tw-ob&q=${encodeURIComponent(clean)}`;
 
@@ -9304,9 +9506,11 @@ body.app-theme-sunset {
           audio.pause();
           audio.currentTime = 0;
           audio.src = url;
+          try { audio.playbackRate = activeRate; } catch (_) {}
 
           audio.onplay = () => {
             if (this._playNonce === nonce) {
+              try { audio.playbackRate = activeRate; } catch (_) {}
               window.VisualEngine?.Mascot?.setState('speaking');
             }
           };
@@ -9319,7 +9523,7 @@ body.app-theme-sunset {
 
           audio.onerror = () => {
             if (this._playNonce === nonce && !finished) {
-              this.speakWithSpeechSynthesis(clean, rate, finish);
+              this.speakWithSpeechSynthesis(clean, activeRate, finish);
             }
           };
 
@@ -9327,7 +9531,7 @@ body.app-theme-sunset {
           if (p !== undefined) {
             p.catch((err) => {
               if (this._playNonce === nonce && !finished) {
-                this.speakWithSpeechSynthesis(clean, rate, finish);
+                this.speakWithSpeechSynthesis(clean, activeRate, finish);
               }
             });
           }
@@ -9336,17 +9540,19 @@ body.app-theme-sunset {
       }
 
       // Fallback till lokal talsyntes
-      this.speakWithSpeechSynthesis(clean, rate, finish);
+      this.speakWithSpeechSynthesis(clean, activeRate, finish);
     },
 
     /**
      * Nivå 3: Lokal Web Speech API (iOS Safari-säkrad utan fördröjning)
      */
-    speakWithSpeechSynthesis(text, rate = 0.88, onEnd = null) {
+    speakWithSpeechSynthesis(text, rate = null, onEnd = null) {
       if (!('speechSynthesis' in window) || !text) {
         if (onEnd) onEnd();
         return;
       }
+
+      const activeRate = (rate !== null && rate !== undefined) ? rate : this.getSpeechRate();
 
       try {
         SoundFX.unlockiOSAudio();
@@ -9362,7 +9568,7 @@ body.app-theme-sunset {
 
         const utter = new SpeechSynthesisUtterance(text);
         utter.lang = 'sv-SE';
-        utter.rate = rate;
+        utter.rate = activeRate;
         utter.pitch = 1.02;
 
         if (this._bestVoice) {
@@ -9386,7 +9592,7 @@ body.app-theme-sunset {
         utter.onerror = done;
 
         // Watchdog mot hängande syntes
-        const estMs = Math.max(1200, Math.round((text.length * 110) / Math.max(0.5, rate)) + 600);
+        const estMs = Math.max(1200, Math.round((text.length * 110) / Math.max(0.5, activeRate)) + 600);
         setTimeout(done, estMs);
 
         window.speechSynthesis.speak(utter);
@@ -9406,9 +9612,10 @@ body.app-theme-sunset {
     /**
      * Huvudmetod för uppspelning av målord/mening
      */
-    async playTargetItem(targetItem, rate = 0.88, onEnd = null) {
+    async playTargetItem(targetItem, rate = null, onEnd = null) {
       SoundFX.unlockiOSAudio();
 
+      const activeRate = (rate !== null && rate !== undefined) ? rate : this.getSpeechRate();
       const itemObj = typeof targetItem === 'object' ? targetItem : null;
       const svText = itemObj ? itemObj.sv : String(targetItem || '');
       const audioUrl = itemObj?.audioUrl || (itemObj?.id ? `assets/audio/${itemObj.id}.mp3` : null);
@@ -9421,7 +9628,7 @@ body.app-theme-sunset {
         }
       }
 
-      this.speakSwedish(svText, rate, onEnd);
+      this.speakSwedish(svText, activeRate, onEnd);
     },
 
     /**
@@ -9583,8 +9790,16 @@ body.app-theme-sunset {
           const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(key, region);
           speechConfig.speechRecognitionLanguage = 'sv-SE';
 
+          // Tystnadstidsgränser: Korta ned Azure standardväntetid så att den avslutar inom 1.0s efter tal
+          try {
+            speechConfig.setProperty(SpeechSDK.PropertyId.SpeechServiceConnection_EndSilenceTimeoutMs, "1000");
+            speechConfig.setProperty(SpeechSDK.PropertyId.SpeechServiceConnection_InitialSilenceTimeoutMs, "5000");
+            speechConfig.setProperty(SpeechSDK.PropertyId.Speech_SegmentationSilenceTimeoutMs, "700");
+          } catch (_) {}
+
           // 2. Skapa AudioConfig från standardmikrofon
           const audioConfig = SpeechSDK.AudioConfig.fromDefaultMicrophoneInput();
+          this._audioConfig = audioConfig;
 
           // 3. Skapa SpeechRecognizer
           const recognizer = new SpeechSDK.SpeechRecognizer(speechConfig, audioConfig);
@@ -9616,10 +9831,64 @@ body.app-theme-sunset {
             if (onAudioLevel) onAudioLevel(fakeLvl);
           }, 100);
 
+          // Extrahera mål-ord för realtids-kontroll i interim hearing
+          const targetWords = (refText || '')
+            .toLowerCase()
+            .replace(/[\.,\/#!$%\^&\*;:{}=\-_`~()?"'«»]/g, ' ')
+            .split(/\s+/)
+            .filter(Boolean);
+
+          let earlyFinishTimer = null;
+          let hasTriggeredFinish = false;
+
+          const finishRecognition = () => {
+            if (hasTriggeredFinish) return;
+            hasTriggeredFinish = true;
+            if (earlyFinishTimer) {
+              clearTimeout(earlyFinishTimer);
+              earlyFinishTimer = null;
+            }
+            this.isRecording = false;
+            this.isAnalyzing = true;
+            if (onStateChange) onStateChange('analyzing');
+            window.VisualEngine?.Mascot?.setState('idle');
+
+            // Stäng audioConfig så att Azure SpeechRecognizer tar emot EOF och slutför bedömningen direkt
+            if (this._audioConfig) {
+              try {
+                this._audioConfig.close();
+              } catch (_) {}
+            }
+          };
+          this._finishRecognitionEarly = finishRecognition;
+
           // Interim hearing event
           recognizer.recognizing = (s, e) => {
             if (e.result && e.result.text) {
-              if (onHearing) onHearing(e.result.text);
+              const heardText = e.result.text;
+              if (onHearing) onHearing(heardText);
+
+              // Automatisk avslutning: Avbryt och bedöm när alla ord i frasen har uppfattats
+              if (targetWords.length > 0 && !hasTriggeredFinish) {
+                const spokenClean = heardText
+                  .toLowerCase()
+                  .replace(/[\.,\/#!$%\^&\*;:{}=\-_`~()?"'«»]/g, ' ')
+                  .split(/\s+/)
+                  .filter(Boolean);
+
+                const allWordsPresent = targetWords.every((tw) =>
+                  spokenClean.some((sw) => sw === tw || sw.startsWith(tw) || tw.startsWith(sw))
+                );
+
+                if (allWordsPresent && spokenClean.length >= targetWords.length) {
+                  // Alla målord är sagda! Vänta 350ms buffert så att sista konsonant/slutljud inte klipps
+                  if (!earlyFinishTimer) {
+                    earlyFinishTimer = setTimeout(() => {
+                      finishRecognition();
+                    }, 350);
+                  }
+                }
+              }
             }
           };
 
@@ -9637,6 +9906,8 @@ body.app-theme-sunset {
             (result) => {
               if (this._audioLevelTimer) clearInterval(this._audioLevelTimer);
               if (this._safetyTimeout) clearTimeout(this._safetyTimeout);
+              if (earlyFinishTimer) clearTimeout(earlyFinishTimer);
+              this._finishRecognitionEarly = null;
 
               this.isRecording = false;
               this.isAnalyzing = true;
@@ -9745,6 +10016,12 @@ body.app-theme-sunset {
                 recognizer.close();
               } catch (_) {}
               this._recognizer = null;
+              if (this._audioConfig) {
+                try {
+                  this._audioConfig.close();
+                } catch (_) {}
+                this._audioConfig = null;
+              }
               this.isAnalyzing = false;
 
               // Applicera visuell dopamin och ljud
@@ -9758,8 +10035,16 @@ body.app-theme-sunset {
             (err) => {
               if (this._audioLevelTimer) clearInterval(this._audioLevelTimer);
               if (this._safetyTimeout) clearTimeout(this._safetyTimeout);
+              if (earlyFinishTimer) clearTimeout(earlyFinishTimer);
+              this._finishRecognitionEarly = null;
               this.isRecording = false;
               this.isAnalyzing = false;
+              if (this._audioConfig) {
+                try {
+                  this._audioConfig.close();
+                } catch (_) {}
+                this._audioConfig = null;
+              }
               try {
                 recognizer.close();
               } catch (_) {}
@@ -9935,9 +10220,24 @@ body.app-theme-sunset {
       }
     }
 
+    finishEarly() {
+      if (this._finishRecognitionEarly) {
+        this._finishRecognitionEarly();
+      } else {
+        this.stop();
+      }
+    }
+
     stop() {
       if (this._safetyTimeout) clearTimeout(this._safetyTimeout);
       if (this._audioLevelTimer) clearInterval(this._audioLevelTimer);
+      this._finishRecognitionEarly = null;
+      if (this._audioConfig) {
+        try {
+          this._audioConfig.close();
+        } catch (_) {}
+        this._audioConfig = null;
+      }
       if (this._recognizer) {
         try {
           this._recognizer.close();
@@ -10033,10 +10333,12 @@ body.app-theme-sunset {
      * Startar inspelning och bedömning via vald talmotor
      */
     async start(targetItem, callbacks = {}) {
-      if (this.isRecording || this.isAnalyzing || this.azureJudge.isRecording) {
+      if (this.isRecording || this.isAnalyzing || this.azureJudge.isRecording || this.azureJudge.isAnalyzing) {
         this.stop();
         return;
       }
+
+      this._callbacks = callbacks;
 
       SoundFX.unlockiOSAudio();
 
@@ -10081,8 +10383,16 @@ body.app-theme-sunset {
         });
         this._audioStream = stream;
 
-        // Initiera live ljudmätare (Audio Analyser)
+        // Initiera live ljudmätare (Audio Analyser) och Voice Activity Detection (VAD)
         const ctx = SoundFX.getContext();
+        let speechDetected = false;
+        let speechStartTime = null;
+        let silenceStartTime = null;
+        const VAD_SPEECH_THRESHOLD = 0.055;  // Tröskel för att röst upptäcks
+        const VAD_SILENCE_THRESHOLD = 0.035; // Tröskel för bakgrund/tystnad
+        const VAD_SILENCE_DURATION = 1000;   // 1.0s tystnad efter tal triggar auto-bedömning
+        const VAD_MIN_SPEECH_DURATION = 350; // Minst 350ms tal innan tystnad räknas
+
         if (ctx) {
           const source = ctx.createMediaStreamSource(stream);
           const analyser = ctx.createAnalyser();
@@ -10099,6 +10409,29 @@ body.app-theme-sunset {
             const avg = sum / dataArray.length;
             const norm = Math.min(1.0, avg / 128);
             if (onAudioLevel) onAudioLevel(norm);
+
+            // VAD: Upptäck röstaktivitet och auto-stoppa efter 1.0s tystnad
+            const now = Date.now();
+            if (norm >= VAD_SPEECH_THRESHOLD) {
+              if (!speechDetected) {
+                speechDetected = true;
+                speechStartTime = now;
+              }
+              silenceStartTime = null;
+            } else if (speechDetected && (now - speechStartTime >= VAD_MIN_SPEECH_DURATION)) {
+              if (norm <= VAD_SILENCE_THRESHOLD) {
+                if (!silenceStartTime) {
+                  silenceStartTime = now;
+                } else if (now - silenceStartTime >= VAD_SILENCE_DURATION) {
+                  // 1.0 sekunds tystnad efter tal -> Auto-stoppa och bedöm med Groq Whisper!
+                  this.stopRecordingAndJudge();
+                  return;
+                }
+              } else {
+                silenceStartTime = null;
+              }
+            }
+
             this._animFrameId = requestAnimationFrame(updateLevel);
           };
           this._animFrameId = requestAnimationFrame(updateLevel);
@@ -10149,10 +10482,10 @@ body.app-theme-sunset {
 
         recorder.start(100);
 
-        // Säkerhetsstopp efter 5.5 sekunder
+        // Säkerhetsstopp efter 4.8 sekunder
         this._safetyTimeout = setTimeout(() => {
           if (this.isRecording) this.stopRecordingAndJudge();
-        }, 5500);
+        }, 4800);
       } catch (err) {
         this.isRecording = false;
         this.isAnalyzing = false;
@@ -10191,6 +10524,24 @@ body.app-theme-sunset {
 
       const json = await response.json();
       return json.text || '';
+    }
+
+    /**
+     * Avsluta pågående inspelning direkt och genomför bedömning omedelbart
+     */
+    finishRecordingAndJudge() {
+      const pref = this.getEnginePreference();
+      if (pref === 'azure' && this.azureJudge.isRecording) {
+        this.azureJudge.finishEarly();
+      } else if (pref === 'groq' && this.isRecording) {
+        this.stopRecordingAndJudge();
+      } else if (this._activeRecognition) {
+        try {
+          this._activeRecognition.stop();
+        } catch (_) {}
+      } else if (this.isRecording) {
+        this.stopRecordingAndJudge();
+      }
     }
 
     /**
@@ -10470,6 +10821,27 @@ body.app-theme-sunset {
             </div>
           </div>
 
+          <!-- Val av taltempo för uppspelning (Standard 0.88x, Snabbt 1.0x eller Extra snabbt 1.15x) -->
+          <div>
+            <label style="font-weight: 900; font-size: 0.88rem; display: block; margin-bottom: 6px;">
+              ⚡ Taltempo för svenskt tal:
+            </label>
+            <div style="display: flex; gap: 8px;">
+              <button type="button" class="settings-speed-btn" id="btn-speed-088" data-speed="0.88" style="flex: 1;">
+                <div style="font-size: 0.95rem; font-weight: 900;">🐢 0.88x</div>
+                <div style="font-size: 0.72rem; font-weight: 700; opacity: 0.85; margin-top: 2px;">Standard (Lugnt)</div>
+              </button>
+              <button type="button" class="settings-speed-btn" id="btn-speed-100" data-speed="1.0" style="flex: 1;">
+                <div style="font-size: 0.95rem; font-weight: 900;">⚡ 1.0x</div>
+                <div style="font-size: 0.72rem; font-weight: 700; opacity: 0.85; margin-top: 2px;">Snabbt (Normalt)</div>
+              </button>
+              <button type="button" class="settings-speed-btn" id="btn-speed-115" data-speed="1.15" style="flex: 1;">
+                <div style="font-size: 0.95rem; font-weight: 900;">🚀 1.15x</div>
+                <div style="font-size: 0.72rem; font-weight: 700; opacity: 0.85; margin-top: 2px;">Extra snabbt</div>
+              </button>
+            </div>
+          </div>
+
           <!-- Testpanel: Högtalare & Mikrofon -->
           <div style="background: var(--surface-muted); border-radius: 16px; padding: 14px; border: 2px solid var(--border-light);">
             <div style="font-weight: 900; font-size: 0.86rem; margin-bottom: 8px;">
@@ -10516,6 +10888,26 @@ body.app-theme-sunset {
       cardAzure?.addEventListener('click', () => selectEngineUI('azure'));
       cardWebkit?.addEventListener('click', () => selectEngineUI('webkit'));
 
+      // Taltempo knappar
+      let selectedSpeed = AudioPlayer.getSpeechRate();
+      const speedBtns = backdrop.querySelectorAll('.settings-speed-btn');
+
+      const selectSpeedUI = (speed) => {
+        selectedSpeed = speed;
+        speedBtns.forEach((btn) => {
+          const btnSpeed = parseFloat(btn.dataset.speed || '0.88');
+          btn.classList.toggle('selected', Math.abs(btnSpeed - speed) < 0.05);
+        });
+      };
+
+      speedBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          window.VisualEngine?.haptic('light', btn);
+          SoundFX.playSound('tap');
+          selectSpeedUI(parseFloat(btn.dataset.speed || '0.88'));
+        });
+      });
+
       document.getElementById('btn-save-settings')?.addEventListener('click', () => {
         let selectedEngine = 'groq';
         if (cardAzure?.classList.contains('selected')) {
@@ -10525,16 +10917,19 @@ body.app-theme-sunset {
         }
 
         speechJudgeInstance.setEnginePreference(selectedEngine);
+        AudioPlayer.setSpeechRate(selectedSpeed);
         SoundFX.playCorrect();
         this.close();
       });
 
-      // Testa Högtalare
+      // Testa Högtalare med valt taltempo
       document.getElementById('btn-test-speaker')?.addEventListener('click', () => {
         const statusEl = document.getElementById('settings-test-status');
-        if (statusEl) statusEl.innerHTML = '🔊 Spelar upp svenskt tal...';
-        AudioPlayer.speakSwedish('Hej! Nu fungerar högtalaren och rösten perfekt.', 0.88, () => {
-          if (statusEl) statusEl.innerHTML = '<span style="color: #166534;">✅ Högtalaren fungerar utmärkt!</span>';
+        const curRate = selectedSpeed || AudioPlayer.getSpeechRate();
+        const speedText = curRate >= 1.1 ? 'extra snabbt (1.15x)' : curRate >= 0.95 ? 'snabbt (1.0x)' : 'standard (0.88x)';
+        if (statusEl) statusEl.innerHTML = `🔊 Spelar upp i ${speedText}...`;
+        AudioPlayer.speakSwedish('Hej! Nu fungerar högtalaren med valt taltempo.', curRate, () => {
+          if (statusEl) statusEl.innerHTML = `<span style="color: #166534;">✅ Högtalaren fungerar utmärkt i ${speedText}!</span>`;
         });
       });
 
@@ -10545,8 +10940,8 @@ body.app-theme-sunset {
         const micLabel = document.getElementById('test-mic-label');
         const micBtn = document.getElementById('btn-test-mic');
 
-        if (speechJudgeInstance.isRecording) {
-          speechJudgeInstance.stop();
+        if (speechJudgeInstance.isRecording || azureSpeechJudgeInstance.isRecording) {
+          speechJudgeInstance.finishRecordingAndJudge();
           return;
         }
 
@@ -10626,6 +11021,13 @@ body.app-theme-sunset {
       cardGroq?.classList.toggle('selected', pref === 'groq');
       cardAzure?.classList.toggle('selected', pref === 'azure');
       cardWebkit?.classList.toggle('selected', pref === 'webkit');
+
+      const currentSpeed = AudioPlayer.getSpeechRate();
+      const speedBtns = document.querySelectorAll('.settings-speed-btn');
+      speedBtns.forEach((btn) => {
+        const btnSpeed = parseFloat(btn.dataset.speed || '0.88');
+        btn.classList.toggle('selected', Math.abs(btnSpeed - currentSpeed) < 0.05);
+      });
     }
   };
 
@@ -10679,10 +11081,10 @@ body.app-theme-sunset {
           <strong>${item.th || ''}</strong> • <span style="color:#7B2CBF;">🌴 ${item.satun || ''}</span>
         </div>
 
-        <!-- Två tydliga ljudknappar (🔊 Normal 0.88x & 🐢 Sköldpadda 0.60x) -->
+        <!-- Två tydliga ljudknappar (🔊 Normal/Snabbt & 🐢 Sköldpadda 0.60x) -->
         <div style="display: flex; justify-content: center; gap: 10px; margin-top: 12px;">
           <button type="button" class="btn-3d btn-blue" id="btn-pronun-listen" style="min-height: 54px; flex: 1; padding: 8px 12px; font-size: 0.88rem; display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
-            <span class="audio-btn-icon">${window.VisualEngine ? window.VisualEngine.getAudioIconSVG('speaker', 20) : '🔊'}</span> Normal (0.88x)
+            <span class="audio-btn-icon">${window.VisualEngine ? window.VisualEngine.getAudioIconSVG('speaker', 20) : '🔊'}</span> ${AudioPlayer.getSpeechRate() >= 0.95 ? 'Snabbt' : 'Normal'} (${AudioPlayer.getSpeechRate()}x)
           </button>
           <button type="button" class="btn-3d" id="btn-pronun-slow" style="min-height: 54px; flex: 1; padding: 8px 12px; font-size: 0.88rem; background: var(--lavender); color: #FFF; border-color: var(--lavender); box-shadow: 0 4px 0 var(--lavender-dark); display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
             <span class="audio-btn-icon">${window.VisualEngine ? window.VisualEngine.getAudioIconSVG('turtle', 20) : '🐢'}</span> Sköldpadda (0.60x)
@@ -10739,13 +11141,13 @@ body.app-theme-sunset {
       </div>
     `;
 
-    // Spela automatiskt upp ordet i lugn hastighet (0.88x)
-    setTimeout(() => AudioPlayer.playTargetItem(item, 0.88), 220);
+    // Spela automatiskt upp ordet i valt taltempo
+    setTimeout(() => AudioPlayer.playTargetItem(item), 220);
 
     document.getElementById('btn-pronun-listen')?.addEventListener('click', (e) => {
       window.VisualEngine?.haptic('light', e.currentTarget);
       SoundFX.playClick();
-      AudioPlayer.playTargetItem(item, 0.88);
+      AudioPlayer.playTargetItem(item);
     });
 
     document.getElementById('btn-pronun-slow')?.addEventListener('click', (e) => {
@@ -10771,9 +11173,9 @@ body.app-theme-sunset {
       if (state === 'recording') {
         micBtn.classList.add('state-recording');
         micIcon.innerHTML = '🔴';
-        micLabel.innerHTML = 'Spelar in...<br>Prata nu!';
+        micLabel.innerHTML = 'Spelar in...<br>(Klicka för att stoppa)';
         meterBar?.classList.add('active');
-        if (hearingText) hearingText.textContent = '🎧 Lyssnar på dig... กำลังบันทึกเสียง!';
+        if (hearingText) hearingText.textContent = '🎧 Lyssnar på dig... Tala nu!';
       } else if (state === 'analyzing') {
         micBtn.classList.add('state-analyzing');
         micIcon.innerHTML = '<span class="mic-spin-star">⭐</span>';
@@ -10816,57 +11218,85 @@ body.app-theme-sunset {
           }
         }
 
-        // Krav 5: 1-3 animerade fyllda guldstjärnor vid >= 75
-        const starsHtml = evaluation.starsCount > 0
-          ? `<div class="azure-stars-row" title="${evaluation.starsCount} stjärnor">${'⭐'.repeat(evaluation.starsCount)}</div>`
-          : '';
+        // 3. Stjärnanimering: Sekventiell fjädrande pop-in (0.1s, 0.25s, 0.4s)
+        let starsHtml = '';
+        if (isPass) {
+          const count = Math.max(1, Math.min(3, evaluation.starsCount || (evaluation.pronScore >= 90 ? 3 : evaluation.pronScore >= 80 ? 2 : 1)));
+          starsHtml = `
+            <div class="azure-stars-row ${count === 3 ? 'all-three' : ''}" title="${count} av 3 stjärnor">
+              <span class="azure-star-item star-1 ${count >= 1 ? 'earned' : 'unearned'}">⭐</span>
+              <span class="azure-star-item star-2 ${count >= 2 ? 'earned' : 'unearned'}">⭐</span>
+              <span class="azure-star-item star-3 ${count >= 3 ? 'earned' : 'unearned'}">⭐</span>
+            </div>
+          `;
+        }
 
-        // Krav 4: Ordlista med färgkodning: Grön (>=80), Gul (60-79), Röd (<60)
+        // 5. Ordlista med färgkodning (Undvik röd felmarkering vid godkänt uttal)
         const wordsHtml = evaluation.words && evaluation.words.length
           ? `<div class="azure-words-row">
-              ${evaluation.words.map((w) => `
-                <span class="azure-word-chip word-${w.colorCategory}" title="${w.word}: ${w.score}%">
-                  ${w.word} <small style="opacity: 0.85;">(${w.score}%)</small>
-                </span>
-              `).join('')}
+              ${evaluation.words.map((w) => {
+                const wScore = w.score != null && w.score > 0 ? w.score : (isPass ? evaluation.pronScore : 0);
+                let chipColor = w.colorCategory || 'green';
+                if (isPass && (chipColor === 'red' || wScore < 60)) {
+                  chipColor = 'amber';
+                }
+                return `
+                  <span class="azure-word-chip word-${chipColor}" title="${w.word}: ${wScore}%">
+                    ${w.word} <small style="opacity: 0.85; font-weight: 700;">(${wScore}%)</small>
+                  </span>
+                `;
+              }).join('')}
             </div>`
           : '';
 
-        // Pedagogiskt uttalstips: Visar mjukt och stöttande vilken stavelse/ljud som kan övas mer på
-        const deviatedHtml = evaluation.deviatedSyllables && evaluation.deviatedSyllables.length
-          ? `<div style="margin-top: 8px; font-size: 0.82rem; color: #854D0E; background: #FEF9C3; border: 1px solid #FDE047; border-radius: 8px; padding: 6px 10px; text-align: center; font-weight: 700;">
-              💡 Uttalstips: Träna lite extra på stavelsen ${evaluation.deviatedSyllables.map((s) => `<span class="azure-phoneme-badge" style="background:#fff; border-color:#F59E0B; color:#B45309;">${s}</span>`).join(' ')}
-            </div>`
-          : (evaluation.deviatedPhonemes && evaluation.deviatedPhonemes.length
-              ? `<div style="margin-top: 8px; font-size: 0.82rem; color: #854D0E; background: #FEF9C3; border: 1px solid #FDE047; border-radius: 8px; padding: 6px 10px; text-align: center; font-weight: 700;">
-                  💡 Uttalstips: Fokusera på ljudet ${evaluation.deviatedPhonemes.map((ph) => `<span class="azure-phoneme-badge" style="background:#fff; border-color:#F59E0B; color:#B45309;">[${ph}]</span>`).join(' ')}
-                </div>`
-              : '');
+        // 5. Avvikande ljud: Om tomt [], dölj eller visa ren grön bock istället för råa hakparenteser
+        const devSyllables = evaluation.deviatedSyllables || [];
+        const devPhonemes = evaluation.deviatedPhonemes || [];
+        let deviatedHtml = '';
+
+        if (devSyllables.length > 0) {
+          deviatedHtml = `
+            <div class="azure-deviated-box" style="font-size: 0.82rem; color: #854D0E; background: #FEF9C3; border: 1px solid #FDE047; border-radius: 10px; padding: 7px 12px; text-align: center; font-weight: 700;">
+              💡 Uttalstips: Träna lite extra på stavelsen ${devSyllables.map((s) => `<span class="azure-phoneme-badge" style="background:#fff; border-color:#F59E0B; color:#B45309; padding: 2px 7px; border-radius: 6px;">${s}</span>`).join(' ')}
+            </div>`;
+        } else if (devPhonemes.length > 0) {
+          deviatedHtml = `
+            <div class="azure-deviated-box" style="font-size: 0.82rem; color: #854D0E; background: #FEF9C3; border: 1px solid #FDE047; border-radius: 10px; padding: 7px 12px; text-align: center; font-weight: 700;">
+              💡 Uttalstips: Fokusera på ljudet ${devPhonemes.map((ph) => `<span class="azure-phoneme-badge" style="background:#fff; border-color:#F59E0B; color:#B45309; padding: 2px 7px; border-radius: 6px;">[${ph}]</span>`).join(' ')}
+            </div>`;
+        } else if (isPass) {
+          deviatedHtml = `
+            <div class="azure-no-deviations" style="display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 0.82rem; color: #15803D; background: #DCFCE7; border: 1px solid #BBF7D0; border-radius: 10px; padding: 7px 12px; font-weight: 700;">
+              <span>✅</span> Inga avvikande ljud (rent och tydligt uttal!)
+            </div>`;
+        }
 
         evalSlot.innerHTML = `
           <div class="pronun-feedback-card ${isPass ? 'tier-passed' : evaluation.status === 'almost' ? 'tier-almost' : 'tier-retry'}">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <div style="font-weight: 900; font-size: 1.05rem;">
-                ${isPass ? '🌟 GODKÄNT!' : evaluation.status === 'almost' ? '💛 NÄSTAN RÄTT!' : '🧡 PROVA IGEN!'} • ${evaluation.pronScore}%
+            <!-- 2. Header & Badge på en rad utan onödig textbrytning -->
+            <div class="pronun-header-row" style="display: flex; justify-content: space-between; align-items: center; width: 100%; gap: 8px;">
+              <div style="font-weight: 900; font-size: 1.15rem; color: ${isPass ? '#15803D' : evaluation.status === 'almost' ? '#B45309' : '#DC2626'};">
+                ${isPass ? '🌟 GODKÄNT!' : evaluation.status === 'almost' ? '💛 NÄSTAN RÄTT!' : '🧡 PROVA IGEN!'}
               </div>
-              <span class="pronun-score-badge" style="color: ${isPass ? '#166534' : evaluation.status === 'almost' ? '#854D0E' : '#991B1B'}; font-size: 0.74rem; font-weight: 800; background: rgba(0,0,0,0.04); padding: 3px 8px; border-radius: 8px;">
-                🎯 AI-analys (sv-SE)
+              <span class="pronun-score-badge azure-engine-pill" style="white-space: nowrap; font-size: 0.72rem; font-weight: 800; padding: 4px 10px; border-radius: 999px; background: rgba(0, 0, 0, 0.04); color: ${isPass ? '#166534' : evaluation.status === 'almost' ? '#854D0E' : '#991B1B'}; flex-shrink: 0;">
+                🎯 Azure sv-SE
               </span>
             </div>
 
+            <!-- 3. Stjärnanimering -->
             ${starsHtml}
 
-            <!-- Totalpoäng (Helhet, Tydlighet, Flyt, Melodi) -->
+            <!-- 4. Mätarpanel (PronScore, Noggrannhet, Flyt, Prosodi) med vertikala avdelare -->
             <div class="azure-scores-hud">
               <div class="azure-score-box">
-                <span class="azure-score-num" style="color: ${isPass ? 'var(--emerald-dark)' : 'var(--coral-dark)'};">
+                <span class="azure-score-num" style="color: ${isPass ? '#15803D' : '#DC2626'};">
                   ${evaluation.pronScore}%
                 </span>
-                <span class="azure-score-label">Helhet</span>
+                <span class="azure-score-label">PronScore</span>
               </div>
               <div class="azure-score-box">
                 <span class="azure-score-num">${evaluation.accuracyScore}%</span>
-                <span class="azure-score-label">Tydlighet</span>
+                <span class="azure-score-label">Noggrannhet</span>
               </div>
               <div class="azure-score-box">
                 <span class="azure-score-num">${evaluation.fluencyScore}%</span>
@@ -10874,22 +11304,31 @@ body.app-theme-sunset {
               </div>
               <div class="azure-score-box">
                 <span class="azure-score-num">${evaluation.prosodyScore}%</span>
-                <span class="azure-score-label">Melodi</span>
+                <span class="azure-score-label">Prosodi</span>
               </div>
             </div>
 
+            <!-- 5. Ordlista & Avvikande ljud -->
             ${wordsHtml}
             ${deviatedHtml}
 
-            <div class="th-text" style="font-size: 0.86rem; margin-top: 8px;">
-              ${evaluation.feedbackTh}
-            </div>
-            <div class="th-text" style="font-size: 0.8rem; color: #7B2CBF; font-weight: 700; margin-top: 4px;">
-              🌴 ${evaluation.satunTip}
+            <!-- 6. Feedback-sektion med avskiljande linje och lila callout-ruta -->
+            <div class="azure-feedback-section" style="border-top: 1px solid #E2E8F0; padding-top: 10px; display: flex; flex-direction: column; gap: 8px;">
+              <div class="th-text" style="font-size: 0.88rem; color: #334155; line-height: 1.45; font-weight: 600;">
+                ${evaluation.feedbackTh}
+              </div>
+              ${evaluation.satunTip ? `
+                <div class="satun-callout-box" style="background: #F3E8FF; border: 1px solid #E9D5FF; border-radius: 12px; padding: 8px 12px; display: flex; align-items: flex-start; gap: 8px;">
+                  <span style="font-size: 1.1rem; flex-shrink: 0; line-height: 1.2;">🌴</span>
+                  <div class="th-text" style="font-size: 0.82rem; color: #6B21A8; font-weight: 700; line-height: 1.4;">
+                    ${evaluation.satunTip}
+                  </div>
+                </div>
+              ` : ''}
             </div>
 
             ${!isPass ? `
-              <div style="display: flex; gap: 8px; margin-top: 10px;">
+              <div style="display: flex; gap: 8px; margin-top: 6px;">
                 <button type="button" class="btn-3d btn-coral" id="btn-azure-retry-mic" style="min-height: 48px; flex: 1; padding: 8px 12px; font-size: 0.84rem;">
                   🎙️ Prova igen • ลองใหม่นะจ๊ะ
                 </button>
@@ -10920,17 +11359,27 @@ body.app-theme-sunset {
 
         evalSlot.innerHTML = `
           <div class="pronun-feedback-card tier-passed">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <div style="font-weight: 900; font-size: 1.05rem;">
-                🌟 GODKÄNT! (${evaluation.score}% Match)
+            <div class="pronun-header-row" style="display: flex; justify-content: space-between; align-items: center; width: 100%; gap: 8px;">
+              <div style="font-weight: 900; font-size: 1.15rem; color: #15803D;">
+                🌟 GODKÄNT!
               </div>
-              <span class="pronun-score-badge" style="color: #166534;">WER: ${evaluation.wer}</span>
+              <span class="pronun-score-badge" style="white-space: nowrap; font-size: 0.72rem; font-weight: 800; padding: 4px 10px; border-radius: 999px; background: rgba(0, 0, 0, 0.04); color: #166534; flex-shrink: 0;">
+                🎯 AI Match: ${evaluation.score}%
+              </span>
             </div>
-            <div class="th-text" style="font-size: 0.88rem; margin-top: 4px;">
-              ${evaluation.feedbackTh}
-            </div>
-            <div class="th-text" style="font-size: 0.8rem; color: #7B2CBF; font-weight: 700; margin-top: 4px;">
-              🌴 ${evaluation.satunTip}
+
+            <div class="azure-feedback-section" style="border-top: 1px solid #E2E8F0; padding-top: 10px; display: flex; flex-direction: column; gap: 8px;">
+              <div class="th-text" style="font-size: 0.88rem; color: #334155; line-height: 1.45; font-weight: 600;">
+                ${evaluation.feedbackTh}
+              </div>
+              ${evaluation.satunTip ? `
+                <div class="satun-callout-box" style="background: #F3E8FF; border: 1px solid #E9D5FF; border-radius: 12px; padding: 8px 12px; display: flex; align-items: flex-start; gap: 8px;">
+                  <span style="font-size: 1.1rem; flex-shrink: 0; line-height: 1.2;">🌴</span>
+                  <div class="th-text" style="font-size: 0.82rem; color: #6B21A8; font-weight: 700; line-height: 1.4;">
+                    ${evaluation.satunTip}
+                  </div>
+                </div>
+              ` : ''}
             </div>
           </div>
         `;
@@ -10941,16 +11390,22 @@ body.app-theme-sunset {
 
         evalSlot.innerHTML = `
           <div class="pronun-feedback-card tier-almost">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <div style="font-weight: 900; font-size: 1.05rem;">
-                💛 NÄSTAN RÄTT! (${evaluation.score}%)
+            <div class="pronun-header-row" style="display: flex; justify-content: space-between; align-items: center; width: 100%; gap: 8px;">
+              <div style="font-weight: 900; font-size: 1.15rem; color: #B45309;">
+                💛 NÄSTAN RÄTT!
               </div>
-              <span class="pronun-score-badge" style="color: #92400E;">${evaluation.status}</span>
+              <span class="pronun-score-badge" style="white-space: nowrap; font-size: 0.72rem; font-weight: 800; padding: 4px 10px; border-radius: 999px; background: rgba(0, 0, 0, 0.04); color: #854D0E; flex-shrink: 0;">
+                ${evaluation.score}%
+              </span>
             </div>
-            <div class="th-text" style="font-size: 0.86rem; margin-top: 4px;">
-              ${missInfo} • ${evaluation.feedbackTh}
+
+            <div class="azure-feedback-section" style="border-top: 1px solid #E2E8F0; padding-top: 10px; display: flex; flex-direction: column; gap: 8px;">
+              <div class="th-text" style="font-size: 0.86rem; color: #334155; line-height: 1.45;">
+                ${missInfo} • ${evaluation.feedbackTh}
+              </div>
             </div>
-            <div style="display: flex; gap: 8px; margin-top: 8px;">
+
+            <div style="display: flex; gap: 8px; margin-top: 4px;">
               <button type="button" class="btn-3d btn-warm" id="btn-eval-retry-mic" style="min-height: 48px; flex: 1; padding: 8px 12px; font-size: 0.84rem;">
                 🎙️ Prova igen • พูดอีกครั้ง
               </button>
@@ -10966,23 +11421,30 @@ body.app-theme-sunset {
       } else {
         evalSlot.innerHTML = `
           <div class="pronun-feedback-card tier-retry">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <div style="font-weight: 900; font-size: 1.05rem;">
-                🧡 PROVA IGEN (${evaluation.score}%)
+            <div class="pronun-header-row" style="display: flex; justify-content: space-between; align-items: center; width: 100%; gap: 8px;">
+              <div style="font-weight: 900; font-size: 1.15rem; color: #DC2626;">
+                🧡 PROVA IGEN!
               </div>
-              <span class="pronun-score-badge" style="color: #991B1B;">${evaluation.status}</span>
+              <span class="pronun-score-badge" style="white-space: nowrap; font-size: 0.72rem; font-weight: 800; padding: 4px 10px; border-radius: 999px; background: rgba(0, 0, 0, 0.04); color: #991B1B; flex-shrink: 0;">
+                ${evaluation.score}%
+              </span>
             </div>
-            <div class="th-text" style="font-size: 0.85rem; margin-top: 4px;">
-              ${evaluation.feedbackTh}
+
+            <div class="azure-feedback-section" style="border-top: 1px solid #E2E8F0; padding-top: 10px; display: flex; flex-direction: column; gap: 8px;">
+              <div class="th-text" style="font-size: 0.86rem; color: #334155; line-height: 1.45;">
+                ${evaluation.feedbackTh}
+              </div>
             </div>
-            <div class="mouth-guide-box" style="margin-top: 8px;">
+
+            <div class="mouth-guide-box" style="margin-top: 4px;">
               <div class="mouth-svg-icon">${evaluation.mouthGuide.svgDiagram}</div>
               <div class="th-text" style="font-size: 0.82rem;">
                 <div style="font-weight: 900; color: #991B1B;">👄 ${evaluation.mouthGuide.titleSv}</div>
                 <div>${evaluation.mouthGuide.tipTh}</div>
               </div>
             </div>
-            <div style="display: flex; gap: 8px; margin-top: 10px;">
+
+            <div style="display: flex; gap: 8px; margin-top: 4px;">
               <button type="button" class="btn-3d btn-coral" id="btn-retry-mic-again" style="min-height: 48px; flex: 1; padding: 8px 12px; font-size: 0.84rem;">
                 🎙️ Prova igen • ลองใหม่นะจ๊ะ
               </button>
@@ -11002,7 +11464,11 @@ body.app-theme-sunset {
       window.VisualEngine?.haptic('light', micBtn);
 
       if (speechJudgeInstance.isRecording || azureSpeechJudgeInstance.isRecording) {
-        speechJudgeInstance.stop();
+        speechJudgeInstance.finishRecordingAndJudge();
+        return;
+      }
+
+      if (speechJudgeInstance.isAnalyzing || azureSpeechJudgeInstance.isAnalyzing) {
         return;
       }
 
@@ -11083,6 +11549,8 @@ body.app-theme-sunset {
     speakTurtle065: AudioPlayer.speakSlow.bind(AudioPlayer),
     speakThai: AudioPlayer.speakThai.bind(AudioPlayer),
     playTargetItem: AudioPlayer.playTargetItem.bind(AudioPlayer),
+    getSpeechRate: () => AudioPlayer.getSpeechRate(),
+    setSpeechRate: (r) => AudioPlayer.setSpeechRate(r),
 
     listenAndEvaluate: (targetItem, callbacks = {}) => {
       return speechJudgeInstance.start(targetItem, {
@@ -11097,6 +11565,7 @@ body.app-theme-sunset {
       });
     },
 
+    finishRecordingAndJudge: () => speechJudgeInstance.finishRecordingAndJudge(),
     stopListening: () => speechJudgeInstance.stop()
   });
 
@@ -14853,75 +15322,75 @@ body.app-theme-sunset {
   const COLLECTIBLE_BADGES = [
     {
       id: 'first_lesson',
-      nameSv: 'Första Steget',
+      nameSv: 'Första Steget (25 XP)',
       nameTh: 'ก้าวแรกสู่สวีเดน',
       icon: '🥇',
-      target: 1,
-      rewardGems: 20,
-      checkUnlocked: (state, sm) => (sm.state.totalXP || 0) >= 10
+      target: 25,
+      rewardGems: 25,
+      checkUnlocked: (state, sm) => (sm.state.totalXP || 0) >= 25
     },
     {
       id: 'sprint_50',
-      nameSv: 'Blixt-Sprintern',
+      nameSv: 'Blixt-Sprintern (65 XP)',
       nameTh: 'สปรินเตอร์สายฟ้า',
       icon: '⚡',
-      target: 50,
-      rewardGems: 25,
-      checkUnlocked: (state) => (state.sprint60BestScore || 0) >= 50
+      target: 65,
+      rewardGems: 30,
+      checkUnlocked: (state) => (state.sprint60BestScore || 0) >= 65
     },
     {
       id: 'voice_master',
-      nameSv: 'Guld-Rösten',
+      nameSv: 'Guld-Rösten (Guld/Diamant)',
       nameTh: 'เสียงทองคำไมโครโฟน',
       icon: '🎙️',
       target: 5,
-      rewardGems: 25,
-      checkUnlocked: (state) => ['Silver', 'Guld', 'Diamant'].includes(state.pronunChallengeBestTier)
+      rewardGems: 35,
+      checkUnlocked: (state) => ['Guld', 'Diamant'].includes(state.pronunChallengeBestTier)
     },
     {
       id: 'streak_3',
-      nameSv: 'Eld-Mästaren',
-      nameTh: 'ผู้พิทักษ์เปลวไฟ 3 วัน',
+      nameSv: 'Eld-Mästaren (7 Dagar)',
+      nameTh: 'ผู้พิทักษ์เปลวไฟ 7 วัน',
       icon: '🔥',
-      target: 3,
-      rewardGems: 30,
-      checkUnlocked: (state, sm) => (sm.state.streakDays || 1) >= 3
+      target: 7,
+      rewardGems: 40,
+      checkUnlocked: (state, sm) => (sm.state.streakDays || 1) >= 7
     },
     {
       id: 'boss_slayer',
-      nameSv: 'Boss-Besegraren',
+      nameSv: 'Boss-Besegraren (3 Bossar)',
       nameTh: 'ผู้พิชิตบอสประจำหมวด',
       icon: '👑',
-      target: 1,
-      rewardGems: 35,
-      checkUnlocked: (state) => Object.keys(state.bossClearedThemes || {}).length >= 1
+      target: 3,
+      rewardGems: 45,
+      checkUnlocked: (state) => Object.keys(state.bossClearedThemes || {}).length >= 3
     },
     {
       id: 'vocab_30',
-      nameSv: 'Ordförråds-Mästaren',
-      nameTh: 'เซียนคลังคำศัพท์',
+      nameSv: 'Ordförråds-Mästaren (50 Ord)',
+      nameTh: 'เซียนคลังคำศัพท์ 50 คำ',
       icon: '📚',
-      target: 30,
-      rewardGems: 25,
-      checkUnlocked: (state, sm) => Object.keys(sm.state.srsData || {}).length >= 30
+      target: 50,
+      rewardGems: 40,
+      checkUnlocked: (state, sm) => Object.keys(sm.state.srsData || {}).length >= 50
     },
     {
       id: 'fashionista',
-      nameSv: 'Mode-Ikonen',
+      nameSv: 'Mode-Ikonen (4 Accessoarer)',
       nameTh: 'เจ้าแม่แฟชั่นสตูล',
       icon: '🛍️',
-      target: 3,
-      rewardGems: 30,
-      checkUnlocked: (state) => (state.ownedAccessories || []).length >= 3
+      target: 4,
+      rewardGems: 35,
+      checkUnlocked: (state) => (state.ownedAccessories || []).length >= 4
     },
     {
       id: 'gem_collector',
-      nameSv: 'Juvel-Samlaren',
-      nameTh: 'เศรษฐีเพชร',
+      nameSv: 'Juvel-Samlaren (300 💎)',
+      nameTh: 'เศรษฐีเพชร 300 เม็ด',
       icon: '💎',
-      target: 200,
-      rewardGems: 50,
-      checkUnlocked: (state, sm) => (sm.state.gems || 0) >= 200
+      target: 300,
+      rewardGems: 60,
+      checkUnlocked: (state, sm) => (sm.state.gems || 0) >= 300
     }
   ];
 
@@ -14939,31 +15408,31 @@ body.app-theme-sunset {
         speak_5: {
           id: 'speak_5',
           icon: '🎙️',
-          titleSv: 'Säg 5 svenska meningar/ord högt',
-          titleTh: 'ฝึกพูดภาษาสวีเดนใส่ไมโครโฟน 5 ครั้ง',
+          titleSv: 'Säg 8 svenska ord/meningar högt',
+          titleTh: 'ฝึกพูดภาษาสวีเดนใส่ไมโครโฟน 8 ครั้ง',
           progress: 0,
-          target: 5,
-          rewardGems: 20,
+          target: 8,
+          rewardGems: 30,
           claimed: false
         },
         combo_3: {
           id: 'combo_3',
           icon: '🔥',
-          titleSv: 'Få 3 rätt i rad',
-          titleTh: 'ตอบถูกติดต่อกัน 3 ข้อรวด (Combo 3x)',
+          titleSv: 'Få 5 rätt i rad (5x Combo)',
+          titleTh: 'ตอบถูกติดต่อกัน 5 ข้อรวด (Combo 5x)',
           progress: 0,
-          target: 3,
-          rewardGems: 15,
+          target: 5,
+          rewardGems: 25,
           claimed: false
         },
-        train_3min: {
-          id: 'train_3min',
+        train_15min: {
+          id: 'train_15min',
           icon: '⏱️',
-          titleSv: 'Träna i 3 minuter',
-          titleTh: 'ใช้เวลาฝึกภาษาสวีเดนครบ 3 นาทีวันนี้',
+          titleSv: 'Träna i 15 minuter',
+          titleTh: 'ใช้เวลาฝึกภาษาสวีเดนครบ 15 นาทีวันนี้',
           progress: 0,
-          target: 3,
-          rewardGems: 25,
+          target: 15,
+          rewardGems: 40,
           claimed: false
         }
       }
@@ -15032,6 +15501,22 @@ body.app-theme-sunset {
             this.data.activeSecondsDate = today;
             this.data.activeSecondsCount = 0;
             this.save();
+          } else {
+            if (this.data.dailyQuestsData.items?.train_3min && !this.data.dailyQuestsData.items?.train_15min) {
+              const old = this.data.dailyQuestsData.items.train_3min;
+              delete this.data.dailyQuestsData.items.train_3min;
+              this.data.dailyQuestsData.items.train_15min = {
+                id: 'train_15min',
+                icon: '⏱️',
+                titleSv: 'Träna i 15 minuter',
+                titleTh: 'ใช้เวลาฝึกภาษาสวีเดนครบ 15 นาทีวันนี้',
+                progress: Math.min(15, old.progress || 0),
+                target: 15,
+                rewardGems: 40,
+                claimed: false
+              };
+              this.save();
+            }
           }
         }
       } catch (_) {
@@ -15078,8 +15563,8 @@ body.app-theme-sunset {
       this._trainingTimer = setInterval(() => {
         if (document.hidden) return;
         this.data.activeSecondsCount = (this.data.activeSecondsCount || 0) + 5;
-        const minutesDone = Math.min(3, Math.floor(this.data.activeSecondsCount / 60));
-        const q = this.data.dailyQuestsData?.items?.train_3min;
+        const minutesDone = Math.min(15, Math.floor(this.data.activeSecondsCount / 60));
+        const q = this.data.dailyQuestsData?.items?.train_15min || this.data.dailyQuestsData?.items?.train_3min;
         if (q && minutesDone > q.progress) {
           q.progress = minutesDone;
           this.save();
@@ -16295,6 +16780,7 @@ body.app-theme-sunset {
       window.VisualEngine?.triggerConfetti();
       window.VisualEngine?.renderMascot('celebrating');
       window.VisualEngine?.Mascot?.say(`🎉 ${acc.nameSv}!`, `${acc.satunDesc}`, 'correct', 4500);
+      window.GameEngine?.UIController?.renderTopbar?.();
 
       this.renderCompeteArena();
     },
@@ -16324,9 +16810,582 @@ body.app-theme-sunset {
 
       window.SpeechEngine?.playSound('fanfare');
       window.VisualEngine?.triggerConfetti();
+      window.GameEngine?.UIController?.renderTopbar?.();
       this.renderCompeteArena();
     }
   };
+
+  /* ==========================================================================
+     XP-NIVÅER & BERÄKNING
+     ========================================================================== */
+
+  const XP_LEVELS = [
+    { level: 1, titleSv: 'Nybörjare', titleTh: 'ผู้เริ่มต้น', minXP: 0, maxXP: 100, icon: '🌱', desc: 'Börja din resa i det svenska språket!' },
+    { level: 2, titleSv: 'Flitig Upptäckare', titleTh: 'นักสำรวจผู้ขยัน', minXP: 100, maxXP: 300, icon: '🧭', desc: 'Du bygger dina första meningar och ordförråd.' },
+    { level: 3, titleSv: 'Satun-Stjärna', titleTh: 'ดาวเด่นสตูล', minXP: 300, maxXP: 650, icon: '⭐', desc: 'Ditt självförtroende i uttal och ordkunskap glänser!' },
+    { level: 4, titleSv: 'Ordmästare', titleTh: 'ปรมาจารย์คำศัพท์', minXP: 650, maxXP: 1200, icon: '📚', desc: 'Ett djupt och stabilt svenskt ordförråd.' },
+    { level: 5, titleSv: 'Uttals-Virtuos', titleTh: 'เซียนสำเนียงสวีเดน', minXP: 1200, maxXP: 2000, icon: '🎙️', desc: 'Nära perfekt svenskt uttal och flyt!' },
+    { level: 6, titleSv: 'Svensk-Mästare', titleTh: 'แชมเปี้ยนภาษาสวีเดน', minXP: 2000, maxXP: 3200, icon: '👑', desc: 'Du behärskar vardagsspråk och kultur suveränt.' },
+    { level: 7, titleSv: 'Nordisk Legend', titleTh: 'ตำนานนอร์ดิกสูงสุด', minXP: 3200, maxXP: 999999, icon: '🏆', desc: 'Högsta möjliga hedersgrad!' }
+  ];
+
+  function getXPLevelInfo(totalXP = 0) {
+    let current = XP_LEVELS[0];
+    for (let i = XP_LEVELS.length - 1; i >= 0; i--) {
+      if (totalXP >= XP_LEVELS[i].minXP) {
+        current = XP_LEVELS[i];
+        break;
+      }
+    }
+    const next = XP_LEVELS.find((l) => l.level === current.level + 1) || null;
+    const xpInLevel = Math.max(0, totalXP - current.minXP);
+    const xpSpan = next ? next.minXP - current.minXP : 1000;
+    const progressPct = next ? Math.min(100, Math.round((xpInLevel / xpSpan) * 100)) : 100;
+    const remainingToNext = next ? Math.max(0, next.minXP - totalXP) : 0;
+
+    return {
+      current,
+      next,
+      totalXP,
+      xpInLevel,
+      xpSpan,
+      progressPct,
+      remainingToNext
+    };
+  }
+
+  /* ==========================================================================
+     11. GAMIFICATION MODALS (TOPBAR-KLICK: STATS, SHOP/BOUTIQUE & XP/ALBUM)
+     ========================================================================== */
+
+  const GamificationModals = {
+    statsBackdrop: null,
+    shopBackdrop: null,
+    xpBackdrop: null,
+
+    // --- 1. STATS MODAL (FLAMMAN) ---
+    openStatsModal() {
+      if (!this.statsBackdrop) {
+        this.statsBackdrop = document.createElement('div');
+        this.statsBackdrop.id = 'stats-modal-backdrop';
+        this.statsBackdrop.className = 'gamification-modal-backdrop';
+        document.body.appendChild(this.statsBackdrop);
+      }
+      this.renderStatsModal();
+      requestAnimationFrame(() => this.statsBackdrop.classList.add('open'));
+    },
+
+    closeStatsModal() {
+      if (this.statsBackdrop) {
+        this.statsBackdrop.classList.remove('open');
+      }
+    },
+
+    renderStatsModal() {
+      const sm = window.GameEngine.StateManager;
+      const streakDays = sm.state.streakDays || 1;
+      const freezes = Part5State.data.streakFreezesCount || 0;
+      const totalXP = sm.state.totalXP || 0;
+      const srs = window.GameEngine.SRSManager;
+      const allItems = window.ContentDB ? window.ContentDB.getAllItems() : [];
+      const learnedCount = allItems.filter((i) => srs.getRecord(i.id).masteryLevel > 0).length;
+      const masteredCount = allItems.filter((i) => srs.getRecord(i.id).masteryLevel >= 4).length;
+      const clearedBossCount = Object.keys(Part5State.data.bossClearedThemes || {}).length;
+
+      const activeSecs = Part5State.data.activeSecondsCount || 0;
+      const minutesDone = Math.floor(activeSecs / 60);
+      const timePct = Math.min(100, Math.round((minutesDone / 15) * 100));
+
+      this.statsBackdrop.innerHTML = `
+        <div class="gamification-modal-card" role="dialog" aria-label="Din Träningsstatistik">
+          <div class="gamification-modal-header">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 1.6rem;">🔥</span>
+              <div>
+                <div style="font-weight: 900; font-size: 1.15rem; color: var(--text-main);">
+                  Träningsstatistik & Streak
+                </div>
+                <div class="th-text" style="font-size: 0.78rem; color: var(--text-secondary);">
+                  สถิติการเรียนและสตรีคประจำวัน
+                </div>
+              </div>
+            </div>
+            <button type="button" class="lesson-close-btn" id="btn-close-stats-modal" aria-label="Stäng">✕</button>
+          </div>
+
+          <!-- Streak Hero Banner -->
+          <div style="background: linear-gradient(135deg, #FFF8EE 0%, #FFF0DE 100%); border: 2px solid #FFE0B2; border-radius: 20px; padding: 16px; text-align: center; box-shadow: 0 4px 12px rgba(255, 122, 0, 0.08);">
+            <div style="font-size: 3.2rem; line-height: 1; animation: flameFlicker 1.5s infinite alternate;">🔥</div>
+            <div style="font-size: 1.8rem; font-weight: 900; color: #C2410C; margin-top: 6px;">
+              ${streakDays} Dagar i rad!
+            </div>
+            <div class="th-text" style="font-size: 0.85rem; color: #9A3412; font-weight: 700; margin-top: 2px;">
+              เรียนติดต่อกัน ${streakDays} วัน สตรีคไม่หลุด!
+            </div>
+            <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.9); border: 1.5px solid #FDBA74; border-radius: 999px; padding: 4px 14px; margin-top: 10px; font-size: 0.82rem; font-weight: 800; color: #9A3412;">
+              <span>🛡️ Streak-Freeze:</span>
+              <span style="color: #0369A1;">${freezes} / 2 aktiva skydd</span>
+            </div>
+          </div>
+
+          <!-- 15-Minuters Dagsmål -->
+          <div style="background: var(--surface); border: 2px solid var(--border-light); border-radius: 18px; padding: 14px 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <div style="font-weight: 900; font-size: 0.95rem; display: flex; align-items: center; gap: 6px;">
+                <span>⏱️</span>
+                <span>Dagens Träningstid</span>
+              </div>
+              <span class="satun-badge" style="background: ${minutesDone >= 15 ? 'var(--emerald-soft)' : '#FEF3C7'}; color: ${minutesDone >= 15 ? 'var(--emerald-dark)' : '#92400E'}; font-weight: 900;">
+                ${minutesDone} / 15 minuter
+              </span>
+            </div>
+            <div style="height: 12px; background: var(--surface-muted); border-radius: 999px; overflow: hidden; border: 1.5px solid var(--border-light); margin-bottom: 8px;">
+              <div style="height: 100%; width: ${timePct}%; background: linear-gradient(90deg, #10B981, #059669); border-radius: 999px; transition: width 0.4s ease;"></div>
+            </div>
+            <div class="th-text" style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4;">
+              ${
+                minutesDone >= 15
+                  ? '🏆 <strong>15-minutersmålet nått!</strong> Fantastiskt jobbat, din hjärna har befäst orden! / ครบเป้าหมาย 15 นาทีแล้ว สุดยอดมาก!'
+                  : `💪 <strong>${15 - minutesDone} minuter kvar</strong> till dagens mål. Träna 15 minuter per dag för bästa minnesretention! / ฝึกต่ออีกนิดเพื่อความจำระยะยาว!`
+              }
+            </div>
+          </div>
+
+          <!-- 4 Stats Boxes Grid -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div style="background: var(--surface); border: 2px solid var(--border-light); border-radius: 16px; padding: 12px; text-align: center;">
+              <div style="font-size: 1.5rem;">⚡</div>
+              <div style="font-weight: 900; font-size: 1.15rem; color: #B45309; margin-top: 2px;">${totalXP} XP</div>
+              <div style="font-size: 0.76rem; color: var(--text-secondary); font-weight: 700;">Total Erfarenhet</div>
+            </div>
+            <div style="background: var(--surface); border: 2px solid var(--border-light); border-radius: 16px; padding: 12px; text-align: center;">
+              <div style="font-size: 1.5rem;">📚</div>
+              <div style="font-weight: 900; font-size: 1.15rem; color: var(--sky-dark); margin-top: 2px;">${learnedCount} Ord</div>
+              <div style="font-size: 0.76rem; color: var(--text-secondary); font-weight: 700;">I Ordbanken</div>
+            </div>
+            <div style="background: var(--surface); border: 2px solid var(--border-light); border-radius: 16px; padding: 12px; text-align: center;">
+              <div style="font-size: 1.5rem;">🌟</div>
+              <div style="font-weight: 900; font-size: 1.15rem; color: var(--emerald-dark); margin-top: 2px;">${masteredCount} Ord</div>
+              <div style="font-size: 0.76rem; color: var(--text-secondary); font-weight: 700;">Bemästrade (4-5★)</div>
+            </div>
+            <div style="background: var(--surface); border: 2px solid var(--border-light); border-radius: 16px; padding: 12px; text-align: center;">
+              <div style="font-size: 1.5rem;">👑</div>
+              <div style="font-weight: 900; font-size: 1.15rem; color: #7C3AED; margin-top: 2px;">${clearedBossCount}/10</div>
+              <div style="font-size: 0.76rem; color: var(--text-secondary); font-weight: 700;">Besegrade Bossar</div>
+            </div>
+          </div>
+
+          <!-- Veckokalender -->
+          <div style="background: var(--surface-muted); border: 2px solid var(--border-light); border-radius: 18px; padding: 12px 14px;">
+            <div style="font-weight: 800; font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 8px;">
+              📅 Träningsaktivitet i veckan:
+            </div>
+            <div style="display: flex; justify-content: space-between; gap: 4px;">
+              ${this.renderWeekCalendar(streakDays)}
+            </div>
+          </div>
+
+          <!-- Fotknapp -->
+          <button type="button" class="btn-3d btn-green w-full" id="btn-stats-continue" style="min-height: 48px; font-size: 0.95rem; margin-top: 4px;">
+            Fortsätt träna • ลุยต่อเลย
+          </button>
+        </div>
+      `;
+
+      document.getElementById('btn-close-stats-modal')?.addEventListener('click', () => this.closeStatsModal());
+      document.getElementById('btn-stats-continue')?.addEventListener('click', () => this.closeStatsModal());
+      this.statsBackdrop.onclick = (e) => {
+        if (e.target === this.statsBackdrop) this.closeStatsModal();
+      };
+    },
+
+    renderWeekCalendar(streakDays = 1) {
+      const dayNames = ['Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör', 'Sön'];
+      const today = new Date();
+      const jsDay = today.getDay();
+      const currentDayIndex = (jsDay + 6) % 7; // Monday = 0
+
+      return dayNames
+        .map((name, idx) => {
+          const isToday = idx === currentDayIndex;
+          const isPastInStreak = idx <= currentDayIndex && currentDayIndex - idx < streakDays;
+          const icon = isToday ? '🔥' : isPastInStreak ? '✓' : '•';
+          const bg = isToday ? '#FFEDD5' : isPastInStreak ? '#DCFCE7' : '#F1F5F9';
+          const border = isToday ? '#FB923C' : isPastInStreak ? '#86EFAC' : '#E2E8F0';
+          const color = isToday ? '#C2410C' : isPastInStreak ? '#15803D' : '#94A3B8';
+
+          return `
+            <div style="flex: 1; text-align: center; background: ${bg}; border: 1.5px solid ${border}; border-radius: 12px; padding: 6px 2px;">
+              <div style="font-size: 0.68rem; font-weight: 800; color: ${color}; text-transform: uppercase;">${name}</div>
+              <div style="font-size: 0.95rem; font-weight: 900; color: ${color}; margin-top: 2px;">${icon}</div>
+            </div>
+          `;
+        })
+        .join('');
+    },
+
+    // --- 2. JUVEL-BOUTIQUE & LULL-LULL (DIAMANTERNA) ---
+    openShopModal() {
+      if (!this.shopBackdrop) {
+        this.shopBackdrop = document.createElement('div');
+        this.shopBackdrop.id = 'shop-modal-backdrop';
+        this.shopBackdrop.className = 'gamification-modal-backdrop';
+        document.body.appendChild(this.shopBackdrop);
+      }
+      this.renderShopModal();
+      requestAnimationFrame(() => this.shopBackdrop.classList.add('open'));
+    },
+
+    closeShopModal() {
+      if (this.shopBackdrop) {
+        this.shopBackdrop.classList.remove('open');
+      }
+    },
+
+    renderShopModal() {
+      const sm = window.GameEngine.StateManager;
+      const gems = sm.state.gems || 0;
+      const freezes = Part5State.data.streakFreezesCount || 0;
+      const isDoubleXp = Part5State.isDoubleXpActive();
+
+      const equippedAcc = MASCOT_ACCESSORIES.find((a) => a.id === Part5State.data.equippedAccessory);
+      const equippedName = equippedAcc ? `${equippedAcc.nameSv} (${equippedAcc.nameTh})` : 'Ingen accessoar vald';
+      const equippedDesc = equippedAcc ? equippedAcc.satunDesc : 'Välj en fin hatt eller pynt nedan!';
+
+      this.shopBackdrop.innerHTML = `
+        <div class="gamification-modal-card" role="dialog" aria-label="Juvel-Boutique och Lull-lull">
+          <div class="gamification-modal-header">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 1.6rem;">💎</span>
+              <div>
+                <div style="font-weight: 900; font-size: 1.15rem; color: var(--text-main);">
+                  Juvel-Boutique: Teman & Lull-lull
+                </div>
+                <div class="th-text" style="font-size: 0.78rem; color: var(--text-secondary);">
+                  ร้านค้าธีมสีและแต่งตัว Nong Dala
+                </div>
+              </div>
+            </div>
+            <button type="button" class="lesson-close-btn" id="btn-close-shop-modal" aria-label="Stäng">✕</button>
+          </div>
+
+          <!-- Saldobanner -->
+          <div style="background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%); border: 2px solid #BAE6FD; border-radius: 20px; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.08);">
+            <div>
+              <div style="font-size: 0.75rem; font-weight: 800; color: #0284C7; text-transform: uppercase; letter-spacing: 0.5px;">Ditt Juvelsaldo</div>
+              <div style="font-size: 1.6rem; font-weight: 900; color: #0369A1;">💎 ${gems} Juveler</div>
+            </div>
+            <div class="satun-badge" style="background: #FFFFFF; color: #0284C7; border: 1.5px solid #BAE6FD; font-size: 0.8rem;">
+              🛍️ Lull-lull & Teman
+            </div>
+          </div>
+
+          <!-- SEKTION 1: FÄRGTEMAN (6 ST) -->
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div style="font-weight: 900; font-size: 0.98rem; display: flex; align-items: center; gap: 6px;">
+                <span>🎨</span>
+                <span>Färgteman för Appen (6 st)</span>
+              </div>
+              <span style="font-size: 0.76rem; color: var(--text-secondary); font-weight: 700;">Byt färg direkt</span>
+            </div>
+            <div class="wardrobe-grid">
+              ${APP_COLOR_THEMES.map((theme) => {
+                const owned = Part5State.data.ownedColorThemes.includes(theme.id);
+                const active = Part5State.data.activeColorTheme === theme.id;
+                const canAfford = gems >= theme.costGems;
+                return `
+                  <div class="wardrobe-item-card ${active ? 'equipped' : ''}" style="padding: 10px;">
+                    <div style="width: 100%; height: 32px; border-radius: 10px; background: ${theme.previewBg}; border: 1.5px solid var(--border-medium); margin-bottom: 6px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);"></div>
+                    <div style="font-weight: 900; font-size: 0.82rem; line-height: 1.2;">${theme.nameSv}</div>
+                    <div class="th-text" style="font-size: 0.72rem; color: var(--text-secondary); margin-top: 2px;">${theme.nameTh}</div>
+                    <button type="button" class="btn-3d ${active ? 'btn-green' : owned ? 'btn-blue' : 'btn-yellow'} w-full"
+                      data-shopmodal-theme="${theme.id}"
+                      style="min-height: 38px; padding: 4px 6px; font-size: 0.76rem; margin-top: 6px;"
+                      ${!owned && !canAfford ? 'disabled style="min-height: 38px; padding: 4px 6px; font-size: 0.76rem; margin-top: 6px; opacity:0.55; cursor:not-allowed;"' : ''}>
+                      ${active ? '✨ Aktiv' : owned ? 'Aktivera' : `💎 ${theme.costGems} Köp`}
+                    </button>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+
+          <!-- SEKTION 2: NONG DALAS LULL-LULL & GARDEROB (10 ST) -->
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div style="font-weight: 900; font-size: 0.98rem; display: flex; align-items: center; gap: 6px;">
+                <span>👑</span>
+                <span>Nong Dalas Lull-lull & Garderob</span>
+              </div>
+              <span style="font-size: 0.76rem; color: var(--text-secondary); font-weight: 700;">10 Accessoarer</span>
+            </div>
+
+            <!-- Live Mascot Preview Card -->
+            <div style="display: flex; align-items: center; gap: 14px; background: var(--surface); border: 2px solid var(--border-light); border-radius: 18px; padding: 10px 14px;">
+              <div id="shopmodal-mascot-preview" style="width: 68px; height: 68px; flex-shrink: 0;">
+                ${window.VisualEngine.Mascot.getSVG(68, 'celebrating')}
+              </div>
+              <div style="flex: 1;">
+                <div style="font-weight: 800; font-size: 0.78rem; color: var(--text-secondary);">Aktuell styling:</div>
+                <div style="font-weight: 900; font-size: 0.92rem; color: #7B2CBF;">
+                  ${equippedName}
+                </div>
+                <div class="th-text" style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 2px;">
+                  ${equippedDesc}
+                </div>
+              </div>
+            </div>
+
+            <div class="wardrobe-grid">
+              ${MASCOT_ACCESSORIES.map((acc) => {
+                const owned = Part5State.data.ownedAccessories.includes(acc.id);
+                const equipped = Part5State.data.equippedAccessory === acc.id;
+                const canAfford = gems >= acc.costGems;
+                return `
+                  <div class="wardrobe-item-card ${equipped ? 'equipped' : ''}" style="padding: 10px;">
+                    <div class="wardrobe-svg-icon" style="height: 44px;">${window.VisualEngine.getAccessorySVG(acc.id, 44)}</div>
+                    <div style="font-weight: 900; font-size: 0.82rem; line-height: 1.2;">${acc.nameSv}</div>
+                    <div class="th-text" style="font-size: 0.72rem; color: var(--text-secondary); margin-top: 2px;">${acc.nameTh}</div>
+                    <button type="button" class="btn-3d ${equipped ? 'btn-green' : owned ? 'btn-blue' : 'btn-yellow'} w-full"
+                      data-shopmodal-acc="${acc.id}"
+                      style="min-height: 38px; padding: 4px 6px; font-size: 0.76rem; margin-top: 6px;"
+                      ${!owned && !canAfford ? 'disabled style="min-height: 38px; padding: 4px 6px; font-size: 0.76rem; margin-top: 6px; opacity:0.55; cursor:not-allowed;"' : ''}>
+                      ${equipped ? '✅ Påklädd' : owned ? '👕 Klä på' : `💎 ${acc.costGems}`}
+                    </button>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+
+          <!-- SEKTION 3: BOOSTERS & LYCKOLÅDA -->
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="font-weight: 900; font-size: 0.98rem; display: flex; align-items: center; gap: 6px;">
+              <span>⚡</span>
+              <span>Spelbara Boosters & Lyckolåda</span>
+            </div>
+            <div class="booster-grid">
+              <!-- Booster 1: Streak Freeze -->
+              <div class="booster-item-card" style="padding: 10px;">
+                <div class="booster-svg-icon">${window.VisualEngine.getBoosterSVG('streak_freeze', 38)}</div>
+                <div style="font-weight: 900; font-size: 0.82rem;">Streak-Freeze</div>
+                <div class="th-text" style="font-size: 0.72rem; color: var(--text-secondary);">${freezes}/2 sparade</div>
+                <button type="button" class="btn-3d btn-blue w-full" data-shopmodal-booster="streak_freeze" style="min-height: 36px; font-size: 0.76rem; padding: 2px;" ${freezes >= 2 || gems < 35 ? 'disabled' : ''}>
+                  ${freezes >= 2 ? 'Fullt' : '35 💎'}
+                </button>
+              </div>
+
+              <!-- Booster 2: 2x XP -->
+              <div class="booster-item-card" style="padding: 10px;">
+                <div class="booster-svg-icon">${window.VisualEngine.getBoosterSVG('double_xp', 38)}</div>
+                <div style="font-weight: 900; font-size: 0.82rem;">2x XP (30m)</div>
+                <div class="th-text" style="font-size: 0.72rem; color: var(--text-secondary);">${isDoubleXp ? 'Aktiv!' : 'แต้มคูณสอง'}</div>
+                <button type="button" class="btn-3d btn-yellow w-full" data-shopmodal-booster="double_xp" style="min-height: 36px; font-size: 0.76rem; padding: 2px;" ${isDoubleXp || gems < 45 ? 'disabled' : ''}>
+                  ${isDoubleXp ? '⚡ Aktiv' : '45 💎'}
+                </button>
+              </div>
+
+              <!-- Booster 3: Mystery Box -->
+              <div class="booster-item-card" style="padding: 10px;">
+                <div class="booster-svg-icon">${window.VisualEngine.getBoosterSVG('mystery_box', 38)}</div>
+                <div style="font-weight: 900; font-size: 0.82rem;">Lyckolåda</div>
+                <div class="th-text" style="font-size: 0.72rem; color: var(--text-secondary);">ลุ้นรางวัลใหญ่!</div>
+                <button type="button" class="btn-3d btn-green w-full" data-shopmodal-booster="mystery_box" style="min-height: 36px; font-size: 0.76rem; padding: 2px;" ${gems < 50 ? 'disabled' : ''}>
+                  50 💎
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Händelsekopplingar i Juvel-Boutique
+      document.getElementById('btn-close-shop-modal')?.addEventListener('click', () => this.closeShopModal());
+      this.shopBackdrop.onclick = (e) => {
+        if (e.target === this.shopBackdrop) this.closeShopModal();
+      };
+
+      // Färgteman
+      this.shopBackdrop.querySelectorAll('[data-shopmodal-theme]').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          window.VisualEngine?.haptic('light', e.currentTarget);
+          const themeId = btn.getAttribute('data-shopmodal-theme');
+          CompeteAndShopUI.handleColorThemeAction(themeId);
+          window.GameEngine?.UIController?.renderTopbar?.();
+          this.renderShopModal();
+        });
+      });
+
+      // Accessoarer
+      this.shopBackdrop.querySelectorAll('[data-shopmodal-acc]').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          window.VisualEngine?.haptic('light', e.currentTarget);
+          const accId = btn.getAttribute('data-shopmodal-acc');
+          CompeteAndShopUI.handleAccessoryAction(accId);
+          window.GameEngine?.UIController?.renderTopbar?.();
+          this.renderShopModal();
+        });
+      });
+
+      // Boosters
+      this.shopBackdrop.querySelectorAll('[data-shopmodal-booster]').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          window.VisualEngine?.haptic('light', e.currentTarget);
+          const boosterId = btn.getAttribute('data-shopmodal-booster');
+          CompeteAndShopUI.handleBuyBooster(boosterId);
+          window.GameEngine?.UIController?.renderTopbar?.();
+          this.renderShopModal();
+        });
+      });
+    },
+
+    // --- 3. SAMLARALBUM & XP-NIVÅER (XP-IKONEN) ---
+    openXPModal() {
+      if (!this.xpBackdrop) {
+        this.xpBackdrop = document.createElement('div');
+        this.xpBackdrop.id = 'xp-modal-backdrop';
+        this.xpBackdrop.className = 'gamification-modal-backdrop';
+        document.body.appendChild(this.xpBackdrop);
+      }
+      this.renderXPModal();
+      requestAnimationFrame(() => this.xpBackdrop.classList.add('open'));
+    },
+
+    closeXPModal() {
+      if (this.xpBackdrop) {
+        this.xpBackdrop.classList.remove('open');
+      }
+    },
+
+    renderXPModal() {
+      const sm = window.GameEngine.StateManager;
+      const totalXP = sm.state.totalXP || 0;
+      const levelInfo = getXPLevelInfo(totalXP);
+      const claimedBadges = Part5State.data.claimedBadges || [];
+
+      this.xpBackdrop.innerHTML = `
+        <div class="gamification-modal-card" role="dialog" aria-label="Samlaralbum och XP-Nivåer">
+          <div class="gamification-modal-header">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 1.6rem;">⚡</span>
+              <div>
+                <div style="font-weight: 900; font-size: 1.15rem; color: var(--text-main);">
+                  Samlaralbum & XP-Nivåer
+                </div>
+                <div class="th-text" style="font-size: 0.78rem; color: var(--text-secondary);">
+                  ระดับเลเวล XP และอัลบั้มเหรียญเกียรติยศ
+                </div>
+              </div>
+            </div>
+            <button type="button" class="lesson-close-btn" id="btn-close-xp-modal" aria-label="Stäng">✕</button>
+          </div>
+
+          <!-- XP Level Card -->
+          <div style="background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%); border: 2px solid #FCD34D; border-radius: 20px; padding: 16px; text-align: center; box-shadow: 0 4px 12px rgba(217, 119, 6, 0.08);">
+            <div style="font-size: 3rem; line-height: 1;">${levelInfo.current.icon}</div>
+            <div style="font-size: 1.45rem; font-weight: 900; color: #92400E; margin-top: 4px;">
+              Nivå ${levelInfo.current.level}: ${levelInfo.current.titleSv}
+            </div>
+            <div class="th-text" style="font-size: 0.84rem; color: #B45309; font-weight: 700; margin-top: 2px;">
+              ${levelInfo.current.titleTh} • ${totalXP} XP Totalt
+            </div>
+
+            <!-- Level Progress Bar -->
+            <div style="margin-top: 12px;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 800; color: #92400E; margin-bottom: 4px;">
+                <span>Framsteg mot Nästa Nivå:</span>
+                <span>${levelInfo.next ? `${levelInfo.remainingToNext} XP kvar` : 'Maxnivå uppnådd!'}</span>
+              </div>
+              <div style="height: 12px; background: rgba(0,0,0,0.08); border-radius: 999px; overflow: hidden; border: 1.5px solid #FBBF24;">
+                <div style="height: 100%; width: ${levelInfo.progressPct}%; background: linear-gradient(90deg, #F59E0B, #D97706); border-radius: 999px; transition: width 0.4s ease;"></div>
+              </div>
+            </div>
+            <div style="font-size: 0.78rem; color: #78350F; margin-top: 8px;">
+              ${levelInfo.current.desc}
+            </div>
+          </div>
+
+          <!-- Samlaralbumet (8 Badges) -->
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <div style="font-weight: 900; font-size: 1rem; display: flex; align-items: center; gap: 6px;">
+                <span>🏆</span>
+                <span>Samlaralbum & Badges</span>
+              </div>
+              <span class="satun-badge" style="font-size: 0.75rem;">
+                ${claimedBadges.length} / 8 Hämtade
+              </span>
+            </div>
+            <div class="badges-grid">
+              ${COLLECTIBLE_BADGES.map((b) => {
+                const isUnlocked = b.checkUnlocked(Part5State.data, sm);
+                const isClaimed = claimedBadges.includes(b.id);
+                return `
+                  <div class="badge-item-card ${isUnlocked ? 'unlocked' : ''}" style="padding: 10px;">
+                    <div class="badge-svg-icon">${window.VisualEngine.Library.badge_medal(34)}</div>
+                    <div style="flex: 1;">
+                      <div style="font-weight: 900; font-size: 0.84rem;">${b.nameSv}</div>
+                      <div class="th-text" style="font-size: 0.72rem; color: var(--text-secondary);">${b.nameTh}</div>
+                      ${
+                        isClaimed
+                          ? `<span class="satun-badge" style="font-size: 0.7rem; padding: 2px 8px; margin-top: 4px; display: inline-block;">✅ Hämtad (+${b.rewardGems} 💎)</span>`
+                          : isUnlocked
+                          ? `<button type="button" class="btn-3d btn-yellow" data-xpmodal-claim="${b.id}" style="min-height: 36px; padding: 4px 10px; font-size: 0.78rem; margin-top: 4px;">
+                              +${b.rewardGems} 💎 Hämta Belöning!
+                            </button>`
+                          : `<div style="font-size: 0.74rem; color: var(--text-muted); font-weight: 700; margin-top: 4px;">
+                              🔒 Låst (Ge järnet för att nå kravet!)
+                             </div>`
+                      }
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+
+          <!-- XP-Nivåtrappan -->
+          <div style="background: var(--surface-muted); border: 2px solid var(--border-light); border-radius: 18px; padding: 12px 14px;">
+            <div style="font-weight: 900; font-size: 0.88rem; margin-bottom: 8px;">
+              🌟 Alla XP-Nivåer & Titlar:
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 6px; font-size: 0.8rem;">
+              ${XP_LEVELS.map((lvl) => {
+                const isCurrent = lvl.level === levelInfo.current.level;
+                const isReached = totalXP >= lvl.minXP;
+                return `
+                  <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 8px; border-radius: 8px; background: ${isCurrent ? '#FEF3C7' : isReached ? '#F1F5F9' : 'transparent'}; font-weight: ${isCurrent ? '900' : '600'};">
+                    <span>${lvl.icon} Nivå ${lvl.level}: ${lvl.titleSv}</span>
+                    <span style="color: ${isReached ? '#059669' : '#94A3B8'}; font-weight: 800;">
+                      ${isCurrent ? '⭐ DU ÄR HÄR' : isReached ? '✓ Klar' : `${lvl.minXP} XP`}
+                    </span>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Händelsekopplingar
+      document.getElementById('btn-close-xp-modal')?.addEventListener('click', () => this.closeXPModal());
+      this.xpBackdrop.onclick = (e) => {
+        if (e.target === this.xpBackdrop) this.closeXPModal();
+      };
+
+      this.xpBackdrop.querySelectorAll('[data-xpmodal-claim]').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          window.VisualEngine?.haptic('light', e.currentTarget);
+          const badgeId = btn.getAttribute('data-xpmodal-claim');
+          CompeteAndShopUI.handleClaimBadge(badgeId);
+          window.GameEngine?.UIController?.renderTopbar?.();
+          this.renderXPModal();
+        });
+      });
+    }
+  };
+
 
   /* ==========================================================================
      10. "MINA ORD"-BANK & VÄLKOMSTSKÄRM
@@ -16568,13 +17627,22 @@ body.app-theme-sunset {
       micBtn?.addEventListener('click', () => {
         window.VisualEngine?.haptic('light', micBtn);
 
+        if (window.SpeechEngine?.SpeechJudge?.isRecording || window.SpeechEngine?.AzureSpeechJudge?.isRecording) {
+          window.SpeechEngine.finishRecordingAndJudge?.();
+          return;
+        }
+
+        if (window.SpeechEngine?.SpeechJudge?.isAnalyzing || window.SpeechEngine?.AzureSpeechJudge?.isAnalyzing) {
+          return;
+        }
+
         window.SpeechEngine.listenAndEvaluate(item, {
           onStateChange: (state) => {
             micBtn.classList.remove('state-idle', 'state-recording', 'state-analyzing');
             if (state === 'recording') {
               micBtn.classList.add('state-recording');
               if (micIcon) micIcon.textContent = '🔴';
-              if (micLabel) micLabel.innerHTML = 'Spelar in...<br>Prata nu!';
+              if (micLabel) micLabel.innerHTML = 'Spelar in...<br>(Klicka för att stoppa)';
             } else if (state === 'analyzing') {
               micBtn.classList.add('state-analyzing');
               if (micIcon) micIcon.innerHTML = '<span class="mic-spin-star">⭐</span>';
@@ -16710,10 +17778,14 @@ body.app-theme-sunset {
     hookLessonController();
     hookUIController();
 
+    window.GamificationModals = GamificationModals;
     Object.assign(window.GameEngine, {
       Part5State,
       ArenaModes,
       CompeteAndShopUI,
+      GamificationModals,
+      XP_LEVELS,
+      getXPLevelInfo,
       handleClaimBadge: (...args) => CompeteAndShopUI.handleClaimBadge(...args),
       handleClaimDailyQuest: (...args) => CompeteAndShopUI.handleClaimDailyQuest(...args),
       MinaOrdBank,
