@@ -289,6 +289,26 @@
       assert('Gamification: ArenaModes Ordjakten finns', typeof window.GameEngine.ArenaModes.startSpeedWordMatch === 'function');
 
       // ======================================================================
+      // GRUPP 9: Wilawan Maskot — Upprätt Stegring & Stampande Framben
+      // ======================================================================
+      const mascotSvg = window.VisualEngine?.Mascot?.getSVG(72, 'idle') || '';
+      assert('Maskot: SVG innehåller förankrade bakben (.dala-hind-legs)', mascotSvg.includes('dala-hind-legs'));
+      assert('Maskot: SVG innehåller aktiva stampande framben (.dala-leg-front-left och .dala-leg-front-right)',
+        mascotSvg.includes('dala-leg-front-left') && mascotSvg.includes('dala-leg-front-right')
+      );
+      assert('Maskot: SVG har gyllene hovar på frambenen',
+        mascotSvg.includes('dala-hoof-front-left') && mascotSvg.includes('dala-hoof-front-right')
+      );
+
+      const testMascotContainer = document.createElement('div');
+      document.body.appendChild(testMascotContainer);
+      window.VisualEngine.Mascot.mount(testMascotContainer, 72, 'idle');
+      window.VisualEngine.Mascot.triggerAction('stegra', testMascotContainer);
+      const testWrapper = testMascotContainer.querySelector('.dala-mascot-wrapper');
+      assert('Maskot: triggerAction(\'stegra\') aktiverar .dala-action-rear', testWrapper && testWrapper.classList.contains('dala-action-rear'));
+      testMascotContainer.remove();
+
+      // ======================================================================
       // SAMMANSTÄLLNING
       // ======================================================================
       const passCount = results.filter(r => r.passed).length;

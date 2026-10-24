@@ -101,19 +101,32 @@
             <!-- Svans -->
             <path class="dala-tail" d="M 22 72 Q 12 70 14 78 Q 20 84 26 77 Z" fill="#A81504" />
 
-            <!-- Bakben och framben -->
-            <rect x="25" y="74" width="9" height="18" rx="4.5" fill="#B81A07" />
-            <rect x="36" y="76" width="9" height="16" rx="4.5" fill="#D62711" />
-            <rect x="58" y="76" width="9" height="16" rx="4.5" fill="#D62711" />
-            <rect x="68" y="74" width="9" height="18" rx="4.5" fill="#B81A07" />
-            <!-- Hovkransar (Guldfärgade) -->
-            <rect x="25" y="87" width="9" height="5" rx="2" fill="#FFC800" />
-            <rect x="36" y="87" width="9" height="5" rx="2" fill="#FFC800" />
-            <rect x="58" y="87" width="9" height="5" rx="2" fill="#FFC800" />
-            <rect x="68" y="87" width="9" height="5" rx="2" fill="#FFC800" />
+            <!-- Bakben (Förankrade mot marken vid stegring) -->
+            <g class="dala-hind-legs">
+              <!-- Vänster bakben & hov -->
+              <rect class="dala-leg-hind-left" x="25" y="74" width="9" height="18" rx="4.5" fill="#B81A07" />
+              <rect class="dala-hoof-hind-left" x="25" y="87" width="9" height="5" rx="2" fill="#FFC800" />
+              <!-- Höger bakben & hov -->
+              <rect class="dala-leg-hind-right" x="68" y="74" width="9" height="18" rx="4.5" fill="#B81A07" />
+              <rect class="dala-hoof-hind-right" x="68" y="87" width="9" height="5" rx="2" fill="#FFC800" />
+            </g>
 
             <!-- Kropp (Rund, go och kramvänlig) -->
-            <ellipse cx="50" cy="66" rx="28" ry="20" fill="url(#dalaShine)" />
+            <ellipse class="dala-torso" cx="50" cy="66" rx="28" ry="20" fill="url(#dalaShine)" />
+
+            <!-- Framben (Aktiva & stampande vid stegring) -->
+            <g class="dala-front-legs">
+              <!-- Vänster framben & hov -->
+              <g class="dala-leg-front-left">
+                <rect class="dala-leg-front-stem-left" x="36" y="76" width="9" height="16" rx="4.5" fill="#D62711" />
+                <rect class="dala-hoof-front-left" x="36" y="87" width="9" height="5" rx="2" fill="#FFC800" />
+              </g>
+              <!-- Höger framben & hov -->
+              <g class="dala-leg-front-right">
+                <rect class="dala-leg-front-stem-right" x="58" y="76" width="9" height="16" rx="4.5" fill="#D62711" />
+                <rect class="dala-hoof-front-right" x="58" y="87" width="9" height="5" rx="2" fill="#FFC800" />
+              </g>
+            </g>
 
             <!-- Sydthailändsk Batik-sadel / Dala Kurbits mönster -->
             <path d="M 36 56 Q 50 63 64 56 C 66 68 34 68 36 56 Z" fill="#FFFDF8" stroke="#0077B6" stroke-width="1.8" />

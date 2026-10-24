@@ -325,38 +325,246 @@
   75% { transform: rotate(5deg) scale(1.04); }
 }
 
+/* ==========================================================================
+   INTERAKTIV GEST: STEGRA (Upprätt mäktig stegring med stampande framben)
+   ========================================================================== */
+
 .dala-action-rear .dala-body-group {
-  animation: dalaHorseRear 1.8s cubic-bezier(0.25, 1, 0.5, 1) !important;
-  transform-origin: 30% 95%;
+  animation: dalaHorseRear 1.9s cubic-bezier(0.25, 1, 0.5, 1) !important;
+  transform-origin: 50% 92%;
 }
 
+/* Dölj sido-viftande armen så enbart de 2 riktiga frambenen syns och stampar */
 .dala-action-rear .dala-arm-wave {
-  animation: dalaFrontLegsKick 1.8s ease-in-out !important;
-  transform-origin: 30% 60%;
+  opacity: 0 !important;
+  transition: opacity 0.15s ease;
 }
 
+/* Bakbenen förankrar och parerar mot marken */
+.dala-action-rear .dala-hind-legs {
+  animation: dalaHindLegsBrace 1.9s cubic-bezier(0.25, 1, 0.5, 1) !important;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+/* Vänster framben: Lyfter högt & stampar rytmiskt i luften */
+.dala-action-rear .dala-leg-front-left {
+  animation: dalaFrontLegLeftStamp 1.9s cubic-bezier(0.25, 1, 0.5, 1) !important;
+  transform-box: fill-box;
+  transform-origin: 50% 0%;
+}
+
+/* Höger framben: Stampar i motfas med gyllene hov i luften */
+.dala-action-rear .dala-leg-front-right {
+  animation: dalaFrontLegRightStamp 1.9s cubic-bezier(0.25, 1, 0.5, 1) !important;
+  transform-box: fill-box;
+  transform-origin: 50% 0%;
+}
+
+/* Glada triumferande ögon (^ ^) vid stegring */
+.dala-action-rear .dala-eyes-happy {
+  display: block !important;
+}
+
+.dala-action-rear .dala-eyes-normal {
+  display: none !important;
+}
+
+/* Gnistrande stjärnor och konfetti runt maskoten */
 .dala-action-rear .dala-sparkles-cluster {
   opacity: 1 !important;
-  animation: dalaSparkleSpin 1.8s linear !important;
+  animation: dalaSparkleSpin 1.9s linear !important;
 }
 
+/* Spetsade öron vid stegring */
+.dala-action-rear .dala-ear-left {
+  animation: dalaRearEarLeft 1.9s ease-in-out !important;
+  transform-box: fill-box;
+  transform-origin: 30% 70%;
+}
+
+.dala-action-rear .dala-ear-right {
+  animation: dalaRearEarRight 1.9s ease-in-out !important;
+  transform-box: fill-box;
+  transform-origin: 70% 70%;
+}
+
+/* --- KEYFRAMES FÖR STEGRING (UPPRÄTT & STOLT, EJ SIDOGUNG) --- */
 @keyframes dalaHorseRear {
-  0% { transform: rotate(0deg) translateY(0) scale(1); }
-  18% { transform: rotate(-8deg) translateY(4px) scale(0.98); }
-  45% { transform: rotate(-34deg) translateY(-28px) scale(1.15); }
-  60% { transform: rotate(-36deg) translateY(-30px) scale(1.18); }
-  75% { transform: rotate(-28deg) translateY(-22px) scale(1.12); }
-  88% { transform: rotate(4deg) translateY(-2px) scale(1.02); }
-  100% { transform: rotate(0deg) translateY(0) scale(1); }
+  0% {
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+  12% {
+    /* Samla kraft / böj bakbenen inför språnget */
+    transform: translateY(3px) scale(1.02, 0.95) rotate(0deg);
+  }
+  24% {
+    /* Reser sig uppåt rakt mot betraktaren */
+    transform: translateY(-16px) scale(1.05, 1.12) rotate(-2deg);
+  }
+  36% {
+    /* Hög ståtlig stegring, bröstet skjuts fram */
+    transform: translateY(-24px) scale(1.08, 1.18) rotate(2deg);
+  }
+  48% {
+    /* Balanserar stolt på bakbenen */
+    transform: translateY(-26px) scale(1.1, 1.2) rotate(-2deg);
+  }
+  60% {
+    /* Toppnivå: rak, reslig och mäktig */
+    transform: translateY(-27px) scale(1.1, 1.22) rotate(1.5deg);
+  }
+  72% {
+    /* Behåller lyftet medan frambenen stampar klart */
+    transform: translateY(-24px) scale(1.08, 1.18) rotate(-1deg);
+  }
+  82% {
+    /* Snabbt nerslag mot marken */
+    transform: translateY(-6px) scale(1.03, 1.05) rotate(0deg);
+  }
+  86% {
+    /* Markisättning / kraftig hovsmäll med svikt */
+    transform: translateY(3px) scale(1.06, 0.92) rotate(0deg);
+  }
+  92% {
+    /* Elastisk återstuds */
+    transform: translateY(-2px) scale(0.98, 1.02) rotate(0deg);
+  }
+  100% {
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
 }
 
-@keyframes dalaFrontLegsKick {
-  0% { transform: rotate(0); }
-  35% { transform: rotate(45deg); }
-  50% { transform: rotate(-25deg); }
-  65% { transform: rotate(40deg); }
-  80% { transform: rotate(-15deg); }
-  100% { transform: rotate(0); }
+/* --- KEYFRAMES: VÄNSTER FRAMBEN STAMPAR I LUFTEN --- */
+@keyframes dalaFrontLegLeftStamp {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  12% {
+    transform: translateY(2px) rotate(0deg) scale(1);
+  }
+  22% {
+    /* Börjar lyfta från marken */
+    transform: translateY(-14px) rotate(-16deg) scale(0.95);
+  }
+  32% {
+    /* STAMP 1: Kammar högt upp mot bringan */
+    transform: translateY(-24px) rotate(-24deg) scale(0.92);
+  }
+  42% {
+    /* STAMP 2: Trycker neråt & stampar med gyllene hoven */
+    transform: translateY(-8px) rotate(14deg) scale(1.08, 1.12);
+  }
+  52% {
+    /* STAMP 3: Kammar högt upp igen */
+    transform: translateY(-26px) rotate(-24deg) scale(0.92);
+  }
+  62% {
+    /* STAMP 4: Nytt kraftfullt tramp/stamp nedåt */
+    transform: translateY(-8px) rotate(14deg) scale(1.08, 1.12);
+  }
+  72% {
+    /* Kulmen: Högt lyft tillsammans med höger hov */
+    transform: translateY(-22px) rotate(-18deg) scale(0.95);
+  }
+  82% {
+    /* Rusar ned mot marken */
+    transform: translateY(-4px) rotate(-4deg) scale(1.02);
+  }
+  86% {
+    /* Nedslag i marken med dämpning */
+    transform: translateY(3px) rotate(0deg) scaleY(0.88) scaleX(1.08);
+  }
+  92% {
+    transform: translateY(-1px) rotate(0deg) scale(1);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+}
+
+/* --- KEYFRAMES: HÖGER FRAMBEN STAMPAR I MOTFAS --- */
+@keyframes dalaFrontLegRightStamp {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  12% {
+    transform: translateY(2px) rotate(0deg) scale(1);
+  }
+  22% {
+    /* Börjar lyfta (stampar först nedåt) */
+    transform: translateY(-8px) rotate(12deg) scale(0.98);
+  }
+  32% {
+    /* STAMP 1: Höger hov stampar kraftfullt framåt/neråt */
+    transform: translateY(-8px) rotate(14deg) scale(1.08, 1.12);
+  }
+  42% {
+    /* STAMP 2: Dras uppåt mot bringan i kammarläge */
+    transform: translateY(-24px) rotate(-22deg) scale(0.92);
+  }
+  52% {
+    /* STAMP 3: Kraftfullt tramp/stamp nedåt */
+    transform: translateY(-8px) rotate(14deg) scale(1.08, 1.12);
+  }
+  62% {
+    /* STAMP 4: Dras uppåt mot bringan */
+    transform: translateY(-26px) rotate(-22deg) scale(0.92);
+  }
+  72% {
+    /* Kulmen: Båda hovarna lyfts triumferande */
+    transform: translateY(-20px) rotate(14deg) scale(0.95);
+  }
+  82% {
+    /* Rusar ned mot marken */
+    transform: translateY(-4px) rotate(4deg) scale(1.02);
+  }
+  86% {
+    /* Nedslag i marken med dämpning */
+    transform: translateY(3px) rotate(0deg) scaleY(0.88) scaleX(1.08);
+  }
+  92% {
+    transform: translateY(-1px) rotate(0deg) scale(1);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+}
+
+/* --- KEYFRAMES: BAKBEN FÖRANKRAR MOT MARKEN --- */
+@keyframes dalaHindLegsBrace {
+  0% {
+    transform: translateY(0) scaleY(1);
+  }
+  12% {
+    transform: translateY(0) scaleY(0.86);
+  }
+  24% {
+    transform: translateY(0) scaleY(1.16);
+  }
+  36%, 48%, 60%, 72% {
+    transform: translateY(0) scaleY(1.22);
+  }
+  86% {
+    transform: translateY(0) scaleY(0.85);
+  }
+  92% {
+    transform: translateY(0) scaleY(1.03);
+  }
+  100% {
+    transform: translateY(0) scaleY(1);
+  }
+}
+
+/* Öron som spetsas i glädje */
+@keyframes dalaRearEarLeft {
+  0%, 100% { transform: rotate(0deg); }
+  30%, 70% { transform: rotate(-12deg) scale(1.05); }
+}
+
+@keyframes dalaRearEarRight {
+  0%, 100% { transform: rotate(0deg); }
+  30%, 70% { transform: rotate(12deg) scale(1.05); }
 }
 
 /* --------------------------------------------------------------------------
