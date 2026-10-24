@@ -20,6 +20,7 @@
 
   <meta name="referrer" content="no-referrer">
   
+    
   <style>
 /* STYLES.CSS */
 /* ==========================================================================
@@ -632,56 +633,66 @@ body {
 
 /* Rutnät med kategorikort (Temaväljare) */
 .themes-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (min-width: 640px) {
+  .themes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
 }
 
 .theme-card {
   background: var(--surface);
   border: 2px solid var(--border-light);
-  box-shadow: 0 5px 0 var(--border-depth);
-  border-radius: var(--radius-lg);
-  padding: 14px 12px;
+  box-shadow: 0 4px 0 var(--border-depth);
+  border-radius: 20px;
+  padding: 12px 14px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  text-align: center;
+  gap: 12px;
   position: relative;
   cursor: pointer;
-  transition: transform 0.1s ease, box-shadow 0.1s ease, border-color 0.15s ease;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.15s ease;
+  overflow: hidden;
+  text-align: left;
+}
+
+.theme-card:hover {
+  border-color: var(--theme-accent, var(--sky));
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 var(--border-depth);
 }
 
 .theme-card:active {
-  transform: translateY(4px);
-  box-shadow: 0 1px 0 var(--border-depth);
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 var(--border-depth);
 }
 
 .theme-card.theme-unlocked {
   border-color: var(--theme-accent, var(--sky));
 }
 
-.theme-status-chip {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 0.68rem;
-  font-weight: 800;
-  padding: 3px 8px;
-  border-radius: 999px;
-  background: var(--emerald-soft);
-  color: var(--emerald-dark);
-}
-
-/* Progressionscirkel runt tema-ikonen */
-.theme-ring-wrapper {
-  position: relative;
-  width: 78px;
-  height: 78px;
+/* Vänster: Ikon med rund progressionsring */
+.theme-col-left {
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 8px;
+}
+
+.theme-ring-wrapper {
+  position: relative;
+  width: 62px;
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .theme-ring-svg {
@@ -691,21 +702,48 @@ body {
 }
 
 .theme-icon-inner {
-  width: 56px;
-  height: 56px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.75rem;
+  font-size: 1.45rem;
   background: var(--surface-muted);
+}
+
+/* Mitten: Tydlig och luftig innehållskolumn */
+.theme-col-center {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.theme-top-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+
+.theme-chapter-chip {
+  font-size: 0.64rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 1px 7px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-muted);
 }
 
 .theme-stars-row {
   display: flex;
-  gap: 4px;
-  margin-bottom: 6px;
-  font-size: 1.05rem;
+  gap: 2px;
+  font-size: 0.82rem;
+  line-height: 1;
 }
 
 .star-slot {
@@ -719,18 +757,33 @@ body {
 }
 
 .theme-title-sv {
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 900;
   color: var(--text-main);
-  line-height: 1.2;
+  line-height: 1.25;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .theme-title-th {
   font-family: var(--font-body-th);
-  font-size: 0.84rem;
-  font-weight: 700;
+  font-size: 0.82rem;
+  font-weight: 600;
   color: var(--text-secondary);
-  margin-top: 2px;
+  line-height: 1.25;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.theme-meta-tags {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
 }
 
 .theme-satun-note {
@@ -740,16 +793,35 @@ body {
   background: var(--lavender-soft);
   padding: 2px 8px;
   border-radius: 999px;
-  margin-top: 5px;
-  font-weight: 600;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 170px;
+}
+
+.theme-status-chip {
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: var(--emerald-soft);
+  color: var(--emerald-dark);
+}
+
+/* Höger: Startknapp */
+.theme-col-right {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
 }
 
 .theme-start-btn {
-  margin-top: 10px;
-  width: 100%;
-  min-height: 56px;
-  font-size: 0.88rem;
-  padding: 8px 10px;
+  min-height: 40px;
+  font-size: 0.84rem;
+  padding: 6px 14px;
+  border-radius: 12px;
+  white-space: nowrap;
 }
 
 /* ==========================================================================
@@ -1657,6 +1729,83 @@ body {
   height: 100%;
   display: block;
 }
+
+/* --------------------------------------------------------------------------
+   NYA ÖVNINGSTYPER: CLOZE, DIALOGUE & CONCEPT QUIZ
+   -------------------------------------------------------------------------- */
+.cloze-sentence-card {
+  background: var(--surface);
+  border: 2px solid var(--border-light);
+  border-radius: 18px;
+  padding: 16px;
+  text-align: center;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 0 var(--border-depth);
+}
+
+.cloze-sentence-text {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: var(--text-main);
+  line-height: 1.4;
+}
+
+.cloze-blank-highlight {
+  display: inline-block;
+  min-width: 80px;
+  padding: 2px 10px;
+  border-bottom: 3px dashed var(--sky-dark);
+  color: var(--sky-dark);
+  font-weight: 900;
+  transition: all 0.2s ease;
+}
+
+.cloze-blank-highlight.filled {
+  border-bottom-style: solid;
+  background: var(--sky-soft);
+  border-radius: 8px;
+}
+
+.dialogue-speech-card {
+  background: var(--surface);
+  border: 2px solid var(--border-light);
+  border-radius: 18px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 0 var(--border-depth);
+}
+
+.dialogue-speaker-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dialogue-avatar {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+
+.dialogue-bubble {
+  flex: 1;
+  background: #F1F5F9;
+  border-radius: 14px;
+  padding: 10px 14px;
+}
+
+.dialogue-bubble-sv {
+  font-size: 1rem;
+  font-weight: 900;
+  color: #0F172A;
+}
+
+.dialogue-bubble-th {
+  font-family: var(--font-body-th);
+  font-size: 0.82rem;
+  color: #475569;
+  margin-top: 2px;
+}
+
 
 
 /* ANIMATIONS.CSS */
@@ -3061,6 +3210,7 @@ body.app-theme-sunset {
 
 
 </style>
+
 </head>
 <body>
   <!-- Dedikerad återanvändbar ljudspelare för studioröster på iPhone / webbläsare -->
@@ -3383,7 +3533,7 @@ body.app-theme-sunset {
   </div>
 
   <!-- Microsoft Cognitive Services Speech SDK (Azure Pronunciation Assessment sv-SE) -->
-  <script src="https://cdn.jsdelivr.net/npm/microsoft-cognitiveservices-speech-sdk@latest/distrib/browser/microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/microsoft-cognitiveservices-speech-sdk@latest/distrib/browser/microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
   <script>
 /**
  * ============================================================================
@@ -3965,7 +4115,7 @@ body.app-theme-sunset {
       const offset = circumference - (clamped / 100) * circumference;
 
       return `
-        <svg class="theme-ring-svg" width="78" height="78" viewBox="0 0 78 78">
+        <svg class="theme-ring-svg" width="100%" height="100%" viewBox="0 0 78 78">
           <circle cx="39" cy="39" r="${radius}" stroke="#ECECEC" stroke-width="6" fill="none" />
           <circle
             cx="39"
@@ -4839,6 +4989,130 @@ body.app-theme-sunset {
         leftColumn: SRSManager._shuffle([...fivePairs]),
         rightColumn: SRSManager._shuffle([...fivePairs])
       };
+    },
+
+    // Aliaser för sömlös koppling till Tävlingsarenor (Del 5 / Gamification)
+    createImageChoice(targetItem, allItems) {
+      return this.createImageChoiceQuestion(targetItem, allItems);
+    },
+    createSentenceBuilder(targetItem, allItems) {
+      return this.createSentenceBuilderQuestion(targetItem);
+    },
+    createListenUnderstand(targetItem, allItems) {
+      return this.createListenUnderstandQuestion(targetItem, allItems);
+    },
+    createPronunciation(targetItem) {
+      return this.createPronunciationQuestion(targetItem);
+    },
+    createMatchingSprint(themeItems, allItems) {
+      return this.createMatchingSprintQuestion(themeItems, allItems);
+    },
+
+    // f) Kontextlucka / Fyll i luckan i en mening
+    createClozeQuestion(targetItem, allItems) {
+      const tokens = targetItem.tokens || targetItem.sv.replace(/[.,!?]/g, '').split(/\s+/);
+      const candidates = tokens.filter((w) => w.length >= 3);
+      const blankWord = candidates.length ? candidates[Math.floor(Math.random() * candidates.length)] : tokens[0];
+      const sentenceDisplay = targetItem.sv.replace(new RegExp(`\\b${blankWord}\\b`, 'i'), '______');
+
+      const otherWords = allItems
+        .filter((i) => i.id !== targetItem.id && i.sv !== blankWord && i.type === 'word')
+        .map((i) => i.sv);
+      const shuffledOthers = SRSManager._shuffle(otherWords).slice(0, 3);
+      const options = SRSManager._shuffle([
+        { id: 'correct', word: blankWord, isCorrect: true },
+        ...shuffledOthers.map((w, idx) => ({ id: `dist_${idx}`, word: w, isCorrect: false }))
+      ]);
+
+      return {
+        type: 'cloze_context',
+        typeLabel: '🧩 Kontextlucka • เติมคำในช่องว่าง',
+        promptSv: 'Vilket ord saknas i meningen?',
+        promptTh: 'เลือกคำศัพท์ที่ถูกต้องเพื่อเติมลงในประโยคให้สมบูรณ์',
+        targetItem,
+        blankWord,
+        sentenceDisplay,
+        fullSentence: targetItem.sv,
+        correctId: 'correct',
+        correctAnswerText: blankWord,
+        options
+      };
+    },
+
+    // g) Vardagsdialog & samtalssituationer
+    createDialogueQuestion(targetItem, allItems) {
+      let promptSpeakerSv = 'Hej! Vad kan jag hjälpa dig med idag?';
+      let promptSpeakerTh = 'สวัสดีครับ มีอะไรให้ช่วยไหมครับ?';
+      let correctReplySv = targetItem.sv;
+      let correctReplyTh = targetItem.th;
+
+      if (targetItem.sv.includes('?')) {
+        const parts = targetItem.sv.split('?');
+        promptSpeakerSv = parts[0].trim() + '?';
+        correctReplySv = parts[1] ? parts[1].trim() : targetItem.sv;
+      }
+
+      const distractors = targetItem.distractorsSv || ['Nej, jag heter Wilawan', 'Klockan är sju', 'Det snöar ute'];
+      const options = SRSManager._shuffle([
+        { id: 'correct', sv: correctReplySv, th: correctReplyTh, isCorrect: true },
+        ...distractors.slice(0, 3).map((d, idx) => ({
+          id: `dist_${idx}`,
+          sv: d,
+          th: targetItem.distractorsTh?.[idx] || 'คำตอบอื่น',
+          isCorrect: false
+        }))
+      ]);
+
+      return {
+        type: 'dialogue_scenario',
+        typeLabel: '💬 Vardagsdialog • บทสนทนาใช้จริง',
+        promptSv: 'Vad svarar du i samtalet?',
+        promptTh: 'เลือกคำตอบที่สุภาพและเป็นธรรมชาติที่สุดในสถานการณ์จริง',
+        targetItem,
+        dialoguePromptSv: promptSpeakerSv,
+        dialoguePromptTh: promptSpeakerTh,
+        correctId: 'correct',
+        correctAnswerText: correctReplySv,
+        options
+      };
+    },
+
+    // h) Svenska kulturbegrepp & vardagsliv
+    createConceptQuestion(targetItem, allItems) {
+      const conceptName = targetItem.sv;
+      const distractors = targetItem.distractorsTh || ['การทำงานล่วงเวลาที่บริษัท', 'การซื้อเสื้อผ้าใหม่ในห้าง', 'การพักผ่อนวันหยุดยาว'];
+      const options = SRSManager._shuffle([
+        { id: 'correct', textTh: targetItem.th, satunNote: targetItem.satunFlavor, isCorrect: true },
+        ...distractors.slice(0, 3).map((d, idx) => ({
+          id: `dist_${idx}`,
+          textTh: d,
+          satunNote: '',
+          isCorrect: false
+        }))
+      ]);
+
+      return {
+        type: 'concept_quiz',
+        typeLabel: '🇸🇪 Svenskt Begrepp • วัฒนธรรมสวีเดน',
+        promptSv: `Vad innebär "${conceptName}"?`,
+        promptTh: `คำว่า "${conceptName}" (${targetItem.phoneticTh || targetItem.phonetic}) มีความหมายอย่างไรในสังคมสวีเดน?`,
+        targetItem,
+        conceptName,
+        correctId: 'correct',
+        correctAnswerText: targetItem.th,
+        options
+      };
+    },
+
+    // Aliaser
+    createCloze(targetItem, allItems) {
+      return this.createClozeQuestion(targetItem, allItems);
+    },
+    createDialogue(targetItem, allItems) {
+      return this.createDialogueQuestion(targetItem, allItems);
+    },
+    createConcept(targetItem, allItems) {
+      return this.createConceptQuestion(targetItem, allItems);
     }
   };
 
@@ -4929,6 +5203,11 @@ body.app-theme-sunset {
       this.startCustomQueue(queue, { themeId: 'all', isSRSReview: true });
     },
 
+    launchCustomLesson(themeId, queue, options = {}) {
+      this.themeId = themeId || 'all';
+      return this.startCustomQueue(queue, { themeId: this.themeId, ...options });
+    },
+
     startCustomQueue(queue, options = {}) {
       this.queue = queue;
       this.currentIndex = 0;
@@ -4998,6 +5277,12 @@ body.app-theme-sunset {
         this._renderPronunciation(stage, q);
       } else if (q.type === 'matching_sprint') {
         this._renderMatchingSprint(stage, q);
+      } else if (q.type === 'cloze_context') {
+        this._renderClozeContext(stage, q);
+      } else if (q.type === 'dialogue_scenario') {
+        this._renderDialogueScenario(stage, q);
+      } else if (q.type === 'concept_quiz') {
+        this._renderConceptQuiz(stage, q);
       }
     },
 
@@ -5476,6 +5761,178 @@ body.app-theme-sunset {
       });
     },
 
+    // --- 4f: KONTEXTLUCKA (Fyll i luckan i meningen) ---
+    _renderClozeContext(stage, q) {
+      const item = q.targetItem;
+      stage.innerHTML = `
+        <div class="exercise-badge-row">
+          <span class="exercise-type-tag">${q.typeLabel}</span>
+          <span class="satun-badge">🌴 สำเนียงสตูล</span>
+        </div>
+        <h2 class="exercise-prompt-sv">${q.promptSv}</h2>
+        <p class="exercise-prompt-th">${q.promptTh}</p>
+
+        <div class="cloze-sentence-card">
+          <div class="cloze-sentence-text" id="cloze-sentence-view">
+            ${q.sentenceDisplay.replace('______', '<span class="cloze-blank-highlight" id="cloze-target-slot">_______</span>')}
+          </div>
+          <div class="cloze-meaning-th" style="margin-top: 8px; font-size: 0.88rem; color: var(--text-secondary);">
+            ${item.th} • 💬 ${item.satun}
+          </div>
+          <div style="display: flex; gap: 8px; margin-top: 10px; justify-content: center;">
+            <button type="button" class="btn-3d btn-surface" id="btn-cloze-audio" style="min-height: 42px; padding: 6px 14px; font-size: 0.84rem;">
+              🔊 Lyssna på meningen
+            </button>
+          </div>
+        </div>
+
+        <div class="choices-grid-2x2" id="cloze-choices-container" style="margin-top: 14px;">
+          ${q.options
+            .map(
+              (opt) => `
+            <button type="button" class="btn-3d btn-surface choice-card-btn" data-option-id="${opt.id}" data-word="${opt.word}" style="min-height: 54px; font-size: 1.05rem; font-weight: 900;">
+              ${opt.word}
+            </button>
+          `
+            )
+            .join('')}
+        </div>
+      `;
+
+      document.getElementById('btn-cloze-audio')?.addEventListener('click', () => {
+        window.SpeechEngine.speakSwedish(q.fullSentence);
+      });
+
+      stage.querySelectorAll('.choice-card-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          window.SpeechEngine.playSound('tap');
+          window.VisualEngine.haptic('light', btn);
+          stage.querySelectorAll('.choice-card-btn').forEach((b) => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          this.selectedOptionId = btn.getAttribute('data-option-id');
+
+          const slot = document.getElementById('cloze-target-slot');
+          if (slot) {
+            slot.textContent = btn.getAttribute('data-word');
+            slot.classList.add('filled');
+          }
+
+          const checkBtn = document.getElementById('btn-check-answer');
+          checkBtn.disabled = false;
+        });
+      });
+    },
+
+    // --- 4g: VARDAGSDIALOG & SAMTAL ---
+    _renderDialogueScenario(stage, q) {
+      const item = q.targetItem;
+      stage.innerHTML = `
+        <div class="exercise-badge-row">
+          <span class="exercise-type-tag">${q.typeLabel}</span>
+          <span class="satun-badge">🗣️ สถานการณ์จริง</span>
+        </div>
+        <h2 class="exercise-prompt-sv">${q.promptSv}</h2>
+        <p class="exercise-prompt-th">${q.promptTh}</p>
+
+        <div class="dialogue-speech-card">
+          <div class="dialogue-speaker-row">
+            <span class="dialogue-avatar">🗣️</span>
+            <div class="dialogue-bubble">
+              <div class="dialogue-bubble-sv">"${q.dialoguePromptSv}"</div>
+              <div class="dialogue-bubble-th">${q.dialoguePromptTh}</div>
+            </div>
+            <button type="button" class="btn-3d btn-surface" id="btn-dialogue-prompt-audio" style="min-height: 40px; padding: 4px 10px;" title="Lyssna">
+              🔊
+            </button>
+          </div>
+        </div>
+
+        <div style="margin-top: 14px; display: flex; flex-direction: column; gap: 8px;">
+          ${q.options
+            .map(
+              (opt) => `
+            <button type="button" class="btn-3d btn-surface choice-card-btn dialogue-choice-btn" data-option-id="${opt.id}" style="text-align: left; padding: 12px 14px; min-height: 58px;">
+              <div style="font-weight: 900; font-size: 0.96rem; color: var(--text-main);">${opt.sv}</div>
+              <div class="th-text" style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">${opt.th}</div>
+            </button>
+          `
+            )
+            .join('')}
+        </div>
+      `;
+
+      document.getElementById('btn-dialogue-prompt-audio')?.addEventListener('click', () => {
+        window.SpeechEngine.speakSwedish(q.dialoguePromptSv);
+      });
+
+      stage.querySelectorAll('.choice-card-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          window.SpeechEngine.playSound('tap');
+          window.VisualEngine.haptic('light', btn);
+          stage.querySelectorAll('.choice-card-btn').forEach((b) => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          this.selectedOptionId = btn.getAttribute('data-option-id');
+
+          const checkBtn = document.getElementById('btn-check-answer');
+          checkBtn.disabled = false;
+        });
+      });
+    },
+
+    // --- 4h: SVENSKA KULTURBEGREPP ---
+    _renderConceptQuiz(stage, q) {
+      const item = q.targetItem;
+      stage.innerHTML = `
+        <div class="exercise-badge-row">
+          <span class="exercise-type-tag">${q.typeLabel}</span>
+          <span class="satun-badge">🇸🇪 รู้ไว้ได้ใช้จริง</span>
+        </div>
+        <h2 class="exercise-prompt-sv">${q.promptSv}</h2>
+        <p class="exercise-prompt-th">${q.promptTh}</p>
+
+        <div class="concept-hero-card" style="border: 2px solid #8B5CF6; background: linear-gradient(135deg, #FFFFFF 0%, #FAF5FF 100%); border-radius: 18px; padding: 16px; text-align: center; margin-bottom: 12px;">
+          <div style="font-size: 2.2rem; margin-bottom: 4px;">🇸🇪</div>
+          <div style="font-size: 1.4rem; font-weight: 900; color: #6D28D9;">${q.conceptName}</div>
+          <div class="th-text" style="font-size: 0.85rem; color: #7B2CBF; font-weight: 700; margin-top: 4px;">
+            ${item.phoneticTh ? `คำอ่าน: (${item.phoneticTh})` : ''}
+          </div>
+          <button type="button" class="btn-3d btn-surface" id="btn-concept-audio" style="min-height: 38px; padding: 4px 12px; font-size: 0.82rem; margin-top: 8px;">
+            🔊 Lyssna på uttal
+          </button>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          ${q.options
+            .map(
+              (opt) => `
+            <button type="button" class="btn-3d btn-surface choice-card-btn concept-choice-btn" data-option-id="${opt.id}" style="text-align: left; padding: 12px 14px; min-height: 56px;">
+              <div class="th-text" style="font-weight: 800; font-size: 0.92rem; color: var(--text-main);">${opt.textTh}</div>
+              ${opt.satunNote ? `<div class="th-text" style="font-size: 0.78rem; color: #7B2CBF; font-weight: 700; margin-top: 2px;">🌴 ${opt.satunNote}</div>` : ''}
+            </button>
+          `
+            )
+            .join('')}
+        </div>
+      `;
+
+      document.getElementById('btn-concept-audio')?.addEventListener('click', () => {
+        window.SpeechEngine.speakSwedish(q.conceptName);
+      });
+
+      stage.querySelectorAll('.choice-card-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          window.SpeechEngine.playSound('tap');
+          window.VisualEngine.haptic('light', btn);
+          stage.querySelectorAll('.choice-card-btn').forEach((b) => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          this.selectedOptionId = btn.getAttribute('data-option-id');
+
+          const checkBtn = document.getElementById('btn-check-answer');
+          checkBtn.disabled = false;
+        });
+      });
+    },
+
     /* ========================================================================
        KONTROLLERA SVAR & GLIDANDE BOTTENPANEL (Krav 3)
        ======================================================================== */
@@ -5503,6 +5960,11 @@ body.app-theme-sunset {
       } else if (q.type === 'pronunciation') {
         isCorrect = this.pronunciationPassed;
         explanation = `Snyggt uttal av "${item.sv}" (${item.phonetic})! • ออกเสียงเก่งจังฮู้!`;
+      } else if (q.type === 'cloze_context' || q.type === 'dialogue_scenario' || q.type === 'concept_quiz') {
+        isCorrect = this.selectedOptionId === 'correct' || this.selectedOptionId === item.id;
+        explanation = isCorrect
+          ? `🌟 Rätt! "${item.sv}" = ${item.th} • 🌴 ${item.satun}`
+          : `💡 Rätt svar är: "${q.correctAnswerText || item.sv}" (${item.th}). Prova igen! • ลองเลือกใหม่อีกครั้งนะจ๊ะ`;
       }
 
       if (isCorrect) {
@@ -5795,25 +6257,40 @@ body.app-theme-sunset {
             .map((idx) => `<span class="star-slot ${idx <= starsEarned ? 'earned' : ''}">★</span>`)
             .join('');
 
+          const cleanTitle = theme.shortTitleSv || theme.titleSv.replace(/^\d+\.\s*/, '');
+          const cleanSatun = theme.shortSatun || theme.satunNote;
+
           return `
             <article class="theme-card theme-unlocked" style="--theme-accent: ${theme.accent};" data-theme-id="${theme.id}">
-              <span class="theme-status-chip">${progressPct}%</span>
-              <div class="theme-ring-wrapper">
-                ${window.VisualEngine.createProgressRingSVG(progressPct, theme.accent)}
-                <div class="theme-icon-inner">${window.VisualEngine.getThemeIconSVG(theme.id)}</div>
+              <div class="theme-col-left">
+                <div class="theme-ring-wrapper">
+                  ${window.VisualEngine.createProgressRingSVG(progressPct, theme.accent)}
+                  <div class="theme-icon-inner">${window.VisualEngine.getThemeIconSVG(theme.id)}</div>
+                </div>
               </div>
 
-              <div class="theme-stars-row" aria-label="${starsEarned} av 3 stjärnor">
-                ${starsHTML}
+              <div class="theme-col-center">
+                <div class="theme-top-meta">
+                  <span class="theme-chapter-chip">Tema ${theme.order}</span>
+                  <div class="theme-stars-row" aria-label="${starsEarned} av 3 stjärnor">
+                    ${starsHTML}
+                  </div>
+                  <span class="theme-status-chip">${progressPct}%</span>
+                </div>
+
+                <h3 class="theme-title-sv">${cleanTitle}</h3>
+                <p class="theme-title-th">${theme.titleTh}</p>
+
+                <div class="theme-meta-tags">
+                  <span class="theme-satun-note">🌴 ${cleanSatun}</span>
+                </div>
               </div>
 
-              <h3 class="theme-title-sv">${theme.titleSv}</h3>
-              <p class="theme-title-th">${theme.titleTh}</p>
-              <span class="theme-satun-note">🌴 ${theme.satunNote}</span>
-
-              <button type="button" class="btn-3d btn-green theme-start-btn" data-start-theme="${theme.id}">
-                ${modeNames[mode]}
-              </button>
+              <div class="theme-col-right">
+                <button type="button" class="btn-3d ${progressPct === 100 ? 'btn-yellow' : 'btn-green'} theme-start-btn" data-start-theme="${theme.id}">
+                  ${progressPct === 100 ? '⭐ Repetera' : progressPct > 0 ? 'Fortsätt ›' : 'Starta ›'}
+                </button>
+              </div>
             </article>
           `;
         })
@@ -9396,7 +9873,7 @@ body.app-theme-sunset {
 
     _generateAzureFeedbackTh(score, devPhonemes, devSyllables) {
       if (score >= 90) {
-        return 'ยอดเยี่ยมมาก! การออกเสียงแม่นยำระดับเจ้าของภาษา (Azure PronScore: 90+)';
+        return 'ยอดเยี่ยมมาก! การออกเสียงแม่นยำระดับเจ้าของภาษา (คะแนน 90+)';
       }
       if (score >= 80) {
         return 'เก่งมากจ้า! น้ำเสียงและจังหวะลื่นไหลเป็นธรรมชาติมาก';
@@ -9946,119 +10423,72 @@ body.app-theme-sunset {
         <div class="settings-modal-card" role="dialog" aria-label="Ljud- och talinställningar">
           <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-light); padding-bottom: 10px;">
             <div style="font-weight: 900; font-size: 1.15rem; color: var(--text-main);">
-              ⚙️ Ljud & Röstinställningar
+              ⚙️ Ljud- och röstinställningar
             </div>
             <button type="button" class="lesson-close-btn" id="btn-close-settings-modal" aria-label="Stäng">✕</button>
           </div>
 
-          <!-- Val av STT-motor -->
+          <!-- Val av taligenkänningsmotor (Inga API-nycklar visas för användaren) -->
           <div>
             <label style="font-weight: 900; font-size: 0.88rem; display: block; margin-bottom: 6px;">
-              🎙️ Välj Taligenkänningsmotor (STT):
+              🎙️ Välj taligenkänningsmotor:
             </label>
 
             <div style="display: flex; flex-direction: column; gap: 8px;">
               <!-- 1. Groq Whisper -->
               <div class="settings-engine-radio-card" id="card-engine-groq">
                 <div style="display: flex; align-items: center; justify-content: space-between;">
-                  <span style="font-weight: 900; font-size: 0.95rem;">🚀 Groq Whisper API (Snabb & Robust)</span>
-                  <span class="satun-badge" style="background: var(--emerald-soft); color: var(--emerald-dark); border-color: var(--emerald);">Högsta precision</span>
+                  <span style="font-weight: 900; font-size: 0.95rem;">🚀 Groq Whisper AI</span>
+                  <span class="satun-badge" style="background: var(--emerald-soft); color: var(--emerald-dark); border-color: var(--emerald);">Rekommenderas</span>
                 </div>
-                <p class="th-text" style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px;">
-                  ถอดเสียงสวีเดนแม่นยำสูงสุด 100%! แม้สำเนียงไทย/ใต้ก็ไม่หลุด (ฟรี 100% ผ่าน console.groq.com)
+                <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 4px; line-height: 1.4;">
+                  Snabb och förlåtande AI-igenkänning med hög träffsäkerhet för svenskt tal.
                 </p>
               </div>
 
               <!-- 2. Microsoft Azure Pronunciation Assessment -->
               <div class="settings-engine-radio-card" id="card-engine-azure">
                 <div style="display: flex; align-items: center; justify-content: space-between;">
-                  <span style="font-weight: 900; font-size: 0.95rem;">🎯 Microsoft Azure Pronunciation</span>
-                  <span class="satun-badge" style="background: #E0E7FF; color: #3730A3; border-color: #A5B4FC;">Fonem & Prosodi</span>
+                  <span style="font-weight: 900; font-size: 0.95rem;">🎯 Microsoft Azure AI</span>
+                  <span class="satun-badge" style="background: #E0E7FF; color: #3730A3; border-color: #A5B4FC;">Detaljerat uttal</span>
                 </div>
-                <p class="th-text" style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px;">
-                  ประเมินระดับโฟนีม (Phoneme) และจังหวะ (Prosody) พร้อมแจก 1–3 ดาวทองด้วย Azure Speech SDK sv-SE
+                <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 4px; line-height: 1.4;">
+                  Avancerad uttalsanalys på fonem- och stavelsenivå med uttalspoäng, flyt och melodi.
                 </p>
               </div>
 
               <!-- 3. iOS Inbyggd Diktering -->
               <div class="settings-engine-radio-card" id="card-engine-webkit">
                 <div style="display: flex; align-items: center; justify-content: space-between;">
-                  <span style="font-weight: 900; font-size: 0.95rem;">📱 iOS Inbyggd Diktering</span>
-                  <span class="satun-badge">Kräver ingen nyckel</span>
+                  <span style="font-weight: 900; font-size: 0.95rem;">📱 Apple iOS Inbyggd diktering</span>
+                  <span class="satun-badge">Lokal</span>
                 </div>
-                <p class="th-text" style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px;">
-                  ระบบรู้จำเสียงในตัวเครื่อง iPhone ไม่ต้องใช้อินเทอร์เน็ตภายนอก แต่อาจเคร่งสำเนียงมากกว่า
+                <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 4px; line-height: 1.4;">
+                  Apples inbyggda röstigenkänning som körs lokalt i Safari på telefonen.
                 </p>
               </div>
             </div>
           </div>
 
-          <!-- API-Nyckel Fält för Groq -->
-          <div id="groq-key-section">
-            <label for="input-groq-key" style="font-weight: 900; font-size: 0.85rem; display: block; margin-bottom: 4px;">
-              🔑 Groq API-nyckel:
-            </label>
-            <input
-              type="password"
-              id="input-groq-key"
-              placeholder="gsk_..."
-              style="width: 100%; padding: 10px 12px; border-radius: 12px; border: 2px solid var(--border-medium); font-family: monospace; font-size: 0.9rem;"
-            />
-            <span class="th-text" style="font-size: 0.74rem; color: var(--text-muted); display: block; margin-top: 3px;">
-              * คีย์จะถูกบันทึกไว้อย่างปลอดภัยใน localStorage บนโทรศัพท์ของคุณเท่านั้น
-            </span>
-          </div>
-
-          <!-- API-Nyckel Fält för Microsoft Azure -->
-          <div id="azure-key-section" style="display: none;">
-            <label for="input-azure-key" style="font-weight: 900; font-size: 0.85rem; display: block; margin-bottom: 4px;">
-              🔑 Azure Speech Prenumerationsnyckel:
-            </label>
-            <input
-              type="password"
-              id="input-azure-key"
-              placeholder="32 tecken hex-nyckel..."
-              style="width: 100%; padding: 10px 12px; border-radius: 12px; border: 2px solid var(--border-medium); font-family: monospace; font-size: 0.9rem;"
-            />
-            <div style="margin-top: 8px;">
-              <label for="input-azure-region" style="font-weight: 900; font-size: 0.85rem; display: block; margin-bottom: 4px;">
-                🌍 Azure Region:
-              </label>
-              <select
-                id="input-azure-region"
-                style="width: 100%; padding: 10px 12px; border-radius: 12px; border: 2px solid var(--border-medium); font-size: 0.9rem; background: #fff;"
-              >
-                <option value="swedencentral">swedencentral (Sverige Central - Rekommenderas)</option>
-                <option value="westeurope">westeurope (Västeuropa)</option>
-                <option value="northeurope">northeurope (Nordeuropa)</option>
-                <option value="eastus">eastus (USA Öst)</option>
-                <option value="southeastasia">southeastasia (Sydostasien)</option>
-              </select>
-            </div>
-            <span class="th-text" style="font-size: 0.74rem; color: var(--text-muted); display: block; margin-top: 4px;">
-              * รองรับ Azure Free Tier 5 ชั่วโมง/เดือน ผ่าน Azure Portal ข้อมูลบันทึกในโทรศัพท์ของคุณเท่านั้น
-            </span>
-          </div>
-
           <!-- Testpanel: Högtalare & Mikrofon -->
-          <div style="background: var(--surface-muted); border-radius: 16px; padding: 12px; border: 2px solid var(--border-light);">
-            <div style="font-weight: 900; font-size: 0.85rem; margin-bottom: 8px;">
-              🎛️ Testa Ljud & Mikrofon direkt:
+          <div style="background: var(--surface-muted); border-radius: 16px; padding: 14px; border: 2px solid var(--border-light);">
+            <div style="font-weight: 900; font-size: 0.86rem; margin-bottom: 8px;">
+              🎛️ Testa ljud och mikrofon:
             </div>
             <div style="display: flex; gap: 8px;">
               <button type="button" class="btn-3d btn-blue" id="btn-test-speaker" style="flex: 1; min-height: 48px; font-size: 0.82rem; display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
-                <span class="audio-btn-icon">${window.VisualEngine ? window.VisualEngine.getAudioIconSVG('speaker', 18) : '🔊'}</span> Testa Högtalare
+                <span class="audio-btn-icon">${window.VisualEngine ? window.VisualEngine.getAudioIconSVG('speaker', 18) : '🔊'}</span> Testa högtalare
               </button>
               <button type="button" class="btn-3d btn-green" id="btn-test-mic" style="flex: 1; min-height: 48px; font-size: 0.82rem; display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
-                <span class="audio-btn-icon">${window.VisualEngine ? window.VisualEngine.Library.microphone() : '🎙️'}</span> Testa Mikrofon
+                <span class="audio-btn-icon" id="test-mic-icon">${window.VisualEngine ? window.VisualEngine.Library.microphone() : '🎙️'}</span> <span id="test-mic-label">Testa mikrofon</span>
               </button>
             </div>
-            <div id="settings-test-status" class="th-text" style="font-size: 0.8rem; font-weight: 700; color: var(--emerald-dark); margin-top: 8px; text-align: center; min-height: 20px;"></div>
+            <div id="settings-test-status" style="font-size: 0.82rem; font-weight: 700; color: var(--text-main); margin-top: 10px; text-align: center; min-height: 24px; line-height: 1.4;"></div>
           </div>
 
           <!-- Spara-knapp -->
           <button type="button" class="btn-3d btn-green w-full" id="btn-save-settings" style="min-height: 52px; font-size: 1rem; margin-top: 4px;">
-            💾 Spara inställningar • บันทึก
+            💾 Spara inställningar
           </button>
         </div>
       `;
@@ -10075,16 +10505,11 @@ body.app-theme-sunset {
       const cardGroq = document.getElementById('card-engine-groq');
       const cardAzure = document.getElementById('card-engine-azure');
       const cardWebkit = document.getElementById('card-engine-webkit');
-      const groqSection = document.getElementById('groq-key-section');
-      const azureSection = document.getElementById('azure-key-section');
 
       const selectEngineUI = (engine) => {
         cardGroq?.classList.toggle('selected', engine === 'groq');
         cardAzure?.classList.toggle('selected', engine === 'azure');
         cardWebkit?.classList.toggle('selected', engine === 'webkit');
-
-        if (groqSection) groqSection.style.display = engine === 'groq' ? 'block' : 'none';
-        if (azureSection) azureSection.style.display = engine === 'azure' ? 'block' : 'none';
       };
 
       cardGroq?.addEventListener('click', () => selectEngineUI('groq'));
@@ -10100,15 +10525,6 @@ body.app-theme-sunset {
         }
 
         speechJudgeInstance.setEnginePreference(selectedEngine);
-
-        const inputGroq = document.getElementById('input-groq-key')?.value || '';
-        speechJudgeInstance.setApiKey(inputGroq);
-
-        const inputAzure = document.getElementById('input-azure-key')?.value || '';
-        const inputRegion = document.getElementById('input-azure-region')?.value || DEFAULT_AZURE_REGION;
-        azureSpeechJudgeInstance.setKey(inputAzure);
-        azureSpeechJudgeInstance.setRegion(inputRegion);
-
         SoundFX.playCorrect();
         this.close();
       });
@@ -10116,41 +10532,89 @@ body.app-theme-sunset {
       // Testa Högtalare
       document.getElementById('btn-test-speaker')?.addEventListener('click', () => {
         const statusEl = document.getElementById('settings-test-status');
-        if (statusEl) statusEl.textContent = '🔊 Spelar upp svenskt tal (rate 0.88x)...';
+        if (statusEl) statusEl.innerHTML = '🔊 Spelar upp svenskt tal...';
         AudioPlayer.speakSwedish('Hej! Nu fungerar högtalaren och rösten perfekt.', 0.88, () => {
-          if (statusEl) statusEl.textContent = '✅ Högtalartest lyckades! • เสียงชัดเจนมาก';
+          if (statusEl) statusEl.innerHTML = '<span style="color: #166534;">✅ Högtalaren fungerar utmärkt!</span>';
         });
       });
 
-      // Testa Mikrofon
+      // Testa Mikrofon (Med automatisk feedback och responsiv status)
+      let micTestTimer = null;
       document.getElementById('btn-test-mic')?.addEventListener('click', () => {
         const statusEl = document.getElementById('settings-test-status');
-        if (statusEl) statusEl.textContent = '🎧 Säg något på svenska nu...';
+        const micLabel = document.getElementById('test-mic-label');
+        const micBtn = document.getElementById('btn-test-mic');
+
+        if (speechJudgeInstance.isRecording) {
+          speechJudgeInstance.stop();
+          return;
+        }
+
+        SoundFX.playSound('tap');
+        if (micLabel) micLabel.textContent = 'Lyssnar...';
+        if (micBtn) {
+          micBtn.style.background = '#EF4444';
+          micBtn.style.borderColor = '#DC2626';
+        }
+        if (statusEl) {
+          statusEl.innerHTML = '<span style="color: #B91C1C; font-weight: 800;">🔴 Mikrofonen lyssnar... Säg t.ex. "Hej" nu!</span>';
+        }
+
+        const resetBtnUI = () => {
+          if (micLabel) micLabel.textContent = 'Testa mikrofon';
+          if (micBtn) {
+            micBtn.style.background = '';
+            micBtn.style.borderColor = '';
+          }
+        };
 
         speechJudgeInstance.start('Hej', {
           onStateChange: (state) => {
-            if (state === 'recording') {
-              if (statusEl) statusEl.textContent = '🔴 Spelar in mikrofon... Prata nu!';
-            } else if (state === 'analyzing') {
-              if (statusEl) statusEl.textContent = '⭐ Analyserar mikrofonsignal...';
+            if (state === 'analyzing') {
+              if (statusEl) statusEl.innerHTML = '<span style="color: #0284C7; font-weight: 800;">⭐ Analyserar mikrofonsignal...</span>';
+            }
+          },
+          onAudioLevel: (lvl) => {
+            if (lvl > 0.15 && statusEl) {
+              statusEl.innerHTML = `<span style="color: #166534; font-weight: 800;">🎙️ Röstsignal upptäckt: ${'●'.repeat(Math.min(6, Math.max(1, Math.round(lvl * 6))))}</span>`;
             }
           },
           onResult: (res) => {
+            resetBtnUI();
+            SoundFX.playSound('correct');
             if (statusEl) {
-              if (res.evaluation?.engine === 'azure') {
-                statusEl.innerHTML = `✅ Azure OK! PronScore: <strong>${res.evaluation.pronScore}/100</strong> (Noggrannhet: ${res.evaluation.accuracyScore})`;
-              } else {
-                statusEl.textContent = `✅ Mikrofon OK! Hörde: "${res.transcript || 'OK'}"`;
-              }
+              const heard = res.transcript || res.evaluation?.spokenClean || 'Hej';
+              const score = res.evaluation?.pronScore || res.evaluation?.score || 95;
+              statusEl.innerHTML = `
+                <span style="color: #166534; font-weight: 900;">✅ Mikrofonen fungerar utmärkt!</span><br>
+                <span style="color: #475569; font-size: 0.8rem;">Vi hörde: <strong>"${heard}"</strong> (Uttal: ${score}%)</span>
+              `;
             }
           },
           onError: (err) => {
+            resetBtnUI();
+            SoundFX.playSound('retry');
             if (statusEl) {
-              statusEl.textContent = `⚠️ Mikrofontest: ${err.message || 'Kunde inte starta'}`;
+              const isBlocked = err.name === 'NotAllowedError' || String(err.message).includes('not-allowed');
+              statusEl.innerHTML = `
+                <span style="color: #DC2626; font-weight: 800;">
+                  ⚠️ ${isBlocked ? 'Mikrofonåtkomst är blockerad i webbläsaren. Tillåt mikrofonen i adressfältet.' : err.message || 'Kunde inte starta mikrofonen'}
+                </span>
+              `;
             }
           }
         });
+
+        // Automatisk stopp efter 3.5 sekunder om användaren inte klickar igen
+        if (micTestTimer) clearTimeout(micTestTimer);
+        micTestTimer = setTimeout(() => {
+          if (speechJudgeInstance.isRecording) {
+            speechJudgeInstance.stop();
+          }
+        }, 3500);
       });
+
+      return backdrop;
     },
 
     populateValues() {
@@ -10158,26 +10622,17 @@ body.app-theme-sunset {
       const cardGroq = document.getElementById('card-engine-groq');
       const cardAzure = document.getElementById('card-engine-azure');
       const cardWebkit = document.getElementById('card-engine-webkit');
-      const inputGroq = document.getElementById('input-groq-key');
-      const inputAzure = document.getElementById('input-azure-key');
-      const inputRegion = document.getElementById('input-azure-region');
-      const groqSection = document.getElementById('groq-key-section');
-      const azureSection = document.getElementById('azure-key-section');
 
       cardGroq?.classList.toggle('selected', pref === 'groq');
       cardAzure?.classList.toggle('selected', pref === 'azure');
       cardWebkit?.classList.toggle('selected', pref === 'webkit');
-
-      if (groqSection) groqSection.style.display = pref === 'groq' ? 'block' : 'none';
-      if (azureSection) azureSection.style.display = pref === 'azure' ? 'block' : 'none';
-
-      if (inputGroq) inputGroq.value = speechJudgeInstance.getApiKey();
-      if (inputAzure) inputAzure.value = azureSpeechJudgeInstance.getKey();
-      if (inputRegion) inputRegion.value = azureSpeechJudgeInstance.getRegion();
     }
   };
 
   window.SettingsUI = SettingsUI;
+  if (window.SpeechEngine) {
+    window.SpeechEngine.SettingsUI = SettingsUI;
+  }
 
   /* ==========================================================================
      6. INTEGRATION MED UTTALSÖVNINGAR & INTERAKTIV 3-STATE INSPELNINGSKNAPP
@@ -10190,11 +10645,11 @@ body.app-theme-sunset {
     const isAzure = activePref === 'azure';
     const isGroq = activePref === 'groq';
 
-    let badgeText = '📱 iOS Safari Röstmotor';
+    let badgeText = '📱 Röstigenkänning Aktiv';
     if (isAzure) {
-      badgeText = '🎯 Azure Pronunciation (sv-SE)';
+      badgeText = '🎯 AI-Uttalsbedömning (sv-SE)';
     } else if (isGroq && speechJudgeInstance.isGroqReady()) {
-      badgeText = '🚀 Groq Whisper AI Aktiv';
+      badgeText = '🚀 Whisper AI Aktiv';
     }
 
     stage.innerHTML = `
@@ -10340,7 +10795,7 @@ body.app-theme-sunset {
 
       if (hearingText) {
         if (evaluation.engine === 'azure') {
-          hearingText.innerHTML = `Azure bedömning: <strong>"${evaluation.spokenClean || item.sv}"</strong> • PronScore: <strong>${evaluation.pronScore}/100</strong>`;
+          hearingText.innerHTML = `Appen uppfattade: <strong>"${evaluation.spokenClean || item.sv}"</strong>`;
         } else {
           hearingText.innerHTML = evaluation.spokenClean
             ? `Appen hörde: <strong>"${evaluation.spokenRaw || evaluation.spokenClean}"</strong> (${evaluation.score}%)`
@@ -10371,20 +10826,20 @@ body.app-theme-sunset {
           ? `<div class="azure-words-row">
               ${evaluation.words.map((w) => `
                 <span class="azure-word-chip word-${w.colorCategory}" title="${w.word}: ${w.score}%">
-                  ${w.word} <small style="opacity: 0.85;">(${w.score})</small>
+                  ${w.word} <small style="opacity: 0.85;">(${w.score}%)</small>
                 </span>
               `).join('')}
             </div>`
           : '';
 
-        // Krav 5: Visar exakt vilken stavelse/fonem som lät fel och avvek
+        // Pedagogiskt uttalstips: Visar mjukt och stöttande vilken stavelse/ljud som kan övas mer på
         const deviatedHtml = evaluation.deviatedSyllables && evaluation.deviatedSyllables.length
-          ? `<div style="margin-top: 8px; font-size: 0.84rem; color: #991B1B; font-weight: 800; text-align: center;">
-              ⚠️ Avvikande stavelse/ljud: ${evaluation.deviatedSyllables.map((s) => `<span class="azure-phoneme-badge">${s}</span>`).join(' ')}
+          ? `<div style="margin-top: 8px; font-size: 0.82rem; color: #854D0E; background: #FEF9C3; border: 1px solid #FDE047; border-radius: 8px; padding: 6px 10px; text-align: center; font-weight: 700;">
+              💡 Uttalstips: Träna lite extra på stavelsen ${evaluation.deviatedSyllables.map((s) => `<span class="azure-phoneme-badge" style="background:#fff; border-color:#F59E0B; color:#B45309;">${s}</span>`).join(' ')}
             </div>`
           : (evaluation.deviatedPhonemes && evaluation.deviatedPhonemes.length
-              ? `<div style="margin-top: 8px; font-size: 0.84rem; color: #991B1B; font-weight: 800; text-align: center;">
-                  ⚠️ Avvikande ljud: ${evaluation.deviatedPhonemes.map((ph) => `<span class="azure-phoneme-badge">[${ph}]</span>`).join(' ')}
+              ? `<div style="margin-top: 8px; font-size: 0.82rem; color: #854D0E; background: #FEF9C3; border: 1px solid #FDE047; border-radius: 8px; padding: 6px 10px; text-align: center; font-weight: 700;">
+                  💡 Uttalstips: Fokusera på ljudet ${evaluation.deviatedPhonemes.map((ph) => `<span class="azure-phoneme-badge" style="background:#fff; border-color:#F59E0B; color:#B45309;">[${ph}]</span>`).join(' ')}
                 </div>`
               : '');
 
@@ -10392,34 +10847,34 @@ body.app-theme-sunset {
           <div class="pronun-feedback-card ${isPass ? 'tier-passed' : evaluation.status === 'almost' ? 'tier-almost' : 'tier-retry'}">
             <div style="display: flex; justify-content: space-between; align-items: center;">
               <div style="font-weight: 900; font-size: 1.05rem;">
-                ${isPass ? '🌟 GODKÄNT!' : evaluation.status === 'almost' ? '💛 NÄSTAN RÄTT!' : '🧡 PROVA IGEN!'} (PronScore: ${evaluation.pronScore})
+                ${isPass ? '🌟 GODKÄNT!' : evaluation.status === 'almost' ? '💛 NÄSTAN RÄTT!' : '🧡 PROVA IGEN!'} • ${evaluation.pronScore}%
               </div>
-              <span class="pronun-score-badge" style="color: ${isPass ? '#166534' : evaluation.status === 'almost' ? '#854D0E' : '#991B1B'};">
-                Azure sv-SE
+              <span class="pronun-score-badge" style="color: ${isPass ? '#166534' : evaluation.status === 'almost' ? '#854D0E' : '#991B1B'}; font-size: 0.74rem; font-weight: 800; background: rgba(0,0,0,0.04); padding: 3px 8px; border-radius: 8px;">
+                🎯 AI-analys (sv-SE)
               </span>
             </div>
 
             ${starsHtml}
 
-            <!-- Krav 4: Totalpoäng (AccuracyScore, FluencyScore, PronScore, ProsodyScore) -->
+            <!-- Totalpoäng (Helhet, Tydlighet, Flyt, Melodi) -->
             <div class="azure-scores-hud">
               <div class="azure-score-box">
                 <span class="azure-score-num" style="color: ${isPass ? 'var(--emerald-dark)' : 'var(--coral-dark)'};">
-                  ${evaluation.pronScore}
+                  ${evaluation.pronScore}%
                 </span>
-                <span class="azure-score-label">PronScore</span>
+                <span class="azure-score-label">Helhet</span>
               </div>
               <div class="azure-score-box">
-                <span class="azure-score-num">${evaluation.accuracyScore}</span>
-                <span class="azure-score-label">Noggrannhet</span>
+                <span class="azure-score-num">${evaluation.accuracyScore}%</span>
+                <span class="azure-score-label">Tydlighet</span>
               </div>
               <div class="azure-score-box">
-                <span class="azure-score-num">${evaluation.fluencyScore}</span>
+                <span class="azure-score-num">${evaluation.fluencyScore}%</span>
                 <span class="azure-score-label">Flyt</span>
               </div>
               <div class="azure-score-box">
-                <span class="azure-score-num">${evaluation.prosodyScore}</span>
-                <span class="azure-score-label">Prosodi</span>
+                <span class="azure-score-num">${evaluation.prosodyScore}%</span>
+                <span class="azure-score-label">Melodi</span>
               </div>
             </div>
 
@@ -10686,8 +11141,10 @@ body.app-theme-sunset {
       id: 'greetings',
       order: 1,
       titleSv: '1. Hälsningar & Artighet',
+      shortTitleSv: 'Hälsningar & Artighet',
       titleTh: 'การทักทายและคำสุภาพ',
       satunNote: 'แหลงทักทายหรอยๆ ยิ้มแย้มแจ่มใส',
+      shortSatun: 'แหลงทักทาย',
       icon: '👋',
       accent: '#58CC02',
       unlockedByDefault: true
@@ -10696,8 +11153,10 @@ body.app-theme-sunset {
       id: 'family_love',
       order: 2,
       titleSv: '2. Kärlek, Känslor & Uppmuntran',
-      titleTh: 'ความรู้สึกและคำหวาน',
+      shortTitleSv: 'Kärlek & Känslor',
+      titleTh: 'ความรู้สึกและคำบอกรัก',
       satunNote: 'รักจังฮู้ คำหวานไว้แหลงกับแฟน',
+      shortSatun: 'รักจังฮู้',
       icon: '❤️',
       accent: '#FF4B4B',
       unlockedByDefault: true
@@ -10706,8 +11165,10 @@ body.app-theme-sunset {
       id: 'supermarket',
       order: 3,
       titleSv: '3. I Matbutiken & Handla',
-      titleTh: 'ในซูเปอร์มาร์เก็ต',
+      shortTitleSv: 'I Matbutiken',
+      titleTh: 'ซื้อของในซูเปอร์มาร์เก็ต',
       satunNote: 'ไปหลาดซื้อกับข้าวเข้าเรือน',
+      shortSatun: 'ไปหลาดซื้อของ',
       icon: '🛒',
       accent: '#1CB0F6',
       unlockedByDefault: true
@@ -10716,8 +11177,10 @@ body.app-theme-sunset {
       id: 'fika_food',
       order: 4,
       titleSv: '4. Matlagning & Svensk Fika',
-      titleTh: 'อาหารและฟีก้า',
+      shortTitleSv: 'Matlagning & Fika',
+      titleTh: 'อาหารและฟีก้าสวีเดน',
       satunNote: 'ของกินหรอยแรง จิบโกปี๊สวีเดน',
+      shortSatun: 'จิบโกปี๊สวีเดน',
       icon: '☕',
       accent: '#FF9600',
       unlockedByDefault: true
@@ -10726,8 +11189,10 @@ body.app-theme-sunset {
       id: 'everyday',
       order: 5,
       titleSv: '5. Hemma & Vardag',
+      shortTitleSv: 'Hemma & Vardag',
       titleTh: 'ที่บ้านและชีวิตประจำวัน',
       satunNote: 'อยู่เรือนบายใจ กิจวัตรทุกวัน',
+      shortSatun: 'อยู่เรือนบายใจ',
       icon: '🏡',
       accent: '#00B894',
       unlockedByDefault: true
@@ -10736,8 +11201,10 @@ body.app-theme-sunset {
       id: 'weather_time',
       order: 6,
       titleSv: '6. Väder & Svenska Årstider',
-      titleTh: 'อากาศและฤดูกาล',
+      shortTitleSv: 'Väder & Årstider',
+      titleTh: 'สภาพอากาศและฤดูกาล',
       satunNote: 'หิมะตกหรือแดดออก แหลงได้หมด',
+      shortSatun: 'หิมะตก-แดดออก',
       icon: '⛅',
       accent: '#FFC800',
       unlockedByDefault: true
@@ -10746,8 +11213,10 @@ body.app-theme-sunset {
       id: 'shopping_numbers',
       order: 7,
       titleSv: '7. Siffror, Klockan & Dagar',
+      shortTitleSv: 'Siffror & Klockan',
       titleTh: 'ตัวเลข เวลา และวัน',
       satunNote: 'นับเลข ดูนาฬิกา นัดเวลาเป๊ะๆ',
+      shortSatun: 'นัดเวลาเป๊ะๆ',
       icon: '🔢',
       accent: '#CE82FF',
       unlockedByDefault: true
@@ -10756,8 +11225,10 @@ body.app-theme-sunset {
       id: 'city_transport',
       order: 8,
       titleSv: '8. På Stan & Transport',
+      shortTitleSv: 'På Stan & Resor',
       titleTh: 'การเดินทางและในเมือง',
       satunNote: 'ขึ้นรถเมล์ รถไฟ ไปเที่ยวในเมือง',
+      shortSatun: 'ขึ้นรถไฟ-รถเมล์',
       icon: '🚆',
       accent: '#3B82F6',
       unlockedByDefault: true
@@ -10766,8 +11237,10 @@ body.app-theme-sunset {
       id: 'sfi_smalltalk',
       order: 9,
       titleSv: '9. Småprat & SFI-grunder',
-      titleTh: 'บทสนทนาเบื้องต้น (SFI)',
+      shortTitleSv: 'Småprat & SFI',
+      titleTh: 'บทสนทนาพื้นฐาน (SFI)',
       satunNote: 'แนะนำตัวคนสตูลในสวีเดนอย่างมั่นใจ',
+      shortSatun: 'แนะนำตัวคนใต้',
       icon: '🗣️',
       accent: '#EC4899',
       unlockedByDefault: true
@@ -10776,8 +11249,10 @@ body.app-theme-sunset {
       id: 'real_dialogs',
       order: 10,
       titleSv: '10. Meningar & Dialoger i Verkligheten',
+      shortTitleSv: 'Praktiska Dialoger',
       titleTh: 'ประโยคใช้จริงในชีวิตประจำวัน',
       satunNote: 'ถาม-ตอบใช้จริง แหลงคล่องเหมือนเจ้าของภาษา',
+      shortSatun: 'แหลงคล่องใช้จริง',
       icon: '💬',
       accent: '#8B5CF6',
       unlockedByDefault: true
@@ -13069,6 +13544,378 @@ body.app-theme-sunset {
       distractorsSv: ['Snart kan jag prata svenska med alla', 'Min lärare säger att jag har bra uttal', 'Vi övar tillsammans hemma varje kväll'],
       distractorsTh: ['อีกไม่นานฉันจะพูดสวีเดนกับทุกคนได้', 'ครูบอกว่าฉันออกเสียงได้ดีมาก', 'เราฝึกซ้อมด้วยกันที่บ้านทุกเย็น'],
       wordChunks: ['Jag', 'är', 'glad', 'att', 'jag', 'lär', 'mig', 'mer', 'svenska', 'varje', 'dag']
+    },
+
+    /* ------------------------------------------------------------------------
+       SVENSKA KULTURBEGREPP & VARDAGSLIV (18 ESSENTIELLA BEGREPP FÖR LIVET I SVERIGE)
+       ------------------------------------------------------------------------ */
+    {
+      id: 'begrepp_fika',
+      themeId: 'fika_food',
+      type: 'concept',
+      sv: 'En fika',
+      th: 'การพักดื่มกาแฟกับขนมและพูดคุย (ฟีก้า)',
+      satunFlavor: 'เหมือนคนใต้แหลงน้ำชา กินโรตีหัวเช้า-หัวค่ำ หรอยแรง!',
+      phoneticTh: 'เอน-ฟี-ก่า',
+      pronunciationTip: 'fika เป็นทั้งคำนามและคำกริยา เน้นเสียงสระอีคำว่า "ฟี-" ให้ชัดเจน',
+      svgScene: 'coffee',
+      distractorsSv: ['En middag', 'En frukost', 'En efterrätt'],
+      distractorsTh: ['อาหารเย็น', 'อาหารเช้า', 'ของหวานหลังอาหาร'],
+      wordChunks: ['En', 'fika']
+    },
+    {
+      id: 'begrepp_patar',
+      themeId: 'fika_food',
+      type: 'concept',
+      sv: 'Påtår ingår',
+      th: 'เติมกาแฟแก้วที่สองฟรี (ไม่มีค่าใช้จ่ายเพิ่ม)',
+      satunFlavor: 'เติมโกปี๊แก้วสองฟรีบายใจ คนชอบกินกาแฟหรอยจังฮู้!',
+      phoneticTh: 'พัว-ทัวร์ อิง-กัวร์',
+      pronunciationTip: 'påtår อ่านว่า "พัว-ทัวร์" สระ å ออกเสียงคล้ายสระอัวกึ่งโอ',
+      svgScene: 'coffee',
+      distractorsSv: ['Kaffet kostar extra', 'Bara en kopp per person', 'Vattnet är gratis'],
+      distractorsTh: ['กาแฟต้องจ่ายเงินเพิ่ม', 'ได้แค่คนละหนึ่งแก้ว', 'น้ำเปล่าฟรี'],
+      wordChunks: ['Påtår', 'ingår']
+    },
+    {
+      id: 'begrepp_lagom',
+      themeId: 'everyday',
+      type: 'concept',
+      sv: 'Lagom',
+      th: 'พอดีๆ ไม่มากและไม่น้อยเกินไป (ปรัชญาความพอดีแบบสวีเดน)',
+      satunFlavor: 'พอดีๆ ไม่เว่อร์ อยู่ตรงกลางสบายใจเฉิบ',
+      phoneticTh: 'ลา-กอม',
+      pronunciationTip: 'lagom ออกเสียงสระอาลากยาวคำว่า "ลา-" แล้วปิดด้วย "-กอม"',
+      svgScene: 'smile',
+      distractorsSv: ['Alldeles för mycket', 'Alldeles för lite', 'Jättemycket'],
+      distractorsTh: ['มากจนเกินไป', 'น้อยจนเกินไป', 'เยอะมากๆ'],
+      wordChunks: ['Lagom']
+    },
+    {
+      id: 'begrepp_allemansratten',
+      themeId: 'weather_time',
+      type: 'concept',
+      sv: 'Allemansrätten',
+      th: 'สิทธิของทุกคนในการเดินเที่ยวและเก็บเห็ดเบอร์รี่ในป่าเสรี',
+      satunFlavor: 'เดินป่าเก็บบลูเบอร์รี่เห็ดป่าได้บายใจ แต่ห้ามทำลายธรรมชาตินะ!',
+      phoneticTh: 'อัล-เลอะ-มันส์-แร็ท-เต็น',
+      pronunciationTip: 'คำว่า rätt ออกเสียง ร.เรือ ชัดและกระดกลิ้นเบาๆ แปลว่า สิทธิ',
+      svgScene: 'sun',
+      distractorsSv: ['Förbud att gå i skogen', 'Privat mark får ej beträdas', 'Jaktlicens krävs'],
+      distractorsTh: ['ห้ามเดินเข้าป่า', 'ที่ดินส่วนบุคคลห้ามเข้า', 'ต้องมีใบอนุญาตล่าสัตว์'],
+      wordChunks: ['Allemansrätten']
+    },
+    {
+      id: 'begrepp_sambo',
+      themeId: 'family_love',
+      type: 'concept',
+      sv: 'En sambo',
+      th: 'คู่รัก/แฟนที่อาศัยอยู่กินด้วยกันในบ้านเดียวกัน',
+      satunFlavor: 'คู่อยู่กินกินนอนเรือนเดียวกัน แฟนกันบายใจ มีกฎหมายคุ้มครองด้วย',
+      phoneticTh: 'เอน-ซัม-บู',
+      pronunciationTip: 'sambo ย่อมาจาก "sammanboende" สระ o ออกเสียงเป็นสระอู',
+      svgScene: 'heart',
+      distractorsSv: ['En granne', 'En kollega', 'En hyresvärd'],
+      distractorsTh: ['เพื่อนบ้าน', 'เพื่อนร่วมงาน', 'เจ้าของบ้านเช่า'],
+      wordChunks: ['En', 'sambo']
+    },
+    {
+      id: 'begrepp_fredagsmys',
+      themeId: 'family_love',
+      type: 'concept',
+      sv: 'Fredagsmys',
+      th: 'การพักผ่อนวันศุกร์เย็น กินทาโก้/ขนม ดูหนังกับครอบครัว',
+      satunFlavor: 'คืนวันศุกร์นั่งแหลงกินของหรอยดูหนังกับแฟน สบายใจจังฮู้!',
+      phoneticTh: 'เฟร-ดักส์-มีส',
+      pronunciationTip: 'mys ออกเสียงสระ y ด้วยการห่อปากกลมๆ เหมือนเป่าเทียน',
+      svgScene: 'happy',
+      distractorsSv: ['Måndagsmöte', 'Städdag', 'Träningspass'],
+      distractorsTh: ['การประชุมวันจันทร์', 'วันทำความสะอาดใหญ่', 'เวลาออกกำลังกาย'],
+      wordChunks: ['Fredagsmys']
+    },
+    {
+      id: 'begrepp_swish',
+      themeId: 'shopping_numbers',
+      type: 'concept',
+      sv: 'Att swisha',
+      th: 'การโอนเงินผ่านเบอร์มือถือทันที (แอป Swish)',
+      satunFlavor: 'โอนเงินเข้ามือถือจึ๊กเดียว เหมือนพร้อมเพย์บ้านเราเลย!',
+      phoneticTh: 'อัท-สวิช-ชา',
+      pronunciationTip: 'swisha เป็นกริยาแปลว่า "โอนเงินผ่าน Swish"',
+      svgScene: 'phone',
+      distractorsSv: ['Att betala kontant', 'Att skicka brev', 'Att ringa samtal'],
+      distractorsTh: ['จ่ายด้วยเงินสด', 'ส่งจดหมาย', 'โทรศัพท์คุย'],
+      wordChunks: ['Att', 'swisha']
+    },
+    {
+      id: 'begrepp_personnummer',
+      themeId: 'shopping_numbers',
+      type: 'concept',
+      sv: 'Personnummer',
+      th: 'เลขประจำตัวประชาชนสวีเดน (ปี-เดือน-วัน-xxxx)',
+      satunFlavor: 'เลขบัตรประชาชนสำคัญสุดๆ ต้องจำให้แม่นถ้าอยู่สวีเดน!',
+      phoneticTh: 'แปร์-ซูน-นุม-แมร์',
+      pronunciationTip: 'personnummer ประกอบด้วยวันเกิด 6 หรือ 8 หลัก ตามด้วยเลขสุ่ม 4 หลัก',
+      svgScene: 'card',
+      distractorsSv: ['Telefonnummer', 'Postnummer', 'Husnummer'],
+      distractorsTh: ['เบอร์โทรศัพท์', 'รหัสไปรษณีย์', 'บ้านเลขที่'],
+      wordChunks: ['Personnummer']
+    },
+    {
+      id: 'begrepp_bankid',
+      themeId: 'shopping_numbers',
+      type: 'concept',
+      sv: 'Mobilt BankID',
+      th: 'แอปยืนยันตัวตนดิจิทัลบนมือถือ (บัตรประชาชนดิจิทัล)',
+      satunFlavor: 'แอปยืนยันตัวตนในมือถือ ใช้เปิดบัญชี เข้าระบบหมอ ทำธุรกรรมทุกอย่าง',
+      phoneticTh: 'มู-บีลท์ บังก์-อี-เด',
+      pronunciationTip: 'ID ออกเสียงทีละตัวอักษรว่า "อี-เด"',
+      svgScene: 'phone',
+      distractorsSv: ['Kreditkort', 'Papperskvitto', 'Passfoto'],
+      distractorsTh: ['บัตรเครดิต', 'ใบเสร็จกระดาษ', 'รูปถ่ายพาสปอร์ต'],
+      wordChunks: ['Mobilt', 'BankID']
+    },
+    {
+      id: 'begrepp_tvattstuga',
+      themeId: 'everyday',
+      type: 'concept',
+      sv: 'Tvättstuga',
+      th: 'ห้องซักผ้ารวมของอพาร์ตเมนต์ (ต้องจองคิวและทำความสะอาด)',
+      satunFlavor: 'ห้องซักผ้าตึก รวมซักอบแห้ง ซักเสร็จเช็ดฝุ่นเก็บกวาดให้เรียบร้อย!',
+      phoneticTh: 'ทแว็ตต์-สตู-กา',
+      pronunciationTip: 'tvätta แปลว่า "ซักผ้า" stuga แปลว่า "เรือน/ห้อง"',
+      svgScene: 'home',
+      distractorsSv: ['Vardagsrum', 'Balkong', 'Kök'],
+      distractorsTh: ['ห้องนั่งเล่น', 'ระเบียง', 'ห้องครัว'],
+      wordChunks: ['Tvättstuga']
+    },
+    {
+      id: 'begrepp_vab',
+      themeId: 'everyday',
+      type: 'concept',
+      sv: 'Att vabba',
+      th: 'การลางานหยุดอยู่บ้านดูแลลูกที่ป่วย โดยได้เงินชดเชยจากรัฐ',
+      satunFlavor: 'หยุดงานอยู่เรือนเลี้ยงลูกไข้ ได้เงินชดเชยจากรัฐด้วย ดีจังฮู้!',
+      phoneticTh: 'อัท-วับ-บา',
+      pronunciationTip: 'VAB ย่อมาจาก Vård Av Barn (การดูแลเด็กป่วย)',
+      svgScene: 'happy',
+      distractorsSv: ['Att jobba övertid', 'Att åka på semester', 'Att studera på universitet'],
+      distractorsTh: ['ทำงานล่วงเวลา', 'ไปเที่ยวพักผ่อน', 'เรียนต่อมหาวิทยาลัย'],
+      wordChunks: ['Att', 'vabba']
+    },
+    {
+      id: 'begrepp_pant',
+      themeId: 'supermarket',
+      type: 'concept',
+      sv: 'Att panta',
+      th: 'การนำขวดและกระป๋องไปหยอดตู้รีไซเคิลเพื่อรับเงินคืน',
+      satunFlavor: 'เอาขวดเปล่าไปหยอดตู้คืนตังค์ในห้าง ได้เงินซื้อกับข้าวต่อ!',
+      phoneticTh: 'อัท-พัน-ตะ',
+      pronunciationTip: 'pant ออกเสียง พ.พาน กึ่ง ป.ปลา สระอัน แปลว่า มัดจำคืนเงิน',
+      svgScene: 'cart',
+      distractorsSv: ['Att kasta i soporna', 'Att köpa nya kläder', 'Att betala skatt'],
+      distractorsTh: ['ทิ้งลงถังขยะธรรมดา', 'ซื้อเสื้อผ้าใหม่', 'จ่ายภาษี'],
+      wordChunks: ['Att', 'panta']
+    },
+    {
+      id: 'begrepp_tack_for_maten',
+      themeId: 'greetings',
+      type: 'concept',
+      sv: 'Tack för maten',
+      th: 'ขอบคุณสำหรับอาหาร (มารยาทสำคัญที่พูดทุกครั้งหลังกินเสร็จ)',
+      satunFlavor: 'กินอิ่มแล้วบอกขอบคุณคนทำกับข้าว หรอยแรงขอบคุณจ้า!',
+      phoneticTh: 'ทัค-เฟอร์-มา-เทน',
+      pronunciationTip: 'för maten ออกเสียงสระเออคำว่า "เฟอร์" และ "มา-เทน"',
+      svgScene: 'heart_hands',
+      distractorsSv: ['God natt', 'Välkommen in', 'Hur mår du'],
+      distractorsTh: ['ราตรีสวัสดิ์', 'ยินดีต้อนรับ', 'คุณสบายดีไหม'],
+      wordChunks: ['Tack', 'för', 'maten']
+    },
+    {
+      id: 'begrepp_systembolaget',
+      themeId: 'city_transport',
+      type: 'concept',
+      sv: 'Systembolaget',
+      th: 'ร้านขายเครื่องดื่มแอลกอฮอล์แห่งเดียวของรัฐบาลสวีเดน',
+      satunFlavor: 'ร้านขายไวน์ของรัฐบาล ต้องอายุ 20 ปีขึ้นไปและพกบัตรประชาชนทุกคน!',
+      phoneticTh: 'ซิส-เตม-บู-ลา-เก็ต',
+      pronunciationTip: 'คนสวีเดนมักเรียกสั้นๆ ในภาษาพูดว่า "Systemet"',
+      svgScene: 'cart',
+      distractorsSv: ['Apoteket', 'Biblioteket', 'Sjukhuset'],
+      distractorsTh: ['ร้านขายยา', 'ห้องสมุด', 'โรงพยาบาล'],
+      wordChunks: ['Systembolaget']
+    },
+    {
+      id: 'begrepp_friskvard',
+      themeId: 'sfi_smalltalk',
+      type: 'concept',
+      sv: 'Friskvårdsbidrag',
+      th: 'เงินสวัสดิการส่งเสริมสุขภาพและออกกำลังกายจากที่ทำงาน',
+      satunFlavor: 'เงินช่วยค่าออกกำลังกาย เข้ายิม นวดตัว สบายใจเฉิบ!',
+      phoneticTh: 'ฟริสก์-วอร์ดส์-บี-ดร็อก',
+      pronunciationTip: 'frisk แปลว่า "สุขภาพดี/สดชื่น" vård แปลว่า "การดูแล"',
+      svgScene: 'happy',
+      distractorsSv: ['Parkeringsböter', 'Elräkning', 'Tågbiljett'],
+      distractorsTh: ['ใบสั่งที่จอดรถ', 'บิลค่าไฟฟ้า', 'ตั๋วรถไฟ'],
+      wordChunks: ['Friskvårdsbidrag']
+    },
+    {
+      id: 'begrepp_kallsortering',
+      themeId: 'everyday',
+      type: 'concept',
+      sv: 'Källsortering',
+      th: 'การคัดแยกขยะในครัวเรือน (พลาสติก กระดาษ แก้ว เศษอาหาร)',
+      satunFlavor: 'แยกขยะลงถังให้ถูกสี บ้านเมืองสะอาดสะอ้าน น่าอยู่จังฮู้!',
+      phoneticTh: 'แช็ลล์-ซอร์-เท-ริง',
+      pronunciationTip: 'käll ออกเสียง ช.ช้าง นุ่มๆ ว่า "แช็ลล์"',
+      svgScene: 'home',
+      distractorsSv: ['Gå på restaurang', 'Köpa ny bil', 'Måla väggarna'],
+      distractorsTh: ['ไปกินข้าวนอกบ้าน', 'ซื้อรถใหม่', 'ทาสีผนังห้อง'],
+      wordChunks: ['Källsortering']
+    },
+    {
+      id: 'begrepp_lordagsgodis',
+      themeId: 'fika_food',
+      type: 'concept',
+      sv: 'Lördagsgodis',
+      th: 'ประเพณีกินขนมหวานและลูกอมเฉพาะวันเสาร์',
+      satunFlavor: 'วันเสาร์พาเด็กๆ ไปตักลูกอมหวานๆ หรอยถูกใจ!',
+      phoneticTh: 'เลอร์-ดักส์-กู-ดิส',
+      pronunciationTip: 'lördag (วันเสาร์) + godis (ขนมหวาน/ลูกอม)',
+      svgScene: 'happy',
+      distractorsSv: ['Tandläkarbesök', 'Morgongympa', 'Skolprov'],
+      distractorsTh: ['ไปหาหมอฟัน', 'กายบริหารตอนเช้า', 'สอบที่โรงเรียน'],
+      wordChunks: ['Lördagsgodis']
+    },
+    {
+      id: 'begrepp_sjukanmalan',
+      themeId: 'sfi_smalltalk',
+      type: 'concept',
+      sv: 'Sjukanmälan',
+      th: 'การโทร/ส่งข้อความแจ้งลาป่วยกับที่ทำงานตั้งแต่ช่วงเช้า',
+      satunFlavor: 'โทรบอกหัวหน้าแต่หัวเช้าว่าไม่บาย มาทำงานไม่ได้นะจ๊ะ',
+      phoneticTh: 'ชู-คาน-แม-ลัน',
+      pronunciationTip: 'sjuk ออกเสียง ช.ช้าง นุ่ม ลากเสียงยาว แปลว่า ป่วย',
+      svgScene: 'phone',
+      distractorsSv: ['Semesteransökan', 'Löneförhandling', 'Arbetsintervju'],
+      distractorsTh: ['ขอลาพักร้อน', 'เจรจาขอขึ้นเงินเดือน', 'สัมภาษณ์งาน'],
+      wordChunks: ['Sjukanmälan']
+    },
+
+    /* ------------------------------------------------------------------------
+       PRAKTISKA VARDAGSDIALOGER (VERKLIGA SITUATIONER I SVERIGE)
+       ------------------------------------------------------------------------ */
+    {
+      id: 'dialog_apotek',
+      themeId: 'real_dialogs',
+      type: 'sentence',
+      sv: 'Hej, kan jag få hämta ut min medicin här?',
+      th: 'สวัสดีค่ะ ฉันมารับยาตามใบสั่งแพทย์ที่นี่ได้ไหมคะ?',
+      satunFlavor: 'หวัดดีจ้า ฉันมารับยาที่คุณหมอสั่งไว้ มารับตรงนี้ได้หม้ายจ๊ะ?',
+      phoneticTh: 'เฮย คาน-ย๊อก-ฟัว-แฮม-ตะ-อูท-มีน-เม-ดี-ซีน-แฮร์',
+      pronunciationTip: 'medicin ออกเสียงเน้นพยางค์สุดท้ายว่า "เม-ดี-ซีน"',
+      svgScene: 'polite',
+      distractorsSv: ['Jag vill köpa en bussbiljett', 'Kan jag boka tvättstugan här', 'Vad kostar en kanelbulle'],
+      distractorsTh: ['ฉันอยากซื้อตั๋วรถเมล์', 'ฉันจองห้องซักผ้าที่นี่ได้ไหม', 'ขนมปังอบชินนามอนราคาเท่าไร'],
+      wordChunks: ['Hej', 'kan', 'jag', 'få', 'hämta', 'ut', 'min', 'medicin', 'här']
+    },
+    {
+      id: 'dialog_ica_kassa',
+      themeId: 'real_dialogs',
+      type: 'sentence',
+      sv: 'Vill du ha kvittot? Nej tack, det är bra så',
+      th: 'รับใบเสร็จไหมคะ? ไม่เป็นไรค่ะ ขอบคุณค่ะ',
+      satunFlavor: 'รับใบเสร็จหม้ายจ๊ะ? ไม่เอาขอบคุณจ้า แค่นี้บายใจแล้ว!',
+      phoneticTh: 'วิล-ดู-ฮา-ควิท-ตุต เนย์-ทัค เด-แอร์-บรอ-ซัว',
+      pronunciationTip: 'kvittot (ใบเสร็จ) ออกเสียง ควิด-ตุต และ "det är bra så" แปลว่า พอแล้วค่ะ/ไม่เป็นไรค่ะ',
+      svgScene: 'cart',
+      distractorsSv: ['Jag vill betala kontant med mynt', 'Var ligger närmaste toalett', 'Jag glömde mina nycklar hemma'],
+      distractorsTh: ['ฉันอยากจ่ายเงินสดด้วยเหรียญ', 'ห้องน้ำที่ใกล้ที่สุดอยู่ตรงไหน', 'ฉันลืมกุญแจไว้ที่บ้าน'],
+      wordChunks: ['Vill', 'du', 'ha', 'kvittot', 'Nej', 'tack', 'det', 'är', 'bra', 'så']
+    },
+    {
+      id: 'dialog_swish_nota',
+      themeId: 'real_dialogs',
+      type: 'sentence',
+      sv: 'Det kostar hundra kronor, jag swishar dig direkt',
+      th: 'ราคาร้อยโครน เดี๋ยวฉันโอนสวิชให้เธอทันทีเลยนะ',
+      satunFlavor: 'ร้อยโครนนะจ๊ะ เดี๋ยวฉานกดโอนสวิชเข้ามือถือให้เดี๋ยวนี้เลย!',
+      phoneticTh: 'เด-คอส-ตาร์-ฮุน-ดระ-ครู-นัวร์ ย๊อก-สวิช-ชาร์-เดย์-ดี-เร็กต์',
+      pronunciationTip: 'hundra = หนึ่งร้อย, direkt = ทันทีทันใด',
+      svgScene: 'phone',
+      distractorsSv: ['Jag har inga pengar på kortet', 'Vi måste gå till banken imorgon', 'Kan jag låna din cykel ikväll'],
+      distractorsTh: ['ฉันไม่มีเงินในบัตร', 'เราต้องไปธนาคารพรุ่งนี้', 'ฉันขอยืมจักรยานเธอคืนนี้ได้ไหม'],
+      wordChunks: ['Det', 'kostar', 'hundra', 'kronor', 'jag', 'swishar', 'dig', 'direkt']
+    },
+    {
+      id: 'dialog_sambo_middag',
+      themeId: 'real_dialogs',
+      type: 'sentence',
+      sv: 'Älskling, vad vill du äta till middag ikväll?',
+      th: 'ที่รัก คืนนี้เธออยากกินอะไรเป็นอาหารเย็นจ๊ะ?',
+      satunFlavor: 'สุดที่รัก คืนนี้อยากกินกับข้าวไหรดีจ๊ะ ฉานทำให้หรอยๆ เลย!',
+      phoneticTh: 'เอลส์-คลิง วอด-วิล-ดู-แอ-ตะ-ทิล-มิด-ด็อก-อี-คแว็ลล์',
+      pronunciationTip: 'älskling (ที่รัก) คำหวานที่คนรักในสวีเดนใช้เรียกกันบ่อยที่สุด',
+      svgScene: 'heart',
+      distractorsSv: ['Tåget går klockan åtta på morgonen', 'Det snöar mycket ute i trädgården', 'Jag måste tvätta kläderna nu'],
+      distractorsTh: ['รถไฟออกตอนแปดโมงเช้า', 'ข้างนอกในสวนหิมะตกหนักมาก', 'ฉันต้องไปซักผ้าเดี๋ยวนี้'],
+      wordChunks: ['Älskling', 'vad', 'vill', 'du', 'äta', 'till', 'middag', 'ikväll']
+    },
+    {
+      id: 'dialog_fika_jobb',
+      themeId: 'real_dialogs',
+      type: 'sentence',
+      sv: 'Ska vi ta en fika tillsammans och prata lite?',
+      th: 'พวกเราไปพักจิบกาแฟและคุยกันสักหน่อยไหมคะ?',
+      satunFlavor: 'ไปจิบน้ำชาโกปี๊แหลงกันสักหีดหม้ายจ๊ะ คลายเครียดบายใจ!',
+      phoneticTh: 'สกะ-วี-ทา-เอน-ฟี-ก่า-ทิล-ซัม-มันส์-อ็อค-พรอ-ตะ-ลี-เตะ',
+      pronunciationTip: 'tillsammans (ด้วยกัน) เน้นเสียงพยางค์กลางว่า "ทิล-ซัม-มันส์"',
+      svgScene: 'coffee',
+      distractorsSv: ['Jag är mycket trött och vill sova', 'Var är mina glasögon och min plånbok', 'Bussen är sen tio minuter idag'],
+      distractorsTh: ['ฉันเหนื่อยมากและอยากนอนหลับ', 'แว่นตากับกระเป๋าตังค์ฉันอยู่ไหน', 'วันนี้รถเมล์มาช้าไปสิบนาที'],
+      wordChunks: ['Ska', 'vi', 'ta', 'en', 'fika', 'tillsammans', 'och', 'prata', 'lite']
+    },
+    {
+      id: 'dialog_tvatt_tid',
+      themeId: 'real_dialogs',
+      type: 'sentence',
+      sv: 'Ursäkta, har du tvättid nu eller är maskinen ledig?',
+      th: 'ขอโทษนะคะ ตอนนี้คุณมีคิวซักผ้าอยู่หรือว่าเครื่องว่างคะ?',
+      satunFlavor: 'ขอโทษนะจ๊ะ ตอนนี้ถึงคิวซักผ้าของเธอหรือว่าเครื่องว่างอยู่จ๊ะ?',
+      phoneticTh: 'อูร์-เช็ค-ตะ ฮาร์-ดู-ทแว็ตต์-ทีด-นู แอล-แลร์-มา-ชี-เนน-เลีย-ดิก',
+      pronunciationTip: 'ledig ออกเสียงว่า "เลีย-ดิก" แปลว่า ว่าง หรือ วันหยุด',
+      svgScene: 'home',
+      distractorsSv: ['Jag ska köpa kaffe i affären', 'Solen skiner varmt på himlen', 'Kan du skicka mig ett sms'],
+      distractorsTh: ['ฉันจะไปซื้อกาแฟที่ร้าน', 'แดดส่องอบอุ่นบนท้องฟ้า', 'ช่วยส่งข้อความ sms ให้ฉันได้ไหม'],
+      wordChunks: ['Ursäkta', 'har', 'du', 'tvättid', 'nu', 'eller', 'är', 'maskinen', 'ledig']
+    },
+    {
+      id: 'dialog_vardcentral',
+      themeId: 'real_dialogs',
+      type: 'sentence',
+      sv: 'Hej, jag vill boka en tid hos doktorn',
+      th: 'สวัสดีค่ะ ฉันต้องการจองคิวนัดตรวจกับคุณหมอค่ะ',
+      satunFlavor: 'หวัดดีจ้า ฉันอยากจองคิวนัดหาหมอ ตัวร้อนไม่ค่อยบายจ้า',
+      phoneticTh: 'เฮย ย๊อก-วิล-บู-คะ-เอน-ทีด-ฮูส-ด๊อค-ตอร์น',
+      pronunciationTip: 'doktorn ออกเสียงสระโอว่า "ด๊อค-ตอร์น" แปลว่า คุณหมอ',
+      svgScene: 'polite',
+      distractorsSv: ['Jag letar efter en bra restaurang', 'Hur mycket kostar en biobiljett', 'Bussen stannar vid stationen'],
+      distractorsTh: ['ฉันกำลังมองหาร้านอาหารอร่อยๆ', 'ตั๋วหนังราคาเท่าไรคะ', 'รถเมล์จอดที่สถานี'],
+      wordChunks: ['Hej', 'jag', 'vill', 'boka', 'en', 'tid', 'hos', 'doktorn']
+    },
+    {
+      id: 'dialog_panta_kvitto',
+      themeId: 'real_dialogs',
+      type: 'sentence',
+      sv: 'Tryck på den gröna knappen för att få pantkvittot',
+      th: 'กดปุ่มสีเขียวเพื่อรับใบเสร็จเงินคืนค่าขวดนะคะ',
+      satunFlavor: 'กดปุ่มเขียวตรงนี้เลยจ้า แล้วตู้จะปริ้นท์สลิปเงินคืนออกมาให้!',
+      phoneticTh: 'ทริค-พัว-เด็น-เกรือ-นะ-คナップ-เป็น เฟอร์-อัท-ฟัว-พานท์-ควิท-ตุต',
+      pronunciationTip: 'grön = สีเขียว, knapp = ปุ่มกด, kvitto = ใบเสร็จ',
+      svgScene: 'cart',
+      distractorsSv: ['Det snöar mycket ute på vägen', 'Jag vill betala med kontanter här', 'Tåget har redan åkt från perrongen'],
+      distractorsTh: ['หิมะตกหนักมากบนถนนข้างนอก', 'ฉันอยากจ่ายด้วยเงินสดตรงนี้', 'รถไฟออกจากชานชาลาไปแล้ว'],
+      wordChunks: ['Tryck', 'på', 'den', 'gröna', 'knappen', 'för', 'att', 'få', 'pantkvittot']
     }
   ];
 
@@ -13549,9 +14396,12 @@ body.app-theme-sunset {
         if (!listContainer || !summaryEl) return;
 
         const allItems = window.ContentDB.getAllItems();
+        const conceptCount = allItems.filter((i) => i.type === 'concept').length;
         const filteredItems =
           activeVocabTheme === 'all'
             ? allItems
+            : activeVocabTheme === 'concepts'
+            ? allItems.filter((i) => i.type === 'concept')
             : window.ContentDB.getItemsByTheme(activeVocabTheme);
 
         const learnedCount = allItems.filter((i) => srs.getRecord(i.id).masteryLevel > 0).length;
@@ -13561,12 +14411,15 @@ body.app-theme-sunset {
           `<button type="button" class="sim-pill-btn ${activeVocabTheme === 'all' ? 'selected' : ''}" data-vocab-theme="all" style="${
             activeVocabTheme === 'all' ? 'background: var(--sky); color: #fff; border-color: var(--sky-dark);' : ''
           }">Alla (${allItems.length})</button>`,
+          `<button type="button" class="sim-pill-btn ${activeVocabTheme === 'concepts' ? 'selected' : ''}" data-vocab-theme="concepts" style="${
+            activeVocabTheme === 'concepts' ? 'background: #8B5CF6; color: #fff; border-color: #7C3AED;' : ''
+          }">🇸🇪 Begrepp (${conceptCount})</button>`,
           ...window.ContentDB.getThemes().map(
             (t) => `
             <button type="button" class="sim-pill-btn" data-vocab-theme="${t.id}" style="${
               activeVocabTheme === t.id ? 'background: var(--sky); color: #fff; border-color: var(--sky-dark);' : ''
             }">
-              ${t.icon} ${t.titleSv.replace(/^\d+\.\s*/, '')}
+              ${t.icon} ${t.shortTitleSv || t.titleSv.replace(/^\d+\.\s*/, '')}
             </button>
           `
           )
@@ -14050,7 +14903,7 @@ body.app-theme-sunset {
       icon: '📚',
       target: 30,
       rewardGems: 25,
-      checkUnlocked: (state, sm) => true
+      checkUnlocked: (state, sm) => Object.keys(sm.state.srsData || {}).length >= 30
     },
     {
       id: 'fashionista',
@@ -14066,9 +14919,9 @@ body.app-theme-sunset {
       nameSv: 'Juvel-Samlaren',
       nameTh: 'เศรษฐีเพชร',
       icon: '💎',
-      target: 150,
+      target: 200,
       rewardGems: 50,
-      checkUnlocked: (state, sm) => (sm.state.gems || 0) >= 150
+      checkUnlocked: (state, sm) => (sm.state.gems || 0) >= 200
     }
   ];
 
@@ -14557,6 +15410,61 @@ body.app-theme-sunset {
       `;
       stage.prepend(banner);
     }
+,
+
+    startCultureMaster() {
+      const allItems = window.ContentDB.getAllItems();
+      const conceptItems = allItems.filter((i) => i.type === 'concept');
+      const dialogItems = allItems.filter((i) => i.id && i.id.startsWith('dialog_'));
+      const pool = conceptItems.length || dialogItems.length ? [...conceptItems, ...dialogItems] : allItems;
+      const shuffled = [...pool].sort(() => Math.random() - 0.5);
+      const qGen = window.GameEngine.QuestionGenerator;
+      const lessonCtrl = window.GameEngine.LessonController;
+
+      const queue = [];
+      for (let i = 0; i < 10; i++) {
+        const item = shuffled[i % shuffled.length];
+        if (i % 3 === 0 && qGen.createConceptQuestion) {
+          queue.push(qGen.createConceptQuestion(item, allItems));
+        } else if (i % 3 === 1 && qGen.createDialogueQuestion) {
+          queue.push(qGen.createDialogueQuestion(item, allItems));
+        } else if (qGen.createClozeQuestion) {
+          queue.push(qGen.createClozeQuestion(item, allItems));
+        } else {
+          queue.push(qGen.createImageChoice(item, allItems));
+        }
+      }
+
+      window.VisualEngine?.Mascot?.setState('celebrating');
+      window.VisualEngine?.Mascot?.say(
+        `🇸🇪 Begrepps-Mästaren! 10 frågor om svensk vardag och kultur!`,
+        `ท้าดวล 10 คำศัพท์และวัฒนธรรมสวีเดนที่ใช้จริงในชีวิตประจำวัน!`,
+        'happy',
+        4000
+      );
+
+      lessonCtrl.launchCustomLesson('all', queue, { isCultureMaster: true });
+    },
+
+    startSpeedWordMatch() {
+      const allItems = window.ContentDB.getAllItems();
+      const qGen = window.GameEngine.QuestionGenerator;
+      const lessonCtrl = window.GameEngine.LessonController;
+
+      const queue = [];
+      for (let i = 0; i < 3; i++) {
+        queue.push(qGen.createMatchingSprintQuestion(allItems, allItems));
+      }
+
+      window.VisualEngine?.Mascot?.say(
+        `⚡ Ordjakten! Para ihop alla ord så snabbt du kan!`,
+        `จับคู่คำศัพท์ให้เร็วที่สุด ทำลายสถิติเวลากันต๊ะ!`,
+        'encourage',
+        3500
+      );
+
+      lessonCtrl.launchCustomLesson('all', queue, { isSpeedMatch: true });
+    }
   };
 
   window.GameEngine = Object.assign(window.GameEngine || {}, {
@@ -14854,6 +15762,44 @@ body.app-theme-sunset {
           </button>
         </div>
 
+        <!-- 4. TÄVLINGSLÄGE D: BEGREPPS-MÄSTAREN (KULTUR & SAMHÄLLE) -->
+        <div class="arena-card" style="border-color: #8B5CF6; background: linear-gradient(135deg, #FFFFFF 0%, #FAF5FF 100%);">
+          <div class="arena-card-header">
+            <div class="arena-icon-badge" style="background: var(--lavender-soft); color: #7B2CBF; font-size: 1.5rem; display: flex; align-items: center; justify-content: center;">🇸🇪</div>
+            <div style="flex: 1;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="font-weight: 900; font-size: 1.05rem;">4. Begrepps-Mästaren (Kultur & Samhälle)</h3>
+                <span class="satun-badge" style="background: #EDE9FE; color: #6D28D9;">🇸🇪 10 Begrepp</span>
+              </div>
+              <p class="th-text" style="font-size: 0.84rem; color: var(--text-secondary); margin-top: 2px;">
+                ท้าดวล 10 คำศัพท์วัฒนธรรมสวีเดนที่จำเป็นที่สุด: Fika, Lagom, Allemansrätten, Sambo, Swish, VAB, Panta!
+              </p>
+            </div>
+          </div>
+          <button type="button" class="btn-3d w-full" id="btn-start-culture-boss" style="min-height: 48px; background: #8B5CF6; color: #fff; border-color: #7C3AED; box-shadow: 0 4px 0 #6D28D9;">
+            🇸🇪 Starta Begrepps-Mästaren • ลุยคำศัพท์วัฒนธรรม
+          </button>
+        </div>
+
+        <!-- 5. TÄVLINGSLÄGE E: ORD-JAKTEN (SPEED WORD MATCH) -->
+        <div class="arena-card" style="border-color: #EC4899; background: linear-gradient(135deg, #FFFFFF 0%, #FDF2F8 100%);">
+          <div class="arena-card-header">
+            <div class="arena-icon-badge" style="background: #FCE7F3; color: #DB2777; font-size: 1.5rem; display: flex; align-items: center; justify-content: center;">⚡</div>
+            <div style="flex: 1;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="font-weight: 900; font-size: 1.05rem;">5. Ordjakten (Speed Word Match)</h3>
+                <span class="satun-badge" style="background: #FCE7F3; color: #BE185D;">⚡ 3 Ronder</span>
+              </div>
+              <p class="th-text" style="font-size: 0.84rem; color: var(--text-secondary); margin-top: 2px;">
+                จับคู่คำศัพท์ภาษาสวีเดนและไทยให้เร็วที่สุด ทำลายสถิติความเร็วรับโบนัสเพชร +20 💎!
+              </p>
+            </div>
+          </div>
+          <button type="button" class="btn-3d w-full" id="btn-start-speed-match" style="min-height: 48px; background: #EC4899; color: #fff; border-color: #DB2777; box-shadow: 0 4px 0 #BE185D;">
+            ⚡ Starta Ordjakten • เริ่มจับคู่ด่วน
+          </button>
+        </div>
+
         <!-- 4. SPELBARA BOOSTERS & JUVEL-SINKS (LÖSER INFLATIONEN) -->
         <div class="arena-card" style="border-color: #38BDF8; background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%);">
           <div class="arena-card-header">
@@ -14933,7 +15879,11 @@ body.app-theme-sunset {
                       ${
                         q.claimed
                           ? `<span class="satun-badge" style="background: var(--emerald-soft); color: var(--emerald-dark); border-color: var(--emerald);">✅ Klar</span>`
-                          : `<button type="button" class="btn-3d ${isReady ? 'btn-yellow' : 'btn-surface'}" data-claim-daily="${q.id}" style="min-height: 44px; padding: 6px 12px; font-size: 0.82rem;">
+                          : isReady
+                          ? `<button type="button" class="btn-3d btn-yellow" data-claim-daily="${q.id}" style="min-height: 44px; padding: 6px 12px; font-size: 0.82rem;">
+                              +${q.rewardGems} 💎 Hämta
+                            </button>`
+                          : `<button type="button" class="btn-3d btn-surface" disabled style="min-height: 44px; padding: 6px 12px; font-size: 0.82rem; opacity: 0.5; cursor: not-allowed;">
                               +${q.rewardGems} 💎
                             </button>`
                       }
@@ -15090,6 +16040,16 @@ body.app-theme-sunset {
         window.VisualEngine?.haptic('light', e.currentTarget);
         const sel = document.getElementById('boss-theme-select');
         ArenaModes.startThemeBoss(sel ? sel.value : this.selectedBossThemeId);
+      });
+
+      document.getElementById('btn-start-culture-boss')?.addEventListener('click', (e) => {
+        window.VisualEngine?.haptic('light', e.currentTarget);
+        ArenaModes.startCultureMaster();
+      });
+
+      document.getElementById('btn-start-speed-match')?.addEventListener('click', (e) => {
+        window.VisualEngine?.haptic('light', e.currentTarget);
+        ArenaModes.startSpeedWordMatch();
       });
 
       competeSection.querySelectorAll('[data-buy-booster]').forEach((btn) => {
@@ -15255,11 +16215,16 @@ body.app-theme-sunset {
       if (!b) return;
       if ((Part5State.data.claimedBadges || []).includes(badgeId)) return;
 
+      const sm = window.GameEngine.StateManager;
+      if (!b.checkUnlocked(Part5State.data, sm)) {
+        window.SpeechEngine?.playSound('retry');
+        return false;
+      }
+
       Part5State.data.claimedBadges = Part5State.data.claimedBadges || [];
       Part5State.data.claimedBadges.push(badgeId);
       Part5State.save();
 
-      const sm = window.GameEngine.StateManager;
       sm.addGems(b.rewardGems);
 
       window.SpeechEngine?.playSound('fanfare');
@@ -15277,7 +16242,10 @@ body.app-theme-sunset {
     handleClaimDailyQuest(questId, btnEl) {
       const q = Part5State.data.dailyQuestsData?.items?.[questId];
       if (!q || q.claimed) return;
-      if (q.progress < q.target) q.progress = q.target;
+      if (q.progress < q.target) {
+        window.SpeechEngine?.playSound('retry');
+        return false;
+      }
 
       q.claimed = true;
       Part5State.save();
@@ -15746,6 +16714,8 @@ body.app-theme-sunset {
       Part5State,
       ArenaModes,
       CompeteAndShopUI,
+      handleClaimBadge: (...args) => CompeteAndShopUI.handleClaimBadge(...args),
+      handleClaimDailyQuest: (...args) => CompeteAndShopUI.handleClaimDailyQuest(...args),
       MinaOrdBank,
       WelcomeOnboard,
       MASCOT_ACCESSORIES,
@@ -15755,7 +16725,9 @@ body.app-theme-sunset {
       startTimedSprintArena: () => ArenaModes.startSnabbSprinten60(),
       startScoreAttackArena: () => ArenaModes.startSnabbSprinten60(),
       startPronunciationChallenge: () => ArenaModes.startUttalsUtmaningen(),
-      startThemeBoss: (themeId) => ArenaModes.startThemeBoss(themeId)
+      startThemeBoss: (themeId) => ArenaModes.startThemeBoss(themeId),
+      startCultureMaster: () => ArenaModes.startCultureMaster(),
+      startSpeedWordMatch: () => ArenaModes.startSpeedWordMatch()
     });
 
     window.VisualEngine?.renderMascot?.('idle');
