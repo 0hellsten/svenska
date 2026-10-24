@@ -242,7 +242,7 @@
     {
       id: 'mystery_box',
       nameSv: 'Lyckolåda / Gåvo-kista',
-      nameTh: 'กล่องสุ่มนำโชค Nong Dala',
+      nameTh: 'กล่องสุ่มนำโชค Wilawan',
       satunDesc: 'ลุ้นรับเพชรโบนัสก้อนโต (+150 💎), XP มหาศาล หรือไอเทมลับ!',
       icon: '🎁',
       costGems: 50
@@ -1215,7 +1215,7 @@
                 <span class="satun-badge">🏅 ${clearedBossCount}/${themes.length} Guld</span>
               </div>
               <p class="th-text" style="font-size: 0.84rem; color: var(--text-secondary); margin-top: 2px;">
-                ทดสอบไฟนอล 10 ข้อผสมกับ Nong Dala ผ่านแล้วรับเหรียญทองประจำหมวด + 30 💎!
+                ทดสอบไฟนอล 10 ข้อผสมกับ Wilawan ผ่านแล้วรับเหรียญทองประจำหมวด + 30 💎!
               </p>
             </div>
           </div>
@@ -1375,7 +1375,7 @@
             <div class="arena-icon-badge" style="background: var(--lavender-soft); color: #7B2CBF;">${window.VisualEngine.Library.ribbon(28)}</div>
             <div style="flex: 1;">
               <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="font-weight: 900; font-size: 1.05rem;">Nong Dalas Garderob (10 st)</h3>
+                <h3 style="font-weight: 900; font-size: 1.05rem;">Wilawans Garderob (10 st)</h3>
                 <span class="satun-badge">💎 ${gems}</span>
               </div>
               <p class="th-text" style="font-size: 0.83rem; color: var(--text-secondary);">
@@ -1390,7 +1390,7 @@
               ${window.VisualEngine.Mascot.getSVG(78, 'celebrating')}
             </div>
             <div style="flex: 1;">
-              <div style="font-weight: 900; font-size: 0.94rem;">Nong Dala bär:</div>
+              <div style="font-weight: 900; font-size: 0.94rem;">Wilawan bär:</div>
               <div class="th-text" style="font-size: 0.85rem; color: #7B2CBF; font-weight: 700;">
                 ${
                   Part5State.data.equippedAccessory
@@ -1667,7 +1667,7 @@
       backdrop.innerHTML = `
         <div class="welcome-onboard-card" style="border-color: #38BDF8;">
           <div style="font-size: 4rem; animation: trophyBounce 1s infinite;">${prizeIcon}</div>
-          <span class="satun-badge">🎁 Nong Dalas Lyckolåda Öppnad!</span>
+          <span class="satun-badge">🎁 Wilawans Lyckolåda Öppnad!</span>
           <h2 style="font-size: 1.45rem; font-weight: 900; color: var(--emerald-dark);">${prizeTitle}</h2>
           <p class="th-text" style="font-size: 0.95rem; color: var(--text-secondary);">${prizeDesc}</p>
           <button type="button" class="btn-3d btn-green w-full" id="btn-close-mystery-box" style="margin-top: 10px;">
@@ -1861,7 +1861,7 @@
         document.body.appendChild(this.statsBackdrop);
       }
       this.renderStatsModal();
-      requestAnimationFrame(() => this.statsBackdrop.classList.add('open'));
+      this.statsBackdrop.classList.add('open');
     },
 
     closeStatsModal() {
@@ -2013,7 +2013,9 @@
         .join('');
     },
 
-    // --- 2. JUVEL-BOUTIQUE & LULL-LULL (DIAMANTERNA) ---
+    // --- 2. WILAWANS BUTIK & GARDEROB (DIAMANTERNA) ---
+    isMascotMagnified: false,
+
     openShopModal() {
       if (!this.shopBackdrop) {
         this.shopBackdrop = document.createElement('div');
@@ -2022,7 +2024,7 @@
         document.body.appendChild(this.shopBackdrop);
       }
       this.renderShopModal();
-      requestAnimationFrame(() => this.shopBackdrop.classList.add('open'));
+      this.shopBackdrop.classList.add('open');
     },
 
     closeShopModal() {
@@ -2036,22 +2038,24 @@
       const gems = sm.state.gems || 0;
       const freezes = Part5State.data.streakFreezesCount || 0;
       const isDoubleXp = Part5State.isDoubleXpActive();
+      const isMagnified = Boolean(this.isMascotMagnified);
+      const mascotSize = isMagnified ? 220 : 135;
 
       const equippedAcc = MASCOT_ACCESSORIES.find((a) => a.id === Part5State.data.equippedAccessory);
       const equippedName = equippedAcc ? `${equippedAcc.nameSv} (${equippedAcc.nameTh})` : 'Ingen accessoar vald';
       const equippedDesc = equippedAcc ? equippedAcc.satunDesc : 'Välj en fin hatt eller pynt nedan!';
 
       this.shopBackdrop.innerHTML = `
-        <div class="gamification-modal-card" role="dialog" aria-label="Juvel-Boutique och Lull-lull">
+        <div class="gamification-modal-card" role="dialog" aria-label="Wilawans Butik">
           <div class="gamification-modal-header">
             <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="font-size: 1.6rem;">💎</span>
+              <span style="font-size: 1.6rem;">🛍️</span>
               <div>
-                <div style="font-weight: 900; font-size: 1.15rem; color: var(--text-main);">
-                  Juvel-Boutique: Teman & Lull-lull
+                <div style="font-weight: 900; font-size: 1.18rem; color: var(--text-main);">
+                  Wilawans Butik
                 </div>
                 <div class="th-text" style="font-size: 0.78rem; color: var(--text-secondary);">
-                  ร้านค้าธีมสีและแต่งตัว Nong Dala
+                  ร้านของวิลาวัลย์ • แต่งตัวและเปลี่ยนธีมสี
                 </div>
               </div>
             </div>
@@ -2105,24 +2109,45 @@
             <div style="display: flex; justify-content: space-between; align-items: center;">
               <div style="font-weight: 900; font-size: 0.98rem; display: flex; align-items: center; gap: 6px;">
                 <span>👑</span>
-                <span>Nong Dalas Lull-lull & Garderob</span>
+                <span>Wilawans Garderob & Styling</span>
               </div>
               <span style="font-size: 0.76rem; color: var(--text-secondary); font-weight: 700;">10 Accessoarer</span>
             </div>
 
-            <!-- Live Mascot Preview Card -->
-            <div style="display: flex; align-items: center; gap: 14px; background: var(--surface); border: 2px solid var(--border-light); border-radius: 18px; padding: 10px 14px;">
-              <div id="shopmodal-mascot-preview" style="width: 68px; height: 68px; flex-shrink: 0;">
-                ${window.VisualEngine.Mascot.getSVG(68, 'celebrating')}
+            <!-- Interaktivt Podium för Wilawan (Större variant & klickbar för zoom) -->
+            <div class="shop-mascot-stage ${isMagnified ? 'stage-magnified' : ''}" id="shop-mascot-stage">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <div style="text-align: left;">
+                  <div style="font-weight: 800; font-size: 0.75rem; color: var(--text-secondary);">Wilawan bär:</div>
+                  <div style="font-weight: 900; font-size: 0.92rem; color: #7B2CBF;">${equippedName}</div>
+                </div>
+                <button type="button" id="btn-toggle-shop-mascot-zoom" class="satun-badge" style="cursor: pointer; background: #F3E8FF; color: #7B2CBF; border-color: #D8B4FE; font-weight: 800; font-size: 0.74rem;">
+                  ${isMagnified ? '🔎 Gör mindre' : '🔍 Förstora Wilawan'}
+                </button>
               </div>
-              <div style="flex: 1;">
-                <div style="font-weight: 800; font-size: 0.78rem; color: var(--text-secondary);">Aktuell styling:</div>
-                <div style="font-weight: 900; font-size: 0.92rem; color: #7B2CBF;">
-                  ${equippedName}
+
+              <!-- Klickbar Maskot (Tryck för att göra henne större eller reagera) -->
+              <div id="shopmodal-mascot-click-target" title="Tryck för att förstora eller se Wilawan reagera!" style="cursor: pointer; display: inline-flex; justify-content: center; align-items: center; margin: 8px 0; transition: transform 0.25s ease;">
+                <div class="dala-mascot-wrapper dala-state-idle" id="shopmodal-mascot-wrapper">
+                  ${window.VisualEngine.Mascot.getSVG(mascotSize, 'idle')}
                 </div>
-                <div class="th-text" style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 2px;">
-                  ${equippedDesc}
-                </div>
+              </div>
+
+              <div class="th-text" style="font-size: 0.75rem; color: #7C3AED; font-weight: 700; margin-bottom: 8px;">
+                ${isMagnified ? '🌟 Wilawan i full storlek! Tryck på knapparna för att få henne att agera:' : '💡 Tryck på Wilawan för att göra henne större eller testa gesterna:'}
+              </div>
+
+              <!-- Interaktiva knappar: Blinka, Vinka, Stegra -->
+              <div style="display: flex; justify-content: center; gap: 8px;">
+                <button type="button" class="btn-3d btn-surface mascot-act-btn" id="btn-shop-act-blink" style="flex: 1; min-height: 38px; padding: 4px 6px; font-size: 0.8rem; font-weight: 900; border-radius: 12px;">
+                  👁️ Blinka
+                </button>
+                <button type="button" class="btn-3d btn-yellow mascot-act-btn" id="btn-shop-act-wave" style="flex: 1; min-height: 38px; padding: 4px 6px; font-size: 0.8rem; font-weight: 900; border-radius: 12px;">
+                  👋 Vinka
+                </button>
+                <button type="button" class="btn-3d btn-green mascot-act-btn" id="btn-shop-act-rear" style="flex: 1; min-height: 38px; padding: 4px 6px; font-size: 0.8rem; font-weight: 900; border-radius: 12px;">
+                  🐎 Stegra!
+                </button>
               </div>
             </div>
 
@@ -2189,11 +2214,38 @@
         </div>
       `;
 
-      // Händelsekopplingar i Juvel-Boutique
+      // Händelsekopplingar i Wilawans Butik
       document.getElementById('btn-close-shop-modal')?.addEventListener('click', () => this.closeShopModal());
       this.shopBackdrop.onclick = (e) => {
         if (e.target === this.shopBackdrop) this.closeShopModal();
       };
+
+      // Zoom toggle för Wilawan
+      const toggleMascotZoom = () => {
+        this.isMascotMagnified = !this.isMascotMagnified;
+        this.renderShopModal();
+        if (this.isMascotMagnified) {
+          window.VisualEngine?.Mascot?.triggerAction?.('wave');
+        } else {
+          window.SpeechEngine?.playSound?.('tap');
+        }
+      };
+      document.getElementById('btn-toggle-shop-mascot-zoom')?.addEventListener('click', toggleMascotZoom);
+      document.getElementById('shopmodal-mascot-click-target')?.addEventListener('click', toggleMascotZoom);
+
+      // Gester: Blinka, Vinka, Stegra
+      document.getElementById('btn-shop-act-blink')?.addEventListener('click', (e) => {
+        window.VisualEngine?.haptic?.('light', e.currentTarget);
+        window.VisualEngine?.Mascot?.triggerAction?.('blink');
+      });
+      document.getElementById('btn-shop-act-wave')?.addEventListener('click', (e) => {
+        window.VisualEngine?.haptic?.('light', e.currentTarget);
+        window.VisualEngine?.Mascot?.triggerAction?.('wave');
+      });
+      document.getElementById('btn-shop-act-rear')?.addEventListener('click', (e) => {
+        window.VisualEngine?.haptic?.('light', e.currentTarget);
+        window.VisualEngine?.Mascot?.triggerAction?.('rear');
+      });
 
       // Färgteman
       this.shopBackdrop.querySelectorAll('[data-shopmodal-theme]').forEach((btn) => {
@@ -2238,7 +2290,7 @@
         document.body.appendChild(this.xpBackdrop);
       }
       this.renderXPModal();
-      requestAnimationFrame(() => this.xpBackdrop.classList.add('open'));
+      this.xpBackdrop.classList.add('open');
     },
 
     closeXPModal() {
@@ -2700,7 +2752,7 @@
       }
 
       overlay.innerHTML = `
-        <div class="welcome-onboard-card" role="dialog" aria-label="Välkommen till Svenska med Nong Dala">
+        <div class="welcome-onboard-card" role="dialog" aria-label="Välkommen till Svenska med Wilawan">
           <div style="width: 108px; height: 108px;">
             ${window.VisualEngine.Mascot.getSVG(108, 'celebrating')}
           </div>

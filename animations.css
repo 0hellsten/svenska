@@ -266,6 +266,99 @@
   100% { transform: scaleY(1.18) scaleX(1.04) rotate(2deg); opacity: 1; }
 }
 
+/* --- INTERAKTIVA GESTER: BLINKA, VINKA, STEGRA --- */
+.dala-action-blink .dala-eye-lid {
+  animation: dalaBlinkTwice 0.75s ease-in-out !important;
+  transform-origin: 50% 38%;
+}
+
+.dala-action-blink .dala-body-group {
+  animation: dalaBlinkHeadNod 0.75s ease-in-out !important;
+  transform-origin: 50% 90%;
+}
+
+@keyframes dalaBlinkTwice {
+  0%, 100% { transform: scaleY(1); }
+  22%, 38% { transform: scaleY(0.08); }
+  55% { transform: scaleY(1); }
+  72%, 88% { transform: scaleY(0.08); }
+}
+
+@keyframes dalaBlinkHeadNod {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  35% { transform: rotate(3deg) translateY(2px); }
+  70% { transform: rotate(-2deg) translateY(1px); }
+}
+
+.dala-action-wave .dala-arm-wave {
+  animation: dalaVigorousWave 1.4s ease-in-out !important;
+  transform-origin: 30% 60%;
+}
+
+.dala-action-wave .dala-body-group {
+  animation: dalaHappyTilt 1.4s ease-in-out !important;
+  transform-origin: 50% 90%;
+}
+
+.dala-action-wave .dala-eyes-happy {
+  display: block !important;
+}
+
+.dala-action-wave .dala-eyes-normal {
+  display: none !important;
+}
+
+@keyframes dalaVigorousWave {
+  0% { transform: rotate(0deg); }
+  15% { transform: rotate(-28deg); }
+  30% { transform: rotate(38deg); }
+  45% { transform: rotate(-24deg); }
+  60% { transform: rotate(34deg); }
+  75% { transform: rotate(-18deg); }
+  90% { transform: rotate(26deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes dalaHappyTilt {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(-6deg) scale(1.04); }
+  75% { transform: rotate(5deg) scale(1.04); }
+}
+
+.dala-action-rear .dala-body-group {
+  animation: dalaHorseRear 1.8s cubic-bezier(0.25, 1, 0.5, 1) !important;
+  transform-origin: 30% 95%;
+}
+
+.dala-action-rear .dala-arm-wave {
+  animation: dalaFrontLegsKick 1.8s ease-in-out !important;
+  transform-origin: 30% 60%;
+}
+
+.dala-action-rear .dala-sparkles-cluster {
+  opacity: 1 !important;
+  animation: dalaSparkleSpin 1.8s linear !important;
+}
+
+@keyframes dalaHorseRear {
+  0% { transform: rotate(0deg) translateY(0) scale(1); }
+  18% { transform: rotate(-8deg) translateY(4px) scale(0.98); }
+  45% { transform: rotate(-34deg) translateY(-28px) scale(1.15); }
+  60% { transform: rotate(-36deg) translateY(-30px) scale(1.18); }
+  75% { transform: rotate(-28deg) translateY(-22px) scale(1.12); }
+  88% { transform: rotate(4deg) translateY(-2px) scale(1.02); }
+  100% { transform: rotate(0deg) translateY(0) scale(1); }
+}
+
+@keyframes dalaFrontLegsKick {
+  0% { transform: rotate(0); }
+  35% { transform: rotate(45deg); }
+  50% { transform: rotate(-25deg); }
+  65% { transform: rotate(40deg); }
+  80% { transform: rotate(-15deg); }
+  100% { transform: rotate(0); }
+}
+
 /* --------------------------------------------------------------------------
    2. PRATBUBBLA MED SATUN-DIALEKT & THAILÄNDSKA
    -------------------------------------------------------------------------- */
@@ -1543,6 +1636,49 @@ body.app-theme-sunset {
   0% { transform: scale(1) rotate(-2deg); }
   100% { transform: scale(1.08) rotate(3deg); }
 }
+
+/* Wilawan Butik & Garderob Podium */
+.shop-mascot-stage {
+  position: relative;
+  border-radius: 22px;
+  background: radial-gradient(circle at center, #FFFFFF 0%, #FAF5FF 100%);
+  border: 2px dashed #D8B4FE;
+  padding: 14px 10px;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+}
+
+.shop-mascot-stage:hover {
+  border-color: #8B5CF6;
+  box-shadow: 0 8px 24px rgba(139, 92, 246, 0.15);
+}
+
+.shop-mascot-stage.stage-magnified {
+  padding: 24px 12px;
+  background: radial-gradient(circle at center, #FFFFFF 0%, #F5F3FF 100%);
+  border: 2.5px solid #7C3AED;
+  box-shadow: 0 12px 35px rgba(124, 58, 237, 0.22);
+}
+
+.shop-mascot-stage.stage-magnified #shopmodal-mascot-click-target {
+  transform: scale(1.04);
+}
+
+.mascot-act-btn {
+  transition: transform 0.12s ease, box-shadow 0.15s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.mascot-act-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.mascot-act-btn:active {
+  transform: translateY(1px);
+}
+
 
 
 

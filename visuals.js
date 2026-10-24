@@ -30,7 +30,7 @@
       { th: "สุดยอดนักสู้!", satun: "เก่งเบอร์นี้ คนสตูลภูมิใจจังฮู้!" }
     ],
     listening: [
-      { th: "น้องดาหลากำลังตั้งใจฟัง...", satun: "แหลงมาเลยจ้า กวนอูฟังอยู่!" }
+      { th: "วิลาวัลย์กำลังตั้งใจฟัง...", satun: "แหลงมาเลยจ้า วิลาวัลย์ฟังอยู่!" }
     ],
     speaking: [
       { th: "ฟังเสียงสวีเดนชัดๆ นะ", satun: "เงี่ยหูฟังต๊ะ ออกเสียงตามเลย" }
@@ -51,7 +51,7 @@
      */
     getSVG(size = 72, state = 'idle') {
       return `
-        <svg class="dala-svg" width="${size}" height="${size}" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Nong Dala maskot">
+        <svg class="dala-svg" width="${size}" height="${size}" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wilawan maskot">
           <defs>
             <radialGradient id="dalaShine" cx="50%" cy="30%" r="60%">
               <stop offset="0%" stop-color="#FF6B55" />
@@ -254,12 +254,47 @@
     },
 
     /**
+     * Kör en interaktiv gest: 'blink', 'wave' eller 'rear' (stegra)
+     */
+    triggerAction(actionName, targetEl = null) {
+      const wrappers = targetEl
+        ? [targetEl.closest('.dala-mascot-wrapper') || targetEl.querySelector('.dala-mascot-wrapper') || targetEl]
+        : Array.from(document.querySelectorAll('.dala-mascot-wrapper'));
+
+      wrappers.forEach((w) => {
+        if (!w) return;
+        w.classList.remove('dala-action-blink', 'dala-action-wave', 'dala-action-rear');
+        void w.offsetWidth;
+        const cls = actionName === 'stegra' ? 'dala-action-rear' : `dala-action-${actionName}`;
+        w.classList.add(cls);
+
+        const durations = { blink: 850, wave: 1500, rear: 1900, stegra: 1900 };
+        const dur = durations[actionName] || 1200;
+        setTimeout(() => {
+          w.classList.remove(cls);
+        }, dur);
+      });
+
+      if (actionName === 'blink') {
+        window.SpeechEngine?.playSound?.('tap');
+        this.say('กระพริบตาสองที น่ารักไหม? ✨', 'กะพริบตาปริบๆ หรอยจัง!', 'happy', 2400);
+      } else if (actionName === 'wave') {
+        window.SpeechEngine?.playSound?.('correct');
+        this.say('สวัสดีจ้า ยินดีต้อนรับสู่ร้านของวิลาวัลย์! 👋', 'โบกมือทักทาย หรอยแรงนิ!', 'correct', 2800);
+      } else if (actionName === 'rear' || actionName === 'stegra') {
+        window.SpeechEngine?.playSound?.('fanfare');
+        window.VisualEngine?.triggerConfetti?.();
+        this.say('ฮี้ๆๆ! ม้าสตูลทรงพลัง กระโดดสองขา! 🐎', 'ยกขาหน้าผงาด เก่งเบอร์นี้!', 'celebrating', 3200);
+      }
+    },
+
+    /**
      * Montera Nong Dala i en DOM-container
      */
     mount(containerEl, size = 68, initialState = 'idle') {
       if (!containerEl) return;
       containerEl.innerHTML = `
-        <div class="dala-mascot-wrapper dala-state-${initialState}" title="น้องดาหลา (Nong Dala) • แตะเพื่อคุยกัน!">
+        <div class="dala-mascot-wrapper dala-state-${initialState}" title="วิลาวัลย์ (Wilawan) • แตะเพื่อคุยกัน!">
           ${this.getSVG(size, initialState)}
         </div>
       `;
