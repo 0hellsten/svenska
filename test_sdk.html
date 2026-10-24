@@ -1,0 +1,22 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://cdn.jsdelivr.net/npm/microsoft-cognitiveservices-speech-sdk@latest/distrib/browser/microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
+</head>
+<body>
+<div id="out"></div>
+<script>
+  const SDK = window.SpeechSDK;
+  const audioConfig = SDK.AudioConfig.fromDefaultMicrophoneInput();
+  let closed = false;
+  try {
+    audioConfig.close();
+    closed = true;
+  } catch(e) {
+    closed = e.message;
+  }
+  document.getElementById('out').textContent = 'closed: ' + closed;
+</script>
+</body>
+</html>

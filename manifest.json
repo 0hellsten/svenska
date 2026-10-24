@@ -1,0 +1,10 @@
+{
+  "name": "Svenska för Satun • เรียนภาษาสวีเดน",
+  "short_name": "Svenska•สตูล",
+  "description": "Lär dig svenska från grunden med Satun-thailändska (ภาษาใต้สำเนียงสตูล)",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFFDF8",
+  "theme_color": "#58CC02"
+}

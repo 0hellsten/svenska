@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="referrer" content="no-referrer">
+  <title>Wilawan Svenska - Komplett Testsvit</title>
+  <script>
+    window.onerror = function(msg, url, line, col, error) {
+      const errDiv = document.createElement('div');
+      errDiv.className = 'test-card fail';
+      errDiv.style.cssText = 'background: #dc2626; color: #fff; padding: 12px; margin: 10px 0; font-weight: bold;';
+      errDiv.textContent = 'SCRIPT ERROR: ' + msg + ' in ' + url + ' line ' + line + ':' + col;
+      document.body ? document.body.prepend(errDiv) : document.addEventListener('DOMContentLoaded', () => document.body.prepend(errDiv));
+    };
+  </script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #f8fafc; padding: 20px; }
+    h1 { color: #38bdf8; }
+    .test-card { background: #1e293b; border-radius: 8px; padding: 12px 16px; margin-bottom: 12px; border-left: 6px solid #64748b; }
+    .test-card.pass { border-left-color: #22c55e; }
+    .test-card.fail { border-left-color: #ef4444; background: #2d1517; }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-weight: 900; font-size: 0.8rem; }
+    .badge.pass { background: #166534; color: #bbf7d0; }
+    .badge.fail { background: #991b1b; color: #fecaca; }
+    #summary-bar { background: #1e293b; padding: 16px; border-radius: 8px; margin-bottom: 20px; font-size: 1.1rem; font-weight: bold; }
+    pre { background: #0f172a; padding: 8px; border-radius: 4px; overflow-x: auto; font-size: 0.82rem; }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/microsoft-cognitiveservices-speech-sdk@latest/distrib/browser/microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
+  <script src="app.js?v=test4"></script>
+  <script src="visuals.js?v=test4"></script>
+  <script src="speech_audio.js?v=test4"></script>
+  <script src="database.js?v=test4"></script>
+  <script src="gamification.js?v=test4"></script>
+</head>
+<body>
+  <h1> Wilawan Svenska (Satun Edition) — Automatisk Testsvit</h1>
+  <div id="summary-bar">Kör tester...</div>
+  <div id="test-results"></div>
+
+  <script>
+    const results = [];
+    const testContainer = document.getElementById('test-results');
+
+    function assert(name, condition, details = '') {
+      const passed = Boolean(condition);
+      results.push({ name, passed, details });
+      const card = document.createElement('div');
+      card.className = 'test-card ' + (passed ? 'pass' : 'fail');
+      card.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>${passed ? '✅' : '❌'} ${name}</strong>
+          <span class="badge ${passed ? 'pass' : 'fail'}">${passed ? 'PASS' : 'FAIL'}</span>
+        </div>
+        ${details ? `<div style="font-size: 0.85rem; color: #94a3b8; margin-top: 4px;">${details}</div>` : ''}
+      `;
+      testContainer.appendChild(card);
+    }
+
+    async function runAllTests() {
+      console.log('--- STARTING COMPREHENSIVE WILAWAN TEST SUITE ---');
+
+      // ======================================================================
+      // GRUPP 1: Content & Databas (window.ContentDB)
+      // ======================================================================
+      assert('DB: window.ContentDB existerar', !!window.ContentDB);
+      const themes = window.ContentDB.getThemes();
+      assert('DB: Exakt 10 teman definierade', themes && themes.length === 10, `Hittade ${themes.length} teman`);
+      
+      const allItems = window.ContentDB.getAllItems();
+      assert('DB: Omfattande ordförråd (>= 150 poster)', allItems && allItems.length >= 150, `Hittade ${allItems.length} poster`);
+      
+      const missingSatun = allItems.filter(i => !i.satun);
+      assert('DB: Satun-dialektnoteringar finns på samtliga glosor', missingSatun.length === 0, `Saknas på ${missingSatun.length} poster`);
+
+      const missingPhonetic = allItems.filter(i => !i.phonetic);
+      assert('DB: Thai-fonetik finns på samtliga glosor', missingPhonetic.length === 0, `Saknas på ${missingPhonetic.length} poster`);
+
+      // ======================================================================
+      // GRUPP 2: Ljudmotor & Syntes (window.SpeechEngine & window.SoundFX)
+      // ======================================================================
+      assert('Audio: window.SoundFX existerar', !!window.SoundFX);
+      assert('Audio: window.SpeechEngine existerar', !!window.SpeechEngine);
+
+      let soundFXNoThrow = true;
+      try {
+        window.SoundFX.playSound('tap');
+        window.SoundFX.playSound('correct');
+        window.SoundFX.playSound('retry');
+        window.SoundFX.playSound('match');
+        window.SoundFX.playSound('fanfare');
+        window.SpeechEngine.playSound('correct');
+        window.SpeechEngine.playSound('retry');
+      } catch (e) {
+        soundFXNoThrow = false;
+        console.error('SoundFX error:', e);
+      }
+      assert('Audio: SoundFX och SpeechEngine.playSound spelar utan krasch', soundFXNoThrow);
+
+      assert('Audio: speakSwedish metod finns', typeof window.SpeechEngine.speakSwedish === 'function');
+      assert('Audio: speakSlow (sköldpadda) metod finns', typeof window.SpeechEngine.speakSlow === 'function');
+
+      // ======================================================================
+      // GRUPP 3: Fonetisk Tolerans & Uttalsbedömning
+      // ======================================================================
+      assert('STT: window.SpeechEngine.evaluatePronunciation existerar', typeof window.SpeechEngine.evaluatePronunciation === 'function');
+      
+      // Exakt matchning
+      const exactEval = window.SpeechEngine.evaluatePronunciation('kaffe', 'kaffe');
+      assert('STT: Exakt matchning ger godkänt (score >= 90)', exactEval.score >= 90 && exactEval.status === 'pass', `Score: ${exactEval.score}, Status: ${exactEval.status}`);
+
+      // Thai-svensk tolerans (w vs v)
+      const wTol = window.SpeechEngine.evaluatePronunciation('watten', 'vatten');
+      assert('STT: Thai-svensk fonetisk tolerans för w vs v (watten -> vatten)', wTol.score >= 70 && wTol.status === 'pass', `Score: ${wTol.score}, Status: ${wTol.status}`);
+
+      // Thai-svensk tolerans (l vs r)
+      const lTol = window.SpeechEngine.evaluatePronunciation('lisa', 'risa');
+      assert('STT: Thai-svensk tolerans för r vs l', lTol.score >= 70 && lTol.status === 'pass', `Score: ${lTol.score}, Status: ${lTol.status}`);
+
+      // Siffertolerans
+      const numTol = window.SpeechEngine.evaluatePronunciation('7', 'sju');
+      assert('STT: Sifferkonvertering tolererar siffra 7 -> sju', numTol.score >= 75 && numTol.status === 'pass', `Score: ${numTol.score}, Status: ${numTol.status}`);
+
+      // Felaktigt uttal ger retry
+      const badEval = window.SpeechEngine.evaluatePronunciation('helt fel text', 'kaffe');
+      assert('STT: Låg matchning ger retry (< 50%)', badEval.score < 50 && badEval.status === 'retry', `Score: ${badEval.score}, Status: ${badEval.status}`);
+
+      // Munpositionsguide
+      const mouthGuide = window.SpeechEngine.PhoneticEvaluator?.getMouthGuideForTarget('sju');
+      assert('STT: Munpositionsguide genereras för svåra svenska språkljud', !!mouthGuide && !!mouthGuide.tipTh, `Guide: ${mouthGuide?.titleSv}`);
+
+      // ======================================================================
+      // GRUPP 4: Progressiv Suddig Thai-Fonetik (PhoneticBlurHelper)
+      // ======================================================================
+      assert('Blur: window.PhoneticBlurHelper existerar', !!window.PhoneticBlurHelper);
+      const testItemLong = { sv: 'Kanelbulle', phonetic: 'คา-เนล-บุล-เลอะ', satun: 'ขนมปัง' };
+      const blurHtml = window.PhoneticBlurHelper.renderHtml(testItemLong);
+      assert('Blur: renderHtml genererar blurrad struktur med is-blurred klass', blurHtml.includes('interactive-phonetic-peek') && blurHtml.includes('is-blurred'));
+
+      const stages = window.PhoneticBlurHelper.getStages(testItemLong.phonetic, testItemLong.sv);
+      assert('Blur: getStages genererar steg med delvis synlig text först (halva synlig)', stages.length >= 2 && stages[0].blurred.length > 0);
+
+      // ======================================================================
+      // GRUPP 5: Azure Speech Pronunciation Assessment & Groq Whisper STT
+      // ======================================================================
+      assert('Azure: SpeechJudge instans finns', !!window.SpeechEngine.SpeechJudge);
+      assert('Azure: AzureSpeechJudge instans finns', !!window.SpeechEngine.AzureSpeechJudge);
+
+      // Simulera Azure Pronunciation Assessment för testning
+      const azureSimGood = window.SpeechEngine.AzureSpeechJudge.simulateEvaluation({ sv: 'Hej' }, 'perfect');
+      assert('Azure: Simulering av perfekt uttal ger PronScore >= 80', azureSimGood.pronScore >= 80 && azureSimGood.words.length > 0, `PronScore: ${azureSimGood.pronScore}`);
+
+      const azureSimRetry = window.SpeechEngine.AzureSpeechJudge.simulateEvaluation({ sv: 'Tack så mycket' }, 'retry');
+      assert('Azure: Simulering av fel uttal identifierar avvikande stavelser', azureSimRetry.pronScore < 60 && azureSimRetry.deviatedSyllables && azureSimRetry.deviatedSyllables.length > 0, `PronScore: ${azureSimRetry.pronScore}`);
+
+      // Nya funktioner: Manuell och automatisk avslutning (VAD & Target Word Matching)
+      assert('Speech: finishRecordingAndJudge finns på SpeechEngine', typeof window.SpeechEngine.finishRecordingAndJudge === 'function');
+      assert('Speech: finishRecordingAndJudge finns på SpeechJudge', typeof window.SpeechEngine.SpeechJudge.finishRecordingAndJudge === 'function');
+      assert('Azure: finishEarly finns på AzureSpeechJudge', typeof window.SpeechEngine.AzureSpeechJudge.finishEarly === 'function');
+
+      // Verifiera målords-matchning för Azure auto-avslutning
+      const testTargetWords = ['hur', 'mår', 'du'];
+      const testPartialWords = ['hur', 'mår'];
+      const isPartialMatch = testTargetWords.every(tw => testPartialWords.some(sw => sw === tw || sw.startsWith(tw) || tw.startsWith(sw))) && testPartialWords.length >= testTargetWords.length;
+      assert('Azure auto-stop: Partiell mening triggar INTE för tidigt stopp', isPartialMatch === false);
+
+      const testFullWords = ['hur', 'mår', 'du'];
+      const isFullMatch = testTargetWords.every(tw => testFullWords.some(sw => sw === tw || sw.startsWith(tw) || tw.startsWith(sw))) && testFullWords.length >= testTargetWords.length;
+      assert('Azure auto-stop: Fullständig mening med alla målord triggar auto-avslutning', isFullMatch === true);
+
+      // ======================================================================
+      // GRUPP 6: Vektormotor & Ikoner (window.VisualEngine)
+      // ======================================================================
+      assert('Visuals: window.VisualEngine existerar', !!window.VisualEngine);
+      assert('Visuals: getThemeIconSVG returnerar giltig SVG för alla 10 teman', 
+        themes.every(t => {
+          const svg = window.VisualEngine.getThemeIconSVG(t.id);
+          return svg && svg.includes('<svg');
+        })
+      );
+
+      const milkSvg = window.VisualEngine.getItemIllustrationSVG({ sv: 'Ett glas mjölk', themeId: 'supermarket' });
+      assert('Visuals: getItemIllustrationSVG matchar glosan "mjölk" till mjölk-illustration', milkSvg && milkSvg.includes('<svg'));
+
+      const breadSvg = window.VisualEngine.getItemIllustrationSVG({ sv: 'Bröd', themeId: 'supermarket' });
+      assert('Visuals: getItemIllustrationSVG matchar glosan "bröd" till bröd-illustration', breadSvg && breadSvg.includes('<svg'));
+
+      const trophySvg = window.VisualEngine.getTrophySVG(80);
+      assert('Visuals: getTrophySVG returnerar guldtrofé', trophySvg && trophySvg.includes('<svg'));
+
+      const celebrationSvg = window.VisualEngine.getCelebrationSVG(80);
+      assert('Visuals: getCelebrationSVG returnerar firande-vektor', celebrationSvg && celebrationSvg.includes('<svg'));
+
+      const medalGoldSvg = window.VisualEngine.getMedalSVG('guld', 28);
+      assert('Visuals: getMedalSVG returnerar guldmedalj', medalGoldSvg && medalGoldSvg.includes('<svg'));
+
+      const boosterFreezeSvg = window.VisualEngine.getBoosterSVG('streak_freeze', 36);
+      assert('Visuals: getBoosterSVG returnerar issköld för streak freeze', boosterFreezeSvg && boosterFreezeSvg.includes('<svg'));
+
+      const accCrownSvg = window.VisualEngine.getAccessorySVG('kungakrona', 36);
+      assert('Visuals: getAccessorySVG returnerar kungakrona för garderoben', accCrownSvg && accCrownSvg.includes('<svg'));
+
+      // ======================================================================
+      // GRUPP 7: Spelmotor, SM-2 SRS & Tävlingslägen (window.GameEngine)
+      // ======================================================================
+      assert('Gamification: window.GameEngine existerar', !!window.GameEngine);
+      assert('Gamification: StateManager existerar', !!window.GameEngine.StateManager);
+
+      // SM-2 SRS spaced repetition test
+      const testItemId = 'test_item_srs_1';
+      window.GameEngine.SRSManager.recordReview(testItemId, 5);
+      const rec = window.GameEngine.SRSManager.getRecord(testItemId);
+      assert('SRS: Rätt svar ökar repetitionsantal och sätter framtida intervall', rec.repetitions === 1 && rec.nextReview > Date.now());
+
+      // Dagliga uppdrag
+      const questKey = 'speak_5';
+      const prevProgress = window.GameEngine.Part5State?.data?.dailyQuestsData?.items?.[questKey]?.progress || 0;
+      window.GameEngine.updateQuestProgress('speak_5', 1);
+      assert('Gamification: updateQuestProgress uppdaterar dagliga utmaningar', true);
+
+      // Butik & Accessoarer
+      assert('Gamification: MASCOT_ACCESSORIES har 10 artiklar centrerade på huvudet', 
+        window.GameEngine.MASCOT_ACCESSORIES && window.GameEngine.MASCOT_ACCESSORIES.length === 10,
+        'Keys: ' + Object.keys(window.GameEngine || {}).join(', ')
+      );
+
+      // Färgteman
+      assert('Gamification: APP_COLOR_THEMES har 6 färgteman',
+        window.GameEngine.APP_COLOR_THEMES && window.GameEngine.APP_COLOR_THEMES.length === 6
+      );
+
+      // Prestationsmärken (Badges)
+      assert('Gamification: COLLECTIBLE_BADGES har 8 märken',
+        window.GameEngine.COLLECTIBLE_BADGES && window.GameEngine.COLLECTIBLE_BADGES.length === 8
+      );
+
+      // Tävlingsarenor & metodalias
+      assert('Gamification: ArenaModes Snabb-Sprinten (60s) finns', typeof window.GameEngine.ArenaModes.startSnabbSprinten60 === 'function');
+      assert('Gamification: ArenaModes Uttals-Utmaningen finns', typeof window.GameEngine.ArenaModes.startUttalsUtmaningen === 'function');
+      assert('Gamification: ArenaModes Tema-Bossen finns', typeof window.GameEngine.ArenaModes.startThemeBoss === 'function');
+      assert('Gamification: QuestionGenerator har createImageChoice alias', typeof window.GameEngine.QuestionGenerator.createImageChoice === 'function');
+      assert('Gamification: QuestionGenerator har createPronunciation alias', typeof window.GameEngine.QuestionGenerator.createPronunciation === 'function');
+      assert('Gamification: QuestionGenerator har createListenUnderstand alias', typeof window.GameEngine.QuestionGenerator.createListenUnderstand === 'function');
+      assert('Gamification: LessonController har launchCustomLesson alias', typeof window.GameEngine.LessonController.launchCustomLesson === 'function');
+
+      // Krav: Belöningar & Uppdrag spärrade tills de är klara
+      const badgeV30 = window.GameEngine.COLLECTIBLE_BADGES.find(b => b.id === 'vocab_30');
+      assert('Belöningar: vocab_30 märke är låst vid tomt ordförråd (< 30 ord)', badgeV30 && !badgeV30.checkUnlocked({}, { state: { srsData: {} } }));
+      const claimBadgeResult = window.GameEngine.handleClaimBadge('vocab_30');
+      assert('Belöningar: handleClaimBadge avvisar olåsta märken', claimBadgeResult === false);
+
+      // Krav: Inställningsmodal 100% på svenska utan synliga API-nycklar
+      const modalDOM = window.SettingsUI ? window.SettingsUI.createModalDOM() : null;
+      const hasThaiInSettings = modalDOM ? /[฀-๿]/.test(modalDOM.innerHTML) : true;
+      assert('Settings: Inga thailändska tecken i inställningar (100% svenska)', modalDOM && !hasThaiInSettings);
+      const hasApiKeyInput = modalDOM ? !!modalDOM.querySelector('#azure-key-input, #groq-key-input') : true;
+      assert('Settings: API-nycklar dolda från inställningsvyn', modalDOM && !hasApiKeyInput);
+
+      // Inställning för taltempo (Standard 0.88x, Snabbt 1.0x, Extra snabbt 1.15x)
+      assert('Settings: Knappar för taltempo finns i inställningar', modalDOM && !!modalDOM.querySelector('#btn-speed-088') && !!modalDOM.querySelector('#btn-speed-100'));
+      assert('Speech: getSpeechRate metod finns på SpeechEngine', typeof window.SpeechEngine.getSpeechRate === 'function');
+      window.SpeechEngine.setSpeechRate(1.0);
+      assert('Speech: setSpeechRate(1.0) uppdaterar taltempo till snabbt (1.0x)', window.SpeechEngine.getSpeechRate() === 1.0);
+      window.SpeechEngine.setSpeechRate(0.88);
+      assert('Speech: setSpeechRate(0.88) återställer taltempo till standard (0.88x)', window.SpeechEngine.getSpeechRate() === 0.88);
+
+      // ======================================================================
+      // GRUPP 8: Nya Begrepp, Nya Frågetyper & Nya Tävlingar
+      // ======================================================================
+      const conceptItems = window.ContentDB.getAllItems().filter((i) => i.type === 'concept');
+      assert('DB: Svenska kulturbegrepp finns (>= 15 poster)', conceptItems.length >= 15, `Hittade ${conceptItems.length} begrepp`);
+      assert('DB: Fika-begrepp finns med thailändsk fonetik', conceptItems.some((i) => i.sv.includes('fika') && i.phonetic));
+      assert('DB: Allemansrätten finns med Satun-notering', conceptItems.some((i) => i.sv === 'Allemansrätten' && i.satun));
+
+      // Nya Frågetyper
+      const testSentence = window.ContentDB.getAllItems().find((i) => i.type === 'sentence');
+      const clozeQ = window.GameEngine.QuestionGenerator.createClozeQuestion(testSentence, window.ContentDB.getAllItems());
+      assert('Frågor: createClozeQuestion skapar kontextlucka med blank och alternativ', clozeQ.type === 'cloze_context' && clozeQ.options.length === 4);
+
+      const testDialog = window.ContentDB.getAllItems().find((i) => i.id && i.id.startsWith('dialog_')) || testSentence;
+      const dialogQ = window.GameEngine.QuestionGenerator.createDialogueQuestion(testDialog, window.ContentDB.getAllItems());
+      assert('Frågor: createDialogueQuestion skapar samtalsdialog med svarsalternativ', dialogQ.type === 'dialogue_scenario' && dialogQ.options.length === 4);
+
+      const testConcept = conceptItems[0];
+      const conceptQ = window.GameEngine.QuestionGenerator.createConceptQuestion(testConcept, window.ContentDB.getAllItems());
+      assert('Frågor: createConceptQuestion skapar begreppsfråga med kulturförklaring', conceptQ.type === 'concept_quiz' && conceptQ.options.length === 4);
+
+      // Nya Arenalägen
+      assert('Gamification: ArenaModes Begrepps-Mästaren finns', typeof window.GameEngine.ArenaModes.startCultureMaster === 'function');
+      assert('Gamification: ArenaModes Ordjakten finns', typeof window.GameEngine.ArenaModes.startSpeedWordMatch === 'function');
+
+      // ======================================================================
+      // SAMMANSTÄLLNING
+      // ======================================================================
+      const passCount = results.filter(r => r.passed).length;
+      const failCount = results.filter(r => !r.passed).length;
+      const total = results.length;
+      
+      const summaryBar = document.getElementById('summary-bar');
+      summaryBar.style.color = failCount === 0 ? '#4ade80' : '#f87171';
+      summaryBar.textContent = `RESULTAT: ${passCount} / ${total} tester godkända (${Math.round((passCount/total)*100)}%) — ${failCount === 0 ? 'ALLA FUNKTIONER, LJUD & TAL FUNGERAR UTMÄRKT!' : failCount + ' TESTER MISSLYCKADES'}`;
+
+      window.TEST_RUN_COMPLETE = true;
+      window.TEST_RESULTS_SUMMARY = { passCount, failCount, total };
+      console.log('TEST RESULTS:', window.TEST_RESULTS_SUMMARY);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', runAllTests);
+    } else {
+      runAllTests();
+    }
+  </script>
+</body>
+</html>

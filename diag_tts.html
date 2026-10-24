@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>TTS Diagnostic</title></head>
+<body>
+<div id="output"></div>
+<script>
+  const log = (msg) => {
+    document.getElementById('output').innerHTML += '<p>' + msg + '</p>';
+    console.log(msg);
+  };
+
+  log('speechSynthesis in window: ' + ('speechSynthesis' in window));
+  log('speechSynthesis.paused: ' + window.speechSynthesis?.paused);
+  log('speechSynthesis.speaking: ' + window.speechSynthesis?.speaking);
+
+  function checkVoices() {
+    const voices = window.speechSynthesis.getVoices();
+    log('Voices count: ' + voices.length);
+    const svVoices = voices.filter(v => v.lang && v.lang.toLowerCase().startsWith('sv'));
+    log('svVoices count: ' + svVoices.length);
+    voices.forEach((v, i) => {
+      if (v.lang.startsWith('sv') || i < 5) {
+        log(' - Voice: ' + v.name + ' (' + v.lang + ') default=' + v.default);
+      }
+    });
+
+    const utter = new SpeechSynthesisUtterance("Hej, tack så mycket!");
+    utter.lang = "sv-SE";
+    utter.onstart = () => log("Utterance onstart fired!");
+    utter.onend = () => log("Utterance onend fired!");
+    utter.onerror = (e) => log("Utterance onerror: " + e.error);
+
+    try {
+      window.speechSynthesis.speak(utter);
+      log("speak() called without exception");
+    } catch(e) {
+      log("speak() threw exception: " + e.message);
+    }
+  }
+
+  if (window.speechSynthesis.getVoices().length > 0) {
+    checkVoices();
+  } else {
+    window.speechSynthesis.onvoiceschanged = () => {
+      log('onvoiceschanged fired');
+      checkVoices();
+    };
+    // fallback if onvoiceschanged doesn't fire
+    setTimeout(checkVoices, 1000);
+  }
+</script>
+</body>
+</html>

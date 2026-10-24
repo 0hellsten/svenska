@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body>
+<div id="log"></div>
+<script>
+  const log = (msg) => {
+    document.getElementById('log').innerHTML += '<p>' + msg + '</p>';
+    console.log(msg);
+  };
+
+  async function testMultiple() {
+    for (let i = 0; i < 4; i++) {
+      await new Promise((resolve) => {
+        const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=sv&client=tw-ob&q=test_${i}`;
+        const audio = new Audio();
+        audio.oncanplaythrough = () => {
+          log(`Audio ${i} loaded successfully!`);
+          resolve();
+        };
+        audio.onerror = (e) => {
+          log(`Audio ${i} failed! Error code: ${audio.error ? audio.error.code : 'unknown'}`);
+          resolve();
+        };
+        audio.src = url;
+        audio.load();
+      });
+    }
+  }
+
+  testMultiple();
+</script>
+</body>
+</html>

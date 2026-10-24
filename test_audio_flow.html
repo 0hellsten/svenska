@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body>
+<audio id="app-speech-audio" preload="auto" playsinline webkit-playsinline style="display:none;"></audio>
+<div id="log"></div>
+<script>
+  const log = (msg) => {
+    document.getElementById('log').innerHTML += '<p>' + msg + '</p>';
+    console.log(msg);
+  };
+
+  const audioEl = document.getElementById('app-speech-audio');
+
+  function playSound(text, index) {
+    return new Promise((resolve) => {
+      const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=sv&client=tw-ob&q=${encodeURIComponent(text)}`;
+      
+      let resolved = false;
+      const done = (status) => {
+        if (resolved) return;
+        resolved = true;
+        log(`Item ${index} (${text}): ${status}`);
+        resolve();
+      };
+
+      audioEl.onended = () => done('ENDED');
+      audioEl.onerror = (e) => done('ERROR');
+
+      // Abort previous if any
+      audioEl.pause();
+      audioEl.src = url;
+      audioEl.play().catch(e => done('PLAY_REJECTED: ' + e.message));
+
+      // simulate short timeout or next click
+      setTimeout(() => done('TIMEOUT_RESOLVED'), 1200);
+    });
+  }
+
+  async function run() {
+    log('Starting sequential and rapid tests...');
+    await playSound('Hej', 1);
+    await playSound('Tack så mycket', 2);
+    await playSound('God morgon', 3);
+    log('Rapid clicks:');
+    playSound('Ett', 4);
+    setTimeout(() => playSound('Två', 5), 100);
+    setTimeout(() => playSound('Tre', 6), 250);
+  }
+
+  run();
+</script>
+</body>
+</html>

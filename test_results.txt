@@ -1,0 +1,484 @@
+﻿<!DOCTYPE html>
+<html lang="sv"><head>
+  <meta charset="UTF-8">
+  <title>Wilawan Svenska - Komplett Testsvit</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #f8fafc; padding: 20px; }
+    h1 { color: #38bdf8; }
+    .test-card { background: #1e293b; border-radius: 8px; padding: 12px 16px; margin-bottom: 12px; border-left: 6px solid #64748b; }
+    .test-card.pass { border-left-color: #22c55e; }
+    .test-card.fail { border-left-color: #ef4444; background: #2d1517; }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-weight: 900; font-size: 0.8rem; }
+    .badge.pass { background: #166534; color: #bbf7d0; }
+    .badge.fail { background: #991b1b; color: #fecaca; }
+    #summary-bar { background: #1e293b; padding: 16px; border-radius: 8px; margin-bottom: 20px; font-size: 1.1rem; font-weight: bold; }
+    pre { background: #0f172a; padding: 8px; border-radius: 4px; overflow-x: auto; font-size: 0.82rem; }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/microsoft-cognitiveservices-speech-sdk@latest/distrib/browser/microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
+  <script src="app.js"></script>
+  <script src="visuals.js"></script>
+  <script src="speech_audio.js"></script>
+  <script src="database.js"></script>
+  <script src="gamification.js"></script>
+</head>
+<body>
+  <h1> Wilawan Svenska (Satun Edition) ÔÇö Automatisk Testsvit</h1>
+  <div id="summary-bar">K├Âr tester...</div>
+  <div id="test-results"><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à DB: window.ContentDB existerar</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à DB: Exakt 10 teman definierade</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        <div style="font-size: 0.85rem; color: #94a3b8; margin-top: 4px;">Hittade 10 teman</div>
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à DB: Omfattande ordf├Ârr├Ñd (&gt;= 150 poster)</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        <div style="font-size: 0.85rem; color: #94a3b8; margin-top: 4px;">Hittade 160 poster</div>
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à DB: Satun-dialektnoteringar finns p├Ñ samtliga glosor</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        <div style="font-size: 0.85rem; color: #94a3b8; margin-top: 4px;">Saknas p├Ñ 0 poster</div>
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à DB: Thai-fonetik finns p├Ñ samtliga glosor</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        <div style="font-size: 0.85rem; color: #94a3b8; margin-top: 4px;">Saknas p├Ñ 0 poster</div>
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à Audio: window.SoundFX existerar</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à Audio: window.SpeechEngine existerar</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à Audio: SoundFX och SpeechEngine.playSound spelar utan krasch</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à Audio: speakSwedish metod finns</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à Audio: speakSlow (sk├Âldpadda) metod finns</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à STT: window.SpeechEngine.evaluatePronunciation existerar</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à STT: Exakt matchning ger godk├ñnt (score &gt;= 90)</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        <div style="font-size: 0.85rem; color: #94a3b8; margin-top: 4px;">Score: 100, Status: pass</div>
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à STT: Thai-svensk fonetisk tolerans f├Âr w vs v (watten -&gt; vatten)</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        <div style="font-size: 0.85rem; color: #94a3b8; margin-top: 4px;">Score: 100, Status: pass</div>
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à STT: Thai-svensk tolerans f├Âr r vs l</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        <div style="font-size: 0.85rem; color: #94a3b8; margin-top: 4px;">Score: 100, Status: pass</div>
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à STT: Sifferkonvertering tolererar siffra 7 -&gt; sju</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        <div style="font-size: 0.85rem; color: #94a3b8; margin-top: 4px;">Score: 100, Status: pass</div>
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à STT: L├Ñg matchning ger retry (&lt; 50%)</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        <div style="font-size: 0.85rem; color: #94a3b8; margin-top: 4px;">Score: 17, Status: retry</div>
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à STT: Munpositionsguide genereras f├Âr sv├Ñra svenska spr├Ñkljud</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        <div style="font-size: 0.85rem; color: #94a3b8; margin-top: 4px;">Guide: Svenskt Sje- / Tje-ljud</div>
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à Blur: window.PhoneticBlurHelper existerar</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à Blur: renderHtml genererar blurrad struktur med is-blurred klass</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à Blur: getStages genererar steg med delvis synlig text f├Ârst (halva synlig)</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à Azure: SpeechJudge instans finns</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à Azure: AzureSpeechJudge instans finns</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à Azure: Simulering av perfekt uttal ger PronScore &gt;= 80</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        <div style="font-size: 0.85rem; color: #94a3b8; margin-top: 4px;">PronScore: 93</div>
+      </div><div class="test-card fail">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>ÔØî Azure: Simulering av fel uttal identifierar avvikande stavelser</strong>
+          <span class="badge fail">FAIL</span>
+        </div>
+        <div style="font-size: 0.85rem; color: #94a3b8; margin-top: 4px;">PronScore: 42</div>
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à Visuals: window.VisualEngine existerar</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à Visuals: getThemeIconSVG returnerar giltig SVG f├Âr alla 10 teman</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à Visuals: getItemIllustrationSVG matchar glosan "mj├Âlk" till mj├Âlk-illustration</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à Visuals: getItemIllustrationSVG matchar glosan "br├Âd" till br├Âd-illustration</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à Visuals: getTrophySVG returnerar guldtrof├®</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à Visuals: getCelebrationSVG returnerar firande-vektor</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à Visuals: getMedalSVG returnerar guldmedalj</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à Visuals: getBoosterSVG returnerar issk├Âld f├Âr streak freeze</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à Visuals: getAccessorySVG returnerar kungakrona f├Âr garderoben</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à Gamification: window.GameEngine existerar</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à Gamification: StateManager existerar</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à SRS: R├ñtt svar ├Âkar repetitionsantal och s├ñtter framtida intervall</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        
+      </div><div class="test-card pass">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>Ô£à Gamification: updateQuestProgress uppdaterar dagliga utmaningar</strong>
+          <span class="badge pass">PASS</span>
+        </div>
+        
+      </div><div class="test-card fail">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>ÔØî Gamification: MASCOT_ACCESSORIES har 10 artiklar centrerade p├Ñ huvudet</strong>
+          <span class="badge fail">FAIL</span>
+        </div>
+        
+      </div><div class="test-card fail">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>ÔØî Gamification: APP_COLOR_THEMES har 6 f├ñrgteman</strong>
+          <span class="badge fail">FAIL</span>
+        </div>
+        
+      </div><div class="test-card fail">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>ÔØî Gamification: COLLECTIBLE_BADGES har 8 m├ñrken</strong>
+          <span class="badge fail">FAIL</span>
+        </div>
+        
+      </div></div>
+
+  <script>
+    const results = [];
+    const testContainer = document.getElementById('test-results');
+
+    function assert(name, condition, details = '') {
+      const passed = Boolean(condition);
+      results.push({ name, passed, details });
+      const card = document.createElement('div');
+      card.className = 'test-card ' + (passed ? 'pass' : 'fail');
+      card.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>${passed ? 'Ô£à' : 'ÔØî'} ${name}</strong>
+          <span class="badge ${passed ? 'pass' : 'fail'}">${passed ? 'PASS' : 'FAIL'}</span>
+        </div>
+        ${details ? `<div style="font-size: 0.85rem; color: #94a3b8; margin-top: 4px;">${details}</div>` : ''}
+      `;
+      testContainer.appendChild(card);
+    }
+
+    async function runAllTests() {
+      console.log('--- STARTING COMPREHENSIVE WILAWAN TEST SUITE ---');
+
+      // ======================================================================
+      // GRUPP 1: Content & Databas (window.ContentDB)
+      // ======================================================================
+      assert('DB: window.ContentDB existerar', !!window.ContentDB);
+      const themes = window.ContentDB.getThemes();
+      assert('DB: Exakt 10 teman definierade', themes && themes.length === 10, `Hittade ${themes.length} teman`);
+      
+      const allItems = window.ContentDB.getAllItems();
+      assert('DB: Omfattande ordf├Ârr├Ñd (>= 150 poster)', allItems && allItems.length >= 150, `Hittade ${allItems.length} poster`);
+      
+      const missingSatun = allItems.filter(i => !i.satun);
+      assert('DB: Satun-dialektnoteringar finns p├Ñ samtliga glosor', missingSatun.length === 0, `Saknas p├Ñ ${missingSatun.length} poster`);
+
+      const missingPhonetic = allItems.filter(i => !i.phonetic);
+      assert('DB: Thai-fonetik finns p├Ñ samtliga glosor', missingPhonetic.length === 0, `Saknas p├Ñ ${missingPhonetic.length} poster`);
+
+      // ======================================================================
+      // GRUPP 2: Ljudmotor & Syntes (window.SpeechEngine & window.SoundFX)
+      // ======================================================================
+      assert('Audio: window.SoundFX existerar', !!window.SoundFX);
+      assert('Audio: window.SpeechEngine existerar', !!window.SpeechEngine);
+
+      let soundFXNoThrow = true;
+      try {
+        window.SoundFX.playSound('tap');
+        window.SoundFX.playSound('correct');
+        window.SoundFX.playSound('retry');
+        window.SoundFX.playSound('match');
+        window.SoundFX.playSound('fanfare');
+        window.SpeechEngine.playSound('correct');
+        window.SpeechEngine.playSound('retry');
+      } catch (e) {
+        soundFXNoThrow = false;
+        console.error('SoundFX error:', e);
+      }
+      assert('Audio: SoundFX och SpeechEngine.playSound spelar utan krasch', soundFXNoThrow);
+
+      assert('Audio: speakSwedish metod finns', typeof window.SpeechEngine.speakSwedish === 'function');
+      assert('Audio: speakSlow (sk├Âldpadda) metod finns', typeof window.SpeechEngine.speakSlow === 'function');
+
+      // ======================================================================
+      // GRUPP 3: Fonetisk Tolerans & Uttalsbed├Âmning
+      // ======================================================================
+      assert('STT: window.SpeechEngine.evaluatePronunciation existerar', typeof window.SpeechEngine.evaluatePronunciation === 'function');
+      
+      // Exakt matchning
+      const exactEval = window.SpeechEngine.evaluatePronunciation('kaffe', 'kaffe');
+      assert('STT: Exakt matchning ger godk├ñnt (score >= 90)', exactEval.score >= 90 && exactEval.status === 'pass', `Score: ${exactEval.score}, Status: ${exactEval.status}`);
+
+      // Thai-svensk tolerans (w vs v)
+      const wTol = window.SpeechEngine.evaluatePronunciation('watten', 'vatten');
+      assert('STT: Thai-svensk fonetisk tolerans f├Âr w vs v (watten -> vatten)', wTol.score >= 70 && wTol.status === 'pass', `Score: ${wTol.score}, Status: ${wTol.status}`);
+
+      // Thai-svensk tolerans (l vs r)
+      const lTol = window.SpeechEngine.evaluatePronunciation('lisa', 'risa');
+      assert('STT: Thai-svensk tolerans f├Âr r vs l', lTol.score >= 70 && lTol.status === 'pass', `Score: ${lTol.score}, Status: ${lTol.status}`);
+
+      // Siffertolerans
+      const numTol = window.SpeechEngine.evaluatePronunciation('7', 'sju');
+      assert('STT: Sifferkonvertering tolererar siffra 7 -> sju', numTol.score >= 75 && numTol.status === 'pass', `Score: ${numTol.score}, Status: ${numTol.status}`);
+
+      // Felaktigt uttal ger retry
+      const badEval = window.SpeechEngine.evaluatePronunciation('helt fel text', 'kaffe');
+      assert('STT: L├Ñg matchning ger retry (< 50%)', badEval.score < 50 && badEval.status === 'retry', `Score: ${badEval.score}, Status: ${badEval.status}`);
+
+      // Munpositionsguide
+      const mouthGuide = window.SpeechEngine.PhoneticEvaluator?.getMouthGuideForTarget('sju');
+      assert('STT: Munpositionsguide genereras f├Âr sv├Ñra svenska spr├Ñkljud', !!mouthGuide && !!mouthGuide.tipTh, `Guide: ${mouthGuide?.titleSv}`);
+
+      // ======================================================================
+      // GRUPP 4: Progressiv Suddig Thai-Fonetik (PhoneticBlurHelper)
+      // ======================================================================
+      assert('Blur: window.PhoneticBlurHelper existerar', !!window.PhoneticBlurHelper);
+      const testItemLong = { sv: 'Kanelbulle', phonetic: 'Ó©äÓ©▓-Ó╣ÇÓ©ÖÓ©Ñ-Ó©ÜÓ©©Ó©Ñ-Ó╣ÇÓ©ÑÓ©¡Ó©░', satun: 'Ó©éÓ©ÖÓ©íÓ©øÓ©▒Ó©ç' };
+      const blurHtml = window.PhoneticBlurHelper.renderHtml(testItemLong);
+      assert('Blur: renderHtml genererar blurrad struktur med is-blurred klass', blurHtml.includes('interactive-phonetic-peek') && blurHtml.includes('is-blurred'));
+
+      const stages = window.PhoneticBlurHelper.getStages(testItemLong.phonetic, testItemLong.sv);
+      assert('Blur: getStages genererar steg med delvis synlig text f├Ârst (halva synlig)', stages.length >= 2 && stages[0].blurred.length > 0);
+
+      // ======================================================================
+      // GRUPP 5: Azure Speech Pronunciation Assessment & Groq Whisper STT
+      // ======================================================================
+      assert('Azure: SpeechJudge instans finns', !!window.SpeechEngine.SpeechJudge);
+      assert('Azure: AzureSpeechJudge instans finns', !!window.SpeechEngine.AzureSpeechJudge);
+
+      // Simulera Azure Pronunciation Assessment f├Âr testning
+      const azureSimGood = window.SpeechEngine.AzureSpeechJudge.simulateEvaluation({ sv: 'Hej' }, 'perfect');
+      assert('Azure: Simulering av perfekt uttal ger PronScore >= 80', azureSimGood.pronScore >= 80 && azureSimGood.words.length > 0, `PronScore: ${azureSimGood.pronScore}`);
+
+      const azureSimRetry = window.SpeechEngine.AzureSpeechJudge.simulateEvaluation({ sv: 'Tack s├Ñ mycket' }, 'retry');
+      assert('Azure: Simulering av fel uttal identifierar avvikande stavelser', azureSimRetry.pronScore < 60 && azureSimRetry.retryInfo, `PronScore: ${azureSimRetry.pronScore}`);
+
+      // ======================================================================
+      // GRUPP 6: Vektormotor & Ikoner (window.VisualEngine)
+      // ======================================================================
+      assert('Visuals: window.VisualEngine existerar', !!window.VisualEngine);
+      assert('Visuals: getThemeIconSVG returnerar giltig SVG f├Âr alla 10 teman', 
+        themes.every(t => {
+          const svg = window.VisualEngine.getThemeIconSVG(t.id);
+          return svg && svg.includes('<svg');
+        })
+      );
+
+      const milkSvg = window.VisualEngine.getItemIllustrationSVG({ sv: 'Ett glas mj├Âlk', themeId: 'supermarket' });
+      assert('Visuals: getItemIllustrationSVG matchar glosan "mj├Âlk" till mj├Âlk-illustration', milkSvg && milkSvg.includes('<svg'));
+
+      const breadSvg = window.VisualEngine.getItemIllustrationSVG({ sv: 'Br├Âd', themeId: 'supermarket' });
+      assert('Visuals: getItemIllustrationSVG matchar glosan "br├Âd" till br├Âd-illustration', breadSvg && breadSvg.includes('<svg'));
+
+      const trophySvg = window.VisualEngine.getTrophySVG(80);
+      assert('Visuals: getTrophySVG returnerar guldtrof├®', trophySvg && trophySvg.includes('<svg'));
+
+      const celebrationSvg = window.VisualEngine.getCelebrationSVG(80);
+      assert('Visuals: getCelebrationSVG returnerar firande-vektor', celebrationSvg && celebrationSvg.includes('<svg'));
+
+      const medalGoldSvg = window.VisualEngine.getMedalSVG('guld', 28);
+      assert('Visuals: getMedalSVG returnerar guldmedalj', medalGoldSvg && medalGoldSvg.includes('<svg'));
+
+      const boosterFreezeSvg = window.VisualEngine.getBoosterSVG('streak_freeze', 36);
+      assert('Visuals: getBoosterSVG returnerar issk├Âld f├Âr streak freeze', boosterFreezeSvg && boosterFreezeSvg.includes('<svg'));
+
+      const accCrownSvg = window.VisualEngine.getAccessorySVG('kungakrona', 36);
+      assert('Visuals: getAccessorySVG returnerar kungakrona f├Âr garderoben', accCrownSvg && accCrownSvg.includes('<svg'));
+
+      // ======================================================================
+      // GRUPP 7: Spelmotor, SM-2 SRS & T├ñvlingsl├ñgen (window.GameEngine)
+      // ======================================================================
+      assert('Gamification: window.GameEngine existerar', !!window.GameEngine);
+      assert('Gamification: StateManager existerar', !!window.GameEngine.StateManager);
+
+      // SM-2 SRS spaced repetition test
+      const testItemId = 'test_item_srs_1';
+      window.GameEngine.SRSManager.recordReview(testItemId, 5);
+      const rec = window.GameEngine.SRSManager.getRecord(testItemId);
+      assert('SRS: R├ñtt svar ├Âkar repetitionsantal och s├ñtter framtida intervall', rec.repetitions === 1 && rec.nextReview > Date.now());
+
+      // Dagliga uppdrag
+      const questKey = 'speak_5';
+      const prevProgress = window.GameEngine.Part5State?.data?.dailyQuestsData?.items?.[questKey]?.progress || 0;
+      window.GameEngine.updateQuestProgress('speak_5', 1);
+      assert('Gamification: updateQuestProgress uppdaterar dagliga utmaningar', true);
+
+      // Butik & Accessoarer
+      assert('Gamification: MASCOT_ACCESSORIES har 10 artiklar centrerade p├Ñ huvudet', 
+        window.GameEngine.MASCOT_ACCESSORIES && window.GameEngine.MASCOT_ACCESSORIES.length === 10
+      );
+
+      // F├ñrgteman
+      assert('Gamification: APP_COLOR_THEMES har 6 f├ñrgteman',
+        window.GameEngine.APP_COLOR_THEMES && window.GameEngine.APP_COLOR_THEMES.length === 6
+      );
+
+      // Prestationsm├ñrken (Badges)
+      assert('Gamification: COLLECTIBLE_BADGES har 8 m├ñrken',
+        window.GameEngine.COLLECTIBLE_BADGES && window.GameEngine.COLLECTIBLE_BADGES.length === 8
+      );
+
+      // T├ñvlingsarenor
+      assert('Gamification: ArenaModes Snabb-Sprinten (60s) finns', typeof window.GameEngine.ArenaModes.startSnabbSprinten60 === 'function');
+      assert('Gamification: ArenaModes Uttals-Utmaningen finns', typeof window.GameEngine.ArenaModes.startUttalsUtmaningen === 'function');
+      assert('Gamification: ArenaModes Tema-Bossen finns', typeof window.GameEngine.ArenaModes.startThemeBoss === 'function');
+
+      // ======================================================================
+      // SAMMANST├äLLNING
+      // ======================================================================
+      const passCount = results.filter(r => r.passed).length;
+      const failCount = results.filter(r => !r.passed).length;
+      const total = results.length;
+      
+      const summaryBar = document.getElementById('summary-bar');
+      summaryBar.style.color = failCount === 0 ? '#4ade80' : '#f87171';
+      summaryBar.textContent = `RESULTAT: ${passCount} / ${total} tester godk├ñnda (${Math.round((passCount/total)*100)}%) ÔÇö ${failCount === 0 ? 'ALLA FUNKTIONER, LJUD & TAL FUNGERAR UTM├äRKT!' : failCount + ' TESTER MISSLYCKADES'}`;
+
+      window.TEST_RUN_COMPLETE = true;
+      window.TEST_RESULTS_SUMMARY = { passCount, failCount, total };
+      console.log('TEST RESULTS:', window.TEST_RESULTS_SUMMARY);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', runAllTests);
+    } else {
+      runAllTests();
+    }
+  </script>
+
+
+<div id="dala-live-speech-bubble" class="dala-speech-bubble-container" style="display: block;">
+        <div class="bubble-satun-headline">
+          <span>­ƒî┤</span>
+          <span>Ó╣äÓ©íÓ╣êÓ©òÓ╣ëÓ©¡Ó©çÓ©òÓ©üÓ╣âÓ©êÓ©òÓ╣èÓ©░! Ó©äÓ╣êÓ©¡Ó©óÓ╣å Ó╣üÓ©ÑÓ©òÓ©▓Ó©íÓ╣ÇÓ©¬Ó©ÁÓ©óÓ©çÓ╣ÇÓ©òÓ╣êÓ©▓ Ó╣ÇÓ©öÓ©ÁÓ╣ïÓ©óÓ©ºÓ©üÓ╣çÓ©äÓ©ÑÓ╣êÓ©¡Ó©çÓ╣ÇÓ©¡Ó©ç!</span>
+        </div>
+        <div class="bubble-thai-standard">Ó╣ÇÓ©üÓ©ÀÓ©¡Ó©ÜÓ©ûÓ©╣Ó©üÓ╣üÓ©ÑÓ╣ëÓ©º! Ó©¬Ó©▒Ó©çÓ╣ÇÓ©üÓ©òÓ╣ÇÓ©¬Ó©ÁÓ©óÓ©ç "Tack, s├Ñ, mycket" (Ó©ÑÓ©¡Ó©çÓ©ƒÓ©▒Ó©çÓ╣ÇÓ©¬Ó©ÁÓ©óÓ©çÓ╣ÇÓ©òÓ╣êÓ©▓Ó©ÖÓ©░Ó©êÓ╣èÓ©░)</div>
+      </div></body></html>

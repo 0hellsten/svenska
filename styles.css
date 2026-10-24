@@ -1,0 +1,1797 @@
+/* ==========================================================================
+   SVENSKA FÖR SATUN (ภาษาสวีเดนเพื่อคนสตูล) — DEL 1 AV 5
+   Designsystem: Varm, dopamingivande Duolingo-estetik optimerad för iOS Safari
+   ========================================================================== */
+
+:root {
+  /* Belönings- och primärfärger (Krav 2) */
+  --emerald: #58CC02;
+  --emerald-dark: #46A302;
+  --emerald-soft: #D7FFB8;
+  --emerald-text: #2B6CB0;
+
+  --gold: #FFC800;
+  --gold-dark: #E5A800;
+  --gold-soft: #FFF4CC;
+  --gold-deep: #B37B00;
+
+  --coral: #FF4B4B;
+  --coral-dark: #EA2B2B;
+  --coral-soft: #FFE2E2;
+
+  --retry-warm: #FF9600;
+  --retry-dark: #D97900;
+  --retry-soft: #FFF0D6;
+
+  --sky: #1CB0F6;
+  --sky-dark: #1899D6;
+  --sky-soft: #DDF4FF;
+
+  --lavender: #CE82FF;
+  --lavender-dark: #A559D9;
+  --lavender-soft: #F3E5FF;
+
+  /* Varma pastellbakgrunder & ytor */
+  --bg-cream: #FFFDF8;
+  --bg-pastel: #F4F7FA;
+  --surface: #FFFFFF;
+  --surface-muted: #F7F9FC;
+  --border-light: #E5E5E5;
+  --border-depth: #CECECE;
+
+  /* Textfärger */
+  --text-main: #3C3C3C;
+  --text-secondary: #777777;
+  --text-muted: #AFAFAF;
+  --text-inverse: #FFFFFF;
+
+  /* Typografi: Svenska (Nunito / SF Pro Rounded) + Thailändska (Kanit / Sarabun) */
+  --font-sv: 'Nunito', -apple-system, 'SF Pro Rounded', 'SF Pro Text', BlinkMacSystemFont, sans-serif;
+  --font-th: 'Kanit', 'Sarabun', 'Thonburi', sans-serif;
+  --font-body-th: 'Sarabun', 'Kanit', 'Thonburi', sans-serif;
+
+  /* iOS Safe Area Insets (Dynamic Island & Home Indicator) */
+  --safe-top: env(safe-area-inset-top, 20px);
+  --safe-bottom: env(safe-area-inset-bottom, 20px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+
+  /* Mått & radier */
+  --radius-sm: 14px;
+  --radius-md: 18px;
+  --radius-lg: 24px;
+  --radius-xl: 30px;
+  --btn-min-height: 56px;
+}
+
+/* ==========================================================================
+   1. RESET & iOS VIEWPORT LOCK
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  background-color: var(--bg-cream);
+  color: var(--text-main);
+  font-family: var(--font-sv), var(--font-body-th);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  touch-action: manipulation;
+  overscroll-behavior: none;
+}
+
+/* Thailändsk text får alltid extra tydlig radhöjd och typsnitt */
+.th-text {
+  font-family: var(--font-body-th);
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+}
+
+.th-heading {
+  font-family: var(--font-th);
+  line-height: 1.35;
+}
+
+.satun-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--lavender-soft);
+  color: #7B2CBF;
+  font-family: var(--font-body-th);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1.5px solid #E3C2FF;
+}
+
+/* ==========================================================================
+   2. APP SHELL & SPA LAYOUT
+   ========================================================================== */
+
+#app-shell {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 520px;
+  height: 100dvh;
+  margin: 0 auto;
+  background: var(--bg-cream);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.06);
+}
+
+/* Toppbar (Streak, Juveler, Daglig XP) */
+.app-topbar {
+  padding-top: calc(var(--safe-top) + 8px);
+  padding-bottom: 10px;
+  padding-left: calc(var(--safe-left) + 16px);
+  padding-right: calc(var(--safe-right) + 16px);
+  background: rgba(255, 253, 248, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 2px solid var(--border-light);
+  z-index: 30;
+  flex-shrink: 0;
+}
+
+.topbar-stats {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.stat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 2px solid var(--border-light);
+  box-shadow: 0 2px 0 var(--border-light);
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.stat-pill:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.stat-pill:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 var(--border-light);
+}
+
+.stat-pill:focus-visible {
+  outline: 2px solid var(--sky);
+  outline-offset: 2px;
+}
+
+.stat-pill.streak-pill {
+  color: #FF7A00;
+  border-color: #FFE0B2;
+  background: #FFF8EE;
+}
+
+.stat-pill.gems-pill {
+  color: var(--sky-dark);
+  border-color: #C7ECFF;
+  background: #F2FAFF;
+}
+
+.stat-pill.xp-pill {
+  color: var(--gold-deep);
+  border-color: #FFE699;
+  background: #FFFBEB;
+}
+
+/* Daglig XP-mätare i toppbaren */
+.daily-xp-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.daily-xp-label {
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.daily-xp-track {
+  flex: 1;
+  height: 12px;
+  background: #ECECEC;
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.daily-xp-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--gold) 0%, #FFAE00 100%);
+  border-radius: 999px;
+  transition: width 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+
+.daily-xp-fill::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 6px;
+  right: 6px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: 999px;
+}
+
+/* Huvudvy-container (SPA Views) */
+.views-container {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.spa-view {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 16px 16px calc(var(--safe-bottom) + 96px) 16px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: opacity 0.24s ease, transform 0.24s ease;
+}
+
+.spa-view.active-view {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* Bottennavigation (Hem, Tävla, Ordbank/SRS) */
+.bottom-nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-top: 8px;
+  padding-bottom: calc(var(--safe-bottom) + 8px);
+  padding-left: calc(var(--safe-left) + 12px);
+  padding-right: calc(var(--safe-right) + 12px);
+  background: var(--surface);
+  border-top: 2px solid var(--border-light);
+  z-index: 30;
+  flex-shrink: 0;
+}
+
+.nav-tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-height: 56px;
+  margin: 0 4px;
+  border-radius: var(--radius-md);
+  border: 2px solid transparent;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-sv), var(--font-th);
+  font-weight: 800;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.nav-tab .nav-icon {
+  font-size: 1.4rem;
+  line-height: 1;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.nav-tab.active {
+  background: var(--sky-soft);
+  border-color: #99DCFF;
+  color: var(--sky-dark);
+}
+
+.nav-tab.active .nav-icon {
+  transform: scale(1.12);
+}
+
+/* ==========================================================================
+   3. TOUCH-OPTIMERADE 3D-KNAPPAR (Krav 1 & 2)
+   ========================================================================== */
+
+.btn-3d {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: var(--btn-min-height);
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sv), var(--font-th);
+  font-size: 1.02rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-align: center;
+  cursor: pointer;
+  border: 2px solid transparent;
+  position: relative;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, background-color 0.15s ease, filter 0.15s ease;
+  user-select: none;
+}
+
+.btn-3d:active:not(:disabled) {
+  transform: translateY(4px);
+}
+
+.btn-3d:disabled {
+  background: #E5E5E5 !important;
+  border-color: #D4D4D4 !important;
+  color: #AFAFAF !important;
+  box-shadow: 0 4px 0 #CCCCCC !important;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Smaragdgrön (Rätt / Primär CTA) */
+.btn-green {
+  background: var(--emerald);
+  color: var(--text-inverse);
+  border-color: var(--emerald);
+  box-shadow: 0 4px 0 var(--emerald-dark);
+}
+.btn-green:active:not(:disabled) {
+  box-shadow: 0 0 0 var(--emerald-dark);
+}
+
+/* Himmelblå (Val / Lyssna) */
+.btn-blue {
+  background: var(--sky);
+  color: var(--text-inverse);
+  border-color: var(--sky);
+  box-shadow: 0 4px 0 var(--sky-dark);
+}
+.btn-blue:active:not(:disabled) {
+  box-shadow: 0 0 0 var(--sky-dark);
+}
+
+/* Solgul (XP / Tävling / Stjärnor) */
+.btn-yellow {
+  background: var(--gold);
+  color: #4A3500;
+  border-color: var(--gold);
+  box-shadow: 0 4px 0 var(--gold-dark);
+}
+.btn-yellow:active:not(:disabled) {
+  box-shadow: 0 0 0 var(--gold-dark);
+}
+
+/* Korall / Varm Orange ("Prova igen") */
+.btn-coral {
+  background: var(--coral);
+  color: var(--text-inverse);
+  border-color: var(--coral);
+  box-shadow: 0 4px 0 var(--coral-dark);
+}
+.btn-coral:active:not(:disabled) {
+  box-shadow: 0 0 0 var(--coral-dark);
+}
+
+.btn-warm {
+  background: var(--retry-warm);
+  color: var(--text-inverse);
+  border-color: var(--retry-warm);
+  box-shadow: 0 4px 0 var(--retry-dark);
+}
+.btn-warm:active:not(:disabled) {
+  box-shadow: 0 0 0 var(--retry-dark);
+}
+
+/* Vit / Neutral 3D-kortknapp */
+.btn-surface {
+  background: var(--surface);
+  color: var(--text-main);
+  border: 2px solid var(--border-light);
+  box-shadow: 0 4px 0 var(--border-depth);
+}
+.btn-surface:active:not(:disabled) {
+  box-shadow: 0 0 0 var(--border-depth);
+}
+.btn-surface.selected {
+  background: var(--sky-soft);
+  border-color: var(--sky);
+  color: var(--sky-dark);
+  box-shadow: 0 4px 0 var(--sky-dark);
+}
+.btn-surface.selected:active {
+  box-shadow: 0 0 0 var(--sky-dark);
+}
+
+.w-full {
+  width: 100%;
+}
+
+/* Haptisk visuell effekt */
+@keyframes hapticPop {
+  0% { transform: scale(1); }
+  40% { transform: scale(0.95); }
+  80% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+.haptic-pop {
+  animation: hapticPop 0.22s ease;
+}
+
+@keyframes gentleShake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+.gentle-shake {
+  animation: gentleShake 0.38s ease;
+}
+
+/* ==========================================================================
+   4. HEM-VY & TEMAVÄLJARE (Krav 3)
+   ========================================================================== */
+
+/* Välkomst- & SRS-banner */
+.hero-welcome-card {
+  background: linear-gradient(135deg, #FFF9E6 0%, #E8F8FF 100%);
+  border: 2px solid #FFE299;
+  box-shadow: 0 4px 0 #F0D284;
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hero-top-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.mascot-avatar {
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  background: var(--surface);
+  border-radius: 50%;
+  border: 2.5px solid var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 0 var(--gold-dark);
+}
+
+.hero-greeting h1 {
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: var(--text-main);
+}
+
+.hero-greeting p {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.srs-banner-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid #E2ECF5;
+}
+
+.srs-info-text {
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.srs-badge-count {
+  display: inline-block;
+  background: var(--emerald);
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  margin-right: 4px;
+}
+
+/* Träningsläges-väljare (Ord, Meningar, Lyssna, Prata, Mix) */
+.mode-selector-section {
+  margin-bottom: 18px;
+}
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.section-title {
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: var(--text-main);
+}
+
+.section-subtitle {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  font-family: var(--font-body-th);
+}
+
+.mode-pills-scroll {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  scrollbar-width: none;
+}
+.mode-pills-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.mode-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 56px;
+  padding: 8px 15px;
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  border: 2px solid var(--border-light);
+  box-shadow: 0 4px 0 var(--border-depth);
+  font-family: var(--font-sv), var(--font-th);
+  font-weight: 800;
+  font-size: 0.88rem;
+  color: var(--text-main);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+
+.mode-pill-btn:active {
+  transform: translateY(4px);
+  box-shadow: 0 0 0 var(--border-depth);
+}
+
+.mode-pill-btn.active {
+  background: var(--sky);
+  color: var(--text-inverse);
+  border-color: var(--sky);
+  box-shadow: 0 4px 0 var(--sky-dark);
+}
+.mode-pill-btn.active:active {
+  box-shadow: 0 0 0 var(--sky-dark);
+}
+
+.mode-pill-sub {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+/* Rutnät med kategorikort (Temaväljare) */
+.themes-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (min-width: 640px) {
+  .themes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+}
+
+.theme-card {
+  background: var(--surface);
+  border: 2px solid var(--border-light);
+  box-shadow: 0 4px 0 var(--border-depth);
+  border-radius: 20px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.15s ease;
+  overflow: hidden;
+  text-align: left;
+}
+
+.theme-card:hover {
+  border-color: var(--theme-accent, var(--sky));
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 var(--border-depth);
+}
+
+.theme-card:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 var(--border-depth);
+}
+
+.theme-card.theme-unlocked {
+  border-color: var(--theme-accent, var(--sky));
+}
+
+/* Vänster: Ikon med rund progressionsring */
+.theme-col-left {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-ring-wrapper {
+  position: relative;
+  width: 62px;
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-ring-svg {
+  position: absolute;
+  inset: 0;
+  transform: rotate(-90deg);
+}
+
+.theme-icon-inner {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.45rem;
+  background: var(--surface-muted);
+}
+
+/* Mitten: Tydlig och luftig innehållskolumn */
+.theme-col-center {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.theme-top-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+
+.theme-chapter-chip {
+  font-size: 0.64rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 1px 7px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-muted);
+}
+
+.theme-stars-row {
+  display: flex;
+  gap: 2px;
+  font-size: 0.82rem;
+  line-height: 1;
+}
+
+.star-slot {
+  color: #DCDCDC;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.star-slot.earned {
+  color: var(--gold);
+  filter: drop-shadow(0 1px 0 var(--gold-dark));
+}
+
+.theme-title-sv {
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: var(--text-main);
+  line-height: 1.25;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.theme-title-th {
+  font-family: var(--font-body-th);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  line-height: 1.25;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.theme-meta-tags {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.theme-satun-note {
+  font-family: var(--font-body-th);
+  font-size: 0.72rem;
+  color: #7B2CBF;
+  background: var(--lavender-soft);
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 170px;
+}
+
+.theme-status-chip {
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: var(--emerald-soft);
+  color: var(--emerald-dark);
+}
+
+/* Höger: Startknapp */
+.theme-col-right {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.theme-start-btn {
+  min-height: 40px;
+  font-size: 0.84rem;
+  padding: 6px 14px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   5. LEKTIONS-VY (Krav 3 & 4)
+   ========================================================================== */
+
+#lesson-overlay {
+  position: fixed;
+  inset: 0;
+  max-width: 520px;
+  margin: 0 auto;
+  background: var(--bg-cream);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease;
+}
+
+#lesson-overlay.open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lesson-header {
+  padding-top: calc(var(--safe-top) + 10px);
+  padding-bottom: 12px;
+  padding-left: 16px;
+  padding-right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-cream);
+  flex-shrink: 0;
+}
+
+.lesson-close-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  border: 2px solid var(--border-light);
+  background: var(--surface);
+  box-shadow: 0 3px 0 var(--border-depth);
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.lesson-close-btn:active {
+  transform: translateY(3px);
+  box-shadow: none;
+}
+
+/* Mjukt växande progress-bar i lektionen */
+.lesson-progress-track {
+  flex: 1;
+  height: 18px;
+  background: #E8ECEF;
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.lesson-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #58CC02 0%, #78E022 100%);
+  border-radius: 999px;
+  transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+
+.lesson-progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 8px;
+  right: 8px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.45);
+  border-radius: 999px;
+}
+
+.lesson-combo-pill {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--gold-soft);
+  border: 1.5px solid var(--gold);
+  color: var(--gold-deep);
+  font-weight: 900;
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+/* Dynamisk arbetsyta i mitten */
+.lesson-stage {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 18px 24px 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.exercise-badge-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.exercise-type-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--sky-dark);
+  background: var(--sky-soft);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.exercise-prompt-sv {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: var(--text-main);
+  margin-bottom: 3px;
+}
+
+.exercise-prompt-th {
+  font-family: var(--font-body-th);
+  font-size: 0.96rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+}
+
+/* Övning A: Bild + Ljud -> 4 val */
+.illustration-showcase {
+  background: var(--surface);
+  border: 2px solid var(--border-light);
+  box-shadow: 0 4px 0 var(--border-depth);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.illustration-svg-box {
+  width: 86px;
+  height: 86px;
+  border-radius: var(--radius-md);
+  background: var(--bg-pastel);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.illustration-details {
+  flex: 1;
+}
+
+.thai-target-word {
+  font-family: var(--font-th);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.satun-hint-line {
+  font-family: var(--font-body-th);
+  font-size: 0.85rem;
+  color: #7B2CBF;
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+.choices-grid-2x2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.choice-card-btn {
+  min-height: 76px;
+  padding: 12px 10px;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.choice-sv-word {
+  font-size: 1.08rem;
+  font-weight: 900;
+}
+
+.choice-phonetic-th {
+  font-family: var(--font-body-th);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+/* Övning B: Bygg meningen (Word Bank) */
+.sentence-source-card {
+  background: var(--surface);
+  border: 2px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 3px 0 var(--border-light);
+}
+
+.sentence-th-main {
+  font-family: var(--font-th);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.sentence-answer-tray {
+  min-height: 86px;
+  background: #F4F7FA;
+  border: 2px dashed #CBD5E1;
+  border-radius: var(--radius-lg);
+  padding: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.tray-placeholder {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-family: var(--font-body-th);
+  width: 100%;
+  text-align: center;
+}
+
+.word-bank-pool {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.word-bubble-btn {
+  min-height: 56px;
+  padding: 10px 16px;
+  border-radius: 16px;
+  font-size: 1.02rem;
+  font-weight: 800;
+  background: var(--surface);
+  border: 2px solid var(--border-light);
+  box-shadow: 0 4px 0 var(--border-depth);
+  color: var(--text-main);
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.word-bubble-btn:active {
+  transform: translateY(4px);
+  box-shadow: 0 0 0 var(--border-depth);
+}
+
+.word-bubble-btn.in-answer {
+  background: var(--sky-soft);
+  border-color: var(--sky);
+  color: var(--sky-dark);
+  box-shadow: 0 4px 0 var(--sky-dark);
+}
+
+/* Övning C: Lyssna & Förstå (Normal + Sköldpadda) */
+.audio-players-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin: 12px 0 20px 0;
+}
+
+.audio-big-btn {
+  width: 96px;
+  height: 96px;
+  border-radius: 26px;
+  font-size: 2.3rem;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.audio-turtle-btn {
+  width: 82px;
+  height: 82px;
+  border-radius: 24px;
+  font-size: 1.8rem;
+  flex-direction: column;
+  gap: 4px;
+  background: var(--lavender);
+  border-color: var(--lavender);
+  color: #fff;
+  box-shadow: 0 4px 0 var(--lavender-dark);
+}
+.audio-turtle-btn:active {
+  box-shadow: 0 0 0 var(--lavender-dark);
+}
+
+.audio-btn-caption {
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.choices-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.choice-row-btn {
+  width: 100%;
+  justify-content: space-between;
+  text-align: left;
+  padding: 14px 16px;
+}
+
+/* Övning D: Uttalsövning (Mikrofon) */
+.pronunciation-card {
+  background: var(--surface);
+  border: 2px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  text-align: center;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 0 var(--border-depth);
+}
+
+.pronun-sv-phrase {
+  font-size: 1.55rem;
+  font-weight: 900;
+  color: var(--text-main);
+}
+
+.pronun-phonetic-pill {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: var(--gold-soft);
+  color: var(--gold-deep);
+  font-family: var(--font-th);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.pronun-phonetic-pill.interactive-phonetic-peek {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.15s ease, background-color 0.2s ease;
+  border: 1.5px solid var(--gold);
+  box-shadow: 0 3px 0 var(--gold-dark);
+}
+
+.pronun-phonetic-pill.interactive-phonetic-peek:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 var(--gold-dark);
+}
+
+.sentence-phonetic-peek-box {
+  background: var(--surface-card);
+  border: 1.5px solid var(--border-light);
+  box-shadow: 0 2px 0 var(--border-medium);
+  color: var(--text-main);
+  padding: 6px 14px;
+  border-radius: 12px;
+  margin-top: 6px;
+}
+
+.phonetic-revealed-text {
+  font-weight: 700;
+  color: inherit;
+  letter-spacing: 0.2px;
+}
+
+.phonetic-blurred-text.is-blurred {
+  display: inline-block;
+  filter: blur(5px);
+  opacity: 0.55;
+  user-select: none;
+  -webkit-user-select: none;
+  border-radius: 4px;
+  transition: filter 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.35s ease;
+}
+
+.phonetic-blurred-text:not(.is-blurred) {
+  display: inline;
+  filter: none;
+  opacity: 1;
+}
+
+.phonetic-peek-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.08);
+  color: inherit;
+  margin-left: 4px;
+  white-space: nowrap;
+}
+
+.phonetic-peek-badge.fully-revealed {
+  background: rgba(88, 204, 2, 0.2);
+  color: #166534;
+}
+
+.pronun-th-meaning {
+  font-family: var(--font-body-th);
+  font-size: 0.98rem;
+  color: var(--text-secondary);
+  margin-top: 8px;
+}
+
+.mic-stage-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.mic-record-btn {
+  width: 108px;
+  height: 108px;
+  border-radius: 50%;
+  font-size: 2.4rem;
+}
+
+.mic-record-btn.listening {
+  background: var(--coral);
+  border-color: var(--coral);
+  box-shadow: 0 0 0 10px rgba(255, 75, 75, 0.22), 0 4px 0 var(--coral-dark);
+  animation: pulseMic 1.1s infinite ease-in-out;
+}
+
+@keyframes pulseMic {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+.sound-waves {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  height: 28px;
+}
+
+.wave-bar {
+  width: 5px;
+  height: 8px;
+  background: var(--sky);
+  border-radius: 99px;
+  transition: height 0.15s ease;
+}
+
+.sound-waves.active .wave-bar:nth-child(1) { animation: waveBounce 0.55s infinite 0.0s; }
+.sound-waves.active .wave-bar:nth-child(2) { animation: waveBounce 0.55s infinite 0.1s; }
+.sound-waves.active .wave-bar:nth-child(3) { animation: waveBounce 0.55s infinite 0.2s; }
+.sound-waves.active .wave-bar:nth-child(4) { animation: waveBounce 0.55s infinite 0.15s; }
+.sound-waves.active .wave-bar:nth-child(5) { animation: waveBounce 0.55s infinite 0.05s; }
+
+@keyframes waveBounce {
+  0%, 100% { height: 8px; }
+  50% { height: 26px; }
+}
+
+/* Övning E: Matchnings-sprint (5 svenska + 5 thailändska ord på tid) */
+.sprint-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface);
+  border: 2px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 8px 14px;
+  margin-bottom: 12px;
+}
+
+.sprint-timer-display {
+  font-weight: 900;
+  font-size: 1.05rem;
+  color: var(--sky-dark);
+}
+
+.matching-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.match-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.match-tile-btn {
+  min-height: 58px;
+  padding: 10px 12px;
+  font-size: 0.94rem;
+  border-radius: var(--radius-md);
+  word-break: break-word;
+}
+
+.match-tile-btn.matched {
+  background: var(--emerald-soft) !important;
+  border-color: var(--emerald) !important;
+  color: var(--emerald-dark) !important;
+  box-shadow: 0 2px 0 var(--emerald) !important;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.match-tile-btn.wrong-flash {
+  background: var(--retry-soft) !important;
+  border-color: var(--retry-warm) !important;
+  color: var(--retry-dark) !important;
+}
+
+/* ==========================================================================
+   6. BOTTENPANEL & GLIDANDE FEEDBACK-SHEET (Krav 3)
+   ========================================================================== */
+
+.lesson-bottom-bar {
+  padding-top: 12px;
+  padding-bottom: calc(var(--safe-bottom) + 14px);
+  padding-left: 18px;
+  padding-right: 18px;
+  background: var(--surface);
+  border-top: 2px solid var(--border-light);
+  position: relative;
+  z-index: 20;
+  flex-shrink: 0;
+}
+
+/* Bottenpanel som glider upp vid svar */
+.feedback-sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding-top: 18px;
+  padding-bottom: calc(var(--safe-bottom) + 16px);
+  padding-left: 18px;
+  padding-right: 18px;
+  border-top: 3px solid transparent;
+  border-radius: 26px 26px 0 0;
+  transform: translateY(105%);
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 50;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.feedback-sheet.visible {
+  transform: translateY(0);
+}
+
+/* Grön vid Godkänt */
+.feedback-sheet.state-correct {
+  background: var(--emerald-soft);
+  border-top-color: var(--emerald);
+  color: #1F5E00;
+}
+
+/* Mjukt orange/rosa vid "Nästan! Prova igen" – aldrig straffande */
+.feedback-sheet.state-retry {
+  background: var(--retry-soft);
+  border-top-color: var(--retry-warm);
+  color: #7C3E00;
+}
+
+.feedback-top-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.feedback-title {
+  font-size: 1.2rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.feedback-explanation {
+  font-family: var(--font-body-th);
+  font-size: 0.94rem;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.feedback-actions-row {
+  display: flex;
+  gap: 10px;
+}
+
+/* ==========================================================================
+   7. TÄVLINGS-VY & ORDBANK/SRS-VY (Krav 3 & 4)
+   ========================================================================== */
+
+.arena-card {
+  background: var(--surface);
+  border: 2px solid var(--border-light);
+  box-shadow: 0 5px 0 var(--border-depth);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  margin-bottom: 14px;
+}
+
+.arena-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.arena-icon-badge {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.7rem;
+  flex-shrink: 0;
+}
+
+.quest-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1.5px solid var(--border-light);
+}
+.quest-item:last-child {
+  border-bottom: none;
+}
+
+.quest-progress-bar {
+  width: 100%;
+  height: 10px;
+  background: #ECECEC;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.quest-progress-fill {
+  height: 100%;
+  background: var(--emerald);
+  border-radius: 999px;
+  transition: width 0.35s ease;
+}
+
+/* SRS Ordbank lista */
+.vocab-item-card {
+  background: var(--surface);
+  border: 2px solid var(--border-light);
+  box-shadow: 0 3px 0 var(--border-depth);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.mastery-dots {
+  display: flex;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.mastery-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #E0E0E0;
+}
+
+.mastery-dot.filled {
+  background: var(--emerald);
+}
+
+/* Konfetti & Flytande XP-animation */
+#fx-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 200;
+}
+
+.floating-xp-toast {
+  position: fixed;
+  z-index: 210;
+  background: var(--gold);
+  color: #4A3500;
+  font-weight: 900;
+  font-size: 1rem;
+  padding: 6px 14px;
+  border-radius: 999px;
+  box-shadow: 0 4px 0 var(--gold-dark);
+  pointer-events: none;
+  animation: floatUpFade 1.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.floating-xp-toast.penalty-toast {
+  background: var(--coral-soft) !important;
+  color: var(--coral-dark) !important;
+  border: 1.5px solid var(--coral);
+  box-shadow: 0 4px 0 var(--coral-dark) !important;
+}
+
+@keyframes floatUpFade {
+  0% { opacity: 0; transform: translate(-50%, 10px) scale(0.8); }
+  25% { opacity: 1; transform: translate(-50%, -10px) scale(1.05); }
+  100% { opacity: 0; transform: translate(-50%, -48px) scale(0.95); }
+}
+
+/* ==========================================================================
+   VEKTOR-IKONER & ANPASSADE SVG-BILDER (ERSÄTTER ALLA EMOJIS)
+   ========================================================================== */
+
+.stat-icon-svg {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.stat-icon-svg svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.nav-tab .nav-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-tab .nav-icon svg {
+  width: 26px;
+  height: 26px;
+  display: block;
+}
+
+.theme-icon-inner svg {
+  width: 44px;
+  height: 44px;
+  display: block;
+}
+
+.choice-icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+}
+
+.choice-icon-wrap svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.arena-icon-badge svg {
+  width: 32px;
+  height: 32px;
+  display: block;
+}
+
+.trophy-hero-anim svg {
+  width: 86px;
+  height: 86px;
+  display: block;
+  margin: 0 auto;
+}
+
+.booster-svg-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 6px;
+}
+
+.booster-svg-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.wardrobe-svg-icon {
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 6px;
+}
+
+.wardrobe-svg-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.badge-svg-icon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.badge-svg-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.quest-svg-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
+.quest-svg-icon svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
+.audio-btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+}
+
+.audio-btn-icon svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.mode-pill-btn .mode-pill-svg {
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mode-pill-btn .mode-pill-svg svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* --------------------------------------------------------------------------
+   NYA ÖVNINGSTYPER: CLOZE, DIALOGUE & CONCEPT QUIZ
+   -------------------------------------------------------------------------- */
+.cloze-sentence-card {
+  background: var(--surface);
+  border: 2px solid var(--border-light);
+  border-radius: 18px;
+  padding: 16px;
+  text-align: center;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 0 var(--border-depth);
+}
+
+.cloze-sentence-text {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: var(--text-main);
+  line-height: 1.4;
+}
+
+.cloze-blank-highlight {
+  display: inline-block;
+  min-width: 80px;
+  padding: 2px 10px;
+  border-bottom: 3px dashed var(--sky-dark);
+  color: var(--sky-dark);
+  font-weight: 900;
+  transition: all 0.2s ease;
+}
+
+.cloze-blank-highlight.filled {
+  border-bottom-style: solid;
+  background: var(--sky-soft);
+  border-radius: 8px;
+}
+
+.dialogue-speech-card {
+  background: var(--surface);
+  border: 2px solid var(--border-light);
+  border-radius: 18px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 0 var(--border-depth);
+}
+
+.dialogue-speaker-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dialogue-avatar {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+
+.dialogue-bubble {
+  flex: 1;
+  background: #F1F5F9;
+  border-radius: 14px;
+  padding: 10px 14px;
+}
+
+.dialogue-bubble-sv {
+  font-size: 1rem;
+  font-weight: 900;
+  color: #0F172A;
+}
+
+.dialogue-bubble-th {
+  font-family: var(--font-body-th);
+  font-size: 0.82rem;
+  color: #475569;
+  margin-top: 2px;
+}
+
+

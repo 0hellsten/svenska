@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <!-- Krav 1: Viewport låst för iPhone & PWA-optimering -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Svenska • สตูล">
+  <meta name="theme-color" content="#FFFDF8">
+  <title>Svenska från grunden • เรียนภาษาสวีเดน (สำเนียงสตูล)</title>
+
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Krav 2: Typografi - Nunito (Svenska) + Kanit & Sarabun (Thailändska) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;600;700;800&family=Nunito:wght@600;700;800;900&family=Sarabun:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <meta name="referrer" content="no-referrer">
+  
+    <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="animations.css">
+
+</head>
+<body>
+  <!-- Dedikerad återanvändbar ljudspelare för studioröster på iPhone / webbläsare -->
+  <audio id="app-speech-audio" preload="auto" playsinline webkit-playsinline style="display:none;"></audio>
+
+  <!-- Canvas för visuell konfetti & partiklar (window.VisualEngine) -->
+  <canvas id="fx-canvas"></canvas>
+
+  <!-- Huvudapplikation (SPA Shell) -->
+  <div id="app-shell">
+
+    <!-- TOPPBAR: Streak, Juveler/Poäng & Daglig XP-mätare -->
+    <header class="app-topbar" aria-label="Status och dagliga mål">
+      <div class="topbar-stats">
+        <button type="button" class="stat-pill streak-pill" id="streak-pill" title="Visa träningsstatistik & streak" aria-label="Träningsstatistik och streak">
+          <span class="stat-icon-svg" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none"><path d="M16 2C16 7 21 11 21 17C21 23 17 28 12 28C7 28 4 23 4 18C4 13 8 9 9 7C9 12 12 15 15 15C13 10 16 2 16 2Z" fill="url(#flame-grad-top)"/><path d="M16 14C16 17 19 19 19 23C19 26 17 28 14 28C11 28 10 25 10 23C10 19 14 16 16 14Z" fill="#FFF275"/><defs><linearGradient id="flame-grad-top" x1="4" y1="2" x2="21" y2="28" gradientUnits="userSpaceOnUse"><stop stop-color="#FF4B4B"/><stop offset="0.6" stop-color="#FF9600"/><stop offset="1" stop-color="#FFD600"/></linearGradient></defs></svg>
+          </span>
+          <span id="streak-count">1</span>
+        </button>
+
+        <button type="button" class="stat-pill gems-pill" id="gems-pill" title="Öppna Juvel-Boutique (Köp färgteman & lull-lull)" aria-label="Juvel-Boutique och färgteman">
+          <span class="stat-icon-svg" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none"><polygon points="10,6 22,6 28,13 16,27 4,13" fill="#38BDF8" stroke="#0284C7" stroke-width="1.8" stroke-linejoin="round"/><polygon points="10,6 16,13 22,6" fill="#BAE6FD"/><polygon points="4,13 16,13 16,27" fill="#0284C7" opacity="0.4"/><polygon points="28,13 16,13 16,27" fill="#0369A1" opacity="0.6"/><polygon points="10,6 16,13 4,13" fill="#E0F2FE"/><polygon points="22,6 16,13 28,13" fill="#7DD3FC"/><circle cx="12" cy="10" r="1.5" fill="#FFF"/></svg>
+          </span>
+          <span id="gems-count">50</span>
+        </button>
+
+        <button type="button" class="stat-pill xp-pill" id="xp-pill" title="Öppna Samlaralbum & XP-nivåer" aria-label="Samlaralbum och XP-nivåer">
+          <span class="stat-icon-svg" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none"><polygon points="16,2 20.3,10.7 29.8,12.1 23,18.7 24.6,28.2 16,23.7 7.4,28.2 9,18.7 2.2,12.1 11.7,10.7" fill="#FFC800" stroke="#D97706" stroke-width="1.8" stroke-linejoin="round"/><polygon points="16,5 19,11.5 26,12.5 21,17.4 22.2,24.4 16,21" fill="#FFE066"/></svg>
+          </span>
+          <span id="total-xp-count">0 XP</span>
+        </button>
+
+        <button type="button" class="stat-pill settings-pill" id="btn-open-settings" title="Ljud- & Talinställningar / ตั้งค่าระบบเสียง" aria-label="Inställningar">
+          <span class="stat-icon-svg" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="11" stroke="#64748B" stroke-width="3" stroke-dasharray="5 3"/><circle cx="16" cy="16" r="5" fill="#64748B"/></svg>
+          </span>
+        </button>
+      </div>
+
+      <div class="daily-xp-bar-row">
+        <span class="daily-xp-label" id="daily-xp-label">Dagens mål • เป้าหมายวันนี้: 0 / 100 XP</span>
+        <div class="daily-xp-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div class="daily-xp-fill" id="daily-xp-fill"></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- SPA VYER -->
+    <main class="views-container">
+
+      <!-- ================================================================
+           VY 1: HEM & TEMAVÄLJARE
+           ================================================================ -->
+      <section id="view-home" class="spa-view active-view" aria-label="Hem och Temaväljare">
+        <!-- Välkomstkort med Satun-hälsning och SM-2 Repetitionskö -->
+        <div class="hero-welcome-card">
+          <div class="hero-top-row">
+            <div class="mascot-avatar" id="mascot-container" aria-hidden="true"></div>
+            <div class="hero-greeting">
+              <span class="satun-badge">🌴 ภาษาใต้สำเนียงสตูล • Satun-fokus</span>
+              <h1 id="welcome-heading">Hej! มาแหลงสวีเดนกันต๊ะ</h1>
+              <p class="th-text" id="welcome-subtext">
+                เรียนภาษาสวีเดนจากพื้นฐาน เข้าใจง่าย สนุกทุกวัน!
+              </p>
+            </div>
+          </div>
+
+          <div class="srs-banner-row">
+            <div class="srs-info-text th-text">
+              <span class="srs-badge-count" id="srs-due-count">0</span>
+              <span id="srs-status-text">คำศัพท์พร้อมทบทวน (SM-2)</span>
+            </div>
+            <button type="button" class="btn-3d btn-green" id="btn-start-srs-review" style="min-height: 56px; padding: 8px 14px; font-size: 0.86rem;">
+              🔄 Repetera • ทบทวน
+            </button>
+          </div>
+        </div>
+
+        <!-- Välj träningsläge fritt (Ord, Meningar, Lyssna, Prata, Mix) -->
+        <div class="mode-selector-section">
+          <div class="section-header">
+            <h2 class="section-title">1. Välj träningsläge</h2>
+            <span class="section-subtitle">เลือกโหมดที่อยากฝึกได้อิสระ</span>
+          </div>
+
+          <div class="mode-pills-scroll" id="training-mode-selector" role="tablist" aria-label="Träningsläge">
+            <button type="button" class="mode-pill-btn active" data-mode="mix" role="tab" aria-selected="true">
+              <span class="mode-pill-svg">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M12 2l2.4 5.6L20 10l-4.5 4 1.4 6-4.9-3.2L7.1 20l1.4-6L4 10l5.6-2.4L12 2z" fill="#FFC800" stroke="#D97706" stroke-width="1.5" stroke-linejoin="round"/><circle cx="19" cy="5" r="2" fill="#38BDF8"/></svg>
+              </span>
+              <div>
+                <div>Mix (i+1)</div>
+                <span class="mode-pill-sub th-text">ผสมครบทุกแบบ</span>
+              </div>
+            </button>
+
+            <button type="button" class="mode-pill-btn" data-mode="words" role="tab" aria-selected="false">
+              <span class="mode-pill-svg">
+                <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="3" fill="#E0F2FE" stroke="#0284C7" stroke-width="1.8"/><circle cx="8" cy="9" r="2" fill="#F59E0B"/><path d="M4 17l4-4 3 3 5-6 4 5v2H4z" fill="#38BDF8"/></svg>
+              </span>
+              <div>
+                <div>Ord</div>
+                <span class="mode-pill-sub th-text">ฝึกคำศัพท์</span>
+              </div>
+            </button>
+
+            <button type="button" class="mode-pill-btn" data-mode="sentences" role="tab" aria-selected="false">
+              <span class="mode-pill-svg">
+                <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="8" height="6" rx="2" fill="#FDE047" stroke="#D97706" stroke-width="1.5"/><rect x="13" y="5" width="8" height="6" rx="2" fill="#BAE6FD" stroke="#0284C7" stroke-width="1.5"/><rect x="5" y="13" width="14" height="6" rx="2" fill="#BBF7D0" stroke="#16A34A" stroke-width="1.5"/></svg>
+              </span>
+              <div>
+                <div>Meningar</div>
+                <span class="mode-pill-sub th-text">เรียงประโยค</span>
+              </div>
+            </button>
+
+            <button type="button" class="mode-pill-btn" data-mode="listen" role="tab" aria-selected="false">
+              <span class="mode-pill-svg">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M4 12v-2a8 8 0 0 1 16 0v2" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" fill="none"/><rect x="3" y="12" width="4" height="7" rx="2" fill="#8B5CF6"/><rect x="17" y="12" width="4" height="7" rx="2" fill="#8B5CF6"/></svg>
+              </span>
+              <div>
+                <div>Lyssna</div>
+                <span class="mode-pill-sub th-text">ฝึกฟังเสียง</span>
+              </div>
+            </button>
+
+            <button type="button" class="mode-pill-btn" data-mode="speak" role="tab" aria-selected="false">
+              <span class="mode-pill-svg">
+                <svg viewBox="0 0 24 24" fill="none"><rect x="8" y="3" width="8" height="11" rx="4" fill="#58CC02" stroke="#3F9102" stroke-width="1.5"/><path d="M5 10a7 7 0 0 0 14 0" stroke="#3F9102" stroke-width="1.8" stroke-linecap="round" fill="none"/><line x1="12" y1="17" x2="12" y2="21" stroke="#3F9102" stroke-width="2" stroke-linecap="round"/></svg>
+              </span>
+              <div>
+                <div>Prata</div>
+                <span class="mode-pill-sub th-text">ฝึกพูดออกเสียง</span>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Temaväljare: Rutnät med kategorikort -->
+        <div class="themes-section">
+          <div class="section-header">
+            <h2 class="section-title">2. Välj tema att träna</h2>
+            <span class="section-subtitle">เลือกหมวดหมู่ที่อยากเรียน</span>
+          </div>
+
+          <div class="themes-grid" id="themes-grid">
+            <!-- Renderas dynamiskt av app.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           VY 2: TÄVLINGS-VY (Poängjakt, Tidstävling & Dagliga utmaningar)
+           ================================================================ -->
+      <section id="view-compete" class="spa-view" aria-label="Tävlings-vy">
+        <div class="section-header" style="margin-bottom: 14px;">
+          <div>
+            <h2 class="section-title" style="font-size: 1.25rem;">🏆 Tävlings-arena • ลานประลอง</h2>
+            <p class="section-subtitle">ท้าทายความไว เก็บเพชรและโบนัส XP!</p>
+          </div>
+        </div>
+
+        <!-- Kort 1: Matchnings-sprint (Tidstävling) -->
+        <div class="arena-card">
+          <div class="arena-card-header">
+            <div class="arena-icon-badge" style="background: var(--sky-soft); color: var(--sky-dark);">⚡</div>
+            <div>
+              <h3 style="font-weight: 900; font-size: 1.05rem;">Matchnings-sprint • จับคู่สายฟ้าแลบ</h3>
+              <p class="th-text" style="font-size: 0.85rem; color: var(--text-secondary);">
+                จับคู่คำศัพท์สวีเดน 5 คำ กับภาษาไทย 5 คำ แข่งกับเวลา!
+              </p>
+            </div>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 0.84rem; font-weight: 800; color: var(--text-secondary);">
+            <span>⏱️ Rekordtid • สถิติเร็วสุด:</span>
+            <span id="best-sprint-time" style="color: var(--sky-dark);">—</span>
+          </div>
+          <button type="button" class="btn-3d btn-blue w-full" id="btn-launch-sprint">
+            ⚡ Starta Tidstävling • เริ่มจับคู่ท้าเวลา
+          </button>
+        </div>
+
+        <!-- Kort 2: Poängjakt (Combo Score Attack) -->
+        <div class="arena-card">
+          <div class="arena-card-header">
+            <div class="arena-icon-badge" style="background: var(--gold-soft); color: var(--gold-deep);">🔥</div>
+            <div>
+              <h3 style="font-weight: 900; font-size: 1.05rem;">Poängjakt • ล่าแต้มคอมโบ</h3>
+              <p class="th-text" style="font-size: 0.85rem; color: var(--text-secondary);">
+                ตอบถูกต่อเนื่องเพื่อคูณคะแนน 2x, 3x และสะสมเพชรโบนัส!
+              </p>
+            </div>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 0.84rem; font-weight: 800; color: var(--text-secondary);">
+            <span>🏅 Högsta poäng • คะแนนสูงสุด:</span>
+            <span id="high-score-attack" style="color: var(--gold-deep);">0 p</span>
+          </div>
+          <button type="button" class="btn-3d btn-yellow w-full" id="btn-launch-score-attack">
+            🚀 Starta Poängjakt • เริ่มล่าแต้ม
+          </button>
+        </div>
+
+        <!-- Kort 3: Dagliga utmaningar -->
+        <div class="arena-card">
+          <div class="arena-card-header">
+            <div class="arena-icon-badge" style="background: var(--emerald-soft); color: var(--emerald-dark);">🎯</div>
+            <div>
+              <h3 style="font-weight: 900; font-size: 1.05rem;">Dagliga utmaningar • ภารกิจประจำวัน</h3>
+              <p class="th-text" style="font-size: 0.85rem; color: var(--text-secondary);">
+                ทำภารกิจให้ครบเพื่อรับเพชรและดาวพิเศษ
+              </p>
+            </div>
+          </div>
+          <div id="daily-quests-list">
+            <!-- Renderas dynamiskt av window.GameEngine -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           VY 3: ORDBANK & SM-2 REPETITIONSDATA
+           ================================================================ -->
+      <section id="view-vocab" class="spa-view" aria-label="Ordbank och SM-2 Progression">
+        <div class="section-header" style="margin-bottom: 12px;">
+          <div>
+            <h2 class="section-title" style="font-size: 1.25rem;">📚 Ordbank & Minne (SM-2)</h2>
+            <p class="section-subtitle">คลังคำศัพท์และระดับความจำ (Mastery 0–5)</p>
+          </div>
+        </div>
+
+        <div id="vocab-mastery-summary" class="arena-card" style="padding: 12px 14px; margin-bottom: 14px;">
+          <!-- Sammanfattning av SM-2 nivåer -->
+        </div>
+
+        <div id="vocab-list-container">
+          <!-- Renderas dynamiskt -->
+        </div>
+      </section>
+
+    </main>
+
+    <!-- BOTTENNAVIGATION -->
+    <nav class="bottom-nav" aria-label="Huvudnavigation">
+      <button type="button" class="nav-tab active" data-target="view-home">
+        <span class="nav-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none"><path d="M5 14L16 4l11 10v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V14z" fill="#58CC02" stroke="#3F9102" stroke-width="2" stroke-linejoin="round"/><path d="M12 27V17h8v10" fill="#FFF"/></svg>
+        </span>
+        <span>Hem • หน้าแรก</span>
+      </button>
+
+      <button type="button" class="nav-tab" data-target="view-compete">
+        <span class="nav-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none"><path d="M9 7h14l-2 10c0 4-3 7-5 7s-5-3-5-7z" fill="#FFC800" stroke="#D97706" stroke-width="1.8"/><path d="M9 9c-3 0-4 4-2 6 2 2 4 1 4 1m10-7c3 0 4 4 2 6-2 2-4 1-4 1" stroke="#D97706" stroke-width="1.8" stroke-linecap="round"/><rect x="14" y="24" width="4" height="4" fill="#D97706"/><rect x="10" y="27" width="12" height="3" rx="1.5" fill="#92400E"/></svg>
+        </span>
+        <span>Tävla • แข่งขัน</span>
+      </button>
+
+      <button type="button" class="nav-tab" data-target="view-vocab">
+        <span class="nav-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none"><path d="M6 6a3 3 0 0 1 3-3h17v22H9a3 3 0 0 0-3 3V6z" fill="#1CB0F6" stroke="#0284C7" stroke-width="1.8"/><path d="M6 25a3 3 0 0 1 3-3h17" stroke="#0284C7" stroke-width="1.8"/><line x1="12" y1="10" x2="21" y2="10" stroke="#FFF" stroke-width="2" stroke-linecap="round"/><line x1="12" y1="15" x2="19" y2="15" stroke="#FFF" stroke-width="2" stroke-linecap="round"/></svg>
+        </span>
+        <span>Mina Ord • คำศัพท์</span>
+      </button>
+    </nav>
+
+    <!-- ================================================================
+         LEKTIONS-VY (Fullskärms-overlay med mjuk progressbar & bottenpanel)
+         ================================================================ -->
+    <section id="lesson-overlay" aria-label="Lektionsvy" aria-hidden="true">
+      <header class="lesson-header">
+        <button type="button" class="lesson-close-btn" id="btn-close-lesson" aria-label="Avsluta lektion">✕</button>
+        <div class="lesson-progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div class="lesson-progress-fill" id="lesson-progress-fill"></div>
+        </div>
+        <div class="lesson-combo-pill" id="lesson-combo-pill">🔥 1x</div>
+      </header>
+
+      <!-- Dynamisk arbetsyta i mitten -->
+      <div class="lesson-stage" id="lesson-stage">
+        <!-- Frågekort och övningar injiceras här -->
+      </div>
+
+      <!-- Fast bottenpanel för Kontrollera-knapp -->
+      <footer class="lesson-bottom-bar" id="lesson-bottom-bar">
+        <button type="button" class="btn-3d btn-green w-full" id="btn-check-answer" disabled>
+          KONTROLLERA • ตรวจคำตอบ
+        </button>
+      </footer>
+
+      <!-- Glidande Feedback-panel (Grön vid rätt, Mjukt varm vid "Nästan! Prova igen") -->
+      <aside class="feedback-sheet" id="feedback-sheet" aria-live="polite">
+        <div class="feedback-top-row">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div id="feedback-mascot-container" style="width: 54px; height: 54px; flex-shrink: 0;" aria-hidden="true"></div>
+            <div>
+              <div class="feedback-title" id="feedback-title">Strålande! • หรอยจังฮู้!</div>
+              <p class="feedback-explanation" id="feedback-explanation"></p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 6px;">
+            <button type="button" class="btn-3d btn-surface" id="btn-feedback-replay" style="min-height: 56px; padding: 8px 12px;" title="Lyssna normal (0.95x)">
+              <span class="audio-btn-icon"><svg viewBox="0 0 32 32" fill="none"><path d="M6 11h5l6-5v20l-6-5H6a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2z" fill="#0284C7"/><path d="M22 10a8 8 0 0 1 0 12m3-16a13 13 0 0 1 0 20" stroke="#0284C7" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></span>
+            </button>
+            <button type="button" class="btn-3d btn-surface" id="btn-feedback-turtle" style="min-height: 56px; padding: 8px 12px;" title="Sköldpadds-tempo (0.60x)">
+              <span class="audio-btn-icon"><svg viewBox="0 0 32 32" fill="none"><ellipse cx="15" cy="17" rx="9" ry="7" fill="#16A34A" stroke="#15803D" stroke-width="1.8"/><circle cx="26" cy="15" r="4" fill="#22C55E" stroke="#15803D" stroke-width="1.5"/><circle cx="27" cy="14" r="1" fill="#1E293B"/><ellipse cx="9" cy="23" rx="2.5" ry="1.8" fill="#22C55E"/><ellipse cx="19" cy="23" rx="2.5" ry="1.8" fill="#22C55E"/><ellipse cx="8" cy="11" rx="2.5" ry="1.8" fill="#22C55E"/><ellipse cx="19" cy="11" rx="2.5" ry="1.8" fill="#22C55E"/><path d="M12 17h6m-3-4v8" stroke="#86EFAC" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+            </button>
+          </div>
+        </div>
+        <div class="feedback-actions-row">
+          <button type="button" class="btn-3d btn-green w-full" id="btn-feedback-continue">
+            FORTSÄTT • ไปต่อเลย
+          </button>
+        </div>
+      </aside>
+    </section>
+
+  </div>
+
+  <!-- Microsoft Cognitive Services Speech SDK (Azure Pronunciation Assessment sv-SE) -->
+    <script src="https://cdn.jsdelivr.net/npm/microsoft-cognitiveservices-speech-sdk@latest/distrib/browser/microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
+  <script src="app.js"></script>
+  <script src="visuals.js"></script>
+  <script src="speech_audio.js"></script>
+  <script src="database.js"></script>
+  <script src="gamification.js"></script>
+</body>
+</html>
