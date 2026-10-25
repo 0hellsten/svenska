@@ -26,6 +26,7 @@
     pre { background: #0f172a; padding: 8px; border-radius: 4px; overflow-x: auto; font-size: 0.82rem; }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/microsoft-cognitiveservices-speech-sdk@latest/distrib/browser/microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
+  <script src="config.local.js" onerror="/* local config */"></script>
   <script src="app.js?v=test4"></script>
   <script src="visuals.js?v=test4"></script>
   <script src="speech_audio.js?v=test4"></script>
@@ -307,6 +308,14 @@
       const testWrapper = testMascotContainer.querySelector('.dala-mascot-wrapper');
       assert('Maskot: triggerAction(\'stegra\') aktiverar .dala-action-rear', testWrapper && testWrapper.classList.contains('dala-action-rear'));
       testMascotContainer.remove();
+
+      // ======================================================================
+      // GRUPP 10: API-Säkerhet & Git-Skydd
+      // ======================================================================
+      assert('Säkerhet: promptForGroqKey finns på SpeechJudge', typeof window.SpeechEngine.SpeechJudge.promptForGroqKey === 'function');
+      assert('Säkerhet: openApiKeyManagerModal finns på SpeechJudge', typeof window.SpeechEngine.SpeechJudge.openApiKeyManagerModal === 'function');
+      const testSettingsDOM = window.SettingsUI ? window.SettingsUI.createModalDOM() : null;
+      assert('Säkerhet: Knapp för att hantera API-nyckel finns i inställningsmodal', testSettingsDOM && !!testSettingsDOM.querySelector('#btn-open-key-manager'));
 
       // ======================================================================
       // SAMMANSTÄLLNING

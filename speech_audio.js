@@ -1057,10 +1057,11 @@
      - Motor 3: Inbyggd iOS Safari WebKit SpeechRecognition fallback
      ========================================================================== */
 
-  // Obfuskerad standardnyckel så GitHub Secret Scanner inte blockerar den i publika repon
-  const _O_GROQ = 'Z3NrX3pubnpId1IyNUxjeGREUlZEbTBiV0dkeWIzRllYR2FLMEsyNjVHUzdCN0ExQ3BoVW9RMDQ=';
-  const DEFAULT_GROQ_API_KEY = typeof atob === 'function' ? atob(_O_GROQ) : '';
-  const DEFAULT_AZURE_KEY = 'sHXRW2SxxCqa7h3yuE1z54m25l5Kwh9e2viwMK6aPW3ZDOgd5B8fJQQJ99CJACfhMk5XJ3w3AAAYACOGD9bf'; // Klistra in din Azure Key 1 här om du vill baka in den i koden
+  // SÄKERHET: Inga API-nycklar hårdkodas i källkoden!
+  // Alla nycklar sparas enbart lokalt i din webbläsare (localStorage) eller i
+  // filen config.local.js som är skyddad av .gitignore och ALDRIG laddas upp till GitHub.
+  const DEFAULT_GROQ_API_KEY = '';
+  const DEFAULT_AZURE_KEY = '';
   const DEFAULT_AZURE_REGION = 'swedencentral';
 
   /* --------------------------------------------------------------------------
@@ -1077,7 +1078,15 @@
     }
 
     getKey() {
+      const envKey = window.ENV_CONFIG && window.ENV_CONFIG.AZURE_SPEECH_KEY;
+      if (envKey && envKey.trim()) return envKey.trim();
       return (localStorage.getItem('azure_speech_key') || DEFAULT_AZURE_KEY || '').trim();
+    }
+
+    getRegion() {
+      const envRegion = window.ENV_CONFIG && window.ENV_CONFIG.AZURE_SPEECH_REGION;
+      if (envRegion && envRegion.trim()) return envRegion.trim();
+      return (localStorage.getItem('azure_speech_region') || DEFAULT_AZURE_REGION).trim();
     }
 
     setKey(key) {
@@ -1614,16 +1623,34 @@
       this._safetyTimeout = null;
       this.azureJudge = azureSpeechJudgeInstance;
 
-      // Förkonfigurera Groq API-nyckeln och sätt Whisper som aktiv motor
-      if (!localStorage.getItem('groq_api_key')) {
-        localStorage.setItem('groq_api_key', DEFAULT_GROQ_API_KEY);
+      // Synka lokala nycklar från config.local.js (window.ENV_CONFIG) om den finns
+      if (window.ENV_CONFIG) {
+        if (window.ENV_CONFIG.GROQ_API_KEY && window.ENV_CONFIG.GROQ_API_KEY.trim()) {
+          localStorage.setItem('groq_api_key', window.ENV_CONFIG.GROQ_API_KEY.trim());
+        }
+        if (window.ENV_CONFIG.AZURE_SPEECH_KEY && window.ENV_CONFIG.AZURE_SPEECH_KEY.trim()) {
+          localStorage.setItem('azure_speech_key', window.ENV_CONFIG.AZURE_SPEECH_KEY.trim());
+        }
+        if (window.ENV_CONFIG.AZURE_SPEECH_REGION && window.ENV_CONFIG.AZURE_SPEECH_REGION.trim()) {
+          localStorage.setItem('azure_speech_region', window.ENV_CONFIG.AZURE_SPEECH_REGION.trim());
+        }
       }
+
+      // Rensa eventuell gammal spärrad Groq-nyckel från webbläsarens minne
+      const oldRevokedPrefix = 'gsk_znzpHw';
+      const currentStoredGroq = localStorage.getItem('groq_api_key') || '';
+      if (currentStoredGroq.startsWith(oldRevokedPrefix)) {
+        localStorage.removeItem('groq_api_key');
+      }
+
       if (!localStorage.getItem('stt_engine_preference')) {
         localStorage.setItem('stt_engine_preference', 'groq');
       }
     }
 
     getApiKey() {
+      const envKey = window.ENV_CONFIG && window.ENV_CONFIG.GROQ_API_KEY;
+      if (envKey && envKey.trim()) return envKey.trim();
       const stored = localStorage.getItem('groq_api_key');
       if (stored && stored.trim()) {
         return stored.trim();
@@ -1841,8 +1868,11 @@
      * REST-anrop mot Groq Whisper API (whisper-large-v3-turbo, språk: sv)
      */
     async _transcribeWithGroq(audioBlob, mimeType) {
-      const apiKey = this.getApiKey();
-      if (!apiKey) throw new Error('Ingen Groq API-nyckel angiven');
+      let apiKey = this.getApiKey();
+      if (!apiKey) {
+        apiKey = await this.promptForGroqKey();
+      }
+      if (!apiKey) throw new Error('Ingen Groq API-nyckel angiven. Klicka på ⚙️ Inställningar för att lägga till din nyckel.');
 
       const ext = mimeType.includes('webm') ? 'webm' : mimeType.includes('mp4') ? 'mp4' : 'm4a';
       const formData = new FormData();
@@ -1861,12 +1891,198 @@
       });
 
       if (!response.ok) {
+        if (response.status === 401) {
+          localStorage.removeItem('groq_api_key');
+          if (window.ENV_CONFIG) window.ENV_CONFIG.GROQ_API_KEY = '';
+          const newKey = await this.promptForGroqKey('Din Groq API-nyckel blev inte godkänd av Groq (401 Unauthorized / Spärrad). Klistra in din nya giltiga Groq-nyckel:');
+          if (newKey) {
+            return this._transcribeWithGroq(audioBlob, mimeType);
+          }
+        }
         const errorText = await response.text();
         throw new Error(`Groq API Error (${response.status}): ${errorText}`);
       }
 
       const json = await response.json();
       return json.text || '';
+    }
+
+    /**
+     * Säker modal för inmatning av Groq-nyckel vid behov (Sparas enbart lokalt)
+     */
+    async promptForGroqKey(customMessage = null) {
+      return new Promise((resolve) => {
+        let modal = document.getElementById('groq-key-dialog-modal');
+        if (!modal) {
+          modal = document.createElement('div');
+          modal.id = 'groq-key-dialog-modal';
+          modal.className = 'settings-modal-backdrop';
+          modal.style.zIndex = '99999';
+          document.body.appendChild(modal);
+        }
+
+        const msg = customMessage || 'För att röstigenkänningen med Groq Whisper ska fungera behöver du ange din Groq API-nyckel (börjar med gsk_). Nyckeln sparas enbart lokalt i din webbläsare och laddas ALDRIG upp till GitHub.';
+
+        modal.innerHTML = `
+          <div class="settings-modal-card" style="max-width: 440px; padding: 22px;">
+            <div style="font-weight: 900; font-size: 1.1rem; color: var(--text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+              <span>🔑</span>
+              <span>Ange Groq API-nyckel</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.45; margin-bottom: 12px;">
+              ${msg}
+            </p>
+            <div style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 10px; padding: 10px; font-size: 0.78rem; color: #166534; margin-bottom: 14px;">
+              🔒 <strong>Privat & skyddat:</strong> Nyckeln sparas endast i enhetens lokala minne (localStorage) och skickas aldrig till något git-arkiv.
+            </div>
+            <div style="margin-bottom: 14px;">
+              <input type="password" id="input-new-groq-key" placeholder="gsk_..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+                style="width: 100%; box-sizing: border-box; padding: 12px; border-radius: 12px; border: 2px solid var(--border-light); font-size: 0.9rem; font-family: monospace;" />
+            </div>
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+              <button type="button" class="btn-3d btn-surface" id="btn-cancel-groq-key" style="min-height: 42px; padding: 6px 14px; font-size: 0.84rem;">
+                Avbryt
+              </button>
+              <button type="button" class="btn-3d btn-green" id="btn-save-groq-key" style="min-height: 42px; padding: 6px 18px; font-size: 0.84rem; font-weight: 900;">
+                Spara nyckel
+              </button>
+            </div>
+          </div>
+        `;
+
+        modal.classList.add('open');
+        const input = document.getElementById('input-new-groq-key');
+        input?.focus();
+
+        const close = (val) => {
+          modal.classList.remove('open');
+          resolve(val);
+        };
+
+        document.getElementById('btn-save-groq-key')?.addEventListener('click', () => {
+          const val = (input?.value || '').trim();
+          if (val) {
+            this.setApiKey(val);
+            close(val);
+          } else {
+            input.style.borderColor = '#EF4444';
+          }
+        });
+
+        document.getElementById('btn-cancel-groq-key')?.addEventListener('click', () => close(null));
+      });
+    }
+
+    /**
+     * Öppnar den fullständiga hanteraren för API-nycklar (Groq & Azure)
+     */
+    openApiKeyManagerModal() {
+      let modal = document.getElementById('api-key-manager-modal');
+      if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'api-key-manager-modal';
+        modal.className = 'settings-modal-backdrop';
+        modal.style.zIndex = '99999';
+        document.body.appendChild(modal);
+      }
+
+      const currentGroq = this.getApiKey() || '';
+      const currentAzure = this.azureJudge.getKey() || '';
+      const maskedGroq = currentGroq ? `••••••••••••${currentGroq.slice(-6)}` : '';
+      const maskedAzure = currentAzure ? `••••••••••••${currentAzure.slice(-6)}` : '';
+
+      modal.innerHTML = `
+        <div class="settings-modal-card" style="max-width: 480px; padding: 22px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-light); padding-bottom: 10px; margin-bottom: 14px;">
+            <div style="font-weight: 900; font-size: 1.15rem; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+              <span>🔑</span>
+              <span>Hantera API-nycklar</span>
+            </div>
+            <button type="button" class="lesson-close-btn" id="btn-close-key-manager-modal" aria-label="Stäng">✕</button>
+          </div>
+
+          <div style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 12px; padding: 12px; font-size: 0.8rem; color: #166534; margin-bottom: 16px; line-height: 1.45;">
+            🔒 <strong>100% säkert & dolt från Git:</strong><br>
+            Nycklarna du anger här sparas uteslutande i din webbläsares lokala minne (localStorage). De kan aldrig checkas in eller laddas upp till GitHub!
+          </div>
+
+          <!-- 1. Groq API-nyckel -->
+          <div style="margin-bottom: 16px;">
+            <label style="display: block; font-weight: 900; font-size: 0.86rem; margin-bottom: 4px;">
+              🚀 Groq Whisper API-nyckel:
+            </label>
+            <div style="font-size: 0.74rem; color: var(--text-secondary); margin-bottom: 6px;">
+              Status: ${currentGroq ? `<span style="color:#16A34A; font-weight:800;">Aktiv (${maskedGroq})</span>` : '<span style="color:#DC2626; font-weight:800;">Ej konfigurerad</span>'}
+            </div>
+            <input type="password" id="input-mgr-groq-key" placeholder="${currentGroq ? 'Klistra in ny nyckel för att byta...' : 'gsk_...'}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+              style="width: 100%; box-sizing: border-box; padding: 10px 12px; border-radius: 10px; border: 2px solid var(--border-light); font-size: 0.88rem; font-family: monospace;" />
+          </div>
+
+          <!-- 2. Microsoft Azure Speech-nyckel (Valfritt) -->
+          <div style="margin-bottom: 18px;">
+            <label style="display: block; font-weight: 900; font-size: 0.86rem; margin-bottom: 4px;">
+              🎯 Microsoft Azure Speech-nyckel (Valfritt):
+            </label>
+            <div style="font-size: 0.74rem; color: var(--text-secondary); margin-bottom: 6px;">
+              Status: ${currentAzure ? `<span style="color:#16A34A; font-weight:800;">Aktiv (${maskedAzure})</span>` : '<span style="color:#64748B; font-weight:700;">Ej konfigurerad</span>'}
+            </div>
+            <input type="password" id="input-mgr-azure-key" placeholder="${currentAzure ? 'Klistra in ny Azure-nyckel...' : 'Azure Key 1...'}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+              style="width: 100%; box-sizing: border-box; padding: 10px 12px; border-radius: 10px; border: 2px solid var(--border-light); font-size: 0.88rem; font-family: monospace;" />
+          </div>
+
+          <div id="key-mgr-feedback" style="min-height: 20px; font-size: 0.82rem; font-weight: 700; text-align: center; margin-bottom: 12px;"></div>
+
+          <div style="display: flex; gap: 10px; justify-content: flex-end;">
+            <button type="button" class="btn-3d btn-surface" id="btn-clear-stored-keys" style="min-height: 44px; padding: 8px 14px; font-size: 0.8rem; color: #DC2626;">
+              🗑️ Rensa nycklar
+            </button>
+            <button type="button" class="btn-3d btn-green" id="btn-save-mgr-keys" style="min-height: 44px; padding: 8px 20px; font-size: 0.88rem; font-weight: 900;">
+              💾 Spara i webbläsaren
+            </button>
+          </div>
+        </div>
+      `;
+
+      modal.classList.add('open');
+
+      const close = () => modal.classList.remove('open');
+      document.getElementById('btn-close-key-manager-modal')?.addEventListener('click', close);
+
+      document.getElementById('btn-clear-stored-keys')?.addEventListener('click', () => {
+        localStorage.removeItem('groq_api_key');
+        localStorage.removeItem('azure_speech_key');
+        if (window.ENV_CONFIG) {
+          window.ENV_CONFIG.GROQ_API_KEY = '';
+          window.ENV_CONFIG.AZURE_SPEECH_KEY = '';
+        }
+        const fb = document.getElementById('key-mgr-feedback');
+        if (fb) {
+          fb.style.color = '#B45309';
+          fb.textContent = 'Alla lokala nycklar har rensats.';
+        }
+        setTimeout(() => this.openApiKeyManagerModal(), 800);
+      });
+
+      document.getElementById('btn-save-mgr-keys')?.addEventListener('click', () => {
+        const groqInput = document.getElementById('input-mgr-groq-key');
+        const azureInput = document.getElementById('input-mgr-azure-key');
+        const newGroq = (groqInput?.value || '').trim();
+        const newAzure = (azureInput?.value || '').trim();
+
+        if (newGroq) {
+          this.setApiKey(newGroq);
+        }
+        if (newAzure) {
+          this.azureJudge.setKey(newAzure);
+        }
+
+        const fb = document.getElementById('key-mgr-feedback');
+        if (fb) {
+          fb.style.color = '#15803D';
+          fb.textContent = '✨ Nycklar har sparats säkert i din webbläsare!';
+        }
+        setTimeout(close, 900);
+      });
     }
 
     /**
@@ -2201,6 +2417,14 @@
             <div id="settings-test-status" style="font-size: 0.82rem; font-weight: 700; color: var(--text-main); margin-top: 10px; text-align: center; min-height: 24px; line-height: 1.4;"></div>
           </div>
 
+          <!-- Hantera API-nycklar (Skyddat lokalt i webbläsaren) -->
+          <div style="margin-top: 2px;">
+            <button type="button" class="btn-3d btn-surface w-full" id="btn-open-key-manager" style="min-height: 42px; font-size: 0.84rem; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 8px;">
+              <span>🔑</span> <span>Hantera API-nycklar (Groq Whisper & Azure)</span>
+            </button>
+            <div id="key-manager-status-indicator" style="font-size: 0.74rem; color: var(--text-secondary); text-align: center; margin-top: 4px; font-weight: 700;"></div>
+          </div>
+
           <!-- Spara-knapp -->
           <button type="button" class="btn-3d btn-green w-full" id="btn-save-settings" style="min-height: 52px; font-size: 1rem; margin-top: 4px;">
             💾 Spara inställningar
@@ -2263,6 +2487,10 @@
         AudioPlayer.setSpeechRate(selectedSpeed);
         SoundFX.playCorrect();
         this.close();
+      });
+
+      document.getElementById('btn-open-key-manager')?.addEventListener('click', () => {
+        speechJudgeInstance.openApiKeyManagerModal();
       });
 
       // Testa Högtalare med valt taltempo
@@ -2371,6 +2599,14 @@
         const btnSpeed = parseFloat(btn.dataset.speed || '0.88');
         btn.classList.toggle('selected', Math.abs(btnSpeed - currentSpeed) < 0.05);
       });
+
+      const indicator = document.getElementById('key-manager-status-indicator');
+      const hasGroq = Boolean(speechJudgeInstance.getApiKey());
+      if (indicator) {
+        indicator.textContent = hasGroq
+          ? '🟢 Groq Whisper är redo (nyckel sparad lokalt)'
+          : '⚪ Ingen Groq-nyckel sparad ännu (klicka ovan för att ange)';
+      }
     }
   };
 

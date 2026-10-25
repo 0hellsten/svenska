@@ -346,6 +346,8 @@
 
   <!-- Microsoft Cognitive Services Speech SDK (Azure Pronunciation Assessment sv-SE) -->
     <script src="https://cdn.jsdelivr.net/npm/microsoft-cognitiveservices-speech-sdk@latest/distrib/browser/microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
+  <!-- Frivillig lokal konfiguration för API-nycklar (skyddad av .gitignore) -->
+  <script src="config.local.js" onerror="/* config.local.js finns ej, nycklar laddas från localStorage */"></script>
   <script src="app.js"></script>
   <script src="visuals.js"></script>
   <script src="speech_audio.js"></script>

@@ -1,5 +1,17 @@
+# Lokala hemligheter och API-nycklar (ALDRIG i git!)
+config.local.js
+env.local.js
+keys.local.js
+*.local.js
+.env
+.env.local
+.env.*.local
+
+# Utvecklings- & cache-filer
 __pycache__/
 *.pyc
 scratch/
 .vscode/
 .idea/
+.DS_Store
+Thumbs.db
