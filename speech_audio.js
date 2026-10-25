@@ -1067,7 +1067,7 @@
 
   const _WILAWAN_VAULT = {
     // Krypterade bytes för Groq Whisper (fylls i automatiskt av set_groq_key.py)
-    groq: [],
+    groq: [61, 14, 28, 28, 11, 4, 16, 40, 72, 12, 82, 7, 72, 121, 87, 32, 26, 242, 203, 252, 181, 249, 190, 232, 131, 149, 244, 210, 199, 158, 247, 236, 206, 251, 164, 113, 97, 115, 7, 19, 30, 28, 33, 28, 122, 35, 31, 64, 98, 60, 116, 103, 5, 200, 205, 200],
     // Valfritt krypterade bytes för Azure Speech
     azure: [],
     region: 'swedencentral'
