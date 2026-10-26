@@ -99,6 +99,11 @@
 
       assert('Audio: speakSwedish metod finns', typeof window.SpeechEngine.speakSwedish === 'function');
       assert('Audio: speakSlow (sköldpadda) metod finns', typeof window.SpeechEngine.speakSlow === 'function');
+      assert('Audio: AudioPlayer.stop metod finns och nollställer ljud', typeof window.AudioPlayer.stop === 'function');
+      assert('Audio: SpeechEngine.stopAudio export existerar', typeof window.SpeechEngine.stopAudio === 'function');
+      assert('Audio: HTML5 spelare har full volym (1.0)', window.AudioPlayer.getAudioElement().volume === 1.0);
+      assert('Audio: SpeechJudge har re-entrancy lås (isStarting)', window.SpeechJudge.isStarting === false);
+      assert('Audio: AzureSpeechJudge har re-entrancy lås (isStarting)', window.AzureSpeechJudge.isStarting === false);
 
       // ======================================================================
       // GRUPP 3: Fonetisk Tolerans & Uttalsbedömning

@@ -1,5 +1,8 @@
 import subprocess
 import re
+import sys
+
+sys.stdout.reconfigure(encoding='utf-8')
 
 cmd = [
     r'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe',

@@ -722,7 +722,32 @@
           document.body ? document.body.appendChild(this._audioEl) : null;
         }
       }
+      if (this._audioEl) {
+        this._audioEl.volume = 1.0;
+        this._audioEl.muted = false;
+      }
       return this._audioEl;
+    },
+
+    /**
+     * Stoppar all pågående uppspelning (HTML5 DOM-ljud och Web Speech API)
+     * Återställer maskotens tillstånd till idle.
+     */
+    stop() {
+      this._playNonce++;
+      try {
+        if (this._audioEl) {
+          this._audioEl.pause();
+          this._audioEl.currentTime = 0;
+          this._audioEl.removeAttribute('src');
+        }
+      } catch (_) {}
+      if (window.speechSynthesis) {
+        try {
+          window.speechSynthesis.cancel();
+        } catch (_) {}
+      }
+      window.VisualEngine?.Mascot?.setState('idle');
     },
 
     initVoices() {
@@ -822,6 +847,9 @@
 
       const activeRate = (rate !== null && rate !== undefined) ? rate : this.getSpeechRate();
 
+      // Kritiskt: Avbryt föregående ljud innan nytt startar för att undvika överlappning och ducking
+      this.stop();
+
       SoundFX.unlockiOSAudio();
 
       const nonce = ++this._playNonce;
@@ -846,13 +874,15 @@
       // Försök spela via den permanenta HTML5 DOM-spelaren först
       if (navigator.onLine !== false && audio) {
         try {
-          audio.pause();
-          audio.currentTime = 0;
+          audio.volume = 1.0;
+          audio.muted = false;
           audio.src = url;
           try { audio.playbackRate = activeRate; } catch (_) {}
 
           audio.onplay = () => {
             if (this._playNonce === nonce) {
+              audio.volume = 1.0;
+              audio.muted = false;
               try { audio.playbackRate = activeRate; } catch (_) {}
               window.VisualEngine?.Mascot?.setState('speaking');
             }
@@ -873,6 +903,10 @@
           const p = audio.play();
           if (p !== undefined) {
             p.catch((err) => {
+              // Om play() avbröts av en ny uppspelning eller stop(), aktivera inte felaktig fallback
+              if (err && (err.name === 'AbortError' || err.name === 'NotAllowedError')) {
+                return;
+              }
               if (this._playNonce === nonce && !finished) {
                 this.speakWithSpeechSynthesis(clean, activeRate, finish);
               }
@@ -913,6 +947,7 @@
         utter.lang = 'sv-SE';
         utter.rate = activeRate;
         utter.pitch = 1.02;
+        utter.volume = 1.0; // Garantera maximal volym (100%)
 
         if (this._bestVoice) {
           utter.voice = this._bestVoice;
@@ -983,6 +1018,7 @@
         if (onEnd) onEnd();
         return;
       }
+      this.stop();
       SoundFX.unlockiOSAudio();
 
       const nonce = ++this._playNonce;
@@ -998,8 +1034,8 @@
 
       if (navigator.onLine !== false && audio) {
         try {
-          audio.pause();
-          audio.currentTime = 0;
+          audio.volume = 1.0;
+          audio.muted = false;
           audio.src = url;
           audio.onended = () => {
             if (this._playNonce === nonce) finish();
@@ -1011,7 +1047,10 @@
           };
           const p = audio.play();
           if (p !== undefined) {
-            p.catch(() => {
+            p.catch((err) => {
+              if (err && (err.name === 'AbortError' || err.name === 'NotAllowedError')) {
+                return;
+              }
               if (this._playNonce === nonce && !finished) {
                 this.speakThaiSpeechSynthesis(clean, finish);
               }
@@ -1034,6 +1073,7 @@
         const utter = new SpeechSynthesisUtterance(text);
         utter.lang = 'th-TH';
         utter.rate = 0.95;
+        utter.volume = 1.0;
         const voices = window.speechSynthesis.getVoices() || [];
         const thVoice = voices.find((v) => v.lang && v.lang.startsWith('th'));
         if (thVoice) utter.voice = thVoice;
@@ -1085,6 +1125,7 @@
     constructor() {
       this.isRecording = false;
       this.isAnalyzing = false;
+      this.isStarting = false;
       this._recognizer = null;
       this._safetyTimeout = null;
       this._audioLevelTimer = null;
@@ -1132,16 +1173,23 @@
       const { onStateChange, onAudioLevel, onResult, onError, onHearing } = callbacks;
       const refText = typeof referenceItem === 'object' ? referenceItem.sv : String(referenceItem || '');
 
+      if (this.isStarting || this.isRecording || this.isAnalyzing) {
+        if (this.isRecording) this.finishEarly();
+        return Promise.resolve();
+      }
+      this.isStarting = true;
+
       return new Promise((resolve, reject) => {
-        if (this.isRecording || this.isAnalyzing) {
-          this.stop();
-        }
+        const finalize = (fn, val) => {
+          this.isStarting = false;
+          fn(val);
+        };
 
         const SpeechSDK = window.SpeechSDK;
         if (!SpeechSDK) {
           const err = new Error('Microsoft Speech SDK kunde inte laddas. Kontrollera internetanslutningen.');
           if (onError) onError(err);
-          reject(err);
+          finalize(reject, err);
           return;
         }
 
@@ -1150,7 +1198,7 @@
         if (!key) {
           const err = new Error('Azure Speech API-nyckel saknas. Klicka på ⚙️ Inställningar för att mata in din Azure-nyckel och region.');
           if (onError) onError(err);
-          reject(err);
+          finalize(reject, err);
           return;
         }
 
@@ -1399,7 +1447,7 @@
               if (onStateChange) onStateChange('idle');
               const finalPayload = { transcript: result.text || refText, evaluation, azureResult: evaluation };
               if (onResult) onResult(finalPayload);
-              resolve(evaluation);
+              finalize(resolve, evaluation);
             },
             (err) => {
               if (this._audioLevelTimer) clearInterval(this._audioLevelTimer);
@@ -1421,7 +1469,7 @@
               if (onStateChange) onStateChange('idle');
               window.VisualEngine?.Mascot?.setState('idle');
               if (onError) onError(err);
-              reject(err);
+              finalize(reject, err);
             }
           );
         } catch (err) {
@@ -1429,7 +1477,7 @@
           this.isAnalyzing = false;
           if (onStateChange) onStateChange('idle');
           if (onError) onError(err);
-          reject(err);
+          finalize(reject, err);
         }
       });
     }
@@ -1598,6 +1646,7 @@
     }
 
     stop() {
+      this.isStarting = false;
       if (this._safetyTimeout) clearTimeout(this._safetyTimeout);
       if (this._audioLevelTimer) clearInterval(this._audioLevelTimer);
       this._finishRecognitionEarly = null;
@@ -1630,10 +1679,12 @@
     constructor() {
       this.isRecording = false;
       this.isAnalyzing = false;
+      this.isStarting = false;
       this._mediaRecorder = null;
       this._audioStream = null;
       this._audioChunks = [];
-      this._audioContext = null;
+      this._micAudioContext = null;
+      this._sourceNode = null;
       this._analyserNode = null;
       this._animFrameId = null;
       this._activeRecognition = null;
@@ -1745,37 +1796,51 @@
      * Startar inspelning och bedömning via vald talmotor
      */
     async start(targetItem, callbacks = {}) {
-      if (this.isRecording || this.isAnalyzing || this.azureJudge.isRecording || this.azureJudge.isAnalyzing) {
-        this.stop();
+      if (this.isStarting || this.isRecording || this.isAnalyzing || this.azureJudge.isStarting || this.azureJudge.isRecording || this.azureJudge.isAnalyzing) {
+        if (this.isRecording) {
+          this.finishRecordingAndJudge();
+        } else if (this.azureJudge.isRecording) {
+          this.azureJudge.finishEarly();
+        }
         return;
       }
 
-      this._callbacks = callbacks;
+      this.isStarting = true;
+      try {
+        this._callbacks = callbacks;
 
-      SoundFX.unlockiOSAudio();
+        // Kritiskt för iOS Safari: Stoppa all pågående taluppspelning innan mikrofon öppnas
+        AudioPlayer.stop();
 
-      // iOS Safari Fix a: Stäng av all syntes och vänta minst 350ms innan mikrofonen öppnas
-      if ('speechSynthesis' in window) {
-        try {
-          window.speechSynthesis.cancel();
-        } catch (_) {}
-      }
-      await new Promise((r) => setTimeout(r, 380));
+        SoundFX.unlockiOSAudio();
 
-      const pref = this.getEnginePreference();
-
-      if (pref === 'azure') {
-        if (this.azureJudge.isReady()) {
-          return this.azureJudge.evaluateAudio(targetItem, callbacks);
-        } else {
-          const err = new Error('Azure Speech API-nyckel saknas. Öppna inställningar (⚙️) för att fylla i nyckel och region.');
-          if (callbacks.onError) callbacks.onError(err);
-          return;
+        // iOS Safari Fix a: Stäng av all syntes och vänta 200ms så ljudsystemet nollställs
+        if ('speechSynthesis' in window) {
+          try {
+            window.speechSynthesis.cancel();
+          } catch (_) {}
         }
-      } else if (pref === 'groq' && this.isGroqReady()) {
-        return this._startGroqPipeline(targetItem, callbacks);
-      } else {
-        return this._startWebkitFallback(targetItem, callbacks);
+        await new Promise((r) => setTimeout(r, 200));
+
+        if (!this.isStarting) return;
+
+        const pref = this.getEnginePreference();
+
+        if (pref === 'azure') {
+          if (this.azureJudge.isReady()) {
+            return await this.azureJudge.evaluateAudio(targetItem, callbacks);
+          } else {
+            const err = new Error('Azure Speech API-nyckel saknas. Öppna inställningar (⚙️) för att fylla i nyckel och region.');
+            if (callbacks.onError) callbacks.onError(err);
+            return;
+          }
+        } else if (pref === 'groq' && this.isGroqReady()) {
+          return await this._startGroqPipeline(targetItem, callbacks);
+        } else {
+          return await this._startWebkitFallback(targetItem, callbacks);
+        }
+      } finally {
+        this.isStarting = false;
       }
     }
 
@@ -1795,58 +1860,66 @@
         });
         this._audioStream = stream;
 
-        // Initiera live ljudmätare (Audio Analyser) och Voice Activity Detection (VAD)
-        const ctx = SoundFX.getContext();
-        let speechDetected = false;
-        let speechStartTime = null;
-        let silenceStartTime = null;
-        const VAD_SPEECH_THRESHOLD = 0.055;  // Tröskel för att röst upptäcks
-        const VAD_SILENCE_THRESHOLD = 0.035; // Tröskel för bakgrund/tystnad
-        const VAD_SILENCE_DURATION = 1000;   // 1.0s tystnad efter tal triggar auto-bedömning
-        const VAD_MIN_SPEECH_DURATION = 350; // Minst 350ms tal innan tystnad räknas
+        // Dedikerad och isolerad AudioContext enbart för mikrofonnivåmätning!
+        // ALDRIG koppla mikrofonströmmen till SoundFX.getContext()!
+        // Att ansluta mikrofonen till uppspelnings-AudioContext tvingar iOS till
+        // PlayAndRecord (låg earpiece-volym och kraftig volymducking).
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (AudioCtx) {
+          try {
+            const micCtx = new AudioCtx();
+            this._micAudioContext = micCtx;
+            const source = micCtx.createMediaStreamSource(stream);
+            this._sourceNode = source;
+            const analyser = micCtx.createAnalyser();
+            analyser.fftSize = 64;
+            source.connect(analyser);
+            this._analyserNode = analyser;
 
-        if (ctx) {
-          const source = ctx.createMediaStreamSource(stream);
-          const analyser = ctx.createAnalyser();
-          analyser.fftSize = 64;
-          source.connect(analyser);
-          this._analyserNode = analyser;
+            let speechDetected = false;
+            let speechStartTime = null;
+            let silenceStartTime = null;
+            const VAD_SPEECH_THRESHOLD = 0.055;  // Tröskel för att röst upptäcks
+            const VAD_SILENCE_THRESHOLD = 0.035; // Tröskel för bakgrund/tystnad
+            const VAD_SILENCE_DURATION = 1000;   // 1.0s tystnad efter tal triggar auto-bedömning
+            const VAD_MIN_SPEECH_DURATION = 350; // Minst 350ms tal innan tystnad räknas
 
-          const dataArray = new Uint8Array(analyser.frequencyBinCount);
-          const updateLevel = () => {
-            if (!this.isRecording) return;
-            analyser.getByteFrequencyData(dataArray);
-            let sum = 0;
-            for (let i = 0; i < dataArray.length; i++) sum += dataArray[i];
-            const avg = sum / dataArray.length;
-            const norm = Math.min(1.0, avg / 128);
-            if (onAudioLevel) onAudioLevel(norm);
+            const dataArray = new Uint8Array(analyser.frequencyBinCount);
+            const updateLevel = () => {
+              if (!this.isRecording) return;
+              analyser.getByteFrequencyData(dataArray);
+              let sum = 0;
+              for (let i = 0; i < dataArray.length; i++) sum += dataArray[i];
+              const avg = sum / dataArray.length;
+              const norm = Math.min(1.0, avg / 128);
+              if (onAudioLevel) onAudioLevel(norm);
 
-            // VAD: Upptäck röstaktivitet och auto-stoppa efter 1.0s tystnad
-            const now = Date.now();
-            if (norm >= VAD_SPEECH_THRESHOLD) {
-              if (!speechDetected) {
-                speechDetected = true;
-                speechStartTime = now;
-              }
-              silenceStartTime = null;
-            } else if (speechDetected && (now - speechStartTime >= VAD_MIN_SPEECH_DURATION)) {
-              if (norm <= VAD_SILENCE_THRESHOLD) {
-                if (!silenceStartTime) {
-                  silenceStartTime = now;
-                } else if (now - silenceStartTime >= VAD_SILENCE_DURATION) {
-                  // 1.0 sekunds tystnad efter tal -> Auto-stoppa och bedöm med Groq Whisper!
-                  this.stopRecordingAndJudge();
-                  return;
+              // VAD: Upptäck röstaktivitet och auto-stoppa efter 1.0s tystnad
+              const now = Date.now();
+              if (norm >= VAD_SPEECH_THRESHOLD) {
+                if (!speechDetected) {
+                  speechDetected = true;
+                  speechStartTime = now;
                 }
-              } else {
                 silenceStartTime = null;
+              } else if (speechDetected && (now - speechStartTime >= VAD_MIN_SPEECH_DURATION)) {
+                if (norm <= VAD_SILENCE_THRESHOLD) {
+                  if (!silenceStartTime) {
+                    silenceStartTime = now;
+                  } else if (now - silenceStartTime >= VAD_SILENCE_DURATION) {
+                    // 1.0 sekunds tystnad efter tal -> Auto-stoppa och bedöm med Groq Whisper!
+                    this.stopRecordingAndJudge();
+                    return;
+                  }
+                } else {
+                  silenceStartTime = null;
+                }
               }
-            }
 
+              this._animFrameId = requestAnimationFrame(updateLevel);
+            };
             this._animFrameId = requestAnimationFrame(updateLevel);
-          };
-          this._animFrameId = requestAnimationFrame(updateLevel);
+          } catch (_) {}
         }
 
         const mimeType = this.getSupportedMimeType();
@@ -2297,6 +2370,26 @@
     }
 
     _cleanupTracks() {
+      if (this._animFrameId) {
+        cancelAnimationFrame(this._animFrameId);
+        this._animFrameId = null;
+      }
+      if (this._sourceNode) {
+        try { this._sourceNode.disconnect(); } catch (_) {}
+        this._sourceNode = null;
+      }
+      if (this._analyserNode) {
+        try { this._analyserNode.disconnect(); } catch (_) {}
+        this._analyserNode = null;
+      }
+      if (this._micAudioContext) {
+        try {
+          if (this._micAudioContext.state !== 'closed') {
+            this._micAudioContext.close().catch(() => {});
+          }
+        } catch (_) {}
+        this._micAudioContext = null;
+      }
       if (this._audioStream) {
         this._audioStream.getTracks().forEach((track) => {
           try {
@@ -2308,6 +2401,7 @@
     }
 
     stop() {
+      this.isStarting = false;
       if (this._safetyTimeout) clearTimeout(this._safetyTimeout);
       if (this._animFrameId) cancelAnimationFrame(this._animFrameId);
       this._cleanupTracks();
@@ -3081,7 +3175,15 @@
       }
     };
 
-    micBtn?.addEventListener('click', () => {
+    let lastMicTap = 0;
+    micBtn?.addEventListener('click', (e) => {
+      const now = Date.now();
+      if (now - lastMicTap < 400) {
+        e?.preventDefault?.();
+        return; // Förhindra oavsiktliga dubbelklick
+      }
+      lastMicTap = now;
+
       window.VisualEngine?.haptic('light', micBtn);
 
       if (speechJudgeInstance.isRecording || azureSpeechJudgeInstance.isRecording) {
@@ -3089,9 +3191,12 @@
         return;
       }
 
-      if (speechJudgeInstance.isAnalyzing || azureSpeechJudgeInstance.isAnalyzing) {
+      if (speechJudgeInstance.isStarting || speechJudgeInstance.isAnalyzing || azureSpeechJudgeInstance.isStarting || azureSpeechJudgeInstance.isAnalyzing) {
         return;
       }
+
+      // Kritiskt: Stoppa all pågående taluppspelning innan inspelning startar
+      AudioPlayer.stop();
 
       speechJudgeInstance.start(item, {
         onStateChange: (state) => updateButtonState(state),
@@ -3165,6 +3270,7 @@
     },
 
     playSound: (effect) => SoundFX.playSound(effect),
+    stopAudio: AudioPlayer.stop.bind(AudioPlayer),
     speakSwedish: AudioPlayer.speakSwedish.bind(AudioPlayer),
     speakSlow: AudioPlayer.speakSlow.bind(AudioPlayer),
     speakTurtle065: AudioPlayer.speakSlow.bind(AudioPlayer),

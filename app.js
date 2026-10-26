@@ -2049,8 +2049,16 @@
       const vizEl = document.getElementById('dala-audio-viz-12');
       const statusLabel = document.getElementById('mic-status-label');
 
-      micBtn?.addEventListener('click', () => {
+      let lastMicTap = 0;
+      micBtn?.addEventListener('click', (e) => {
+        const now = Date.now();
+        if (now - lastMicTap < 400) {
+          e?.preventDefault?.();
+          return;
+        }
+        lastMicTap = now;
         window.VisualEngine.haptic('light', micBtn);
+        window.SpeechEngine.stopAudio?.();
         window.SpeechEngine.listenAndEvaluate(item, {
           onStart: () => {
             micBtn.classList.add('listening');
