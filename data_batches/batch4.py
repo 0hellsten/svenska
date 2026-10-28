@@ -1,0 +1,4394 @@
+# -*- coding: utf-8 -*-
+# Batch 4: Theme 7 (shopping_numbers, 81 items) & Theme 8 (city_transport, 83 items)
+# Total: 164 items
+
+batch4_items = [
+    {
+        "id": "t7_ext_01",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "En ledig provhytt",
+        "th": "ห้องลองเสื้อที่ว่างอยู่",
+        "satunFlavor": "ห้องลองเสื้อผ้า เข้าไปลองดูว่าใส่สวยมั้ย",
+        "phoneticTh": "เอน-เล-ดิก-พรูฟ-ฮึทท์",
+        "pronunciationTip": "hytt สระ y ทำปากจู๋ลึก พรูฟ-ฮึทท์",
+        "svgScene": "fitting_room",
+        "distractorsSv": [
+            "En kassa",
+            "En hylla",
+            "En utgång"
+        ],
+        "distractorsTh": [
+            "เคาน์เตอร์แคชเชียร์",
+            "ชั้นวางของ",
+            "ทางออก"
+        ],
+        "wordChunks": [
+            "En",
+            "ledig",
+            "provhytt"
+        ]
+    },
+    {
+        "id": "t7_ext_02",
+        "themeId": "shopping_numbers",
+        "type": "sentence",
+        "sv": "Kan jag få prova den här?",
+        "th": "ฉันขอลองใส่ตัวนี้หน่อยได้ไหมคะ?",
+        "satunFlavor": "ขอลองใส่เสื้อตัวนี้แลทีต๊ะ ใส่พอดีมั้ย",
+        "phoneticTh": "คัน-ย็อก-โฟ-พรู-วา-เดน-แฮร์?",
+        "pronunciationTip": "prova สระ o ออกเสียงสระอู พรู-วา",
+        "svgScene": "fitting_room",
+        "distractorsSv": [
+            "Kan jag köpa den?",
+            "Kan jag byta den?",
+            "Kan jag låna den?"
+        ],
+        "distractorsTh": [
+            "ฉันซื้อได้ไหม?",
+            "ฉันขอเปลี่ยนได้ไหม?",
+            "ฉันขอยืมได้ไหม?"
+        ],
+        "wordChunks": [
+            "Kan",
+            "jag",
+            "få",
+            "prova",
+            "den",
+            "här?"
+        ]
+    },
+    {
+        "id": "t7_ext_03",
+        "themeId": "shopping_numbers",
+        "type": "sentence",
+        "sv": "Den här passar perfekt",
+        "th": "ตัวนี้ใส่ได้พอดีเป๊ะเลยค่ะ",
+        "satunFlavor": "ใส่พอดีเป๊ะ สวยงามถูกใจจังฮู้",
+        "phoneticTh": "เดน-แฮร์-พัส-ซาร์-แพร์-เฟ็คต์",
+        "pronunciationTip": "passar สระ a สั้น พัส-ซาร์-แพร์-เฟ็คต์",
+        "svgScene": "clothes",
+        "distractorsSv": [
+            "Den är för liten",
+            "Den är för stor",
+            "Den är ful"
+        ],
+        "distractorsTh": [
+            "มันเล็กไป",
+            "มันใหญ่ไป",
+            "มันน่าเกลียด"
+        ],
+        "wordChunks": [
+            "Den",
+            "här",
+            "passar",
+            "perfekt"
+        ]
+    },
+    {
+        "id": "t7_ext_04",
+        "themeId": "shopping_numbers",
+        "type": "sentence",
+        "sv": "Den är tyvärr för liten",
+        "th": "น่าเสียดายที่ตัวนี้มันเล็กเกินไปค่ะ",
+        "satunFlavor": "ตัวเล็กไปนิด ติดพุงใส่ไม่สบาย",
+        "phoneticTh": "เดน-แอร์-ทือ-แวร์-เฟอร์-ลี-เตน",
+        "pronunciationTip": "liten สระ i ลากยาว ลี-เตน",
+        "svgScene": "clothes",
+        "distractorsSv": [
+            "Den passar bra",
+            "Den är för stor",
+            "Den är dyr"
+        ],
+        "distractorsTh": [
+            "มันพอดี",
+            "มันใหญ่ไป",
+            "มันแพง"
+        ],
+        "wordChunks": [
+            "Den",
+            "är",
+            "tyvärr",
+            "för",
+            "liten"
+        ]
+    },
+    {
+        "id": "t7_ext_05",
+        "themeId": "shopping_numbers",
+        "type": "sentence",
+        "sv": "Den är alldeles för stor",
+        "th": "ตัวนี้มันใหญ่เทอะทะเกินไปค่ะ",
+        "satunFlavor": "ตัวใหญ่เบ้อเริ่ม ใส่แล้วหลวมโพรก",
+        "phoneticTh": "เดน-แอร์-อัล-เดะ-เลส-เฟอร์-สตอร์",
+        "pronunciationTip": "stor สระ o ออกเสียงสระอู สตอร์",
+        "svgScene": "clothes",
+        "distractorsSv": [
+            "Den är för liten",
+            "Den sitter bra",
+            "Den är lagom"
+        ],
+        "distractorsTh": [
+            "มันเล็กไป",
+            "มันใส่พอดี",
+            "มันกำลังพอดี"
+        ],
+        "wordChunks": [
+            "Den",
+            "är",
+            "alldeles",
+            "för",
+            "stor"
+        ]
+    },
+    {
+        "id": "t7_ext_06",
+        "themeId": "shopping_numbers",
+        "type": "sentence",
+        "sv": "Har ni en större storlek?",
+        "th": "คุณมีไซส์ที่ใหญ่กว่านี้ไหมคะ?",
+        "satunFlavor": "มีเบอร์ใหญ่กว่านี้มั้ยจ๊ะ อยากได้หลวมๆ หน่อย",
+        "phoneticTh": "ฮาร์-นี-เอน-สเตร์-เรอะ-สตอร์-เลค?",
+        "pronunciationTip": "större สระ ö ปากจู๋ สเตร์-เรอะ",
+        "svgScene": "clothes",
+        "distractorsSv": [
+            "Har ni en mindre storlek?",
+            "Vad kostar den?",
+            "Är den slut?"
+        ],
+        "distractorsTh": [
+            "มีไซส์เล็กกว่านี้ไหม?",
+            "ราคาเท่าไร?",
+            "ของหมดหรือยัง?"
+        ],
+        "wordChunks": [
+            "Har",
+            "ni",
+            "en",
+            "större",
+            "storlek?"
+        ]
+    },
+    {
+        "id": "t7_ext_07",
+        "themeId": "shopping_numbers",
+        "type": "sentence",
+        "sv": "Har ni en mindre storlek?",
+        "th": "คุณมีไซส์ที่เล็กกว่านี้ไหมคะ?",
+        "satunFlavor": "มีไซส์เล็กกว่านี้มั้ย ตัวนี้หลวมไปนิด",
+        "phoneticTh": "ฮาร์-นี-เอน-มิน-เดรอะ-สตอร์-เลค?",
+        "pronunciationTip": "mindre สระ i สั้น มิน-เดรอะ-สตอร์-เลค",
+        "svgScene": "clothes",
+        "distractorsSv": [
+            "Har ni en större storlek?",
+            "Finns den i rött?",
+            "Var är kassan?"
+        ],
+        "distractorsTh": [
+            "มีไซส์ใหญ่กว่านี้ไหม?",
+            "มีสีแดงไหม?",
+            "แคชเชียร์อยู่ไหน?"
+        ],
+        "wordChunks": [
+            "Har",
+            "ni",
+            "en",
+            "mindre",
+            "storlek?"
+        ]
+    },
+    {
+        "id": "t7_ext_08",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Storlek medium",
+        "th": "ขนาดไซส์กลาง (M)",
+        "satunFlavor": "ไซส์เอ็ม ขนาดกลางใส่พอดีตัว",
+        "phoneticTh": "สตอร์-เลค-เม-ดิ-อุม",
+        "pronunciationTip": "medium สระ u ออกเสียงสระอู เม-ดิ-อุม",
+        "svgScene": "tag",
+        "distractorsSv": [
+            "Storlek small",
+            "Storlek large",
+            "Extrastor"
+        ],
+        "distractorsTh": [
+            "ไซส์เอส",
+            "ไซส์แอล",
+            "ไซส์ใหญ่พิเศษ"
+        ],
+        "wordChunks": [
+            "Storlek",
+            "medium"
+        ]
+    },
+    {
+        "id": "t7_ext_09",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Storlek small",
+        "th": "ขนาดไซส์เล็ก (S)",
+        "satunFlavor": "ไซส์เอส ขนาดเล็กพอดีรูปร่าง",
+        "phoneticTh": "สตอร์-เลค-สมอลล์",
+        "pronunciationTip": "small ออกเสียง สมอลล์",
+        "svgScene": "tag",
+        "distractorsSv": [
+            "Storlek large",
+            "Storlek medium",
+            "Storlek extra large"
+        ],
+        "distractorsTh": [
+            "ไซส์แอล",
+            "ไซส์เอ็ม",
+            "ไซส์เอกซ์แอล"
+        ],
+        "wordChunks": [
+            "Storlek",
+            "small"
+        ]
+    },
+    {
+        "id": "t7_ext_10",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Storlek large",
+        "th": "ขนาดไซส์ใหญ่ (L)",
+        "satunFlavor": "ไซส์แอล ขนาดใหญ่ใส่สบายไม่อึดอัด",
+        "phoneticTh": "สตอร์-เลค-ลาร์จ",
+        "pronunciationTip": "large ออกเสียง ลาร์จ",
+        "svgScene": "tag",
+        "distractorsSv": [
+            "Storlek small",
+            "Storlek medium",
+            "Barnstorlek"
+        ],
+        "distractorsTh": [
+            "ไซส์เอส",
+            "ไซส์เอ็ม",
+            "ไซส์เด็ก"
+        ],
+        "wordChunks": [
+            "Storlek",
+            "large"
+        ]
+    },
+    {
+        "id": "t7_ext_11",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "En varm vinterjacka",
+        "th": "เสื้อแจ็กเก็ตกันหนาวตัวหนา",
+        "satunFlavor": "เสื้อกันหนาวตัวหนา กันลมกันหิมะอุ่นจังฮู้",
+        "phoneticTh": "เอน-วาร์ม-วิน-เทร์-ยัค-คา",
+        "pronunciationTip": "jacka ตัว j ออกเสียง ย ยัค-คา",
+        "svgScene": "jacket",
+        "distractorsSv": [
+            "En tunn tröja",
+            "En regnjacka",
+            "En t-shirt"
+        ],
+        "distractorsTh": [
+            "เสื้อบาง",
+            "เสื้อกันฝน",
+            "เสื้อยืด"
+        ],
+        "wordChunks": [
+            "En",
+            "varm",
+            "vinterjacka"
+        ]
+    },
+    {
+        "id": "t7_ext_12",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "En stickad ulltröja",
+        "th": "เสื้อกันหนาวไหมพรมขนสัตว์ถัก",
+        "satunFlavor": "เสื้อขนแกะถัก หนา นุ่ม อุ่นสบายคลายหนาว",
+        "phoneticTh": "เอน-สติก-คัด-อุลล์-เตรอ-ยา",
+        "pronunciationTip": "ö ใน tröja ปากจู๋ เตรอ-ยา",
+        "svgScene": "clothes",
+        "distractorsSv": [
+            "En sommarklänning",
+            "En baddräkt",
+            "Ett linne"
+        ],
+        "distractorsTh": [
+            "ชุดเดรสหน้าร้อน",
+            "ชุดว่ายน้ำ",
+            "เสื้อกล้าม"
+        ],
+        "wordChunks": [
+            "En",
+            "stickad",
+            "ulltröja"
+        ]
+    },
+    {
+        "id": "t7_ext_13",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Ett par blå jeans",
+        "th": "กางเกงยีนส์สีน้ำเงินหนึ่งตัว",
+        "satunFlavor": "กางเกงยีนส์สีน้ำเงิน ใส่เที่ยวเท่ระเบิด",
+        "phoneticTh": "เอ็ท-พอร์-โบล-ยีนส์",
+        "pronunciationTip": "jeans ตัว j ออกเสียง ย ยีนส์",
+        "svgScene": "jeans",
+        "distractorsSv": [
+            "Ett par shorts",
+            "En kjol",
+            "Mjukisbyxor"
+        ],
+        "distractorsTh": [
+            "กางเกงขาสั้น",
+            "กระโปรง",
+            "กางเกงวอร์ม"
+        ],
+        "wordChunks": [
+            "Ett",
+            "par",
+            "blå",
+            "jeans"
+        ]
+    },
+    {
+        "id": "t7_ext_14",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Ett par bekväma byxor",
+        "th": "กางเกงขายาวใส่สบายหนึ่งตัว",
+        "satunFlavor": "กางเกงผ้านุ่ม ใส่เดินสบายทั้งวัน",
+        "phoneticTh": "เอ็ท-พอร์-เบะ-แควร์-มา-บึก-ซูร์",
+        "pronunciationTip": "byxor สระ y จู๋ปากลึก บึก-ซูร์",
+        "svgScene": "clothes",
+        "distractorsSv": [
+            "En jacka",
+            "En slips",
+            "En halsduk"
+        ],
+        "distractorsTh": [
+            "เสื้อแจ็กเก็ต",
+            "เนคไท",
+            "ผ้าพันคอ"
+        ],
+        "wordChunks": [
+            "Ett",
+            "par",
+            "bekväma",
+            "byxor"
+        ]
+    },
+    {
+        "id": "t7_ext_15",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "En blommig kjol",
+        "th": "กระโปรงลายดอกไม้",
+        "satunFlavor": "กระโปรงลายดอกไม้สดใส พลิ้วสวยรับลมหน้าร้อน",
+        "phoneticTh": "เอน-บลุม-มิก-ชูล",
+        "pronunciationTip": "kjol ตัว kj ออกเสียง ช ชูล",
+        "svgScene": "clothes",
+        "distractorsSv": [
+            "Ett par byxor",
+            "En kappa",
+            "En kostym"
+        ],
+        "distractorsTh": [
+            "กางเกงขายาว",
+            "เสื้อโค้ต",
+            "ชุดสูท"
+        ],
+        "wordChunks": [
+            "En",
+            "blommig",
+            "kjol"
+        ]
+    },
+    {
+        "id": "t7_ext_16",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "En elegant klänning",
+        "th": "ชุดเดรสยาวสวยหรูหรา",
+        "satunFlavor": "ชุดแซกสวยหรู ใส่ออกงานเลี้ยงสวยเด่น",
+        "phoneticTh": "เอน-เอ-เล-กันต์-แคลน-นิง",
+        "pronunciationTip": "klänning สระ ä กว้าง แคลน-นิง",
+        "svgScene": "clothes",
+        "distractorsSv": [
+            "En t-shirt",
+            "Ett par jeans",
+            "Ett nattlinne"
+        ],
+        "distractorsTh": [
+            "เสื้อยืด",
+            "กางเกงยีนส์",
+            "ชุดนอน"
+        ],
+        "wordChunks": [
+            "En",
+            "elegant",
+            "klänning"
+        ]
+    },
+    {
+        "id": "t7_ext_17",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "En strykfiri skjorta",
+        "th": "เสื้อเชิ้ตแบบไม่ต้องรีบ",
+        "satunFlavor": "เสื้อเชิ้ตใส่สบาย ซักแล้วสะบัดตากไม่ต้องเปลืองแรงรีด",
+        "phoneticTh": "เอน-สตรึค-ฟรี-ชูร์-ตา",
+        "pronunciationTip": "skjorta ออกเสียง ชูร์-ตา ปากกลม",
+        "svgScene": "clothes",
+        "distractorsSv": [
+            "En kofta",
+            "En luvtröja",
+            "En väst"
+        ],
+        "distractorsTh": [
+            "เสื้อคาร์ดิแกน",
+            "เสื้อฮู้ด",
+            "เสื้อกั๊ก"
+        ],
+        "wordChunks": [
+            "En",
+            "strykfiri",
+            "skjorta"
+        ]
+    },
+    {
+        "id": "t7_ext_18",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "En mjuk bomullströja",
+        "th": "เสื้อผ้าฝ้ายเนื้อนุ่ม",
+        "satunFlavor": "เสื้อผ้าฝ้ายคอตตอนร้อยเปอร์เซ็นต์ ใส่สบายระบายเหงื่อ",
+        "phoneticTh": "เอน-มยูค-บู-มุลส์-เตรอ-ยา",
+        "pronunciationTip": "bomull สระ o เป็นอู บู-มุลส์",
+        "svgScene": "clothes",
+        "distractorsSv": [
+            "En ylletröja",
+            "En sidenblus",
+            "En läderjacka"
+        ],
+        "distractorsTh": [
+            "เสื้อขนแกะ",
+            "เสื้อเชิ้ตผ้าไหม",
+            "แจ็กเก็ตหนัง"
+        ],
+        "wordChunks": [
+            "En",
+            "mjuk",
+            "bomullströja"
+        ]
+    },
+    {
+        "id": "t7_ext_19",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Varma ullstrumpor",
+        "th": "ถุงเท้าขนสัตว์หนานุ่มให้ความอบอุ่น",
+        "satunFlavor": "ถุงเท้าขนแกะหนาๆ ใส่กันหนาวเท้าอุ่นสบาย",
+        "phoneticTh": "วาร์-มา-อุลล์-สตรุม-พูร์",
+        "pronunciationTip": "strumpor สระ u และ o เป็นอู สตรุม-พูร์",
+        "svgScene": "socks",
+        "distractorsSv": [
+            "Tunna strumpor",
+            "Strumpbyxor",
+            "Tofflor"
+        ],
+        "distractorsTh": [
+            "ถุงเท้าบาง",
+            "ถุงน่อง",
+            "รองเท้าแตะในบ้าน"
+        ],
+        "wordChunks": [
+            "Varma",
+            "ullstrumpor"
+        ]
+    },
+    {
+        "id": "t7_ext_20",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Fodrade vinterskor",
+        "th": "รองเท้าบูทกันหนาวบุขนด้านใน",
+        "satunFlavor": "รองเท้าบูทบุขนหนา กันน้ำกันหิมะ เดินบนน้ำแข็งไม่ลื่น",
+        "phoneticTh": "ฟูด-รา-เดะ-วิน-เทร์-สคูร์",
+        "pronunciationTip": "skor สระ o ออกเสียงสระอู สคูร์",
+        "svgScene": "shoes",
+        "distractorsSv": [
+            "Sommarsandaler",
+            "Högklackade skor",
+            "Tofflor"
+        ],
+        "distractorsTh": [
+            "รองเท้าแตะหน้าร้อน",
+            "รองเท้าส้นสูง",
+            "รองเท้าใส่ในบ้าน"
+        ],
+        "wordChunks": [
+            "Fodrade",
+            "vinterskor"
+        ]
+    },
+    {
+        "id": "t7_ext_21",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Ett par gymnastikskor",
+        "th": "รองเท้าผ้าใบสำหรับวิ่งหรือออกกำลังกาย",
+        "satunFlavor": "รองเท้าผ้าใบ เดินเหินคล่องตัวใส่สบาย",
+        "phoneticTh": "เอ็ท-พอร์-ยึม-นัส-ทิค-สคูร์",
+        "pronunciationTip": "gymnastik สระ y จู๋ปาก ยึม-นัส-ทิค-สคูร์",
+        "svgScene": "shoes",
+        "distractorsSv": [
+            "Stövlar",
+            "Sandaler",
+            "Pumps"
+        ],
+        "distractorsTh": [
+            "รองเท้าบูทยาว",
+            "รองเท้าแตะรัดส้น",
+            "รองเท้าคัตชู"
+        ],
+        "wordChunks": [
+            "Ett",
+            "par",
+            "gymnastikskor"
+        ]
+    },
+    {
+        "id": "t7_ext_22",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "En praktisk handväska",
+        "th": "กระเป๋าถืออเนกประสงค์",
+        "satunFlavor": "กระเป๋าถือใส่กระเป๋าตังค์มือถือกุญแจ พกพาสะดวก",
+        "phoneticTh": "เอน-ปรัก-ทิสค์-ฮันด์-แวส-คา",
+        "pronunciationTip": "väska สระ ä กว้าง แวส-คา",
+        "svgScene": "bag",
+        "distractorsSv": [
+            "En resväska",
+            "En plastpåse",
+            "En necessär"
+        ],
+        "distractorsTh": [
+            "กระเป๋าเดินทางใบใหญ่",
+            "ถุงพลาสติก",
+            "กระเป๋าใส่เครื่องสำอาง"
+        ],
+        "wordChunks": [
+            "En",
+            "praktisk",
+            "handväska"
+        ]
+    },
+    {
+        "id": "t7_ext_23",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "En varm mössa",
+        "th": "หมวกไหมพรมกันหนาว",
+        "satunFlavor": "หมวกไหมพรม ดึงคลุมหูกันลมหนาวบาดหู",
+        "phoneticTh": "เอน-วาร์ม-เมิส-ซา",
+        "pronunciationTip": "ö ใน mössa ทำปากจู๋ เมิส-ซา",
+        "svgScene": "hat",
+        "distractorsSv": [
+            "En keps",
+            "En stråhatt",
+            "En hjälm"
+        ],
+        "distractorsTh": [
+            "หมวกแก๊ป",
+            "หมวกสาน",
+            "หมวกกันน็อก"
+        ],
+        "wordChunks": [
+            "En",
+            "varm",
+            "mössa"
+        ]
+    },
+    {
+        "id": "t7_ext_24",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Ett par stickade vantar",
+        "th": "ถุงมือไหมพรมหนึ่งคู่",
+        "satunFlavor": "ถุงมือไหมพรม สวมไว้มือจะได้ไม่อุ่นแข็ง",
+        "phoneticTh": "เอ็ท-พอร์-สติก-คา-เดะ-วัน-ทาร์",
+        "pronunciationTip": "vantar สระ a สั้น วัน-ทาร์",
+        "svgScene": "gloves",
+        "distractorsSv": [
+            "Ett par sockor",
+            "En halsduk",
+            "En sjal"
+        ],
+        "distractorsTh": [
+            "ถุงเท้า",
+            "ผ้าพันคอ",
+            "ผ้าคลุมไหล่"
+        ],
+        "wordChunks": [
+            "Ett",
+            "par",
+            "stickade",
+            "vantar"
+        ]
+    },
+    {
+        "id": "t7_ext_25",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "En lång halsduk",
+        "th": "ผ้าพันคอผืนยาว",
+        "satunFlavor": "ผ้าพันคอผืนยาว พันคอให้อุ่นสบายเวลาเดินข้างนอก",
+        "phoneticTh": "เอน-ลุง-ฮัลส์-ดุค",
+        "pronunciationTip": "halsduk สระ u ปากจู๋ ฮัลส์-ดุค",
+        "svgScene": "scarf",
+        "distractorsSv": [
+            "En slips",
+            "En fluga",
+            "Ett halsband"
+        ],
+        "distractorsTh": [
+            "เนคไท",
+            "หูกระต่าย",
+            "สร้อยคอ"
+        ],
+        "wordChunks": [
+            "En",
+            "lång",
+            "halsduk"
+        ]
+    },
+    {
+        "id": "t7_ext_26",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Ett bälte i läder",
+        "th": "เข็มขัดหนังแท้",
+        "satunFlavor": "เข็มขัดหนัง รัดเอวให้กระชับพอดี",
+        "phoneticTh": "เอ็ท-แบล-เตะ-อี-แล-เดร์",
+        "pronunciationTip": "läder สระ ä กว้าง แล-เดร์",
+        "svgScene": "belt",
+        "distractorsSv": [
+            "En slips",
+            "Ett spänne",
+            "Ett band"
+        ],
+        "distractorsTh": [
+            "เนคไท",
+            "หัวเข็มขัด",
+            "แถบริบบิ้น"
+        ],
+        "wordChunks": [
+            "Ett",
+            "bälte",
+            "i",
+            "läder"
+        ]
+    },
+    {
+        "id": "t7_ext_27",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Ett vackert smycke",
+        "th": "เครื่องประดับสวยงาม",
+        "satunFlavor": "เครื่องประดับสวยๆ สวมใส่เพิ่มความงาม",
+        "phoneticTh": "เอ็ท-วัค-เคิร์ท-สมึค-เคะ",
+        "pronunciationTip": "smycke สระ y จู๋ปากแน่น สมึค-เคะ",
+        "svgScene": "jewelry",
+        "distractorsSv": [
+            "En klocka",
+            "En spegel",
+            "En kam"
+        ],
+        "distractorsTh": [
+            "นาฬิกา",
+            "กระจก",
+            "หวี"
+        ],
+        "wordChunks": [
+            "Ett",
+            "vackert",
+            "smycke"
+        ]
+    },
+    {
+        "id": "t7_ext_28",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "En glänsande guldring",
+        "th": "แหวนทองคำส่องประกายแวววาว",
+        "satunFlavor": "แหวนทองแท้ สุกปลั่งสวมนิ้วสวยงาม",
+        "phoneticTh": "เอน-แกลน-ซัน-เดะ-กุลด์-ริง",
+        "pronunciationTip": "guld สระ u ออกเสียง กุลด์",
+        "svgScene": "jewelry",
+        "distractorsSv": [
+            "Ett silverarmband",
+            "Örhängen",
+            "En brosch"
+        ],
+        "distractorsTh": [
+            "กำไลเงิน",
+            "ต่างหู",
+            "เข็มกลัด"
+        ],
+        "wordChunks": [
+            "En",
+            "glänsande",
+            "guldring"
+        ]
+    },
+    {
+        "id": "t7_ext_29",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Ett halsband i silver",
+        "th": "สร้อยคอเงินแท้",
+        "satunFlavor": "สายสร้อยคอเงิน สร้อยเงินลวดลายประณีต",
+        "phoneticTh": "เอ็ท-ฮัลส์-บันด์-อี-ซิล-เวร์",
+        "pronunciationTip": "silver สระ i สั้น ซิล-เวร์",
+        "svgScene": "jewelry",
+        "distractorsSv": [
+            "En ring",
+            "Ett armband",
+            "En tiara"
+        ],
+        "distractorsTh": [
+            "แหวน",
+            "กำไลข้อมือ",
+            "มงกุฎรัดเกล้า"
+        ],
+        "wordChunks": [
+            "Ett",
+            "halsband",
+            "i",
+            "silver"
+        ]
+    },
+    {
+        "id": "t7_ext_30",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Ett par fina örhängen",
+        "th": "ต่างหูคู่สวย",
+        "satunFlavor": "ตุ้มหูสวยๆ ใส่ประดับหูดูเก๋ไก๋",
+        "phoneticTh": "เอ็ท-พอร์-ฟี-นา-เออร์-แฮง-เง็น",
+        "pronunciationTip": "örhängen ö ปากจู๋ เออร์-แฮง-เง็น",
+        "svgScene": "jewelry",
+        "distractorsSv": [
+            "Ett halsband",
+            "En ring",
+            "Ett diadem"
+        ],
+        "distractorsTh": [
+            "สร้อยคอ",
+            "แหวน",
+            "ที่คาดผม"
+        ],
+        "wordChunks": [
+            "Ett",
+            "par",
+            "fina",
+            "örhängen"
+        ]
+    },
+    {
+        "id": "t7_ext_31",
+        "themeId": "shopping_numbers",
+        "type": "concept",
+        "sv": "Öppet köp i trettio dagar",
+        "th": "สิทธิ์คืนสินค้าได้รับเงินคืนเต็มจำนวนภายใน 30 วัน",
+        "satunFlavor": "สิทธิ์คืนของได้เงินคืนใน 30 วัน ซื้อไปไม่ถูกใจเอามาคืนได้เลย",
+        "phoneticTh": "เอิพ-เป็ต-เชิพ-อี-เตร็ต-ติ-ดา-การ์",
+        "pronunciationTip": "köp ออกเสียง เชิพ สระ ö ปากจู๋",
+        "svgScene": "receipt",
+        "distractorsSv": [
+            "Ingen returrätt",
+            "Slutrea",
+            "Bara byte"
+        ],
+        "distractorsTh": [
+            "ไม่รับคืน",
+            "ลดล้างสต็อก",
+            "เปลี่ยนได้อย่างเดียว"
+        ],
+        "wordChunks": [
+            "Öppet",
+            "köp",
+            "i",
+            "trettio",
+            "dagar"
+        ]
+    },
+    {
+        "id": "t7_ext_32",
+        "themeId": "shopping_numbers",
+        "type": "concept",
+        "sv": "Giltig bytesrätt",
+        "th": "สิทธิ์การเปลี่ยนเป็นสินค้าชิ้นอื่น",
+        "satunFlavor": "สิทธิ์เปลี่ยนขนาดหรือเปลี่ยนแบบสินค้า",
+        "phoneticTh": "ยิล-ทิก-บึ-เทส-แร็ตต์",
+        "pronunciationTip": "bytesrätt สระ y จู๋ปาก บึ-เทส-แร็ตต์",
+        "svgScene": "receipt",
+        "distractorsSv": [
+            "Öppet köp",
+            "Presentkort",
+            "Kvitto saknas"
+        ],
+        "distractorsTh": [
+            "สิทธิ์คืนเงิน",
+            "บัตรของขวัญ",
+            "ไม่มีใบเสร็จ"
+        ],
+        "wordChunks": [
+            "Giltig",
+            "bytesrätt"
+        ]
+    },
+    {
+        "id": "t7_ext_33",
+        "themeId": "shopping_numbers",
+        "type": "sentence",
+        "sv": "Jag vill byta den här tröjan",
+        "th": "ฉันอยากขอเปลี่ยนเสื้อตัวนี้ค่ะ",
+        "satunFlavor": "ขอเปลี่ยนเสื้อตัวนี้หน่อยจ๊ะ จะเอาไซส์อื่น",
+        "phoneticTh": "ย็อก-วิล-บึ-ทา-เดน-แฮร์-เตรอ-ยัน",
+        "pronunciationTip": "byta สระ y ทำปากจู๋ บึ-ทา",
+        "svgScene": "clothes",
+        "distractorsSv": [
+            "Jag vill köpa en tröja",
+            "Jag vill slänga tröjan",
+            "Jag har ingen tröja"
+        ],
+        "distractorsTh": [
+            "ฉันอยากซื้อเสื้อ",
+            "ฉันอยากทิ้งเสื้อ",
+            "ฉันไม่มีเสื้อ"
+        ],
+        "wordChunks": [
+            "Jag",
+            "vill",
+            "byta",
+            "den",
+            "här",
+            "tröjan"
+        ]
+    },
+    {
+        "id": "t7_ext_34",
+        "themeId": "shopping_numbers",
+        "type": "sentence",
+        "sv": "Jag vill lämna tillbaka varan",
+        "th": "ฉันต้องการนำสินค้านี้มาคืนค่ะ",
+        "satunFlavor": "ขอเอาของมาคืนร้าน พร้อมรับเงินคืน",
+        "phoneticTh": "ย็อก-วิล-แลม-นา-ทิล-บอ-คา-วอ-รัน",
+        "pronunciationTip": "lämna สระ ä กว้าง แลม-นา-ทิล-บอ-คา",
+        "svgScene": "receipt",
+        "distractorsSv": [
+            "Jag vill köpa varan",
+            "Jag vill behålla varan",
+            "Jag älskar varan"
+        ],
+        "distractorsTh": [
+            "ฉันอยากซื้อสินค้า",
+            "ฉันอยากเก็บสินค้าไว้",
+            "ฉันชอบสินค้ามาก"
+        ],
+        "wordChunks": [
+            "Jag",
+            "vill",
+            "lämna",
+            "tillbaka",
+            "varan"
+        ]
+    },
+    {
+        "id": "t7_ext_35",
+        "themeId": "shopping_numbers",
+        "type": "sentence",
+        "sv": "Har du sparat kvittot?",
+        "th": "คุณได้เก็บใบเสร็จเอาไว้ไหมคะ?",
+        "satunFlavor": "เก็บใบเสร็จไว้มั้ยจ๊ะ พนักงานถามก่อนคืนของ",
+        "phoneticTh": "ฮาร์-ดู-สปอ-รัต-ควิต-ตุท?",
+        "pronunciationTip": "sparat สระ a ยาว สปอ-รัต",
+        "svgScene": "receipt",
+        "distractorsSv": [
+            "Har du pengar?",
+            "Har du väskan?",
+            "Vill du handla mer?"
+        ],
+        "distractorsTh": [
+            "คุณมีเงินไหม?",
+            "มีกระเป๋าไหม?",
+            "อยากซื้อของเพิ่มไหม?"
+        ],
+        "wordChunks": [
+            "Har",
+            "du",
+            "sparat",
+            "kvittot?"
+        ]
+    },
+    {
+        "id": "t7_ext_36",
+        "themeId": "shopping_numbers",
+        "type": "sentence",
+        "sv": "Jag har kvittot med mig",
+        "th": "ฉันพกใบเสร็จติดตัวมาด้วยค่ะ",
+        "satunFlavor": "ใบเสร็จอยู่นี่จ้า เก็บไว้อย่างดีเลย",
+        "phoneticTh": "ย็อก-ฮาร์-ควิต-ตุท-เมด-เมย์",
+        "pronunciationTip": "kvittot ควิต-ตุท-เมด-เมย์",
+        "svgScene": "receipt",
+        "distractorsSv": [
+            "Jag tappade kvittot",
+            "Jag glömde kvittot",
+            "Jag har inget kvitto"
+        ],
+        "distractorsTh": [
+            "ฉันทำใบเสร็จหาย",
+            "ฉันลืมใบเสร็จ",
+            "ฉันไม่มีใบเสร็จ"
+        ],
+        "wordChunks": [
+            "Jag",
+            "har",
+            "kvittot",
+            "med",
+            "mig"
+        ]
+    },
+    {
+        "id": "t7_ext_37",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Trettio kronor",
+        "th": "สามสิบโครน (30 kr)",
+        "satunFlavor": "สามสิบโครน ราคาสบายกระเป๋า",
+        "phoneticTh": "เตร็ต-ติ-ครู-นูร์",
+        "pronunciationTip": "trettio ออกเสียง เตร็ต-ติ",
+        "svgScene": "money",
+        "distractorsSv": [
+            "Tjugo kronor",
+            "Fyrtio kronor",
+            "Tio kronor"
+        ],
+        "distractorsTh": [
+            "ยี่สิบโครน",
+            "สี่สิบโครน",
+            "สิบโครน"
+        ],
+        "wordChunks": [
+            "Trettio",
+            "kronor"
+        ]
+    },
+    {
+        "id": "t7_ext_38",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Fyrtio kronor",
+        "th": "สี่สิบโครน (40 kr)",
+        "satunFlavor": "สี่สิบโครน ซื้อของกินเล่นได้ชิ้นนึง",
+        "phoneticTh": "เฟือร์-ติ-ครู-นูร์",
+        "pronunciationTip": "fyrtio สระ y จู๋ปาก เฟือร์-ติ",
+        "svgScene": "money",
+        "distractorsSv": [
+            "Trettio kronor",
+            "Femtio kronor",
+            "Sextio kronor"
+        ],
+        "distractorsTh": [
+            "สามสิบโครน",
+            "ห้าสิบโครน",
+            "หกสิบโครน"
+        ],
+        "wordChunks": [
+            "Fyrtio",
+            "kronor"
+        ]
+    },
+    {
+        "id": "t7_ext_39",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Femtio kronor",
+        "th": "ห้าสิบโครน (50 kr)",
+        "satunFlavor": "ห้าสิบโครน แบงก์สีส้ม",
+        "phoneticTh": "เฟ็ม-ติ-ครู-นูร์",
+        "pronunciationTip": "femtio ออกเสียง เฟ็ม-ติ",
+        "svgScene": "money",
+        "distractorsSv": [
+            "Fyrtio kronor",
+            "Sextio kronor",
+            "Hundra kronor"
+        ],
+        "distractorsTh": [
+            "สี่สิบโครน",
+            "หกสิบโครน",
+            "หนึ่งร้อยโครน"
+        ],
+        "wordChunks": [
+            "Femtio",
+            "kronor"
+        ]
+    },
+    {
+        "id": "t7_ext_40",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Sextio kronor",
+        "th": "หกสิบโครน (60 kr)",
+        "satunFlavor": "หกสิบโครน",
+        "phoneticTh": "เซ็กส์-ติ-ครู-นูร์",
+        "pronunciationTip": "sextio ออกเสียง เซ็กส์-ติ",
+        "svgScene": "money",
+        "distractorsSv": [
+            "Femtio kronor",
+            "Sjuttio kronor",
+            "Åttio kronor"
+        ],
+        "distractorsTh": [
+            "ห้าสิบโครน",
+            "เจ็ดสิบโครน",
+            "แปดสิบโครน"
+        ],
+        "wordChunks": [
+            "Sextio",
+            "kronor"
+        ]
+    },
+    {
+        "id": "t7_ext_41",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Sjuttio kronor",
+        "th": "เจ็ดสิบโครน (70 kr)",
+        "satunFlavor": "เจ็ดสิบโครน",
+        "phoneticTh": "ชึต-ติ-ครู-นูร์",
+        "pronunciationTip": "sjuttio sj ออกเสียง ชึ ปากจู๋ ชึต-ติ",
+        "svgScene": "money",
+        "distractorsSv": [
+            "Sextio kronor",
+            "Åttio kronor",
+            "Nittio kronor"
+        ],
+        "distractorsTh": [
+            "หกสิบโครน",
+            "แปดสิบโครน",
+            "เก้าสิบโครน"
+        ],
+        "wordChunks": [
+            "Sjuttio",
+            "kronor"
+        ]
+    },
+    {
+        "id": "t7_ext_42",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Åttio kronor",
+        "th": "แปดสิบโครน (80 kr)",
+        "satunFlavor": "แปดสิบโครน",
+        "phoneticTh": "อ็อต-ติ-ครู-นูร์",
+        "pronunciationTip": "åttio สระ å ปากกลม อ็อต-ติ",
+        "svgScene": "money",
+        "distractorsSv": [
+            "Sjuttio kronor",
+            "Nittio kronor",
+            "Hundra kronor"
+        ],
+        "distractorsTh": [
+            "เจ็ดสิบโครน",
+            "เก้าสิบโครน",
+            "หนึ่งร้อยโครน"
+        ],
+        "wordChunks": [
+            "Åttio",
+            "kronor"
+        ]
+    },
+    {
+        "id": "t7_ext_43",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Nittio kronor",
+        "th": "เก้าสิบโครน (90 kr)",
+        "satunFlavor": "เก้าสิบโครน เกือบหนึ่งร้อย",
+        "phoneticTh": "นิต-ติ-ครู-นูร์",
+        "pronunciationTip": "nittio สระ i สั้น นิต-ติ",
+        "svgScene": "money",
+        "distractorsSv": [
+            "Åttio kronor",
+            "Hundra kronor",
+            "Tusen kronor"
+        ],
+        "distractorsTh": [
+            "แปดสิบโครน",
+            "หนึ่งร้อยโครน",
+            "หนึ่งพันโครน"
+        ],
+        "wordChunks": [
+            "Nittio",
+            "kronor"
+        ]
+    },
+    {
+        "id": "t7_ext_44",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Ettusen kronor",
+        "th": "หนึ่งพันโครน (1 000 kr)",
+        "satunFlavor": "หนึ่งพันโครน แบงก์ใหญ่สุดของสวีเดน",
+        "phoneticTh": "เอ็ท-ทู-เซ็น-ครู-นูร์",
+        "pronunciationTip": "tusen สระ u ออกเสียงสระอู ทู-เซ็น",
+        "svgScene": "money",
+        "distractorsSv": [
+            "Femhundra kronor",
+            "Tvåtusen kronor",
+            "Hundra kronor"
+        ],
+        "distractorsTh": [
+            "ห้าร้อยโครน",
+            "สองพันโครน",
+            "หนึ่งร้อยโครน"
+        ],
+        "wordChunks": [
+            "Ettusen",
+            "kronor"
+        ]
+    },
+    {
+        "id": "t7_ext_45",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Tvåtusen kronor",
+        "th": "สองพันโครน (2 000 kr)",
+        "satunFlavor": "สองพันโครน เป็นเงินก้อน",
+        "phoneticTh": "ทโว-ทู-เซ็น-ครู-นูร์",
+        "pronunciationTip": "tvåtusen ทโว-ทู-เซ็น",
+        "svgScene": "money",
+        "distractorsSv": [
+            "Ettusen kronor",
+            "Tretusen kronor",
+            "Fyratusen kronor"
+        ],
+        "distractorsTh": [
+            "หนึ่งพันโครน",
+            "สามพันโครน",
+            "สี่พันโครน"
+        ],
+        "wordChunks": [
+            "Tvåtusen",
+            "kronor"
+        ]
+    },
+    {
+        "id": "t7_ext_46",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Femtusen kronor",
+        "th": "ห้าพันโครน (5 000 kr)",
+        "satunFlavor": "ห้าพันโครน ค่าเช่าห้องหรือค่าใช้จ่ายประจำเดือน",
+        "phoneticTh": "เฟ็ม-ทู-เซ็น-ครู-นูร์",
+        "pronunciationTip": "femtusen เฟ็ม-ทู-เซ็น",
+        "svgScene": "money",
+        "distractorsSv": [
+            "Tiotusen kronor",
+            "Ettusen kronor",
+            "Hundratusen kronor"
+        ],
+        "distractorsTh": [
+            "หนึ่งหมื่นโครน",
+            "หนึ่งพันโครน",
+            "หนึ่งแสนโครน"
+        ],
+        "wordChunks": [
+            "Femtusen",
+            "kronor"
+        ]
+    },
+    {
+        "id": "t7_ext_47",
+        "themeId": "shopping_numbers",
+        "type": "concept",
+        "sv": "Halva priset",
+        "th": "ลดครึ่งราคา (ลด 50%)",
+        "satunFlavor": "ลดครึ่งราคา ถูกจังฮู้ รีบหยิบเลยต๊ะ",
+        "phoneticTh": "ฮัล-วา-ปรี-เซ็ต",
+        "pronunciationTip": "halva ฮัล-วา และ priset ปรี-เซ็ต",
+        "svgScene": "tag",
+        "distractorsSv": [
+            "Fullt pris",
+            "Dubbelt pris",
+            "Dyr vara"
+        ],
+        "distractorsTh": [
+            "ราคาเต็ม",
+            "ราคาคูณสอง",
+            "สินค้าแพง"
+        ],
+        "wordChunks": [
+            "Halva",
+            "priset"
+        ]
+    },
+    {
+        "id": "t7_ext_48",
+        "themeId": "shopping_numbers",
+        "type": "sentence",
+        "sv": "Det är trettio procents rabatt",
+        "th": "มีส่วนลดสามสิบเปอร์เซ็นต์ค่ะ",
+        "satunFlavor": "ลดสามสิบเปอร์เซ็นต์ ประหยัดเบี้ยได้เยอะ",
+        "phoneticTh": "เด-แอร์-เตร็ต-ติ-พรู-เซนทส์-รา-บัตต์",
+        "pronunciationTip": "procent สระ o ออกเสียง พรู-เซนทส์",
+        "svgScene": "tag",
+        "distractorsSv": [
+            "Det är inget rabatt",
+            "Det är dubbelt pris",
+            "Det är gratis"
+        ],
+        "distractorsTh": [
+            "ไม่มีส่วนลด",
+            "ราคาเพิ่มเท่าตัว",
+            "แจกฟรี"
+        ],
+        "wordChunks": [
+            "Det",
+            "är",
+            "trettio",
+            "procents",
+            "rabatt"
+        ]
+    },
+    {
+        "id": "t7_ext_49",
+        "themeId": "shopping_numbers",
+        "type": "sentence",
+        "sv": "Finns den i en annan färg?",
+        "th": "แบบนี้มีสีอื่นไหมคะ?",
+        "satunFlavor": "มีสีอื่นมั้ยจ๊ะ อยากได้สีที่เข้ากับผิว",
+        "phoneticTh": "ฟินส์-เดน-อี-เอน-อัน-นัน-แฟร์ย?",
+        "pronunciationTip": "färg ออกเสียง แฟร์ย ตัว g ท้ายคำเป็น ย",
+        "svgScene": "colors",
+        "distractorsSv": [
+            "Finns den i annan storlek?",
+            "Vad kostar den?",
+            "Är den trasig?"
+        ],
+        "distractorsTh": [
+            "มีไซส์อื่นไหม?",
+            "ราคาเท่าไร?",
+            "มันขาดชำรุดไหม?"
+        ],
+        "wordChunks": [
+            "Finns",
+            "den",
+            "i",
+            "en",
+            "annan",
+            "färg?"
+        ]
+    },
+    {
+        "id": "t7_ext_50",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Den röda färgen",
+        "th": "สีแดง",
+        "satunFlavor": "สีแดงสดใส สะดุดตาน่ารัก",
+        "phoneticTh": "เดน-เรอ-ดา-แฟร์-เยน",
+        "pronunciationTip": "röd สระ ö ทำปากจู๋ เรอ-ดา",
+        "svgScene": "colors",
+        "distractorsSv": [
+            "Den blåa färgen",
+            "Den gröna färgen",
+            "Den gula färgen"
+        ],
+        "distractorsTh": [
+            "สีน้ำเงิน",
+            "สีเขียว",
+            "สีเหลือง"
+        ],
+        "wordChunks": [
+            "Den",
+            "röda",
+            "färgen"
+        ]
+    },
+    {
+        "id": "t7_ext_51",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Den blåa färgen",
+        "th": "สีน้ำเงิน / สีฟ้า",
+        "satunFlavor": "สีฟ้าครามเหมือนน้ำทะเลสตูล",
+        "phoneticTh": "เดน-โบล-อา-แฟร์-เยน",
+        "pronunciationTip": "blå สระ å ปากกลม โบล-อา",
+        "svgScene": "colors",
+        "distractorsSv": [
+            "Den röda färgen",
+            "Den svarta färgen",
+            "Den vita färgen"
+        ],
+        "distractorsTh": [
+            "สีแดง",
+            "สีดำ",
+            "สีขาว"
+        ],
+        "wordChunks": [
+            "Den",
+            "blåa",
+            "färgen"
+        ]
+    },
+    {
+        "id": "t7_ext_52",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Den gröna färgen",
+        "th": "สีเขียว",
+        "satunFlavor": "สีเขียวใบไม้ สบายตา",
+        "phoneticTh": "เดน-เกริน-นา-แฟร์-เยน",
+        "pronunciationTip": "grön สระ ö ทำปากจู๋ เกริน-นา",
+        "svgScene": "colors",
+        "distractorsSv": [
+            "Den gula färgen",
+            "Den rosa färgen",
+            "Den lila färgen"
+        ],
+        "distractorsTh": [
+            "สีเหลือง",
+            "สีชมพู",
+            "สีม่วง"
+        ],
+        "wordChunks": [
+            "Den",
+            "gröna",
+            "färgen"
+        ]
+    },
+    {
+        "id": "t7_ext_53",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Den gula färgen",
+        "th": "สีเหลือง",
+        "satunFlavor": "สีเหลืองสดใสเหมือนแสงแดด",
+        "phoneticTh": "เดน-กู-ลา-แฟร์-เยน",
+        "pronunciationTip": "gul สระ u ออกเสียงสระอู กู-ลา",
+        "svgScene": "colors",
+        "distractorsSv": [
+            "Den röda färgen",
+            "Den blåa färgen",
+            "Den gråa färgen"
+        ],
+        "distractorsTh": [
+            "สีแดง",
+            "สีน้ำเงิน",
+            "สีเทา"
+        ],
+        "wordChunks": [
+            "Den",
+            "gula",
+            "färgen"
+        ]
+    },
+    {
+        "id": "t7_ext_54",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Den svarta färgen",
+        "th": "สีดำ",
+        "satunFlavor": "สีดำสนิท ใส่แล้วดูภูมิฐานเรียบหรู",
+        "phoneticTh": "เดน-สวาร์-ทา-แฟร์-เยน",
+        "pronunciationTip": "svart สระ a สั้น สวาร์-ทา",
+        "svgScene": "colors",
+        "distractorsSv": [
+            "Den vita färgen",
+            "Den bruna färgen",
+            "Den rosa färgen"
+        ],
+        "distractorsTh": [
+            "สีขาว",
+            "สีน้ำตาล",
+            "สีชมพู"
+        ],
+        "wordChunks": [
+            "Den",
+            "svarta",
+            "färgen"
+        ]
+    },
+    {
+        "id": "t7_ext_55",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Den vita färgen",
+        "th": "สีขาว",
+        "satunFlavor": "สีขาวสะอาดบริสุทธิ์เหมือนหิมะ",
+        "phoneticTh": "เดน-วี-ทา-แฟร์-เยน",
+        "pronunciationTip": "vit สระ i ลากยาว วี-ทา",
+        "svgScene": "colors",
+        "distractorsSv": [
+            "Den svarta färgen",
+            "Den gråa färgen",
+            "Den blåa färgen"
+        ],
+        "distractorsTh": [
+            "สีดำ",
+            "สีเทา",
+            "สีน้ำเงิน"
+        ],
+        "wordChunks": [
+            "Den",
+            "vita",
+            "färgen"
+        ]
+    },
+    {
+        "id": "t7_ext_56",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Den gråa färgen",
+        "th": "สีเทา",
+        "satunFlavor": "สีเทาคลาสสิก แมตช์กับเสื้อผ้าง่าย",
+        "phoneticTh": "เดน-โกร-อา-แฟร์-เยน",
+        "pronunciationTip": "grå สระ å ปากกลม โกร-อา",
+        "svgScene": "colors",
+        "distractorsSv": [
+            "Den bruna färgen",
+            "Den röda färgen",
+            "Den gröna färgen"
+        ],
+        "distractorsTh": [
+            "สีน้ำตาล",
+            "สีแดง",
+            "สีเขียว"
+        ],
+        "wordChunks": [
+            "Den",
+            "gråa",
+            "färgen"
+        ]
+    },
+    {
+        "id": "t7_ext_57",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Den bruna färgen",
+        "th": "สีน้ำตาล",
+        "satunFlavor": "สีน้ำตาลอบอุ่นเหมือนสีเปลือกไม้",
+        "phoneticTh": "เดน-บรู-นา-แฟร์-เยน",
+        "pronunciationTip": "brun สระ u ออกเสียงสระอู บรู-นา",
+        "svgScene": "colors",
+        "distractorsSv": [
+            "Den svarta färgen",
+            "Den vita färgen",
+            "Den gula färgen"
+        ],
+        "distractorsTh": [
+            "สีดำ",
+            "สีขาว",
+            "สีเหลือง"
+        ],
+        "wordChunks": [
+            "Den",
+            "bruna",
+            "färgen"
+        ]
+    },
+    {
+        "id": "t7_ext_58",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Den rosa färgen",
+        "th": "สีชมพู",
+        "satunFlavor": "สีชมพูหวานแหวว น่ารักฟรุ้งฟริ้ง",
+        "phoneticTh": "เดน-รู-ซา-แฟร์-เยน",
+        "pronunciationTip": "rosa สระ o ออกเสียง รู-ซา",
+        "svgScene": "colors",
+        "distractorsSv": [
+            "Den röda färgen",
+            "Den lila färgen",
+            "Den blåa färgen"
+        ],
+        "distractorsTh": [
+            "สีแดง",
+            "สีม่วง",
+            "สีน้ำเงิน"
+        ],
+        "wordChunks": [
+            "Den",
+            "rosa",
+            "färgen"
+        ]
+    },
+    {
+        "id": "t7_ext_59",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Den lila färgen",
+        "th": "สีม่วง",
+        "satunFlavor": "สีม่วงเม็ดมะปราง สวยเก๋ไม่ซ้ำใคร",
+        "phoneticTh": "เดน-ลี-ลา-แฟร์-เยน",
+        "pronunciationTip": "lila สระ i ลากยาว ลี-ลา",
+        "svgScene": "colors",
+        "distractorsSv": [
+            "Den rosa färgen",
+            "Den blåa färgen",
+            "Den svarta färgen"
+        ],
+        "distractorsTh": [
+            "สีชมพู",
+            "สีน้ำเงิน",
+            "สีดำ"
+        ],
+        "wordChunks": [
+            "Den",
+            "lila",
+            "färgen"
+        ]
+    },
+    {
+        "id": "t7_ext_60",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Den orangea färgen",
+        "th": "สีส้ม",
+        "satunFlavor": "สีส้มสดใส เปรี้ยวจี๊ดมีพลัง",
+        "phoneticTh": "เดน-อู-รัน-ชา-แฟร์-เยน",
+        "pronunciationTip": "orange ออกเสียง อู-รัน-ชา",
+        "svgScene": "colors",
+        "distractorsSv": [
+            "Den gula färgen",
+            "Den röda färgen",
+            "Den bruna färgen"
+        ],
+        "distractorsTh": [
+            "สีเหลือง",
+            "สีแดง",
+            "สีน้ำตาล"
+        ],
+        "wordChunks": [
+            "Den",
+            "orangea",
+            "färgen"
+        ]
+    },
+    {
+        "id": "t7_ext_61",
+        "themeId": "shopping_numbers",
+        "type": "sentence",
+        "sv": "Jag bestämmer mig för den här",
+        "th": "ฉันตัดสินใจเลือกเอาตัวนี้ค่ะ",
+        "satunFlavor": "ตกลงใจเอาตัวนี้แหละ สวยถูกใจที่สุดแล้ว",
+        "phoneticTh": "ย็อก-เบะ-สตัม-แมร์-เมย์-เฟอร์-เดน-แฮร์",
+        "pronunciationTip": "bestämmer สระ ä กว้าง เบะ-สตัม-แมร์",
+        "svgScene": "smile",
+        "distractorsSv": [
+            "Jag vill inte ha den",
+            "Jag ångrar mig",
+            "Den är trasig"
+        ],
+        "distractorsTh": [
+            "ฉันไม่อยากได้",
+            "ฉันเปลี่ยนใจแล้ว",
+            "มันชำรุด"
+        ],
+        "wordChunks": [
+            "Jag",
+            "bestämmer",
+            "mig",
+            "för",
+            "den",
+            "här"
+        ]
+    },
+    {
+        "id": "t7_ext_62",
+        "themeId": "shopping_numbers",
+        "type": "sentence",
+        "sv": "Jag ska fundera lite till",
+        "th": "ฉันขอคิดทบทวนดูอีกสักหน่อยนะคะ",
+        "satunFlavor": "ขอคิดดูก่อนนะจ๊ะ ยังตัดสินใจไม่ได้",
+        "phoneticTh": "ย็อก-สกา-ฟุน-เด-รา-ลี-เตะ-ทิล",
+        "pronunciationTip": "fundera สระ u ทำปากจู๋ ฟุน-เด-รา",
+        "svgScene": "think",
+        "distractorsSv": [
+            "Jag köper den direkt",
+            "Ge mig två stycken",
+            "Var kan jag betala?"
+        ],
+        "distractorsTh": [
+            "ฉันซื้อเลยทันที",
+            "ขอสองตัว",
+            "จ่ายเงินตรงไหน?"
+        ],
+        "wordChunks": [
+            "Jag",
+            "ska",
+            "fundera",
+            "lite",
+            "till"
+        ]
+    },
+    {
+        "id": "t7_ext_63",
+        "themeId": "shopping_numbers",
+        "type": "sentence",
+        "sv": "Tack, jag bara tittar runt",
+        "th": "ขอบคุณค่ะ ฉันแค่เดินดูรอบๆ เฉยๆ ค่ะ",
+        "satunFlavor": "ขอบคุณจ้า แค่เดินแลเฉยๆ ยังไม่ซื้อนะ",
+        "phoneticTh": "ทัค-ย็อก-บอ-รา-ทิต-ทาร์-รุนต์",
+        "pronunciationTip": "tittar สระ i สั้น ทิต-ทาร์-รุนต์",
+        "svgScene": "smile",
+        "distractorsSv": [
+            "Hjälp mig genast",
+            "Var är chefen?",
+            "Jag vill klaga"
+        ],
+        "distractorsTh": [
+            "ช่วยฉันเดี๋ยวนี้",
+            "ผู้จัดการอยู่ไหน?",
+            "ฉันจะร้องเรียน"
+        ],
+        "wordChunks": [
+            "Tack,",
+            "jag",
+            "bara",
+            "tittar",
+            "runt"
+        ]
+    },
+    {
+        "id": "t7_ext_64",
+        "themeId": "shopping_numbers",
+        "type": "sentence",
+        "sv": "Behöver du hjälp med storleken?",
+        "th": "ต้องการให้ช่วยหาขนาดไซส์ไหมคะ?",
+        "satunFlavor": "ให้ช่วยหาเบอร์มั้ยจ๊ะ พนักงานร้านถามใจดี",
+        "phoneticTh": "เบะ-เฮิฟ-แวร์-ดู-แย็ลป์-เมด-สตอร์-เล-เกน?",
+        "pronunciationTip": "hjälp ตัว hj ออกเสียง ย แย็ลป์",
+        "svgScene": "dialog",
+        "distractorsSv": [
+            "Vill du betala?",
+            "Är du färdig?",
+            "Gå ut nu"
+        ],
+        "distractorsTh": [
+            "ต้องการจ่ายเงินไหม?",
+            "เสร็จหรือยัง?",
+            "ออกไปได้แล้ว"
+        ],
+        "wordChunks": [
+            "Behöver",
+            "du",
+            "hjälp",
+            "med",
+            "storleken?"
+        ]
+    },
+    {
+        "id": "t7_ext_65",
+        "themeId": "shopping_numbers",
+        "type": "sentence",
+        "sv": "Säg bara till om du undrar något",
+        "th": "บอกได้ตลอดเลยนะคะหากมีข้อสงสัยอะไร",
+        "satunFlavor": "สงสัยไหรบอกได้เลยจ้า ยินดีบริการเต็มที่",
+        "phoneticTh": "แซก-บอ-รา-ทิล-อุม-ดู-อุน-ดราร์-โน-ก็อตต์",
+        "pronunciationTip": "undrar สระ u ทำปากจู๋ อุน-ดราร์",
+        "svgScene": "smile",
+        "distractorsSv": [
+            "Fråga inte mig",
+            "Jag jobbar inte här",
+            "Butiken stänger nu"
+        ],
+        "distractorsTh": [
+            "อย่าถามฉัน",
+            "ฉันไม่ได้ทำงานที่นี่",
+            "ร้านปิดแล้ว"
+        ],
+        "wordChunks": [
+            "Säg",
+            "bara",
+            "till",
+            "om",
+            "du",
+            "undrar",
+            "något"
+        ]
+    },
+    {
+        "id": "t7_ext_66",
+        "themeId": "shopping_numbers",
+        "type": "sentence",
+        "sv": "Kan jag få ett presentkvitto?",
+        "th": "ฉันขอใบเสร็จสำหรับของขวัญ (ไม่ระบุราคา) ได้ไหมคะ?",
+        "satunFlavor": "ขอใบเสร็จของขวัญ เอาไว้ให้เพื่อนเปลี่ยนไซส์ได้ถ้าไม่พอดี",
+        "phoneticTh": "คัน-ย็อก-โฟ-เอ็ท-เพร-เซนต์-ควิต-ตู?",
+        "pronunciationTip": "presentkvitto เพร-เซนต์-ควิต-ตู",
+        "svgScene": "gift",
+        "distractorsSv": [
+            "Kan jag få rabatt?",
+            "Kan jag få låna pengar?",
+            "Kan jag få gratis påse?"
+        ],
+        "distractorsTh": [
+            "ขอลดราคาได้ไหม?",
+            "ขอยืมเงินได้ไหม?",
+            "ขอถุงฟรีได้ไหม?"
+        ],
+        "wordChunks": [
+            "Kan",
+            "jag",
+            "få",
+            "ett",
+            "presentkvitto?"
+        ]
+    },
+    {
+        "id": "t7_ext_67",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Ett presentkort på femhundra",
+        "th": "บัตรของขวัญมูลค่าห้าร้อยโครน",
+        "satunFlavor": "บัตรกำนัล 500 โครน ให้เป็นของขวัญวันเกิดถูกใจคนรับ",
+        "phoneticTh": "เอ็ท-เพร-เซนต์-คูร์ท-โพ-เฟ็ม-ฮุน-ดรา",
+        "pronunciationTip": "kort ออกเสียง คูร์ท ปากกลม",
+        "svgScene": "gift",
+        "distractorsSv": [
+            "Ett bankkort",
+            "Ett ID-kort",
+            "Ett busskort"
+        ],
+        "distractorsTh": [
+            "บัตรธนาคาร",
+            "บัตรประชาชน",
+            "บัตรรถเมล์"
+        ],
+        "wordChunks": [
+            "Ett",
+            "presentkort",
+            "på",
+            "femhundra"
+        ]
+    },
+    {
+        "id": "t7_ext_68",
+        "themeId": "shopping_numbers",
+        "type": "sentence",
+        "sv": "Det är en present till min man",
+        "th": "นี่เป็นของขวัญให้สามีของฉันค่ะ",
+        "satunFlavor": "ซื้อของขวัญให้พ่อบ้าน เซอร์ไพรส์ให้ดีใจ",
+        "phoneticTh": "เด-แอร์-เอน-เพร-เซนต์-ทิล-มีน-มัน",
+        "pronunciationTip": "man สระ a สั้น มัน",
+        "svgScene": "gift",
+        "distractorsSv": [
+            "Det är till mig själv",
+            "Det är till min katt",
+            "Det är till jobbet"
+        ],
+        "distractorsTh": [
+            "ซื้อให้ตัวเอง",
+            "ซื้อให้แมว",
+            "ซื้อไปใช้ที่ทำงาน"
+        ],
+        "wordChunks": [
+            "Det",
+            "är",
+            "en",
+            "present",
+            "till",
+            "min",
+            "man"
+        ]
+    },
+    {
+        "id": "t7_ext_69",
+        "themeId": "shopping_numbers",
+        "type": "sentence",
+        "sv": "Kan ni slå in den i paket?",
+        "th": "ช่วยห่อเป็นของขวัญให้หน่อยได้ไหมคะ?",
+        "satunFlavor": "ช่วยห่อกระดาษของขวัญให้ที ผูกโบว์สวยๆ",
+        "phoneticTh": "คัน-นี-สโล-อิน-เดน-อี-พา-เคท?",
+        "pronunciationTip": "slå สระ å ปากกลม สโล-อิน",
+        "svgScene": "gift",
+        "distractorsSv": [
+            "Kan ni kasta den?",
+            "Kan ni öppna paketet?",
+            "Kan ni tvätta den?"
+        ],
+        "distractorsTh": [
+            "ช่วยทิ้งให้หน่อยได้ไหม?",
+            "ช่วยแกะกล่องได้ไหม?",
+            "ช่วยซักให้ได้ไหม?"
+        ],
+        "wordChunks": [
+            "Kan",
+            "ni",
+            "slå",
+            "in",
+            "den",
+            "i",
+            "paket?"
+        ]
+    },
+    {
+        "id": "t7_ext_70",
+        "themeId": "shopping_numbers",
+        "type": "sentence",
+        "sv": "Var finns inslagningspapper?",
+        "th": "กระดาษห่อของขวัญอยู่ตรงไหนคะ?",
+        "satunFlavor": "โต๊ะห่อของขวัญอยู่ตรงไหน จะได้ไปห่อเอง",
+        "phoneticTh": "วาร์-ฟินส์-อิน-สลัก-นิงส์-พับ-เปร์?",
+        "pronunciationTip": "papper สระ a สั้น พับ-เปร์",
+        "svgScene": "gift",
+        "distractorsSv": [
+            "Var är toaletten?",
+            "Var är utgången?",
+            "Var är hissen?"
+        ],
+        "distractorsTh": [
+            "ห้องน้ำอยู่ไหน?",
+            "ทางออกอยู่ไหน?",
+            "ลิฟต์อยู่ไหน?"
+        ],
+        "wordChunks": [
+            "Var",
+            "finns",
+            "inslagningspapper?"
+        ]
+    },
+    {
+        "id": "t7_ext_71",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "En rulle tejp",
+        "th": "เทปกาวหนึ่งม้วน",
+        "satunFlavor": "เทปใสติดกล่อง แปะของขวัญแน่นหนา",
+        "phoneticTh": "เอน-รุล-เลอะ-เทย์ป",
+        "pronunciationTip": "tejp ออกเสียง เทย์ป",
+        "svgScene": "tool",
+        "distractorsSv": [
+            "Ett snöre",
+            "Ett lim",
+            "Ett gem"
+        ],
+        "distractorsTh": [
+            "เชือก",
+            "กาว",
+            "คลิปหนีบกระดาษ"
+        ],
+        "wordChunks": [
+            "En",
+            "rulle",
+            "tejp"
+        ]
+    },
+    {
+        "id": "t7_ext_72",
+        "themeId": "shopping_numbers",
+        "type": "word",
+        "sv": "Ett vackert presentsnöre",
+        "th": "ริบบิ้นผูกของขวัญสวยงาม",
+        "satunFlavor": "เชือกริบบิ้น ผูกโบว์น่ารักจังฮู้",
+        "phoneticTh": "เอ็ท-วัค-เคิร์ท-เพร-เซนต์-สเนอ-เรอะ",
+        "pronunciationTip": "ö ใน snöre ทำปากจู๋ สเนอ-เรอะ",
+        "svgScene": "gift",
+        "distractorsSv": [
+            "En tejpbit",
+            "Ett papper",
+            "En sax"
+        ],
+        "distractorsTh": [
+            "เศษเทป",
+            "กระดาษ",
+            "กรรไกร"
+        ],
+        "wordChunks": [
+            "Ett",
+            "vackert",
+            "presentsnöre"
+        ]
+    },
+    {
+        "id": "t7_ext_73",
+        "themeId": "shopping_numbers",
+        "type": "sentence",
+        "sv": "Vill du ha en påse till?",
+        "th": "คุณต้องการถุงเพิ่มอีกหนึ่งใบไหมคะ?",
+        "satunFlavor": "เอาถุงเพิ่มอีกใบมั้ย ของเยอะกลัวถุงขาด",
+        "phoneticTh": "วิล-ดู-ฮา-เอน-โพ-เสะ-ทิล?",
+        "pronunciationTip": "påse สระ å ปากกลม โพ-เสะ",
+        "svgScene": "bag",
+        "distractorsSv": [
+            "Vill du betala?",
+            "Vill du gå hem?",
+            "Vill du ha mer mat?"
+        ],
+        "distractorsTh": [
+            "ต้องการจ่ายเงินไหม?",
+            "อยากกลับบ้านไหม?",
+            "ต้องการอาหารเพิ่มไหม?"
+        ],
+        "wordChunks": [
+            "Vill",
+            "du",
+            "ha",
+            "en",
+            "påse",
+            "till?"
+        ]
+    },
+    {
+        "id": "t7_ext_74",
+        "themeId": "shopping_numbers",
+        "type": "sentence",
+        "sv": "Jag har med en egen påse",
+        "th": "ฉันพกถุงผ้ามาเองจากบ้านค่ะ",
+        "satunFlavor": "หิ้วถุงผ้ามาเอง ไม่ต้องเสียเบี้ยซื้อถุงพลาสติก",
+        "phoneticTh": "ย็อก-ฮาร์-เมด-เอน-เอ-เก็น-โพ-เสะ",
+        "pronunciationTip": "egen สระ e ยาว เอ-เก็น",
+        "svgScene": "bag",
+        "distractorsSv": [
+            "Jag vill köpa tio påsar",
+            "Jag har ingen väska",
+            "Släng påsen"
+        ],
+        "distractorsTh": [
+            "ฉันอยากซื้อสิบถุง",
+            "ฉันไม่มีกระเป๋า",
+            "ทิ้งถุงไป"
+        ],
+        "wordChunks": [
+            "Jag",
+            "har",
+            "med",
+            "en",
+            "egen",
+            "påse"
+        ]
+    },
+    {
+        "id": "t7_ext_75",
+        "themeId": "shopping_numbers",
+        "type": "sentence",
+        "sv": "Det blir fyrahundrafemtio kronor",
+        "th": "ยอดรวมทั้งหมดเป็นสี่ร้อยห้าสิบโครนค่ะ",
+        "satunFlavor": "ยอดรวม 450 โครน เตรียมเงินหรือบัตรให้พร้อม",
+        "phoneticTh": "เด-บลีร์-ฟือ-รา-ฮุน-ดรา-เฟ็ม-ติ-ครู-นูร์",
+        "pronunciationTip": "fyrahundra สระ y จู๋ปาก ฟือ-รา-ฮุน-ดรา",
+        "svgScene": "money",
+        "distractorsSv": [
+            "Det blir gratis",
+            "Det kostar tusen",
+            "Det blev för dyrt"
+        ],
+        "distractorsTh": [
+            "ฟรีค่ะ",
+            "ราคาหนึ่งพัน",
+            "มันแพงเกินไป"
+        ],
+        "wordChunks": [
+            "Det",
+            "blir",
+            "fyrahundrafemtio",
+            "kronor"
+        ]
+    },
+    {
+        "id": "t7_ext_76",
+        "themeId": "shopping_numbers",
+        "type": "sentence",
+        "sv": "Kan jag få dela upp betalningen?",
+        "th": "ฉันสามารถแบ่งชำระเป็นงวดๆ ได้ไหมคะ?",
+        "satunFlavor": "ขอผ่อนจ่ายเป็นงวดได้มั้ยจ๊ะ ซื้อของชิ้นใหญ่",
+        "phoneticTh": "คัน-ย็อก-โฟ-เด-ลา-อุพ-เบะ-ทอล-นิง-เง็น?",
+        "pronunciationTip": "dela สระ e ลากยาว เด-ลา",
+        "svgScene": "card",
+        "distractorsSv": [
+            "Jag betalar allt nu",
+            "Jag vill inte betala",
+            "Ge mig rabatt"
+        ],
+        "distractorsTh": [
+            "ฉันจ่ายรวดเดียวตอนนี้",
+            "ฉันไม่อยากจ่าย",
+            "ขอลดราคา"
+        ],
+        "wordChunks": [
+            "Kan",
+            "jag",
+            "få",
+            "dela",
+            "upp",
+            "betalningen?"
+        ]
+    },
+    {
+        "id": "t7_ext_77",
+        "themeId": "shopping_numbers",
+        "type": "sentence",
+        "sv": "Sätt in kortet i terminalen",
+        "th": "กรุณาเสียบบัตรเข้าที่เครื่องรับชำระเงินค่ะ",
+        "satunFlavor": "เสียบบัตรตรงตู้รูดบัตรเลยจ้า",
+        "phoneticTh": "แซ็ตต์-อิน-คูร์-เท็ต-อี-แทร์-มิ-นา-เลน",
+        "pronunciationTip": "terminalen แทร์-มิ-นา-เลน",
+        "svgScene": "card",
+        "distractorsSv": [
+            "Dra ut kortet",
+            "Kasta kortet",
+            "Ge mig kortet"
+        ],
+        "distractorsTh": [
+            "ดึงบัตรออก",
+            "โยนบัตรทิ้ง",
+            "เอาบัตรมาให้ฉัน"
+        ],
+        "wordChunks": [
+            "Sätt",
+            "in",
+            "kortet",
+            "i",
+            "terminalen"
+        ]
+    },
+    {
+        "id": "t7_ext_78",
+        "themeId": "shopping_numbers",
+        "type": "sentence",
+        "sv": "Slå din fyrsiffriga kod",
+        "th": "กรุณากดรหัสผ่านสี่หลักของคุณค่ะ",
+        "satunFlavor": "กดรหัสบัตร 4 ตัว เอามือบังไว้ด้วยนะปลอดภัย",
+        "phoneticTh": "สโล-ดีน-ฟือร์-ซิฟ-ฟริ-กา-คูด",
+        "pronunciationTip": "kod สระ o ออกเสียงสระอู คูด",
+        "svgScene": "card",
+        "distractorsSv": [
+            "Glöm inte koden",
+            "Skriv under här",
+            "Visa legitimation"
+        ],
+        "distractorsTh": [
+            "อย่าลืมรหัส",
+            "เซ็นชื่อตรงนี้",
+            "แสดงบัตรประจำตัว"
+        ],
+        "wordChunks": [
+            "Slå",
+            "din",
+            "fyrsiffriga",
+            "kod"
+        ]
+    },
+    {
+        "id": "t7_ext_79",
+        "themeId": "shopping_numbers",
+        "type": "sentence",
+        "sv": "Tryck på den gröna knappen",
+        "th": "กรุณากดปุ่มสีเขียว (OK) เพื่อยืนยันค่ะ",
+        "satunFlavor": "กดปุ่มเขียวปุ๊บ เงินก็ตัดปั๊บ เรียบร้อย",
+        "phoneticTh": "ทรึค-โพ-เดน-เกริน-นา-คนัป-เพ็น",
+        "pronunciationTip": "tryck สระ y ทำปากจู๋ ทรึค",
+        "svgScene": "card",
+        "distractorsSv": [
+            "Tryck på röda knappen",
+            "Tryck på gula knappen",
+            "Dra ut sladden"
+        ],
+        "distractorsTh": [
+            "กดปุ่มสีแดง",
+            "กดปุ่มสีเหลือง",
+            "ดึงปลั๊กออก"
+        ],
+        "wordChunks": [
+            "Tryck",
+            "på",
+            "den",
+            "gröna",
+            "knappen"
+        ]
+    },
+    {
+        "id": "t7_ext_80",
+        "themeId": "shopping_numbers",
+        "type": "sentence",
+        "sv": "Köp godkänt, välkommen åter!",
+        "th": "การชำระเงินอนุมัติเรียบร้อย ยินดีต้อนรับกลับมาใหม่นะคะ!",
+        "satunFlavor": "ตัดเงินผ่านฉลุย ขอบคุณหลายๆ โอกาสหน้าแวะมาใหม่นะจ๊ะ!",
+        "phoneticTh": "เชิพ-กุด-ชานต์-แวล-คอม-เม็น-โอ-เตร์!",
+        "pronunciationTip": "godkänt กุด-ชานต์",
+        "svgScene": "smile",
+        "distractorsSv": [
+            "Köp medges ej",
+            "Fel kod",
+            "Kortet spärrat"
+        ],
+        "distractorsTh": [
+            "ไม่อนุมัติการทำรายการ",
+            "รหัสผิด",
+            "บัตรถูกระงับ"
+        ],
+        "wordChunks": [
+            "Köp",
+            "godkänt,",
+            "välkommen",
+            "åter!"
+        ]
+    },
+    {
+        "id": "t7_ext_81",
+        "themeId": "shopping_numbers",
+        "type": "sentence",
+        "sv": "Tack för ett trevligt bemötande!",
+        "th": "ขอบคุณสำหรับการต้อนรับและบริการที่น่ารักมากนะคะ!",
+        "satunFlavor": "ขอบคุณคนขายจ้า บริการดีประทับใจจังฮู้!",
+        "phoneticTh": "ทัค-เฟอร์-เอ็ท-เทรฟ-ลิกต์-เบะ-เมอ-ตัน-เดะ!",
+        "pronunciationTip": "bemötande สระ ö ปากจู๋ เบะ-เมอ-ตัน-เดะ",
+        "svgScene": "smile",
+        "distractorsSv": [
+            "Det var dålig service",
+            "Jag är missnöjd",
+            "Jag kommer aldrig mer"
+        ],
+        "distractorsTh": [
+            "บริการแย่มาก",
+            "ฉันไม่พอใจ",
+            "ฉันจะไม่มาอีก"
+        ],
+        "wordChunks": [
+            "Tack",
+            "för",
+            "ett",
+            "trevligt",
+            "bemötande!"
+        ]
+    },
+    {
+        "id": "t8_ext_01",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "En stor centralstation",
+        "th": "สถานีรถไฟกลางแห่งใหญ่",
+        "satunFlavor": "สถานีรถไฟใหญ่ใจกลางเมือง ผู้คนคึกคัก",
+        "phoneticTh": "เอน-สตอร์-เซ็น-ทรอล-สตา-ชูน",
+        "pronunciationTip": "station ออกเสียง สตา-ชูน",
+        "svgScene": "train",
+        "distractorsSv": [
+            "En busshållplats",
+            "En flygplats",
+            "En hamn"
+        ],
+        "distractorsTh": [
+            "ป้ายรถเมล์",
+            "สนามบิน",
+            "ท่าเรือ"
+        ],
+        "wordChunks": [
+            "En",
+            "stor",
+            "centralstation"
+        ]
+    },
+    {
+        "id": "t8_ext_02",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "Perrong nummer två",
+        "th": "ชานชาลาหมายเลขสอง",
+        "satunFlavor": "ชานชาลาที่สอง ยืนรอขึ้นรถไฟให้ถูกขบวน",
+        "phoneticTh": "แพร์-รุง-นุม-เมร์-ทโว",
+        "pronunciationTip": "perrong สระ o ออกเสียง แพร์-รุง",
+        "svgScene": "train",
+        "distractorsSv": [
+            "Perrong tre",
+            "Väntsal",
+            "Biljettlucka"
+        ],
+        "distractorsTh": [
+            "ชานชาลาสาม",
+            "ห้องพักผู้โดยสาร",
+            "ช่องขายตั๋ว"
+        ],
+        "wordChunks": [
+            "Perrong",
+            "nummer",
+            "två"
+        ]
+    },
+    {
+        "id": "t8_ext_03",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "Ett modernt snabbtåg",
+        "th": "รถไฟความเร็วสูงรุ่นใหม่",
+        "satunFlavor": "รถไฟความเร็วสูง วิ่งฉิวถึงที่หมายไวทันใจ",
+        "phoneticTh": "เอ็ท-มู-แดร์นท-สนับ-โตก",
+        "pronunciationTip": "tåg สระ å ปากกลม สนับ-โตก",
+        "svgScene": "train",
+        "distractorsSv": [
+            "Ett godståg",
+            "En buss",
+            "En spårvagn"
+        ],
+        "distractorsTh": [
+            "รถไฟบรรทุกสินค้า",
+            "รถเมล์",
+            "รถราง"
+        ],
+        "wordChunks": [
+            "Ett",
+            "modernt",
+            "snabbtåg"
+        ]
+    },
+    {
+        "id": "t8_ext_04",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "Ett bekvämt pendeltåg",
+        "th": "รถไฟชานเมืองแสนสบายสำหรับคนเดินทางไปทำงาน",
+        "satunFlavor": "รถไฟชานเมือง นั่งไปทำงานเช้าเย็นแสนสะดวก",
+        "phoneticTh": "เอ็ท-เบะ-แควร์มท-เพน-เด็ล-โตก",
+        "pronunciationTip": "pendeltåg เพน-เด็ล-โตก",
+        "svgScene": "train",
+        "distractorsSv": [
+            "Ett nattåg",
+            "En tunnelbana",
+            "En cykel"
+        ],
+        "distractorsTh": [
+            "รถไฟตู้นอน",
+            "รถไฟใต้ดิน",
+            "จักรยาน"
+        ],
+        "wordChunks": [
+            "Ett",
+            "bekvämt",
+            "pendeltåg"
+        ]
+    },
+    {
+        "id": "t8_ext_05",
+        "themeId": "city_transport",
+        "type": "concept",
+        "sv": "Tunnelbanan i Stockholm",
+        "th": "รถไฟใต้ดินในกรุงสตอกโฮล์ม",
+        "satunFlavor": "รถไฟใต้ดินสตอกโฮล์ม แต่ละสถานีมีงานศิลปะวาดผนังสวยงาม",
+        "phoneticTh": "ทุน-เน็ล-บอ-นัน-อี-สต็อก-ฮ็อลม",
+        "pronunciationTip": "tunnelbana สระ u ปากจู๋ ทุน-เน็ล-บอ-นัน",
+        "svgScene": "subway",
+        "distractorsSv": [
+            "Spårvagnen",
+            "Bussen",
+            "Färjan"
+        ],
+        "distractorsTh": [
+            "รถราง",
+            "รถเมล์",
+            "เรือข้ามฟาก"
+        ],
+        "wordChunks": [
+            "Tunnelbanan",
+            "i",
+            "Stockholm"
+        ]
+    },
+    {
+        "id": "t8_ext_06",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "En lång rulltrappa",
+        "th": "บันไดเลื่อนตัวยาว",
+        "satunFlavor": "บันไดเลื่อนยาวเหยียด ลงไปสู่สถานีใต้ดินลึก",
+        "phoneticTh": "เอน-ลุง-รุล-ทรัพ-พา",
+        "pronunciationTip": "rulltrappa สระ u ปากจู๋ รุล-ทรัพ-พา",
+        "svgScene": "stairs",
+        "distractorsSv": [
+            "En vanlig trappa",
+            "En hiss",
+            "En ramp"
+        ],
+        "distractorsTh": [
+            "บันไดธรรมดา",
+            "ลิฟต์",
+            "ทางลาด"
+        ],
+        "wordChunks": [
+            "En",
+            "lång",
+            "rulltrappa"
+        ]
+    },
+    {
+        "id": "t8_ext_07",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "En rymlig hiss",
+        "th": "ลิฟต์โดยสารกว้างขวาง",
+        "satunFlavor": "ลิฟต์ขึ้นลง สำหรับคนเข็นรถเด็กหรือกระเป๋าหนัก",
+        "phoneticTh": "เอน-รึม-ลิก-ฮิสส์",
+        "pronunciationTip": "rymlig สระ y จู๋ปากลึก รึม-ลิก",
+        "svgScene": "elevator",
+        "distractorsSv": [
+            "En rulltrappa",
+            "En dörr",
+            "En gångbro"
+        ],
+        "distractorsTh": [
+            "บันไดเลื่อน",
+            "ประตู",
+            "สะพานลอย"
+        ],
+        "wordChunks": [
+            "En",
+            "rymlig",
+            "hiss"
+        ]
+    },
+    {
+        "id": "t8_ext_08",
+        "themeId": "city_transport",
+        "type": "concept",
+        "sv": "En spärr i tunnelbanan",
+        "th": "ประตูกั้นสแกนบัตรโดยสารรถไฟใต้ดิน",
+        "satunFlavor": "ประตูกั้น แตะบัตรหรือมือถือก่อนเดินผ่านเข้าไป",
+        "phoneticTh": "เอน-สแปร์ร-อี-ทุน-เน็ล-บอ-นัน",
+        "pronunciationTip": "spärr สระ ä กว้าง สแปร์ร",
+        "svgScene": "gate",
+        "distractorsSv": [
+            "En utgång",
+            "En perrong",
+            "En väntsal"
+        ],
+        "distractorsTh": [
+            "ทางออก",
+            "ชานชาลา",
+            "ห้องพักผู้โดยสาร"
+        ],
+        "wordChunks": [
+            "En",
+            "spärr",
+            "i",
+            "tunnelbanan"
+        ]
+    },
+    {
+        "id": "t8_ext_09",
+        "themeId": "city_transport",
+        "type": "sentence",
+        "sv": "Jag blippar mitt kort mot läsaren",
+        "th": "ฉันแตะบัตรโดยสารเข้ากับเครื่องอ่านค่ะ",
+        "satunFlavor": "เอาบัตรแตะเครื่องดังติ๊ด ประตูก็เปิดออก",
+        "phoneticTh": "ย็อก-บลิพ-พาร์-มิตต์-คูร์ท-มูท-แล-ซา-เรน",
+        "pronunciationTip": "läsaren สระ ä กว้าง แล-ซา-เรน",
+        "svgScene": "card",
+        "distractorsSv": [
+            "Jag tappar kortet",
+            "Jag köper biljett",
+            "Jag glömde kortet"
+        ],
+        "distractorsTh": [
+            "ฉันทำบัตรตก",
+            "ฉันซื้อตั๋ว",
+            "ฉันลืมบัตร"
+        ],
+        "wordChunks": [
+            "Jag",
+            "blippar",
+            "mitt",
+            "kort",
+            "mot",
+            "läsaren"
+        ]
+    },
+    {
+        "id": "t8_ext_10",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "En enkelbiljett för vuxen",
+        "th": "ตั๋วโดยสารเที่ยวเดียวสำหรับผู้ใหญ่",
+        "satunFlavor": "ตั๋วเที่ยวเดียว นั่งได้ 75 นาทีขึ้นได้ทั้งบัสและรถไฟ",
+        "phoneticTh": "เอน-เอ็ง-เค็ล-บิล-เย็ตต์-เฟอร์-วุค-เซ็น",
+        "pronunciationTip": "vuxen สระ u ทำปากจู๋ วุค-เซ็น",
+        "svgScene": "ticket",
+        "distractorsSv": [
+            "Barnbiljett",
+            "Pensionärsbiljett",
+            "Månadskort"
+        ],
+        "distractorsTh": [
+            "ตั๋วเด็ก",
+            "ตั๋วผู้สูงอายุ",
+            "ตั๋วรายเดือน"
+        ],
+        "wordChunks": [
+            "En",
+            "enkelbiljett",
+            "för",
+            "vuxen"
+        ]
+    },
+    {
+        "id": "t8_ext_11",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "En tur-och-returbiljett",
+        "th": "ตั๋วโดยสารแบบไป-กลับ",
+        "satunFlavor": "ตั๋วไปกลับ ซื้อทีเดียวใช้ได้ทั้งขาไปขากลับบายใจ",
+        "phoneticTh": "เอน-ทูร์-อ็อค-เร-ทูร์-บิล-เย็ตต์",
+        "pronunciationTip": "tur och retur สระ u เป็นอู ทูร์-อ็อค-เร-ทูร์",
+        "svgScene": "ticket",
+        "distractorsSv": [
+            "Enkelbiljett",
+            "Ungdomsbiljett",
+            "Gruppbiljett"
+        ],
+        "distractorsTh": [
+            "ตั๋วเที่ยวเดียว",
+            "ตั๋วเยาวชน",
+            "ตั๋วกลุ่ม"
+        ],
+        "wordChunks": [
+            "En",
+            "tur-och-returbiljett"
+        ]
+    },
+    {
+        "id": "t8_ext_12",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "Ett månadskort för bussen",
+        "th": "ตั๋วโดยสารรายเดือนสำหรับรถเมล์",
+        "satunFlavor": "ตั๋วเดือน นั่งรถเมล์ได้ไม่จำกัดเที่ยว คุ้มค่าแรง",
+        "phoneticTh": "เอ็ท-โม-นัดส์-คูร์ท-เฟอร์-บุส-เซน",
+        "pronunciationTip": "månad สระ å ปากกลม โม-นัดส์-คูร์ท",
+        "svgScene": "card",
+        "distractorsSv": [
+            "Årskort",
+            "Engångsbiljett",
+            "Dygnsbiljett"
+        ],
+        "distractorsTh": [
+            "ตั๋วปี",
+            "ตั๋วครั้งเดียว",
+            "ตั๋ว 24 ชั่วโมง"
+        ],
+        "wordChunks": [
+            "Ett",
+            "månadskort",
+            "för",
+            "bussen"
+        ]
+    },
+    {
+        "id": "t8_ext_13",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "En tjugofyratimmarsbiljett",
+        "th": "ตั๋วโดยสารแบบ 24 ชั่วโมง (1 วัน)",
+        "satunFlavor": "ตั๋ว 24 ชั่วโมง เหมาะกับคนพาเพื่อนเที่ยวรอบเมือง",
+        "phoneticTh": "เอน-ชู-กู-ฟือ-รา-ทิม-มาร์ส-บิล-เย็ตต์",
+        "pronunciationTip": "tjugofyra ชู-กู-ฟือ-รา",
+        "svgScene": "ticket",
+        "distractorsSv": [
+            "Enkelbiljett",
+            "Veckokort",
+            "Månadskort"
+        ],
+        "distractorsTh": [
+            "ตั๋วเที่ยวเดียว",
+            "ตั๋วสัปดาห์",
+            "ตั๋วเดือน"
+        ],
+        "wordChunks": [
+            "En",
+            "tjugofyratimmarsbiljett"
+        ]
+    },
+    {
+        "id": "t8_ext_14",
+        "themeId": "city_transport",
+        "type": "concept",
+        "sv": "En biljettkontroll",
+        "th": "เจ้าหน้าที่ตรวจตั๋วโดยสารบนรถไฟ/รถเมล์",
+        "satunFlavor": "ตรวจตั๋วรถ ต้องซื้อตั๋วให้ถูกต้อง อย่าขึ้นฟรีโดนปรับแพงนะ",
+        "phoneticTh": "เอน-บิล-เย็ตต์-คอน-ทร็อลล์",
+        "pronunciationTip": "kontroll เน้นพยางค์หลัง คอน-ทร็อลล์",
+        "svgScene": "ticket",
+        "distractorsSv": [
+            "Poliskontroll",
+            "Passkontroll",
+            "Tullkontroll"
+        ],
+        "distractorsTh": [
+            "ด่านตำรวจ",
+            "ตรวจคนเข้าเมือง",
+            "ตรวจศุลกากร"
+        ],
+        "wordChunks": [
+            "En",
+            "biljettkontroll"
+        ]
+    },
+    {
+        "id": "t8_ext_15",
+        "themeId": "city_transport",
+        "type": "sentence",
+        "sv": "Får jag se på biljetten?",
+        "th": "ขอดูตั๋วโดยสารหน่อยได้ไหมครับ/ค่ะ?",
+        "satunFlavor": "ขอดูตั๋วโดยสารหน่อยจ้า เจ้าหน้าที่ตรวจตั๋วเอ่ยถาม",
+        "phoneticTh": "ฟอร์-ย็อก-เซ-โพ-บิล-เย็ต-เทน?",
+        "pronunciationTip": "får สระ å ปากกลม ฟอร์-ย็อก-เซ",
+        "svgScene": "ticket",
+        "distractorsSv": [
+            "Var ska du åka?",
+            "Vad heter du?",
+            "Har du legitimation?"
+        ],
+        "distractorsTh": [
+            "คุณจะไปไหน?",
+            "คุณชื่ออะไร?",
+            "มีบัตรประชาชนไหม?"
+        ],
+        "wordChunks": [
+            "Får",
+            "jag",
+            "se",
+            "på",
+            "biljetten?"
+        ]
+    },
+    {
+        "id": "t8_ext_16",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "Tågets slutstation",
+        "th": "สถานีปลายทางของขบวนรถไฟ",
+        "satunFlavor": "สถานีสุดสาย นั่งสุดทางไม่หลงแน่นอน",
+        "phoneticTh": "โท-เก็ตส์-สลูท-สตา-ชูน",
+        "pronunciationTip": "slut ออกเสียง สลูท สระ u เป็นอู",
+        "svgScene": "train",
+        "distractorsSv": [
+            "Startstation",
+            "Mellanstopp",
+            "Depå"
+        ],
+        "distractorsTh": [
+            "สถานีต้นทาง",
+            "จุดจอดระหว่างทาง",
+            "อู่ซ่อมบำรุง"
+        ],
+        "wordChunks": [
+            "Tågets",
+            "slutstation"
+        ]
+    },
+    {
+        "id": "t8_ext_17",
+        "themeId": "city_transport",
+        "type": "sentence",
+        "sv": "Nästa hållplats är torget",
+        "th": "ป้ายหน้าคือจัตุรัสกลางเมืองค่ะ",
+        "satunFlavor": "ป้ายต่อไปคือลานตลาดกลางเมือง เตรียมตัวลงได้เลย",
+        "phoneticTh": "แนส-ตา-ฮ็อล-พลัทส์-แอร์-ทูร์-เก็ต",
+        "pronunciationTip": "torget สระ o ออกเสียง ทูร์-เก็ต",
+        "svgScene": "bus",
+        "distractorsSv": [
+            "Sista hållplatsen",
+            "Tåget stannar inte",
+            "Vi kör fel väg"
+        ],
+        "distractorsTh": [
+            "ป้ายสุดท้าย",
+            "รถไฟไม่จอด",
+            "เราขับผิดทาง"
+        ],
+        "wordChunks": [
+            "Nästa",
+            "hållplats",
+            "är",
+            "torget"
+        ]
+    },
+    {
+        "id": "t8_ext_18",
+        "themeId": "city_transport",
+        "type": "sentence",
+        "sv": "Tryck på den röda stoppknappen",
+        "th": "กดปุ่มสัญญานกริ่งหยุดสีแดงบนรถเมล์ค่ะ",
+        "satunFlavor": "กดกริ่งสีแดงดังติ๊ง ให้คนขับรู้ว่าจะลงป้ายหน้า",
+        "phoneticTh": "ทรึค-โพ-เดน-เรอ-ดา-สต็อพ-คนัป-เพ็น",
+        "pronunciationTip": "stopp ออกเสียง สต็อพ สระ o สั้น",
+        "svgScene": "bus",
+        "distractorsSv": [
+            "Öppna dörren själv",
+            "Ropa på föraren",
+            "Hoppa av i farten"
+        ],
+        "distractorsTh": [
+            "เปิดประตูเอง",
+            "ตะโกนบอกคนขับ",
+            "กระโดดลงตอนรถวิ่ง"
+        ],
+        "wordChunks": [
+            "Tryck",
+            "på",
+            "den",
+            "röda",
+            "stoppknappen"
+        ]
+    },
+    {
+        "id": "t8_ext_19",
+        "themeId": "city_transport",
+        "type": "sentence",
+        "sv": "Bussen stannar vid hållplatsen",
+        "th": "รถเมล์เทียบจอดที่ป้ายหยุดรถแล้วค่ะ",
+        "satunFlavor": "รถเมล์จอดเทียบป้ายสนิท ก้าวขึ้นลงอย่างปลอดภัย",
+        "phoneticTh": "บุส-เซน-สตัน-นาร์-วิด-ฮ็อล-พลัท-เซน",
+        "pronunciationTip": "stannar สระ a สั้น สตัน-นาร์",
+        "svgScene": "bus",
+        "distractorsSv": [
+            "Bussen kör förbi",
+            "Bussen är trasig",
+            "Bussen svänger av"
+        ],
+        "distractorsTh": [
+            "รถเมล์ขับเลยไป",
+            "รถเมล์เสีย",
+            "รถเมล์เลี้ยวหนี"
+        ],
+        "wordChunks": [
+            "Bussen",
+            "stannar",
+            "vid",
+            "hållplatsen"
+        ]
+    },
+    {
+        "id": "t8_ext_20",
+        "themeId": "city_transport",
+        "type": "sentence",
+        "sv": "Vi kliver av här",
+        "th": "พวกเราลงตรงป้ายนี้กันค่ะ",
+        "satunFlavor": "ลงป้ายนี้กันต๊ะ ถึงที่หมายเรียบร้อย",
+        "phoneticTh": "วี-คลี-แวร์-ออฟ-แฮร์",
+        "pronunciationTip": "kliver สระ i ยาว คลี-แวร์",
+        "svgScene": "bus",
+        "distractorsSv": [
+            "Vi sitter kvar",
+            "Vi åker vidare",
+            "Vi sover på bussen"
+        ],
+        "distractorsTh": [
+            "เรานั่งต่อไป",
+            "เราไปต่อ",
+            "เรานอนบนรถเมล์"
+        ],
+        "wordChunks": [
+            "Vi",
+            "kliver",
+            "av",
+            "här"
+        ]
+    },
+    {
+        "id": "t8_ext_21",
+        "themeId": "city_transport",
+        "type": "sentence",
+        "sv": "Gå på genom framdörren",
+        "th": "กรุณาขึ้นรถทางประตูด้านหน้านะคะ",
+        "satunFlavor": "ขึ้นประตูด้านหน้า แตะบัตรให้คนขับดูด้วยนะ",
+        "phoneticTh": "กอร์-โพ-เย-นุม-ฟรัม-เดิร์ร-เรน",
+        "pronunciationTip": "framdörren สระ ö ปากจู๋ ฟรัม-เดิร์ร-เรน",
+        "svgScene": "bus",
+        "distractorsSv": [
+            "Gå ut bak",
+            "Stå stilla",
+            "Vänta ute"
+        ],
+        "distractorsTh": [
+            "ออกทางด้านหลัง",
+            "ยืนนิ่งๆ",
+            "รอข้างนอก"
+        ],
+        "wordChunks": [
+            "Gå",
+            "på",
+            "genom",
+            "framdörren"
+        ]
+    },
+    {
+        "id": "t8_ext_22",
+        "themeId": "city_transport",
+        "type": "concept",
+        "sv": "Barnvagnar åker gratis på bussen",
+        "th": "ผู้ที่เข็นรถเข็นเด็กเดินทางฟรีบนรถเมล์ (ในหลายเมือง)",
+        "satunFlavor": "เข็นรถเข็นเด็กขึ้นรถเมล์ฟรี สวัสดิการน่ารักของสวีเดน",
+        "phoneticTh": "บาร์น-วัก-นาร์-โอ-เกร์-กรอ-ติส-โพ-บุส-เซน",
+        "pronunciationTip": "gratis สระ a ยาว กรอ-ติส",
+        "svgScene": "stroller",
+        "distractorsSv": [
+            "Barnvagn kostar extra",
+            "Inga barnvagnar tillåtna",
+            "Bara på helgen"
+        ],
+        "distractorsTh": [
+            "รถเข็นเด็กคิดเงินเพิ่ม",
+            "ห้ามนำรถเข็นขึ้น",
+            "เฉพาะวันหยุด"
+        ],
+        "wordChunks": [
+            "Barnvagnar",
+            "åker",
+            "gratis",
+            "på",
+            "bussen"
+        ]
+    },
+    {
+        "id": "t8_ext_23",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "En bred cykelbana",
+        "th": "ทางวิ่งรถจักรยานที่กว้างขวาง",
+        "satunFlavor": "ทางเฉพาะเลนจักรยาน คนสวีเดนปั่นจักรยานกันเยอะมาก",
+        "phoneticTh": "เอน-เบรด-ซึค-เค็ล-บอ-นา",
+        "pronunciationTip": "cykel สระ y จู๋ปาก ซึค-เค็ล-บอ-นา",
+        "svgScene": "bicycle",
+        "distractorsSv": [
+            "En bilväg",
+            "En motorväg",
+            "En trottoar"
+        ],
+        "distractorsTh": [
+            "ถนนรถยนต์",
+            "ทางด่วน",
+            "ทางเท้า"
+        ],
+        "wordChunks": [
+            "En",
+            "bred",
+            "cykelbana"
+        ]
+    },
+    {
+        "id": "t8_ext_24",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "En ren trottoar",
+        "th": "ทางเท้าคนเดินที่สะอาด",
+        "satunFlavor": "ฟุตบาททางเท้า เดินปลอดภัยไม่มีมอเตอร์ไซค์กวนใจ",
+        "phoneticTh": "เอน-เรน-ทร็อต-ทู-อาร์",
+        "pronunciationTip": "trottoar ทร็อต-ทู-อาร์",
+        "svgScene": "walking",
+        "distractorsSv": [
+            "En cykelbana",
+            "En körbana",
+            "Ett dike"
+        ],
+        "distractorsTh": [
+            "เลนจักรยาน",
+            "ช่องทางเดินรถ",
+            "คูน้ำ"
+        ],
+        "wordChunks": [
+            "En",
+            "ren",
+            "trottoar"
+        ]
+    },
+    {
+        "id": "t8_ext_25",
+        "themeId": "city_transport",
+        "type": "concept",
+        "sv": "Ett övergångsställe",
+        "th": "ทางม้าลายสำหรับคนข้ามถนน",
+        "satunFlavor": "ทางม้าลาย รถยนต์จะหยุดให้คนข้ามเสมอ มารยาทเป๊ะมาก",
+        "phoneticTh": "เอ็ท-เออ-เวร์-กุงส์-สแต็ล-เลอะ",
+        "pronunciationTip": "övergång ออกเสียง เออ-เวร์-กุงส์",
+        "svgScene": "crosswalk",
+        "distractorsSv": [
+            "En tunnel",
+            "En bro",
+            "En korsning"
+        ],
+        "distractorsTh": [
+            "อุโมงค์",
+            "สะพาน",
+            "สี่แยก"
+        ],
+        "wordChunks": [
+            "Ett",
+            "övergångsställe"
+        ]
+    },
+    {
+        "id": "t8_ext_26",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "Ett trafikljus vid korsningen",
+        "th": "ไฟจราจรตรงบริเวณสี่แยก",
+        "satunFlavor": "ไฟเขียวไฟแดงตรงสี่แยก แลดูสัญญาณให้ดี",
+        "phoneticTh": "เอ็ท-ทรา-ฟิค-ยูส-วิด-ชอร์ช-นิง-เง็น",
+        "pronunciationTip": "korsning ออกเสียง ชอร์ช-นิง-เง็น",
+        "svgScene": "traffic_light",
+        "distractorsSv": [
+            "En vägskylt",
+            "En rondell",
+            "En vägbula"
+        ],
+        "distractorsTh": [
+            "ป้ายจราจร",
+            "วงเวียน",
+            "ลูกระนาดชะลอความเร็ว"
+        ],
+        "wordChunks": [
+            "Ett",
+            "trafikljus",
+            "vid",
+            "korsningen"
+        ]
+    },
+    {
+        "id": "t8_ext_27",
+        "themeId": "city_transport",
+        "type": "sentence",
+        "sv": "Gå över när det är grönt ljus",
+        "th": "ข้ามถนนได้เมื่อสัญญาณไฟเป็นสีเขียวค่ะ",
+        "satunFlavor": "ไฟเขียวคนเดินค่อยข้ามนะจ๊ะ ปลอดภัยไว้ก่อน",
+        "phoneticTh": "กอร์-เออ-เวร์-แนร์-เด-แอร์-เกรินต์-ยูส",
+        "pronunciationTip": "grönt สระ ö ปากจู๋ เกรินต์-ยูส",
+        "svgScene": "crosswalk",
+        "distractorsSv": [
+            "Stanna vid rött",
+            "Spring över gatan",
+            "Titta inte"
+        ],
+        "distractorsTh": [
+            "หยุดตอนไฟแดง",
+            "วิ่งข้ามถนน",
+            "ไม่ต้องมอง"
+        ],
+        "wordChunks": [
+            "Gå",
+            "över",
+            "när",
+            "det",
+            "är",
+            "grönt",
+            "ljus"
+        ]
+    },
+    {
+        "id": "t8_ext_28",
+        "themeId": "city_transport",
+        "type": "sentence",
+        "sv": "Stanna alltid vid rött ljus",
+        "th": "หยุดรอทุกครั้งเมื่อสัญญาณไฟเป็นสีแดงค่ะ",
+        "satunFlavor": "ไฟแดงต้องหยุดยืนรอ ห้ามวิ่งข้ามเด็ดขาด",
+        "phoneticTh": "สตัน-นา-อัล-ทิด-วิด-เรริตต์-ยูส",
+        "pronunciationTip": "rött สระ ö ทำปากจู๋ เรริตต์-ยูส",
+        "svgScene": "traffic_light",
+        "distractorsSv": [
+            "Gå över snabbt",
+            "Titta bort",
+            "Gå mot rött"
+        ],
+        "distractorsTh": [
+            "ข้ามเร็วๆ",
+            "มองไปทางอื่น",
+            "ฝ่าไฟแดง"
+        ],
+        "wordChunks": [
+            "Stanna",
+            "alltid",
+            "vid",
+            "rött",
+            "ljus"
+        ]
+    },
+    {
+        "id": "t8_ext_29",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "En stor rondell",
+        "th": "วงเวียนจราจรขนาดใหญ่",
+        "satunFlavor": "วงเวียนกลับรถ ให้ทางรถทางซ้ายในวงเวียนก่อน",
+        "phoneticTh": "เอน-สตอร์-ร็อน-เด็ลล์",
+        "pronunciationTip": "rondell เน้นพยางค์หลัง เด็ลล์",
+        "svgScene": "roundabout",
+        "distractorsSv": [
+            "En korsning",
+            "En raksträcka",
+            "En återvändsgränd"
+        ],
+        "distractorsTh": [
+            "สี่แยก",
+            "ทางตรง",
+            "ซอยตัน"
+        ],
+        "wordChunks": [
+            "En",
+            "stor",
+            "rondell"
+        ]
+    },
+    {
+        "id": "t8_ext_30",
+        "themeId": "city_transport",
+        "type": "sentence",
+        "sv": "Sväng till höger i korsningen",
+        "th": "เลี้ยวขวาตรงบริเวณสี่แยกข้างหน้าค่ะ",
+        "satunFlavor": "ถึงสี่แยกแล้วเลี้ยวขวาไปเลยต๊ะ",
+        "phoneticTh": "สแวง-ทิล-เฮอ-เกร์-อี-ชอร์ช-นิง-เง็น",
+        "pronunciationTip": "höger สระ ö ปากจู๋ เฮอ-เกร์",
+        "svgScene": "turn_right",
+        "distractorsSv": [
+            "Sväng till vänster",
+            "Kör rakt fram",
+            "Vänd om"
+        ],
+        "distractorsTh": [
+            "เลี้ยวซ้าย",
+            "ขับตรงไป",
+            "กลับรถ"
+        ],
+        "wordChunks": [
+            "Sväng",
+            "till",
+            "höger",
+            "i",
+            "korsningen"
+        ]
+    },
+    {
+        "id": "t8_ext_31",
+        "themeId": "city_transport",
+        "type": "sentence",
+        "sv": "Fortsätt rakt fram i tvåhundra meter",
+        "th": "ตรงไปข้างหน้าเรื่อยๆ อีกประมาณสองร้อยเมตรค่ะ",
+        "satunFlavor": "ตรงไปเรื่อยๆ สักสองร้อยเมตร เดี๋ยวก็เห็น",
+        "phoneticTh": "ฟูร์ท-แซ็ตต์-ร็อกต์-ฟรัม-อี-ทโว-ฮุน-ดรา-เม-เตร์",
+        "pronunciationTip": "rakt fram ร็อกต์-ฟรัม",
+        "svgScene": "straight",
+        "distractorsSv": [
+            "Sväng direkt",
+            "Stanna bilen",
+            "Backa tillbaka"
+        ],
+        "distractorsTh": [
+            "เลี้ยวทันที",
+            "หยุดรถ",
+            "ถอยหลังกลับ"
+        ],
+        "wordChunks": [
+            "Fortsätt",
+            "rakt",
+            "fram",
+            "i",
+            "tvåhundra",
+            "meter"
+        ]
+    },
+    {
+        "id": "t8_ext_32",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "En detaljerad stadskarta",
+        "th": "แผนที่ตัวเมืองอย่างละเอียด",
+        "satunFlavor": "แผนที่ผังเมือง กางดูชื่อถนนหนทาง",
+        "phoneticTh": "เอน-เด-ทัล-เย-รัด-สตัดส์-คาร์-ตา",
+        "pronunciationTip": "stadskarta สระ a สั้น สตัดส์-คาร์-ตา",
+        "svgScene": "map",
+        "distractorsSv": [
+            "En tidtabell",
+            "En guidebok",
+            "En kompass"
+        ],
+        "distractorsTh": [
+            "ตารางเดินรถ",
+            "หนังสือนำเที่ยว",
+            "เข็มทิศ"
+        ],
+        "wordChunks": [
+            "En",
+            "detaljerad",
+            "stadskarta"
+        ]
+    },
+    {
+        "id": "t8_ext_33",
+        "themeId": "city_transport",
+        "type": "sentence",
+        "sv": "Hjälp, jag har gått vilse!",
+        "th": "ช่วยด้วยค่ะ ฉันเดินหลงทางแล้ว!",
+        "satunFlavor": "ช่วยทีต๊ะ! เดินหลงทาง ไม่รู้ว่าอยู่ตรงไหนแล้ว",
+        "phoneticTh": "แย็ลป์-ย็อก-ฮาร์-ก็อตต์-วิล-เสะ!",
+        "pronunciationTip": "vilse สระ i สั้น วิล-เสะ",
+        "svgScene": "lost",
+        "distractorsSv": [
+            "Jag hittar hem",
+            "Jag vet var jag är",
+            "Följ efter mig"
+        ],
+        "distractorsTh": [
+            "ฉันหาทางกลับบ้านเจอ",
+            "ฉันรู้ว่าฉันอยู่ที่ไหน",
+            "ตามฉันมา"
+        ],
+        "wordChunks": [
+            "Hjälp,",
+            "jag",
+            "har",
+            "gått",
+            "vilse!"
+        ]
+    },
+    {
+        "id": "t8_ext_34",
+        "themeId": "city_transport",
+        "type": "sentence",
+        "sv": "Kan du visa mig på kartan?",
+        "th": "คุณช่วยชี้บอกทางบนแผนที่หน่อยได้ไหมคะ?",
+        "satunFlavor": "ช่วยจิ้มบอกในแผนที่ทีต๊ะ ฉันอยู่ตรงไหนนะ",
+        "phoneticTh": "คัน-ดู-วี-ซา-เมย์-โพ-คาร์-ตัน?",
+        "pronunciationTip": "visa สระ i ยาว วี-ซา-เมย์",
+        "svgScene": "map",
+        "distractorsSv": [
+            "Kan du köpa en karta?",
+            "Var bor du?",
+            "Vad gör du här?"
+        ],
+        "distractorsTh": [
+            "ซื้อแผนที่ให้หน่อยได้ไหม?",
+            "คุณอยู่ที่ไหน?",
+            "มาทำอะไรที่นี่?"
+        ],
+        "wordChunks": [
+            "Kan",
+            "du",
+            "visa",
+            "mig",
+            "på",
+            "kartan?"
+        ]
+    },
+    {
+        "id": "t8_ext_35",
+        "themeId": "city_transport",
+        "type": "sentence",
+        "sv": "Det ligger precis runt hörnet",
+        "th": "มันตั้งอยู่ตรงหัวมุมข้างหน้านี้เองค่ะ",
+        "satunFlavor": "อยู่ตรงหัวมุมนี้เอง เดินเลี้ยวไปก็เจอแล้ว",
+        "phoneticTh": "เด-ลิก-เกร์-เพร-ซีส-รุนต์-เฮอร์-เน็ต",
+        "pronunciationTip": "hörnet สระ ö ปากจู๋ เฮอร์-เน็ต",
+        "svgScene": "map",
+        "distractorsSv": [
+            "Det är jättelångt bort",
+            "Det finns inte kvar",
+            "Gå i två timmar"
+        ],
+        "distractorsTh": [
+            "มันอยู่ไกลมาก",
+            "มันไม่มีอยู่อีกแล้ว",
+            "เดินไปสองชั่วโมง"
+        ],
+        "wordChunks": [
+            "Det",
+            "ligger",
+            "precis",
+            "runt",
+            "hörnet"
+        ]
+    },
+    {
+        "id": "t8_ext_36",
+        "themeId": "city_transport",
+        "type": "sentence",
+        "sv": "Det tar bara fem minuter att gå",
+        "th": "เดินไปแค่ห้านาทีก็ถึงแล้วค่ะ",
+        "satunFlavor": "เดินแป๊บเดียวห้านาที สบายๆ ใกล้นิดเดียว",
+        "phoneticTh": "เด-ทอร์-บอ-รา-เฟ็ม-มิ-นู-เทร์-อัท-กอร์",
+        "pronunciationTip": "minuter สระ u ออกเสียงสระอู มิ-นู-เทร์",
+        "svgScene": "walking",
+        "distractorsSv": [
+            "Det tar en timme med bil",
+            "Du måste ta flyg",
+            "Det är omöjligt att gå"
+        ],
+        "distractorsTh": [
+            "ขับรถหนึ่งชั่วโมง",
+            "ต้องนั่งเครื่องบิน",
+            "เดินไปไม่ได้หรอก"
+        ],
+        "wordChunks": [
+            "Det",
+            "tar",
+            "bara",
+            "fem",
+            "minuter",
+            "att",
+            "gå"
+        ]
+    },
+    {
+        "id": "t8_ext_37",
+        "themeId": "city_transport",
+        "type": "concept",
+        "sv": "Ta tunnelbanans röda linje",
+        "th": "นั่งรถไฟใต้ดินสายสีแดง",
+        "satunFlavor": "นั่งรถไฟใต้ดินสายสีแดง วิ่งตรงเข้าสู่ใจกลางเมือง",
+        "phoneticTh": "ทอ-ทุน-เน็ล-บอ-นันส์-เรอ-ดา-ลีน-เยอะ",
+        "pronunciationTip": "linje ตัว j ออกเสียง ย ลีน-เยอะ",
+        "svgScene": "subway",
+        "distractorsSv": [
+            "Ta gröna linjen",
+            "Ta blå linjen",
+            "Ta spårvagnen"
+        ],
+        "distractorsTh": [
+            "นั่งสายสีเขียว",
+            "นั่งสายสีน้ำเงิน",
+            "นั่งรถราง"
+        ],
+        "wordChunks": [
+            "Ta",
+            "tunnelbanans",
+            "röda",
+            "linje"
+        ]
+    },
+    {
+        "id": "t8_ext_38",
+        "themeId": "city_transport",
+        "type": "sentence",
+        "sv": "Vi måste byta tåg vid T-Centralen",
+        "th": "พวกเราต้องเปลี่ยนขบวนรถไฟที่สถานี T-Centralen ค่ะ",
+        "satunFlavor": "ต้องไปเปลี่ยนสายรถไฟที่สถานีใหญ่ใจกลางเมือง",
+        "phoneticTh": "วี-มุส-เตะ-บึ-ทา-โตก-วิด-ที-เซ็น-ทรอ-เลน",
+        "pronunciationTip": "byta สระ y ทำปากจู๋ บึ-ทา-โตก",
+        "svgScene": "subway",
+        "distractorsSv": [
+            "Sitt kvar på tåget",
+            "Gå av och ta taxi",
+            "Tåget stannar inte"
+        ],
+        "distractorsTh": [
+            "นั่งอยู่บนรถไฟต่อ",
+            "ลงแล้วนั่งแท็กซี่",
+            "รถไฟไม่จอด"
+        ],
+        "wordChunks": [
+            "Vi",
+            "måste",
+            "byta",
+            "tåg",
+            "vid",
+            "T-Centralen"
+        ]
+    },
+    {
+        "id": "t8_ext_39",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "En ledig taxibil",
+        "th": "รถแท็กซี่คันว่าง",
+        "satunFlavor": "รถแท็กซี่ว่าง โบกเรียกขึ้นไปได้เลย",
+        "phoneticTh": "เอน-เล-ดิก-ทัก-ซิ-บีล",
+        "pronunciationTip": "taxi สระ a สั้น ทัก-ซิ-บีล",
+        "svgScene": "taxi",
+        "distractorsSv": [
+            "En upptagen taxi",
+            "En privatbil",
+            "En polisbil"
+        ],
+        "distractorsTh": [
+            "แท็กซี่ไม่ว่าง",
+            "รถส่วนบุคคล",
+            "รถตำรวจ"
+        ],
+        "wordChunks": [
+            "En",
+            "ledig",
+            "taxibil"
+        ]
+    },
+    {
+        "id": "t8_ext_40",
+        "themeId": "city_transport",
+        "type": "sentence",
+        "sv": "Kan du beställa en taxi till mig?",
+        "th": "คุณช่วยโทรเรียกรถแท็กซี่ให้ฉันหน่อยได้ไหมคะ?",
+        "satunFlavor": "ช่วยโทรเรียกรถแท็กซี่ให้ทีจ้า จะรีบไปสนามบิน",
+        "phoneticTh": "คัน-ดู-เบะ-สตัล-ลา-เอน-ทัก-ซิ-ทิล-เมย์?",
+        "pronunciationTip": "beställa สระ ä กว้าง เบะ-สตัล-ลา",
+        "svgScene": "taxi",
+        "distractorsSv": [
+            "Kan du köra mig?",
+            "Var är bussen?",
+            "Jag vill gå till fots"
+        ],
+        "distractorsTh": [
+            "คุณขับไปส่งฉันได้ไหม?",
+            "รถเมล์อยู่ไหน?",
+            "ฉันอยากเดินไป"
+        ],
+        "wordChunks": [
+            "Kan",
+            "du",
+            "beställa",
+            "en",
+            "taxi",
+            "till",
+            "mig?"
+        ]
+    },
+    {
+        "id": "t8_ext_41",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "En internationell flygplats",
+        "th": "สนามบินนานาชาติ",
+        "satunFlavor": "สนามบินใหญ่ เครื่องบินบินไปกลับต่างประเทศ",
+        "phoneticTh": "เอน-อิน-แทร์-นัช-ชู-เน็ล-ฟลึก-พลัทส์",
+        "pronunciationTip": "flyg สระ y ทำปากจู๋ ฟลึก-พลัทส์",
+        "svgScene": "airplane",
+        "distractorsSv": [
+            "En tågstation",
+            "En bussterminal",
+            "En färjehamn"
+        ],
+        "distractorsTh": [
+            "สถานีรถไฟ",
+            "สถานีขนส่ง",
+            "ท่าเรือเฟอร์รี่"
+        ],
+        "wordChunks": [
+            "En",
+            "internationell",
+            "flygplats"
+        ]
+    },
+    {
+        "id": "t8_ext_42",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "Flygbussen till flygplatsen",
+        "th": "รถบัสแอร์พอร์ตรับส่งไปยังสนามบิน",
+        "satunFlavor": "รถบัสไปสนามบิน สะดวก รวดเร็ว มีที่วางกระเป๋าเพียบ",
+        "phoneticTh": "ฟลึก-บุส-เซน-ทิล-ฟลึก-พลัท-เซน",
+        "pronunciationTip": "flygbussen ฟลึก-บุส-เซน",
+        "svgScene": "bus",
+        "distractorsSv": [
+            "Stadsbussen",
+            "Skolbussen",
+            "Nattbussen"
+        ],
+        "distractorsTh": [
+            "รถเมล์ในเมือง",
+            "รถโรงเรียน",
+            "รถเมล์กะดึก"
+        ],
+        "wordChunks": [
+            "Flygbussen",
+            "till",
+            "flygplatsen"
+        ]
+    },
+    {
+        "id": "t8_ext_43",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "En rymlig avgångshall",
+        "th": "อาคารผู้โดยสารขาออกที่กว้างขวาง",
+        "satunFlavor": "ห้องโถงผู้โดยสารขาออก เช็คอินโหลดกระเป๋าขึ้นเครื่อง",
+        "phoneticTh": "เอน-รึม-ลิก-ออฟ-กุงส์-ฮัลล์",
+        "pronunciationTip": "gång สระ å ปากกลม ออฟ-กุงส์-ฮัลล์",
+        "svgScene": "airport",
+        "distractorsSv": [
+            "En ankomsthall",
+            "Ett bagageband",
+            "En gate"
+        ],
+        "distractorsTh": [
+            "อาคารผู้โดยสารขาเข้า",
+            "สายพานรับกระเป๋า",
+            "ประตูขึ้นเครื่อง"
+        ],
+        "wordChunks": [
+            "En",
+            "rymlig",
+            "avgångshall"
+        ]
+    },
+    {
+        "id": "t8_ext_44",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "En ankomsthall",
+        "th": "อาคารผู้โดยสารขาเข้า",
+        "satunFlavor": "โถงผู้โดยสารขาเข้า ญาติมารอยืนรับอบอุ่นใจ",
+        "phoneticTh": "เอน-อัน-คุมสต์-ฮัลล์",
+        "pronunciationTip": "ankomst สระ o ออกเสียง อัน-คุมสต์-ฮัลล์",
+        "svgScene": "airport",
+        "distractorsSv": [
+            "En avgångshall",
+            "En taxikö",
+            "En växlingskontor"
+        ],
+        "distractorsTh": [
+            "อาคารขาออก",
+            "คิวแท็กซี่",
+            "บูธแลกเงิน"
+        ],
+        "wordChunks": [
+            "En",
+            "ankomsthall"
+        ]
+    },
+    {
+        "id": "t8_ext_45",
+        "themeId": "city_transport",
+        "type": "concept",
+        "sv": "Säkerhetskontrollen på flyget",
+        "th": "จุดตรวจค้นความปลอดภัยก่อนขึ้นเครื่องบิน",
+        "satunFlavor": "ด่านตรวจค้นสัมภาระ ถอดเสื้อโค้ต เอาของเหลวใส่ถุงใส",
+        "phoneticTh": "แซ-แคร์-เฮทส์-คอน-ทร็อล-เลน",
+        "pronunciationTip": "säkerhet สระ ä กว้าง แซ-แคร์-เฮทส์",
+        "svgScene": "airport",
+        "distractorsSv": [
+            "Passkontrollen",
+            "Incheckningen",
+            "Tullkontrollen"
+        ],
+        "distractorsTh": [
+            "จุดตรวจพาสปอร์ต",
+            "เคาน์เตอร์เช็คอิน",
+            "ด่านศุลกากร"
+        ],
+        "wordChunks": [
+            "Säkerhetskontrollen",
+            "på",
+            "flyget"
+        ]
+    },
+    {
+        "id": "t8_ext_46",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "Ett giltigt pass",
+        "th": "หนังสือเดินทาง (พาสปอร์ต) ที่ยังไม่หมดอายุ",
+        "satunFlavor": "เล่มพาสปอร์ต พกติดตัวเวลาบินกลับไทยไปเยี่ยมบ้านที่สตูล",
+        "phoneticTh": "เอ็ท-ยิล-ทิกต์-พัสส์",
+        "pronunciationTip": "pass สระ a สั้น พัสส์",
+        "svgScene": "passport",
+        "distractorsSv": [
+            "Ett körkort",
+            "Ett ID-kort",
+            "Ett bibliotekskort"
+        ],
+        "distractorsTh": [
+            "ใบขับขี่",
+            "บัตรประชาชน",
+            "บัตรห้องสมุด"
+        ],
+        "wordChunks": [
+            "Ett",
+            "giltigt",
+            "pass"
+        ]
+    },
+    {
+        "id": "t8_ext_47",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "Ett boardingkort i mobilen",
+        "th": "บัตรผ่านขึ้นเครื่อง (บอร์ดดิ้งพาส) ในโทรศัพท์มือถือ",
+        "satunFlavor": "ตั๋วขึ้นเครื่องในมือถือ โชว์ให้พนักงานสแกนก่อนขึ้นเครื่อง",
+        "phoneticTh": "เอ็ท-บัวร์-ดิง-คูร์ท-อี-มู-บี-เลน",
+        "pronunciationTip": "boardingkort บัวร์-ดิง-คูร์ท",
+        "svgScene": "ticket",
+        "distractorsSv": [
+            "Ett kvitto",
+            "Ett visitkort",
+            "Ett bankkort"
+        ],
+        "distractorsTh": [
+            "ใบเสร็จ",
+            "นามบัตร",
+            "บัตรเอทีเอ็ม"
+        ],
+        "wordChunks": [
+            "Ett",
+            "boardingkort",
+            "i",
+            "mobilen"
+        ]
+    },
+    {
+        "id": "t8_ext_48",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "Tungt bagage",
+        "th": "สัมภาระกระเป๋าเดินทางน้ำหนักมาก",
+        "satunFlavor": "กระเป๋าเดินทางใบโต ใส่ของฝากเต็มเอี้ยดหนักจังฮู้",
+        "phoneticTh": "ทุงต์-บา-กอช",
+        "pronunciationTip": "bagage ออกเสียง บา-กอช",
+        "svgScene": "luggage",
+        "distractorsSv": [
+            "Lätt handväska",
+            "Ett litet paket",
+            "En ryggsäck"
+        ],
+        "distractorsTh": [
+            "กระเป๋าถือเบาๆ",
+            "พัสดุชิ้นเล็ก",
+            "เป้สะพายหลัง"
+        ],
+        "wordChunks": [
+            "Tungt",
+            "bagage"
+        ]
+    },
+    {
+        "id": "t8_ext_49",
+        "themeId": "city_transport",
+        "type": "sentence",
+        "sv": "Jag hämtar min väska på bandet",
+        "th": "ฉันกำลังรอรับกระเป๋าเดินทางที่สายพานค่ะ",
+        "satunFlavor": "ยืนรอกระเป๋าที่สายพานหมุน แลดูแถบป้ายชื่อกระเป๋า",
+        "phoneticTh": "ย็อก-แฮม-ทาร์-มีน-แวส-คา-โพ-บัน-เด็ต",
+        "pronunciationTip": "hämtar สระ ä กว้าง แฮม-ทาร์",
+        "svgScene": "luggage",
+        "distractorsSv": [
+            "Jag tappar min väska",
+            "Jag glömde väskan",
+            "Jag köper en ny väska"
+        ],
+        "distractorsTh": [
+            "ฉันทำกระเป๋าหล่น",
+            "ฉันลืมกระเป๋า",
+            "ฉันซื้อกระเป๋าใหม่"
+        ],
+        "wordChunks": [
+            "Jag",
+            "hämtar",
+            "min",
+            "väska",
+            "på",
+            "bandet"
+        ]
+    },
+    {
+        "id": "t8_ext_50",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "En bekväm hyrbil",
+        "th": "รถยนต์เช่าขับแสนสบาย",
+        "satunFlavor": "รถเช่า เช่าขับเที่ยวชมธรรมชาติสวยงามรอบสวีเดน",
+        "phoneticTh": "เอน-เบะ-แควร์ม-ฮือร์-บีล",
+        "pronunciationTip": "hyrbil สระ y จู๋ปากลึก ฮือร์-บีล",
+        "svgScene": "car",
+        "distractorsSv": [
+            "En cykel",
+            "En moped",
+            "En traktor"
+        ],
+        "distractorsTh": [
+            "จักรยาน",
+            "รถมอเตอร์ไซค์",
+            "รถแทรกเตอร์"
+        ],
+        "wordChunks": [
+            "En",
+            "bekväm",
+            "hyrbil"
+        ]
+    },
+    {
+        "id": "t8_ext_51",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "En bensinstation",
+        "th": "สถานีบริการน้ำมัน / ปั๊มน้ำมัน",
+        "satunFlavor": "ปั๊มน้ำมัน แวะเติมน้ำมัน ซื้อกาแฟกับฮอทดอกกินเล่น",
+        "phoneticTh": "เอน-เบน-ซีน-สตา-ชูน",
+        "pronunciationTip": "station สตา-ชูน",
+        "svgScene": "gas_station",
+        "distractorsSv": [
+            "En biltvätt",
+            "En verkstad",
+            "En bilaffär"
+        ],
+        "distractorsTh": [
+            "คาร์แคร์ล้างรถ",
+            "อู่ซ่อมรถ",
+            "โชว์รูมขายรถ"
+        ],
+        "wordChunks": [
+            "En",
+            "bensinstation"
+        ]
+    },
+    {
+        "id": "t8_ext_52",
+        "themeId": "city_transport",
+        "type": "sentence",
+        "sv": "Vi måste tanka bilen nu",
+        "th": "ตอนนี้พวกเราต้องแวะเติมน้ำมันรถแล้วค่ะ",
+        "satunFlavor": "แวะปั๊มเติมน้ำมันก่อนต๊ะ ไฟเตือนน้ำมันจะหมดแล้ว",
+        "phoneticTh": "วี-มุส-เตะ-ทัน-คา-บี-เลน-นู",
+        "pronunciationTip": "tanka สระ a สั้น ทัน-คา",
+        "svgScene": "gas_station",
+        "distractorsSv": [
+            "Vi tvättar bilen",
+            "Vi säljer bilen",
+            "Vi parkerar bilen"
+        ],
+        "distractorsTh": [
+            "เราล้างรถ",
+            "เราขายรถ",
+            "เราจอดรถ"
+        ],
+        "wordChunks": [
+            "Vi",
+            "måste",
+            "tanka",
+            "bilen",
+            "nu"
+        ]
+    },
+    {
+        "id": "t8_ext_53",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "En ledig parkeringsplats",
+        "th": "ช่องจอดรถยนต์ที่ว่างอยู่",
+        "satunFlavor": "ที่จอดรถว่าง หาที่จอดได้ดีใจบายใจเฉิบ",
+        "phoneticTh": "เอน-เล-ดิก-พาร์-เค-ริงส์-พลัทส์",
+        "pronunciationTip": "parkering พาร์-เค-ริงส์-พลัทส์",
+        "svgScene": "parking",
+        "distractorsSv": [
+            "Upptagen plats",
+            "P-förbud",
+            "Lastzon"
+        ],
+        "distractorsTh": [
+            "ที่จอดเต็ม",
+            "ห้ามจอด",
+            "จุดจอดรถขนถ่ายสินค้า"
+        ],
+        "wordChunks": [
+            "En",
+            "ledig",
+            "parkeringsplats"
+        ]
+    },
+    {
+        "id": "t8_ext_54",
+        "themeId": "city_transport",
+        "type": "sentence",
+        "sv": "Jag betalar parkeringen i appen",
+        "th": "ฉันจ่ายค่าจอดรถผ่านแอปพลิเคชันค่ะ",
+        "satunFlavor": "จ่ายค่าจอดรถในมือถือ กดสตาร์ทเวลา สบายไม่ต้องหยอดเหรียญ",
+        "phoneticTh": "ย็อก-เบะ-ทอ-ลาร์-พาร์-เค-ริง-เง็น-อี-อัป-เพ็น",
+        "pronunciationTip": "appen สระ a สั้น อัป-เพ็น",
+        "svgScene": "parking",
+        "distractorsSv": [
+            "Jag betalar med kontanter",
+            "Parkeringen är gratis",
+            "Jag fick böter"
+        ],
+        "distractorsTh": [
+            "ฉันจ่ายเงินสด",
+            "ที่จอดรถฟรี",
+            "ฉันโดนใบสั่ง"
+        ],
+        "wordChunks": [
+            "Jag",
+            "betalar",
+            "parkeringen",
+            "i",
+            "appen"
+        ]
+    },
+    {
+        "id": "t8_ext_55",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "En tråkig parkeringsbot",
+        "th": "ใบสั่งค่าปรับจอดรถผิดระเบียบ",
+        "satunFlavor": "ใบสั่งค่าปรับจอดรถ โดนปรับเป็นพันโครนเสียดายเบี้ยจังฮู้",
+        "phoneticTh": "เอน-โทร-คิก-พาร์-เค-ริงส์-บูท",
+        "pronunciationTip": "bot สระ o ออกเสียงสระอู บูท",
+        "svgScene": "warning",
+        "distractorsSv": [
+            "Ett kvitto",
+            "Ett presentkort",
+            "En rabattkupong"
+        ],
+        "distractorsTh": [
+            "ใบเสร็จ",
+            "บัตรของขวัญ",
+            "คูปองส่วนลด"
+        ],
+        "wordChunks": [
+            "En",
+            "tråkig",
+            "parkeringsbot"
+        ]
+    },
+    {
+        "id": "t8_ext_56",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "En vacker bro över vattnet",
+        "th": "สะพานสวยงามข้ามแม่น้ำ",
+        "satunFlavor": "สะพานข้ามสายน้ำ ข้ามเกาะแก่งวิวสวยประทับใจ",
+        "phoneticTh": "เอน-วัค-เคร์-บรู-เออ-เวร์-วัตต์-เน็ต",
+        "pronunciationTip": "bro สระ o ออกเสียงสระอู บรู",
+        "svgScene": "bridge",
+        "distractorsSv": [
+            "En tunnel",
+            "En hamn",
+            "En pir"
+        ],
+        "distractorsTh": [
+            "อุโมงค์",
+            "ท่าเรือ",
+            "สะพานปลา"
+        ],
+        "wordChunks": [
+            "En",
+            "vacker",
+            "bro",
+            "över",
+            "vattnet"
+        ]
+    },
+    {
+        "id": "t8_ext_57",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "En skärgårdsbåt på sommaren",
+        "th": "เรือโดยสารท่องเที่ยวหมู่เกาะในฤดูร้อน",
+        "satunFlavor": "เรือวิ่งข้ามเกาะหน้าร้อน นั่งรับลมชมเกาะแก่งเหมือนเที่ยวทะเลใต้",
+        "phoneticTh": "เอน-แชร์-กอร์ดส์-โบท-โพ-ซุม-มา-เรน",
+        "pronunciationTip": "båt สระ å ปากกลม โบท",
+        "svgScene": "boat",
+        "distractorsSv": [
+            "En roddbåt",
+            "En ubåt",
+            "En kanot"
+        ],
+        "distractorsTh": [
+            "เรือพาย",
+            "เรือดำน้ำ",
+            "เรือแคนู"
+        ],
+        "wordChunks": [
+            "En",
+            "skärgårdsbåt",
+            "på",
+            "sommaren"
+        ]
+    },
+    {
+        "id": "t8_ext_58",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "En bilfärja",
+        "th": "เรือเฟอร์รี่บรรทุกรถยนต์ข้ามฟาก",
+        "satunFlavor": "แพขนานยนต์/เรือเฟอร์รี่ ขับรถขึ้นเรือข้ามฟากฟรี",
+        "phoneticTh": "เอน-บีล-แฟร์-ยา",
+        "pronunciationTip": "färja สระ ä กว้าง แฟร์-ยา",
+        "svgScene": "boat",
+        "distractorsSv": [
+            "Ett kryssningsfartyg",
+            "En fiskebåt",
+            "En segelbåt"
+        ],
+        "distractorsTh": [
+            "เรือสำราญ",
+            "เรือหาปลา",
+            "เรือใบ"
+        ],
+        "wordChunks": [
+            "En",
+            "bilfärja"
+        ]
+    },
+    {
+        "id": "t8_ext_59",
+        "themeId": "city_transport",
+        "type": "sentence",
+        "sv": "Välkommen ombord på tåget!",
+        "th": "ยินดีต้อนรับผู้โดยสารทุกท่านขึ้นสู่ขบวนรถไฟค่ะ!",
+        "satunFlavor": "ยินดีต้อนรับขึ้นรถไฟจ้า หาที่นั่งตามระบุในตั๋วต๊ะ!",
+        "phoneticTh": "แวล-คอม-เม็น-อุม-บัวร์ด-โพ-โท-เก็ต!",
+        "pronunciationTip": "ombord ออกเสียง อุม-บัวร์ด",
+        "svgScene": "train",
+        "distractorsSv": [
+            "Tåget är inställt",
+            "Gå av tåget",
+            "Tåget är fullt"
+        ],
+        "distractorsTh": [
+            "รถไฟถูกยกเลิก",
+            "ลงจากรถไฟ",
+            "รถไฟเต็มแล้ว"
+        ],
+        "wordChunks": [
+            "Välkommen",
+            "ombord",
+            "på",
+            "tåget!"
+        ]
+    },
+    {
+        "id": "t8_ext_60",
+        "themeId": "city_transport",
+        "type": "sentence",
+        "sv": "Ha en fin tågresa!",
+        "th": "ขอให้นั่งรถไฟเดินทางโดยสวัสดิภาพและเพลิดเพลินนะคะ!",
+        "satunFlavor": "เดินทางปลอดภัยบายใจตลอดทางบนรถไฟนะจ๊ะ!",
+        "phoneticTh": "ฮอ-เอน-ฟีน-โทก-เร-ซา!",
+        "pronunciationTip": "tågresa สระ å ปากกลม โทก-เร-ซา",
+        "svgScene": "wave",
+        "distractorsSv": [
+            "Stanna hemma",
+            "Välkommen hem",
+            "Akta dig"
+        ],
+        "distractorsTh": [
+            "อยู่บ้านเถอะ",
+            "ยินดีต้อนรับกลับบ้าน",
+            "ระวังตัวด้วย"
+        ],
+        "wordChunks": [
+            "Ha",
+            "en",
+            "fin",
+            "tågresa!"
+        ]
+    },
+    {
+        "id": "t8_ext_61",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "En grön elcykel",
+        "th": "จักรยานไฟฟ้าสีเขียว",
+        "satunFlavor": "จักรยานไฟฟ้า ปั่นสบายไม่ต้องออกแรงขึ้นเนิน",
+        "phoneticTh": "เอน-เกริน-เอล-ซึค-เค็ล",
+        "pronunciationTip": "elcykel เอล-ซึค-เค็ล สระ y จู๋ปาก",
+        "svgScene": "bicycle",
+        "distractorsSv": [
+            "En moped",
+            "En motorcykel",
+            "En sparkcykel"
+        ],
+        "distractorsTh": [
+            "รถมอเตอร์ไซค์เล็ก",
+            "บิ๊กไบค์",
+            "สกู๊ตเตอร์"
+        ],
+        "wordChunks": [
+            "En",
+            "grön",
+            "elcykel"
+        ]
+    },
+    {
+        "id": "t8_ext_62",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "En elsparkcykel",
+        "th": "สกู๊ตเตอร์ไฟฟ้าสำหรับขี่ในเมือง",
+        "satunFlavor": "สกู๊ตเตอร์ไฟฟ้า เช่าผ่านแอปขี่ฉิวไปทำงาน",
+        "phoneticTh": "เอน-เอล-สปาร์ค-ซึค-เค็ล",
+        "pronunciationTip": "sparkcykel สปาร์ค-ซึค-เค็ล",
+        "svgScene": "scooter",
+        "distractorsSv": [
+            "En cykel",
+            "En skateboard",
+            "En rullskridsko"
+        ],
+        "distractorsTh": [
+            "จักรยาน",
+            "สเก็ตบอร์ด",
+            "โรลเลอร์สเก็ต"
+        ],
+        "wordChunks": [
+            "En",
+            "elsparkcykel"
+        ]
+    },
+    {
+        "id": "t8_ext_63",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "En säker cykelhjälm",
+        "th": "หมวกกันน็อกสำหรับขี่จักรยานที่ปลอดภัย",
+        "satunFlavor": "หมวกกันน็อกจักรยาน สวมไว้ปลอดภัยอุ่นใจ",
+        "phoneticTh": "เอน-แซ-แคร์-ซึค-เค็ล-แย็ล์ม",
+        "pronunciationTip": "hjälm hj ออกเสียง ย แย็ล์ม",
+        "svgScene": "helmet",
+        "distractorsSv": [
+            "En mössa",
+            "En keps",
+            "En hatt"
+        ],
+        "distractorsTh": [
+            "หมวกไหมพรม",
+            "หมวกแก๊ป",
+            "หมวกปีก"
+        ],
+        "wordChunks": [
+            "En",
+            "säker",
+            "cykelhjälm"
+        ]
+    },
+    {
+        "id": "t8_ext_64",
+        "themeId": "city_transport",
+        "type": "sentence",
+        "sv": "Använd alltid cykelhjälm",
+        "th": "สวมหมวกกันน็อกจักรยานทุกครั้งนะคะ",
+        "satunFlavor": "ใส่หมวกกันน็อกทุกครั้งนะจ๊ะ เพื่อความปลอดภัย",
+        "phoneticTh": "อัน-แวนด์-อัล-ทิด-ซึค-เค็ล-แย็ล์ม",
+        "pronunciationTip": "använd สระ ä กว้าง อัน-แวนด์",
+        "svgScene": "helmet",
+        "distractorsSv": [
+            "Glöm hjälmen",
+            "Cykla utan lyse",
+            "Cykla på motorväg"
+        ],
+        "distractorsTh": [
+            "ลืมหมวกไปเถอะ",
+            "ปั่นไม่มีไฟ",
+            "ปั่นบนทางด่วน"
+        ],
+        "wordChunks": [
+            "Använd",
+            "alltid",
+            "cykelhjälm"
+        ]
+    },
+    {
+        "id": "t8_ext_65",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "Ett starkt cykellås",
+        "th": "แม่กุญแจล็อคจักรยานที่แข็งแรง",
+        "satunFlavor": "โซ่ล็อครถจักรยาน ล็อคให้แน่นหนาป้องกันขโมย",
+        "phoneticTh": "เอ็ท-สตาร์คท-ซึค-เค็ล-โลส",
+        "pronunciationTip": "lås สระ å ปากกลม โลส",
+        "svgScene": "lock",
+        "distractorsSv": [
+            "En cykelpump",
+            "En ringklocka",
+            "En cykelkorg"
+        ],
+        "distractorsTh": [
+            "ที่สูบลมจักรยาน",
+            "กระดิ่ง",
+            "ตะกร้าหน้ารถ"
+        ],
+        "wordChunks": [
+            "Ett",
+            "starkt",
+            "cykellås"
+        ]
+    },
+    {
+        "id": "t8_ext_66",
+        "themeId": "city_transport",
+        "type": "sentence",
+        "sv": "Glöm inte att låsa cykeln",
+        "th": "อย่าลืมล็อคจักรยานนะคะ",
+        "satunFlavor": "จอดรถแล้วอย่าลืมล็อคกุญแจให้ดีต๊ะ",
+        "phoneticTh": "เกลิม-อิน-เตะ-อัท-โล-ซา-ซึค-เค็ลน",
+        "pronunciationTip": "glöm สระ ö ทำปากจู๋ เกลิม",
+        "svgScene": "lock",
+        "distractorsSv": [
+            "Lämna nyckeln i låset",
+            "Ställ den olåst",
+            "Kasta cykeln"
+        ],
+        "distractorsTh": [
+            "เสียบกุญแจคาไว้",
+            "จอดทิ้งไว้ไม่ล็อค",
+            "ทิ้งจักรยาน"
+        ],
+        "wordChunks": [
+            "Glöm",
+            "inte",
+            "att",
+            "låsa",
+            "cykeln"
+        ]
+    },
+    {
+        "id": "t8_ext_67",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "En cykelpump",
+        "th": "ที่สูบลมยางจักรยาน",
+        "satunFlavor": "ที่สูบลม สูบลมยางให้แน่นปั่นเบาแรง",
+        "phoneticTh": "เอน-ซึค-เค็ล-พุมป์",
+        "pronunciationTip": "pump สระ u ปากจู๋ พุมป์",
+        "svgScene": "tool",
+        "distractorsSv": [
+            "En slang",
+            "En däck",
+            "En pedal"
+        ],
+        "distractorsTh": [
+            "สายยาง",
+            "ยางรถ",
+            "บันไดปั่น"
+        ],
+        "wordChunks": [
+            "En",
+            "cykelpump"
+        ]
+    },
+    {
+        "id": "t8_ext_68",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "En ringklocka på styret",
+        "th": "กระดิ่งจักรยานบนแฮนด์",
+        "satunFlavor": "กระดิ่งจักรยาน ดีดกริ๊งๆ เตือนคนเดินถนน",
+        "phoneticTh": "เอน-ริง-คล็อค-คา-โพ-สตือ-เร็ต",
+        "pronunciationTip": "styret สระ y จู๋ปาก สตือ-เร็ต",
+        "svgScene": "bicycle",
+        "distractorsSv": [
+            "En broms",
+            "En sadel",
+            "En eker"
+        ],
+        "distractorsTh": [
+            "เบรก",
+            "อานเบาะนั่ง",
+            "ซี่ล้อ"
+        ],
+        "wordChunks": [
+            "En",
+            "ringklocka",
+            "på",
+            "styret"
+        ]
+    },
+    {
+        "id": "t8_ext_69",
+        "themeId": "city_transport",
+        "type": "sentence",
+        "sv": "Plinga med klockan",
+        "th": "กดสั่นกระดิ่งเตือนค่ะ",
+        "satunFlavor": "กดกริ่งกริ๊งๆ ส่งสัญญาณเตือนข้างหน้า",
+        "phoneticTh": "พลึง-งา-เมด-คล็อค-คัน",
+        "pronunciationTip": "plinga พลึง-งา",
+        "svgScene": "bicycle",
+        "distractorsSv": [
+            "Ropa högt",
+            "Kör på",
+            "Stanna helt"
+        ],
+        "distractorsTh": [
+            "ตะโกนเสียงดัง",
+            "พุ่งชนเลย",
+            "หยุดนิ่งสนิท"
+        ],
+        "wordChunks": [
+            "Plinga",
+            "med",
+            "klockan"
+        ]
+    },
+    {
+        "id": "t8_ext_70",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "Ett punkterat däck",
+        "th": "ยางรถยนต์หรือจักรยานรั่วแบน",
+        "satunFlavor": "ยางรถรั่ว แบนแต๊ดแต๋ต้องปะยาง",
+        "phoneticTh": "เอ็ท-พุงค์-เท-รัท-ดัค",
+        "pronunciationTip": "däck สระ ä กว้าง ดัค",
+        "svgScene": "warning",
+        "distractorsSv": [
+            "Ett nytt däck",
+            "Bra bromsar",
+            "Ren kedja"
+        ],
+        "distractorsTh": [
+            "ยางใหม่",
+            "เบรกดี",
+            "โซ่สะอาด"
+        ],
+        "wordChunks": [
+            "Ett",
+            "punkterat",
+            "däck"
+        ]
+    },
+    {
+        "id": "t8_ext_71",
+        "themeId": "city_transport",
+        "type": "concept",
+        "sv": "Ett reflexband i mörkret",
+        "th": "แถบสะท้อนแสงสำหรับติดตัวในยามค่ำคืน",
+        "satunFlavor": "แถบสะท้อนแสง คนสวีเดนต้องติดตัวหน้าหนาว รถจะได้เห็นแต่ไกล",
+        "phoneticTh": "เอ็ท-เร-เฟล็คส์-บันด์-อี-เมอร์ค-แร็ต",
+        "pronunciationTip": "reflex ออกเสียง เร-เฟล็คส์",
+        "svgScene": "safety",
+        "distractorsSv": [
+            "En ficklampa",
+            "Ett mörkt tyg",
+            "Solglasögon"
+        ],
+        "distractorsTh": [
+            "ไฟฉาย",
+            "ผ้าสีมืด",
+            "แว่นกันแดด"
+        ],
+        "wordChunks": [
+            "Ett",
+            "reflexband",
+            "i",
+            "mörkret"
+        ]
+    },
+    {
+        "id": "t8_ext_72",
+        "themeId": "city_transport",
+        "type": "sentence",
+        "sv": "Bär reflex så du syns i mörkret",
+        "th": "ติดแผ่นสะท้อนแสงเพื่อความปลอดภัยในความมืดนะคะ",
+        "satunFlavor": "ติดแถบสะท้อนแสงต๊ะ คนขับรถจะได้แลเห็นเราชัดเจน",
+        "phoneticTh": "แบร์-เร-เฟล็คส์-โซ-ดู-ซืนส์-อี-เมอร์ค-แร็ต",
+        "pronunciationTip": "syns สระ y จู๋ปาก ซืนส์",
+        "svgScene": "safety",
+        "distractorsSv": [
+            "Klä dig i helsvart",
+            "Gå mitt i vägen",
+            "Släck alla lampor"
+        ],
+        "distractorsTh": [
+            "ใส่ชุดดำทั้งตัว",
+            "เดินกลางถนน",
+            "ปิดไฟทุกดวง"
+        ],
+        "wordChunks": [
+            "Bär",
+            "reflex",
+            "så",
+            "du",
+            "syns",
+            "i",
+            "mörkret"
+        ]
+    },
+    {
+        "id": "t8_ext_73",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "En reflexväst",
+        "th": "เสื้อกั๊กสะท้อนแสงสีสะท้อนตา",
+        "satunFlavor": "เสื้อกั๊กสะท้อนแสงสีเขียวมะนาว เดินหรือปั่นปลอดภัย",
+        "phoneticTh": "เอน-เร-เฟล็คส์-แวสต์",
+        "pronunciationTip": "väst สระ ä กว้าง แวสต์",
+        "svgScene": "safety",
+        "distractorsSv": [
+            "En jacka",
+            "En tröja",
+            "En cape"
+        ],
+        "distractorsTh": [
+            "เสื้อแจ็กเก็ต",
+            "เสื้อกันหนาว",
+            "ผ้าคลุมไหล่"
+        ],
+        "wordChunks": [
+            "En",
+            "reflexväst"
+        ]
+    },
+    {
+        "id": "t8_ext_74",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "Ett säkerhetsbälte i bilen",
+        "th": "เข็มขัดนิรภัยในรถยนต์",
+        "satunFlavor": "สายเบลท์ (เข็มขัดนิรภัย) ขึ้นรถต้องคาดทันที",
+        "phoneticTh": "เอ็ท-แซ-แคร์-เฮทส์-แบล-เตะ-อี-บี-เลน",
+        "pronunciationTip": "säkerhetsbälte แซ-แคร์-เฮทส์-แบล-เตะ",
+        "svgScene": "safety",
+        "distractorsSv": [
+            "En kudde",
+            "En ratt",
+            "En backspegel"
+        ],
+        "distractorsTh": [
+            "หมอน",
+            "พวงมาลัย",
+            "กระจกมองหลัง"
+        ],
+        "wordChunks": [
+            "Ett",
+            "säkerhetsbälte",
+            "i",
+            "bilen"
+        ]
+    },
+    {
+        "id": "t8_ext_75",
+        "themeId": "city_transport",
+        "type": "sentence",
+        "sv": "Knäpp fast bältet",
+        "th": "กรุณาคาดเข็มขัดนิรภัยให้แน่นค่ะ",
+        "satunFlavor": "คาดเข็มขัดนิรภัยให้ดังคลิก ปลอดภัยหายห่วง",
+        "phoneticTh": "คแน็พ-ฟัสต์-แบล-เท็ต",
+        "pronunciationTip": "knäpp ออกเสียง คแน็พ สระ ä กว้าง",
+        "svgScene": "safety",
+        "distractorsSv": [
+            "Ta av bältet",
+            "Lås upp dörren",
+            "Öppna fönstret"
+        ],
+        "distractorsTh": [
+            "ปลดเข็มขัดออก",
+            "ปลดล็อคประตู",
+            "เปิดหน้าต่าง"
+        ],
+        "wordChunks": [
+            "Knäpp",
+            "fast",
+            "bältet"
+        ]
+    },
+    {
+        "id": "t8_ext_76",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "En trygg bilbarnstol",
+        "th": "คาร์ซีทสำหรับเด็กเพื่อความปลอดภัย",
+        "satunFlavor": "เบาะนั่งนิรภัยสำหรับเด็ก กฎหมายสวีเดนเข้มงวดมาก",
+        "phoneticTh": "เอน-ทรึก-บีล-บาร์น-สทูล",
+        "pronunciationTip": "trygg สระ y จู๋ปาก ทรึก",
+        "svgScene": "car",
+        "distractorsSv": [
+            "Ett baksäte",
+            "En framstol",
+            "En vagn"
+        ],
+        "distractorsTh": [
+            "เบาะหลัง",
+            "เบาะหน้า",
+            "รถเข็น"
+        ],
+        "wordChunks": [
+            "En",
+            "trygg",
+            "bilbarnstol"
+        ]
+    },
+    {
+        "id": "t8_ext_77",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "En hastighetsgräns på vägen",
+        "th": "อัตราจำกัดความเร็วบนถนน",
+        "satunFlavor": "ป้ายจำกัดความเร็ว ขับตามกฎจราจรเคร่งครัด",
+        "phoneticTh": "เอน-ฮัส-ทิก-เฮทส์-แกรนส์",
+        "pronunciationTip": "gräns สระ ä กว้าง แกรนส์",
+        "svgScene": "traffic_light",
+        "distractorsSv": [
+            "En fartkamera",
+            "En vägskylt",
+            "Ett vägarbete"
+        ],
+        "distractorsTh": [
+            "กล้องตรวจจับความเร็ว",
+            "ป้ายบอกทาง",
+            "เขตก่อสร้างทาง"
+        ],
+        "wordChunks": [
+            "En",
+            "hastighetsgräns",
+            "på",
+            "vägen"
+        ]
+    },
+    {
+        "id": "t8_ext_78",
+        "themeId": "city_transport",
+        "type": "sentence",
+        "sv": "Kör försiktigt, det är halt!",
+        "th": "ขับรถอย่างระมัดระวังนะคะ ถนนลื่นมาก!",
+        "satunFlavor": "ขับรถระวังต๊ะ! ถนนลื่นน้ำแข็ง อย่าขับซิ่ง",
+        "phoneticTh": "เชิร์ร-เฟอร์-ซิค-ทิกต์-เด-แอร์-ฮัลต์!",
+        "pronunciationTip": "kör ออกเสียง เชิร์ร สระ ö ปากจู๋",
+        "svgScene": "warning",
+        "distractorsSv": [
+            "Kör fortare",
+            "Titta i mobilen",
+            "Somna inte"
+        ],
+        "distractorsTh": [
+            "ขับให้เร็วขึ้น",
+            "ก้มดูมือถือ",
+            "อย่าเพิ่งหลับ"
+        ],
+        "wordChunks": [
+            "Kör",
+            "försiktigt,",
+            "det",
+            "är",
+            "halt!"
+        ]
+    },
+    {
+        "id": "t8_ext_79",
+        "themeId": "city_transport",
+        "type": "sentence",
+        "sv": "Jag sätter på vindrutetorkarna",
+        "th": "ฉันเปิดที่ปัดน้ำฝนหน้ารถค่ะ",
+        "satunFlavor": "เปิดที่ปัดน้ำฝน ฝนตกหนักมองทางไม่เห็น",
+        "phoneticTh": "ย็อก-แซ็ต-เทร์-โพ-วินด์-รู-เทะ-ทูร์-คาร์-นา",
+        "pronunciationTip": "vindruta วินด์-รู-เทะ-ทูร์-คาร์-นา",
+        "svgScene": "car",
+        "distractorsSv": [
+            "Jag öppnar huven",
+            "Jag tutar",
+            "Jag stänger av motorn"
+        ],
+        "distractorsTh": [
+            "ฉันเปิดฝากระโปรงรถ",
+            "ฉันบีบแตร",
+            "ฉันดับเครื่องยนต์"
+        ],
+        "wordChunks": [
+            "Jag",
+            "sätter",
+            "på",
+            "vindrutetorkarna"
+        ]
+    },
+    {
+        "id": "t8_ext_80",
+        "themeId": "city_transport",
+        "type": "sentence",
+        "sv": "Jag skrapar rutorna på morgonen",
+        "th": "ฉันขูดน้ำแข็งที่เกาะกระจกรถในตอนเช้าค่ะ",
+        "satunFlavor": "ขูดน้ำแข็งกระจกรถหน้าหนาว ทุกเช้าก่อนขับไปทำงาน",
+        "phoneticTh": "ย็อก-สครอ-พาร์-รู-ทูร์-นา-โพ-มอร์-กอน-เนน",
+        "pronunciationTip": "skrapar สระ a สั้น สครอ-พาร์",
+        "svgScene": "snow",
+        "distractorsSv": [
+            "Jag tvättar bilen",
+            "Jag byter däck",
+            "Jag kör iväg"
+        ],
+        "distractorsTh": [
+            "ฉันล้างรถ",
+            "ฉันเปลี่ยนยาง",
+            "ฉันขับออกไปเลย"
+        ],
+        "wordChunks": [
+            "Jag",
+            "skrapar",
+            "rutorna",
+            "på",
+            "morgonen"
+        ]
+    },
+    {
+        "id": "t8_ext_81",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "En isskrapa till bilen",
+        "th": "ที่ขูดน้ำแข็งกระจกรถยนต์",
+        "satunFlavor": "ที่ขูดน้ำแข็ง อุปกรณ์คู่ใจคนมีรถในสวีเดน",
+        "phoneticTh": "เอน-อีส-สครอ-พา-ทิล-บี-เลน",
+        "pronunciationTip": "isskrapa อีส-สครอ-พา",
+        "svgScene": "snow",
+        "distractorsSv": [
+            "En snöborste",
+            "En skiftnyckel",
+            "En domkraft"
+        ],
+        "distractorsTh": [
+            "แปรงปัดหิมะ",
+            "ประแจเลื่อน",
+            "แม่แรงยกรถ"
+        ],
+        "wordChunks": [
+            "En",
+            "isskrapa",
+            "till",
+            "bilen"
+        ]
+    },
+    {
+        "id": "t8_ext_82",
+        "themeId": "city_transport",
+        "type": "word",
+        "sv": "Dubbdäck på vintern",
+        "th": "ยางรถยนต์แบบติดหมุดโลหะสำหรับวิ่งบนน้ำแข็ง",
+        "satunFlavor": "ยางติดหมุด เกาะน้ำแข็งหนึบ ขับขี่ปลอดภัยหน้าหนาว",
+        "phoneticTh": "ดุบ-ดัค-โพ-วิน-เทริน",
+        "pronunciationTip": "dubb สระ u ปากจู๋ ดุบ-ดัค",
+        "svgScene": "snow",
+        "distractorsSv": [
+            "Sommardäck",
+            "Cykelhjul",
+            "Reservdäck"
+        ],
+        "distractorsTh": [
+            "ยางหน้าร้อน",
+            "ล้อจักรยาน",
+            "ยางอะไหล่"
+        ],
+        "wordChunks": [
+            "Dubbdäck",
+            "på",
+            "vintern"
+        ]
+    },
+    {
+        "id": "t8_ext_83",
+        "themeId": "city_transport",
+        "type": "sentence",
+        "sv": "Kom fram säkert och tryggt!",
+        "th": "ขอให้เดินทางถึงจุดหมายปลายทางอย่างปลอดภัยนะคะ!",
+        "satunFlavor": "ขอให้ถึงที่หมายอย่างปลอดภัยบายใจทุกคนนะจ๊ะ!",
+        "phoneticTh": "คอม-ฟรัม-แซ-แคร์ท-อ็อค-ทรึกต์!",
+        "pronunciationTip": "säkert สระ ä กว้าง แซ-แคร์ท",
+        "svgScene": "smile",
+        "distractorsSv": [
+            "Kör för fort",
+            "Tappa bort dig",
+            "Glöm väskan"
+        ],
+        "distractorsTh": [
+            "ขับเร็วเกินไป",
+            "หลงทาง",
+            "ลืมกระเป๋า"
+        ],
+        "wordChunks": [
+            "Kom",
+            "fram",
+            "säkert",
+            "och",
+            "tryggt!"
+        ]
+    }
+]

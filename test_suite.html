@@ -68,7 +68,14 @@
       assert('DB: Exakt 10 teman definierade', themes && themes.length === 10, `Hittade ${themes.length} teman`);
       
       const allItems = window.ContentDB.getAllItems();
-      assert('DB: Omfattande ordförråd (>= 150 poster)', allItems && allItems.length >= 150, `Hittade ${allItems.length} poster`);
+      assert('DB: Komplett ordförråd (exakt 1 000 poster)', allItems && allItems.length === 1000, `Hittade ${allItems.length} poster (förväntade 1 000)`);
+      
+      let allThemes100 = true;
+      themes.forEach(t => {
+        const themeItems = window.ContentDB.getItemsByTheme(t.id);
+        if (!themeItems || themeItems.length !== 100) allThemes100 = false;
+      });
+      assert('DB: Varje tema har exakt 100 unika poster', allThemes100, 'Ett eller flera teman har inte 100 poster');
       
       const missingSatun = allItems.filter(i => !i.satun);
       assert('DB: Satun-dialektnoteringar finns på samtliga glosor', missingSatun.length === 0, `Saknas på ${missingSatun.length} poster`);

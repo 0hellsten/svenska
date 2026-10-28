@@ -2701,7 +2701,7 @@
       document.getElementById('btn-theme-bubble-speak')?.addEventListener('click', (e) => {
         e.stopPropagation();
         window.VisualEngine?.haptic?.('light', e.currentTarget);
-        const thaiSpeech = 'วิธีเก็บวงแหวนให้ครบ 100 เปอร์เซ็นต์ ฝึกสะสมดาวให้ครบทั้ง 16 คำจนได้ 5 ดาว แวะมาฝึกซ้ำเรื่อยๆ ในแต่ละวัน และพิชิตบอสประจำหมวดเพื่อรับเหรียญทองค่ะ สู้ๆ นะคะ';
+        const thaiSpeech = 'วิธีเก็บวงแหวนให้ครบ 100 เปอร์เซ็นต์ ฝึกสะสมดาวให้ครบทุกคำในหมวดจนได้ 5 ดาว แวะมาฝึกซ้ำเรื่อยๆ ในแต่ละวัน และพิชิตบอสประจำหมวดเพื่อรับเหรียญทองค่ะ สู้ๆ นะคะ';
         window.SpeechEngine?.speakThai?.(thaiSpeech);
       });
     },

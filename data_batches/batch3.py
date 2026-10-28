@@ -1,0 +1,4299 @@
+# -*- coding: utf-8 -*-
+# Batch 3: Theme 5 (everyday, 80 items) & Theme 6 (weather_time, 83 items)
+# Total: 163 items
+
+batch3_items = [
+    {
+        "id": "t5_ext_01",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "En tandborste",
+        "th": "แปรงสีฟัน",
+        "satunFlavor": "แปรงสีฟัน แปรงฟันให้สะอาดก่อนนอน",
+        "phoneticTh": "เอน-ทันด์-บอร์ช-เตะ",
+        "pronunciationTip": "rs ใน borste ออกเสียง sh บอร์ช-เตะ",
+        "svgScene": "brush",
+        "distractorsSv": [
+            "Tandkräm",
+            "En tvål",
+            "En kam"
+        ],
+        "distractorsTh": [
+            "ยาสีฟัน",
+            "สบู่",
+            "หวี"
+        ],
+        "wordChunks": [
+            "En",
+            "tandborste"
+        ]
+    },
+    {
+        "id": "t5_ext_02",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "Tandkräm",
+        "th": "ยาสีฟัน",
+        "satunFlavor": "ยาสีฟันรสมินต์หอมสดชื่น",
+        "phoneticTh": "ทันด์-แครม",
+        "pronunciationTip": "ä ใน kräm ลากเสียงกว้าง แครม",
+        "svgScene": "brush",
+        "distractorsSv": [
+            "En tandborste",
+            "Schampo",
+            "Tvål"
+        ],
+        "distractorsTh": [
+            "แปรงสีฟัน",
+            "แชมพู",
+            "สบู่"
+        ],
+        "wordChunks": [
+            "Tandkräm"
+        ]
+    },
+    {
+        "id": "t5_ext_03",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Jag borstar tänderna",
+        "th": "ฉันกำลังแปรงฟันค่ะ",
+        "satunFlavor": "แปรงฟันเช้าเย็น ฟันขาวสะอาดวิบวับ",
+        "phoneticTh": "ย็อก-บอร์ช-ทาร์-แทน-เดร์-นา",
+        "pronunciationTip": "tänderna สระ ä อ้าปากกว้าง แทน-เดร์-นา",
+        "svgScene": "brush",
+        "distractorsSv": [
+            "Jag tvättar håret",
+            "Jag duschar",
+            "Jag kammar mig"
+        ],
+        "distractorsTh": [
+            "ฉันสระผม",
+            "ฉันอาบน้ำ",
+            "ฉันหวีผม"
+        ],
+        "wordChunks": [
+            "Jag",
+            "borstar",
+            "tänderna"
+        ]
+    },
+    {
+        "id": "t5_ext_04",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "En hård tvål",
+        "th": "สบู่ก้อน",
+        "satunFlavor": "สบู่ก้อน ฟอกตัวหอมฉุย",
+        "phoneticTh": "เอน-ฮอร์ด-ทโวล",
+        "pronunciationTip": "tvål สระ å ปากกลม ทโวล",
+        "svgScene": "soap",
+        "distractorsSv": [
+            "Flytande tvål",
+            "Schampo",
+            "Balsam"
+        ],
+        "distractorsTh": [
+            "สบู่อาบน้ำเหลว",
+            "แชมพู",
+            "ครีมนวด"
+        ],
+        "wordChunks": [
+            "En",
+            "hård",
+            "tvål"
+        ]
+    },
+    {
+        "id": "t5_ext_05",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "Flytande tvål",
+        "th": "สบู่เหลวล้างมือ",
+        "satunFlavor": "สบู่เหลว กดล้างมือสะอาดปลอดภัย",
+        "phoneticTh": "ฟลือ-ตัน-เดะ-ทโวล",
+        "pronunciationTip": "y ใน flytande จีบปากลึก ฟลือ-ตัน-เดะ",
+        "svgScene": "soap",
+        "distractorsSv": [
+            "En hård tvål",
+            "Lotion",
+            "Diskmedel"
+        ],
+        "distractorsTh": [
+            "สบู่ก้อน",
+            "โลชั่น",
+            "น้ำยาล้างจาน"
+        ],
+        "wordChunks": [
+            "Flytande",
+            "tvål"
+        ]
+    },
+    {
+        "id": "t5_ext_06",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Jag tvättar händerna",
+        "th": "ฉันกำลังล้างมือค่ะ",
+        "satunFlavor": "ล้างมือก่อนกินข้าวเสมอ สุขภาพแข็งแรง",
+        "phoneticTh": "ย็อก-ทแว็ต-ทาร์-แฮน-เดร์-นา",
+        "pronunciationTip": "händerna สระ ä กว้าง แฮน-เดร์-นา",
+        "svgScene": "soap",
+        "distractorsSv": [
+            "Jag torkar händerna",
+            "Jag tvättar ansiktet",
+            "Jag diskar"
+        ],
+        "distractorsTh": [
+            "ฉันเช็ดมือ",
+            "ฉันล้างหน้า",
+            "ฉันล้างจาน"
+        ],
+        "wordChunks": [
+            "Jag",
+            "tvättar",
+            "händerna"
+        ]
+    },
+    {
+        "id": "t5_ext_07",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "En mjuk handduk",
+        "th": "ผ้าเช็ดมือนุ่มๆ",
+        "satunFlavor": "ผ้าขนหนูนุ่มๆ เช็ดมือแห้งสนิท",
+        "phoneticTh": "เอน-มยูค-ฮันด์-ดุค",
+        "pronunciationTip": "mjuk สระ u ปากจู๋ มยูค-ฮันด์-ดุค",
+        "svgScene": "towel",
+        "distractorsSv": [
+            "Ett lakan",
+            "En filt",
+            "En matta"
+        ],
+        "distractorsTh": [
+            "ผ้าปูที่นอน",
+            "ผ้าห่ม",
+            "พรม"
+        ],
+        "wordChunks": [
+            "En",
+            "mjuk",
+            "handduk"
+        ]
+    },
+    {
+        "id": "t5_ext_08",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "Ett badlakan",
+        "th": "ผ้าเช็ดตัวผืนใหญ่",
+        "satunFlavor": "ผ้าเช็ดตัวผืนใหญ่ ห่มตัวหลังอาบน้ำอุ่น",
+        "phoneticTh": "เอ็ท-บอด-ลอ-คัน",
+        "pronunciationTip": "bad สระ a ยาว บอด-ลอ-คัน",
+        "svgScene": "towel",
+        "distractorsSv": [
+            "En handduk",
+            "En trasa",
+            "Ett örngott"
+        ],
+        "distractorsTh": [
+            "ผ้าเช็ดมือ",
+            "ผ้าขี้ริ้ว",
+            "ปลอกหมอน"
+        ],
+        "wordChunks": [
+            "Ett",
+            "badlakan"
+        ]
+    },
+    {
+        "id": "t5_ext_09",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Jag tar en varm dusch",
+        "th": "ฉันขอไปอาบน้ำอุ่นค่ะ",
+        "satunFlavor": "อาบน้ำอุ่นให้คลายหนาว สบายเนื้อสบายตัวจังฮู้",
+        "phoneticTh": "ย็อก-ทอร์-เอน-วาร์ม-ดุช",
+        "pronunciationTip": "dusch ออกเสียง ดุช ตัว u ปากจู๋ ย็อก-ทอร์-เอน-วาร์ม-ดุช",
+        "svgScene": "shower",
+        "distractorsSv": [
+            "Jag badar i sjön",
+            "Jag tvättar fötterna",
+            "Jag sover"
+        ],
+        "distractorsTh": [
+            "ฉันว่ายน้ำในทะเลสาบ",
+            "ฉันล้างเท้า",
+            "ฉันนอน"
+        ],
+        "wordChunks": [
+            "Jag",
+            "tar",
+            "en",
+            "varm",
+            "dusch"
+        ]
+    },
+    {
+        "id": "t5_ext_10",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "Mild schampo",
+        "th": "แชมพูสระผมสูตรอ่อนโยน",
+        "satunFlavor": "ยาสระผม กลิ่นหอมฟองนุ่ม",
+        "phoneticTh": "มิลด์-ชัม-พู",
+        "pronunciationTip": "schampo ออกเสียง ชัม-พู สระ o เป็นอู",
+        "svgScene": "soap",
+        "distractorsSv": [
+            "Tvål",
+            "Tandkräm",
+            "Balsam"
+        ],
+        "distractorsTh": [
+            "สบู่",
+            "ยาสีฟัน",
+            "ครีมนวด"
+        ],
+        "wordChunks": [
+            "Mild",
+            "schampo"
+        ]
+    },
+    {
+        "id": "t5_ext_11",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "En hårtork",
+        "th": "ไดร์เป่าผม",
+        "satunFlavor": "ไดร์เป่าผม เป่าให้แห้งไวทันใจตอนหน้าหนาว",
+        "phoneticTh": "เอน-ฮอร์-ทอร์ค",
+        "pronunciationTip": "hår สระ å ปากกลม ฮอร์-ทอร์ค",
+        "svgScene": "dryer",
+        "distractorsSv": [
+            "En kam",
+            "En sax",
+            "En spegel"
+        ],
+        "distractorsTh": [
+            "หวี",
+            "กรรไกร",
+            "กระจก"
+        ],
+        "wordChunks": [
+            "En",
+            "hårtork"
+        ]
+    },
+    {
+        "id": "t5_ext_12",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "En stor spegel",
+        "th": "กระจกเงาบานใหญ่",
+        "satunFlavor": "กระจกเงา ส่องแลหน้าแต่งตัวสวยๆ",
+        "phoneticTh": "เอน-สตอร์-สเป-เก็ล",
+        "pronunciationTip": "stor สระ o ออกเสียงสระอู สตอร์-สเป-เก็ล",
+        "svgScene": "mirror",
+        "distractorsSv": [
+            "Ett fönster",
+            "En tavla",
+            "En dörr"
+        ],
+        "distractorsTh": [
+            "หน้าต่าง",
+            "รูปภาพ",
+            "ประตู"
+        ],
+        "wordChunks": [
+            "En",
+            "stor",
+            "spegel"
+        ]
+    },
+    {
+        "id": "t5_ext_13",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Jag kammar håret",
+        "th": "ฉันกำลังหวีผมค่ะ",
+        "satunFlavor": "หวีผมให้เรียบร้อยก่อนออกจากเรือน",
+        "phoneticTh": "ย็อก-คัม-มาร์-ฮอ-เร็ต",
+        "pronunciationTip": "håret สระ å ทำปากกลม ย็อก-คัม-มาร์-ฮอ-เร็ต",
+        "svgScene": "brush",
+        "distractorsSv": [
+            "Jag klipper håret",
+            "Jag färgar håret",
+            "Jag tvättar håret"
+        ],
+        "distractorsTh": [
+            "ฉันตัดผม",
+            "ฉันย้อมผม",
+            "ฉันสระผม"
+        ],
+        "wordChunks": [
+            "Jag",
+            "kammar",
+            "håret"
+        ]
+    },
+    {
+        "id": "t5_ext_14",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "En bekväm säng",
+        "th": "เตียงนอนแสนสบาย",
+        "satunFlavor": "เตียงนอนนุ่มๆ นอนหลับบายใจทั้งคืน",
+        "phoneticTh": "เอน-เบะ-แควร์ม-แซ็งก์",
+        "pronunciationTip": "bekväm สระ ä กว้าง เบะ-แควร์ม-แซ็งก์",
+        "svgScene": "bed",
+        "distractorsSv": [
+            "En soffa",
+            "En fåtölj",
+            "En stol"
+        ],
+        "distractorsTh": [
+            "โซฟา",
+            "เก้าอี้อาร์มแชร์",
+            "เก้าอี้"
+        ],
+        "wordChunks": [
+            "En",
+            "bekväm",
+            "säng"
+        ]
+    },
+    {
+        "id": "t5_ext_15",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "Ett mjukt täcke",
+        "th": "ผ้านวมหนานุ่ม",
+        "satunFlavor": "ผ้านวมอุ่นๆ หน้าหนาวห่มมิดหัวอุ่นสบาย",
+        "phoneticTh": "เอ็ท-มยูคท-แท็ค-เคะ",
+        "pronunciationTip": "täcke สระ ä อ้าปากกว้าง แท็ค-เคะ",
+        "svgScene": "bed",
+        "distractorsSv": [
+            "En kudde",
+            "Ett lakan",
+            "En filt"
+        ],
+        "distractorsTh": [
+            "หมอน",
+            "ผ้าปูที่นอน",
+            "ผ้าห่มบาง"
+        ],
+        "wordChunks": [
+            "Ett",
+            "mjukt",
+            "täcke"
+        ]
+    },
+    {
+        "id": "t5_ext_16",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "En skön kudde",
+        "th": "หมอนหนุนนอนแสนสบาย",
+        "satunFlavor": "หมอนหนุนหัว หนุนแล้วหลับฝันดี",
+        "phoneticTh": "เอน-เชิน-คุด-เดะ",
+        "pronunciationTip": "skön ออกเสียง เชิน และ kudde สระ u จู๋ปาก คุด-เดะ",
+        "svgScene": "bed",
+        "distractorsSv": [
+            "Ett täcke",
+            "En madrass",
+            "En filt"
+        ],
+        "distractorsTh": [
+            "ผ้านวม",
+            "ที่นอน",
+            "ผ้าห่ม"
+        ],
+        "wordChunks": [
+            "En",
+            "skön",
+            "kudde"
+        ]
+    },
+    {
+        "id": "t5_ext_17",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Jag bäddar sängen",
+        "th": "ฉันกำลังจัดเก็บที่นอนค่ะ",
+        "satunFlavor": "จัดที่นอนให้ตึงเปรี๊ยะตอนตื่นนอน",
+        "phoneticTh": "ย็อก-แบลด-ดาร์-แซ็ง-เง็น",
+        "pronunciationTip": "bäddar สระ ä กว้าง แบลด-ดาร์-แซ็ง-เง็น",
+        "svgScene": "bed",
+        "distractorsSv": [
+            "Jag sover i sängen",
+            "Jag köper en säng",
+            "Jag tvättar lakan"
+        ],
+        "distractorsTh": [
+            "ฉันนอนบนเตียง",
+            "ฉันซื้อเตียง",
+            "ฉันซักผ้าปู"
+        ],
+        "wordChunks": [
+            "Jag",
+            "bäddar",
+            "sängen"
+        ]
+    },
+    {
+        "id": "t5_ext_18",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Väckarklockan ringer",
+        "th": "นาฬิกาปลุกดังแล้วค่ะ",
+        "satunFlavor": "นาฬิกาปลุกร้องลั่น ได้เวลาลุกตื่นแล้ว",
+        "phoneticTh": "แว็ค-คาร์-คล็อค-คัน-ริง-เงร์",
+        "pronunciationTip": "klockan สระ o สั้น คล็อค-คัน",
+        "svgScene": "alarm",
+        "distractorsSv": [
+            "Telefonen ringer",
+            "Dörren öppnas",
+            "Bilen startar"
+        ],
+        "distractorsTh": [
+            "โทรศัพท์ดัง",
+            "ประตูปิด",
+            "รถสตาร์ท"
+        ],
+        "wordChunks": [
+            "Väckarklockan",
+            "ringer"
+        ]
+    },
+    {
+        "id": "t5_ext_19",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Jag stiger upp ur sängen",
+        "th": "ฉันลุกขึ้นจากเตียงนอนค่ะ",
+        "satunFlavor": "ลุกจากที่นอน บิดขี้เกียจพร้อมเริ่มวันใหม่",
+        "phoneticTh": "ย็อก-สตี-เกร์-อุพ-อูร์-แซ็ง-เง็น",
+        "pronunciationTip": "ur สระ u ออกเสียงสระอู อูร์-แซ็ง-เง็น",
+        "svgScene": "morning",
+        "distractorsSv": [
+            "Jag går och lägger mig",
+            "Jag somnar om",
+            "Jag ligger kvar"
+        ],
+        "distractorsTh": [
+            "ฉันไปเข้านอน",
+            "ฉันหลับต่อ",
+            "ฉันนอนแช่ต่อ"
+        ],
+        "wordChunks": [
+            "Jag",
+            "stiger",
+            "upp",
+            "ur",
+            "sängen"
+        ]
+    },
+    {
+        "id": "t5_ext_20",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Jag klär på mig",
+        "th": "ฉันกำลังแต่งตัวใส่เสื้อผ้าค่ะ",
+        "satunFlavor": "นุ่งผ้าใส่เสื้อให้เรียบร้อย",
+        "phoneticTh": "ย็อก-แคลร์-โพ-เมย์",
+        "pronunciationTip": "klär สระ ä กว้าง แคลร์-โพ-เมย์",
+        "svgScene": "clothes",
+        "distractorsSv": [
+            "Jag klär av mig",
+            "Jag byter skor",
+            "Jag tvättar kläder"
+        ],
+        "distractorsTh": [
+            "ฉันถอดเสื้อผ้า",
+            "ฉันเปลี่ยนรองเท้า",
+            "ฉันซักผ้า"
+        ],
+        "wordChunks": [
+            "Jag",
+            "klär",
+            "på",
+            "mig"
+        ]
+    },
+    {
+        "id": "t5_ext_21",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Jag klär av mig",
+        "th": "ฉันกำลังถอดเสื้อผ้าเตรียมอาบน้ำค่ะ",
+        "satunFlavor": "ถอดเสื้อผ้าเตรียมลงอ่างอาบน้ำ",
+        "phoneticTh": "ย็อก-แคลร์-ออฟ-เมย์",
+        "pronunciationTip": "av ออกเสียง ออฟ สั้น ย็อก-แคลร์-ออฟ-เมย์",
+        "svgScene": "clothes",
+        "distractorsSv": [
+            "Jag klär på mig",
+            "Jag köper kläder",
+            "Jag stryker skjortan"
+        ],
+        "distractorsTh": [
+            "ฉันใส่เสื้อผ้า",
+            "ฉันซื้อเสื้อผ้า",
+            "ฉันรีดเสื้อเชิ้ต"
+        ],
+        "wordChunks": [
+            "Jag",
+            "klär",
+            "av",
+            "mig"
+        ]
+    },
+    {
+        "id": "t5_ext_22",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "En tvättmaskin",
+        "th": "เครื่องซักผ้า",
+        "satunFlavor": "จักรซักผ้า ปั่นผ้าสะอาดไม่ต้องเปลืองแรง",
+        "phoneticTh": "เอน-ทแว็ตต์-มา-ชีน",
+        "pronunciationTip": "maskin ตัว k ออกเสียง sh มา-ชีน",
+        "svgScene": "washing_machine",
+        "distractorsSv": [
+            "En torktumlare",
+            "Ett torkskåp",
+            "En diskmaskin"
+        ],
+        "distractorsTh": [
+            "เครื่องอบผ้า",
+            "ตู้เป่าผ้าแห้ง",
+            "เครื่องล้างจาน"
+        ],
+        "wordChunks": [
+            "En",
+            "tvättmaskin"
+        ]
+    },
+    {
+        "id": "t5_ext_23",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "En torktumlare",
+        "th": "เครื่องอบผ้าให้แห้ง",
+        "satunFlavor": "เครื่องอบผ้า หมุนปั่นผ้าแห้งอุ่นฟู สบายใจไม่ต้องตาก",
+        "phoneticTh": "เอน-ทอร์ค-ทุม-ลอ-เรอะ",
+        "pronunciationTip": "tumlare สระ u ทำปากจู๋ ทุม-ลอ-เรอะ",
+        "svgScene": "dryer",
+        "distractorsSv": [
+            "En tvättmaskin",
+            "Ett strykjärn",
+            "En torkställning"
+        ],
+        "distractorsTh": [
+            "เครื่องซักผ้า",
+            "เตารีด",
+            "ราวตากผ้า"
+        ],
+        "wordChunks": [
+            "En",
+            "torktumlare"
+        ]
+    },
+    {
+        "id": "t5_ext_24",
+        "themeId": "everyday",
+        "type": "concept",
+        "sv": "En tvättstuga",
+        "th": "ห้องซักผ้ารวมของอพาร์ตเมนต์",
+        "satunFlavor": "ห้องซักผ้ารวมใต้ตึก ต้องจองคิวซักนะวัฒนธรรมสวีเดนแท้ๆ",
+        "phoneticTh": "เอน-ทแว็ตต์-สทู-กา",
+        "pronunciationTip": "stuga สระ u ออกเสียงสระอู สทู-กา",
+        "svgScene": "washing_machine",
+        "distractorsSv": [
+            "Ett soprum",
+            "Ett förråd",
+            "En källare"
+        ],
+        "distractorsTh": [
+            "ห้องทิ้งขยะ",
+            "ห้องเก็บของ",
+            "ห้องใต้ดิน"
+        ],
+        "wordChunks": [
+            "En",
+            "tvättstuga"
+        ]
+    },
+    {
+        "id": "t5_ext_25",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "Flytande tvättmedel",
+        "th": "น้ำยาซักผ้าสูตรน้ำ",
+        "satunFlavor": "น้ำยาซักผ้า กลิ่นหอมสะอาด",
+        "phoneticTh": "ฟลือ-ตัน-เดะ-ทแว็ตต์-เม-เด็ล",
+        "pronunciationTip": "medel เน้นพยางค์แรก เม-เด็ล",
+        "svgScene": "soap",
+        "distractorsSv": [
+            "Sköljmedel",
+            "Diskmedel",
+            "Blekmedel"
+        ],
+        "distractorsTh": [
+            "น้ำยาปรับผ้านุ่ม",
+            "น้ำยาล้างจาน",
+            "น้ำยาฟอกขาว"
+        ],
+        "wordChunks": [
+            "Flytande",
+            "tvättmedel"
+        ]
+    },
+    {
+        "id": "t5_ext_26",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "Doftande sköljmedel",
+        "th": "น้ำยาปรับผ้านุ่มกลิ่นหอม",
+        "satunFlavor": "น้ำยาปรับผ้านุ่ม ผ้าหอมนุ่มฟูถูกใจ",
+        "phoneticTh": "ดุฟ-ตัน-เดะ-เชิลย์-เม-เด็ล",
+        "pronunciationTip": "skölj ออกเสียง เชิลย์ สระ ö ปากจู๋",
+        "svgScene": "soap",
+        "distractorsSv": [
+            "Tvättmedel",
+            "Såpa",
+            "Rengöringsspray"
+        ],
+        "distractorsTh": [
+            "ผงซักฟอก",
+            "สบู่เหลวสน",
+            "สเปรย์ทำความสะอาด"
+        ],
+        "wordChunks": [
+            "Doftande",
+            "sköljmedel"
+        ]
+    },
+    {
+        "id": "t5_ext_27",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Jag hänger tvätten",
+        "th": "ฉันกำลังตากผ้าค่ะ",
+        "satunFlavor": "ผึ่งผ้าตากลม สะอาดแห้งไว",
+        "phoneticTh": "ย็อก-แฮง-เงร์-ทแว็ต-เทน",
+        "pronunciationTip": "hänger สระ ä กว้าง แฮง-เงร์-ทแว็ต-เทน",
+        "svgScene": "laundry",
+        "distractorsSv": [
+            "Jag stryker kläder",
+            "Jag viker kläder",
+            "Jag köper kläder"
+        ],
+        "distractorsTh": [
+            "ฉันรีดผ้า",
+            "ฉันพับผ้า",
+            "ฉันซื้อเสื้อผ้า"
+        ],
+        "wordChunks": [
+            "Jag",
+            "hänger",
+            "tvätten"
+        ]
+    },
+    {
+        "id": "t5_ext_28",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Jag viker tvätten",
+        "th": "ฉันกำลังพับเสื้อผ้าที่แห้งแล้วค่ะ",
+        "satunFlavor": "พับผ้าเรียบร้อย เก็บเข้าตู้เสื้อผ้า",
+        "phoneticTh": "ย็อก-วี-เกร์-ทแว็ต-เทน",
+        "pronunciationTip": "viker สระ i ลากยาว วี-เกร์",
+        "svgScene": "laundry",
+        "distractorsSv": [
+            "Jag kastar tvätten",
+            "Jag smutsar ner",
+            "Jag tvättar"
+        ],
+        "distractorsTh": [
+            "ฉันโยนผ้าทิ้ง",
+            "ฉันทำเลอะ",
+            "ฉันซักผ้า"
+        ],
+        "wordChunks": [
+            "Jag",
+            "viker",
+            "tvätten"
+        ]
+    },
+    {
+        "id": "t5_ext_29",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "Ett varmt strykjärn",
+        "th": "เตารีดร้อนๆ",
+        "satunFlavor": "เตารีด รีดเสื้อผ้าให้เรียบกริบ",
+        "phoneticTh": "เอ็ท-วาร์มต์-สตรึค-แยร์น",
+        "pronunciationTip": "strykjärn สระ y จู๋ปาก สตรึค และ järn แยร์น",
+        "svgScene": "iron",
+        "distractorsSv": [
+            "En strykbräda",
+            "En sax",
+            "En nål"
+        ],
+        "distractorsTh": [
+            "โต๊ะรีดผ้า",
+            "กรรไกร",
+            "เข็มเย็บผ้า"
+        ],
+        "wordChunks": [
+            "Ett",
+            "varmt",
+            "strykjärn"
+        ]
+    },
+    {
+        "id": "t5_ext_30",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Jag stryker en skjorta",
+        "th": "ฉันกำลังรีดเสื้อเชิ้ตค่ะ",
+        "satunFlavor": "รีดเสื้อเชิ้ตใส่ไปทำงานให้ดูดี",
+        "phoneticTh": "ย็อก-สตรึ-เกร์-เอน-ชูร์-ตา",
+        "pronunciationTip": "skjorta ออกเสียง ชูร์-ตา ปากกลม",
+        "svgScene": "iron",
+        "distractorsSv": [
+            "Jag tvättar skjortan",
+            "Jag köper en tröja",
+            "Jag syr en knapp"
+        ],
+        "distractorsTh": [
+            "ฉันซักเสื้อเชิ้ต",
+            "ฉันซื้อเสื้อกันหนาว",
+            "ฉันเย็บกระดุม"
+        ],
+        "wordChunks": [
+            "Jag",
+            "stryker",
+            "en",
+            "skjorta"
+        ]
+    },
+    {
+        "id": "t5_ext_31",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "En stark dammsugare",
+        "th": "เครื่องดูดฝุ่นพลังแรง",
+        "satunFlavor": "เครื่องดูดฝุ่น ดูดฝุ่นเกลี้ยงพื้นสะอาดเอี่ยม",
+        "phoneticTh": "เอน-สตาร์ค-ดัม-ซู-กา-เรอะ",
+        "pronunciationTip": "dammsugare สระ u เป็นสระอู ดัม-ซู-กา-เรอะ",
+        "svgScene": "cleaning",
+        "distractorsSv": [
+            "En sopkvast",
+            "En mopp",
+            "En skurhink"
+        ],
+        "distractorsTh": [
+            "ไม้กวาด",
+            "ไม้ม็อบ",
+            "ถังน้ำถูพื้น"
+        ],
+        "wordChunks": [
+            "En",
+            "stark",
+            "dammsugare"
+        ]
+    },
+    {
+        "id": "t5_ext_32",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Jag dammsuger vardagsrummet",
+        "th": "ฉันกำลังดูดฝุ่นห้องนั่งเล่นค่ะ",
+        "satunFlavor": "ดูดฝุ่นห้องโถงให้สะอาด สะอาดตาน่าอยู่",
+        "phoneticTh": "ย็อก-ดัม-ซู-เกร์-วาร์-ด็อกส์-รุม-เม็ต",
+        "pronunciationTip": "vardagsrummet รุม-เม็ต ปากจู๋ ดัม-ซู-เกร์",
+        "svgScene": "cleaning",
+        "distractorsSv": [
+            "Jag diskar köket",
+            "Jag sover i sängen",
+            "Jag tittar på tv"
+        ],
+        "distractorsTh": [
+            "ฉันล้างจานในครัว",
+            "ฉันนอนบนเตียง",
+            "ฉันดูทีวี"
+        ],
+        "wordChunks": [
+            "Jag",
+            "dammsuger",
+            "vardagsrummet"
+        ]
+    },
+    {
+        "id": "t5_ext_33",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "En golvmopp",
+        "th": "ไม้ม็อบถูพื้น",
+        "satunFlavor": "ไม้ม็อบชุบน้ำถูเรือนให้เงาวับ",
+        "phoneticTh": "เอน-กุลฟ์-ม็อพ",
+        "pronunciationTip": "golv สระ o ออกเสียงสระอู กุลฟ์-ม็อพ",
+        "svgScene": "cleaning",
+        "distractorsSv": [
+            "En sopkvast",
+            "En dammsugare",
+            "En dammtrasa"
+        ],
+        "distractorsTh": [
+            "ไม้กวาด",
+            "เครื่องดูดฝุ่น",
+            "ผ้าปัดฝุ่น"
+        ],
+        "wordChunks": [
+            "En",
+            "golvmopp"
+        ]
+    },
+    {
+        "id": "t5_ext_34",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Jag moppar golvet",
+        "th": "ฉันกำลังถูพื้นค่ะ",
+        "satunFlavor": "ถูพื้นสะอาดจนเดินเท้าเปล่าสบายใจ",
+        "phoneticTh": "ย็อก-ม็อพ-พาร์-กุล-เว็ต",
+        "pronunciationTip": "golvet สระ o ออกเสียง กุล-เว็ต",
+        "svgScene": "cleaning",
+        "distractorsSv": [
+            "Jag målar väggen",
+            "Jag byter lampa",
+            "Jag öppnar fönstret"
+        ],
+        "distractorsTh": [
+            "ฉันทาสีผนัง",
+            "ฉันเปลี่ยนหลอดไฟ",
+            "ฉันเปิดหน้าต่าง"
+        ],
+        "wordChunks": [
+            "Jag",
+            "moppar",
+            "golvet"
+        ]
+    },
+    {
+        "id": "t5_ext_35",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "Effektivt diskmedel",
+        "th": "น้ำยาล้างจานเข้มข้น",
+        "satunFlavor": "น้ำยาล้างจาน ล้างคราบมันหมดเกลี้ยง",
+        "phoneticTh": "เอฟ-เฟ็ค-ทีฟต์-ดิสค์-เม-เด็ล",
+        "pronunciationTip": "disk ออกเสียง ดิสค์-เม-เด็ล",
+        "svgScene": "soap",
+        "distractorsSv": [
+            "Tvättmedel",
+            "Schampo",
+            "Bilschampo"
+        ],
+        "distractorsTh": [
+            "ผงซักฟอก",
+            "แชมพู",
+            "แชมพูล้างรถ"
+        ],
+        "wordChunks": [
+            "Effektivt",
+            "diskmedel"
+        ]
+    },
+    {
+        "id": "t5_ext_36",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "En diskborste",
+        "th": "แปรงล้างจาน",
+        "satunFlavor": "แปรงล้างจานมีด้ามจับ เอกลักษณ์ครัวสวีเดนล้างสะดวกมือไม่เลอะ",
+        "phoneticTh": "เอน-ดิสค์-บอร์ช-เตะ",
+        "pronunciationTip": "rs ออกเสียง sh บอร์ช-เตะ",
+        "svgScene": "brush",
+        "distractorsSv": [
+            "En disksvamp",
+            "En disktrasa",
+            "En handduk"
+        ],
+        "distractorsTh": [
+            "ฟองน้ำล้างจาน",
+            "ผ้าเช็ดโต๊ะ",
+            "ผ้าเช็ดมือ"
+        ],
+        "wordChunks": [
+            "En",
+            "diskborste"
+        ]
+    },
+    {
+        "id": "t5_ext_37",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "En disktrasa",
+        "th": "ผ้าเช็ดโต๊ะ / ผ้าเช็ดอ่างล้างจาน",
+        "satunFlavor": "ผ้าเช็ดโต๊ะสวีเดน ซับน้ำดีบิดแห้งไว",
+        "phoneticTh": "เอน-ดิสค์-ทรา-สะ",
+        "pronunciationTip": "trasa สระ a ยาว ทรา-สะ",
+        "svgScene": "cleaning",
+        "distractorsSv": [
+            "En diskborste",
+            "En skursvamp",
+            "Ett förkläde"
+        ],
+        "distractorsTh": [
+            "แปรงล้างจาน",
+            "ฝอยขัดหม้อ",
+            "ผ้ากันเปื้อน"
+        ],
+        "wordChunks": [
+            "En",
+            "disktrasa"
+        ]
+    },
+    {
+        "id": "t5_ext_38",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Jag diskar för hand",
+        "th": "ฉันล้างจานด้วยมือค่ะ",
+        "satunFlavor": "ล้างจานด้วยมือ แป๊บเดียวสะอาดวับ",
+        "phoneticTh": "ย็อก-ดิส-คาร์-เฟอร์-ฮันด์",
+        "pronunciationTip": "för hand ออกเสียง เฟอร์-ฮันด์",
+        "svgScene": "dishes",
+        "distractorsSv": [
+            "Jag kör diskmaskinen",
+            "Jag lagar mat",
+            "Jag äter middag"
+        ],
+        "distractorsTh": [
+            "ฉันเปิดเครื่องล้างจาน",
+            "ฉันทำกับข้าว",
+            "ฉันกินมื้อค่ำ"
+        ],
+        "wordChunks": [
+            "Jag",
+            "diskar",
+            "för",
+            "hand"
+        ]
+    },
+    {
+        "id": "t5_ext_39",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "En modern diskmaskin",
+        "th": "เครื่องล้างจานรุ่นใหม่",
+        "satunFlavor": "เครื่องล้างจาน ใส่จานชามกดปุ่มเสร็จบายใจ",
+        "phoneticTh": "เอน-มู-แดร์น-ดิสค์-มา-ชีน",
+        "pronunciationTip": "modern สระ o ออกเสียง มู-แดร์น",
+        "svgScene": "kitchen",
+        "distractorsSv": [
+            "En tvättmaskin",
+            "En spis",
+            "En ugn"
+        ],
+        "distractorsTh": [
+            "เครื่องซักผ้า",
+            "เตาปรุงอาหาร",
+            "เตาอบ"
+        ],
+        "wordChunks": [
+            "En",
+            "modern",
+            "diskmaskin"
+        ]
+    },
+    {
+        "id": "t5_ext_40",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Jag plockar ur diskmaskinen",
+        "th": "ฉันกำลังเก็บจานออกจากเครื่องล้างจานค่ะ",
+        "satunFlavor": "หยิบจานชามที่ล้างแห้งแล้วเก็บเข้าตู้",
+        "phoneticTh": "ย็อก-พล็อค-คาร์-อูร์-ดิสค์-มา-ชี-เนน",
+        "pronunciationTip": "ur สระ u เป็นอู พล็อค-คาร์-อูร์",
+        "svgScene": "kitchen",
+        "distractorsSv": [
+            "Jag startar maskinen",
+            "Jag diskar kastrullen",
+            "Jag krossar tallriken"
+        ],
+        "distractorsTh": [
+            "ฉันกดเปิดเครื่อง",
+            "ฉันขัดหม้อ",
+            "ฉันทำจานแตก"
+        ],
+        "wordChunks": [
+            "Jag",
+            "plockar",
+            "ur",
+            "diskmaskinen"
+        ]
+    },
+    {
+        "id": "t5_ext_41",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Jag torkar köksbordet",
+        "th": "ฉันกำลังเช็ดโต๊ะกินข้าวในครัวค่ะ",
+        "satunFlavor": "เช็ดโต๊ะกินข้าวสะอาดเอี่ยมหลังกินเสร็จ",
+        "phoneticTh": "ย็อก-ทูร์-คาร์-เชิคส์-บัวร์-เด็ต",
+        "pronunciationTip": "kök ออกเสียง เชิคส์-บัวร์-เด็ต",
+        "svgScene": "cleaning",
+        "distractorsSv": [
+            "Jag dukar bordet",
+            "Jag flyttar bordet",
+            "Jag köper ett bord"
+        ],
+        "distractorsTh": [
+            "ฉันจัดโต๊ะอาหาร",
+            "ฉันย้ายโต๊ะ",
+            "ฉันซื้อโต๊ะ"
+        ],
+        "wordChunks": [
+            "Jag",
+            "torkar",
+            "köksbordet"
+        ]
+    },
+    {
+        "id": "t5_ext_42",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "En full soppåse",
+        "th": "ถุงขยะที่เต็มแล้ว",
+        "satunFlavor": "ถุงขยะเต็มเอี้ยด มัดปากถุงเตรียมเอาไปทิ้ง",
+        "phoneticTh": "เอน-ฟุลล์-ซ็อพ-โพ-เสะ",
+        "pronunciationTip": "sop ออกเสียง ซ็อพ และ påse ออกเสียง โพ-เสะ",
+        "svgScene": "trash",
+        "distractorsSv": [
+            "En tom påse",
+            "En matkasse",
+            "En ryggsäck"
+        ],
+        "distractorsTh": [
+            "ถุงเปล่า",
+            "ถุงกับข้าว",
+            "กระเป๋าเป้"
+        ],
+        "wordChunks": [
+            "En",
+            "full",
+            "soppåse"
+        ]
+    },
+    {
+        "id": "t5_ext_43",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Jag går ut med soporna",
+        "th": "ฉันกำลังเอาขยะออกไปทิ้งค่ะ",
+        "satunFlavor": "หิ้วถุงขยะไปทิ้งที่ห้องแยกขยะ",
+        "phoneticTh": "ย็อก-กอร์-อูท-เมด-ซู-พูร์-นา",
+        "pronunciationTip": "soporna สระ o ออกเสียงสระอู ซู-พูร์-นา",
+        "svgScene": "trash",
+        "distractorsSv": [
+            "Jag går och handlar",
+            "Jag går till bussen",
+            "Jag går på promenad"
+        ],
+        "distractorsTh": [
+            "ฉันไปซื้อของ",
+            "ฉันเดินไปขึ้นรถเมล์",
+            "ฉันไปเดินเล่น"
+        ],
+        "wordChunks": [
+            "Jag",
+            "går",
+            "ut",
+            "med",
+            "soporna"
+        ]
+    },
+    {
+        "id": "t5_ext_44",
+        "themeId": "everyday",
+        "type": "concept",
+        "sv": "Ett soprum",
+        "th": "ห้องรวมถังขยะและคัดแยกขยะของตึก",
+        "satunFlavor": "ห้องทิ้งขยะรวม คัดแยกขยะตามสีถัง",
+        "phoneticTh": "เอ็ท-ซูพ-รุม",
+        "pronunciationTip": "rum สระ u ปากจู๋ ซูพ-รุม",
+        "svgScene": "trash",
+        "distractorsSv": [
+            "Ett cykelrum",
+            "En källare",
+            "En hiss"
+        ],
+        "distractorsTh": [
+            "ห้องเก็บจักรยาน",
+            "ห้องใต้ดิน",
+            "ลิฟต์"
+        ],
+        "wordChunks": [
+            "Ett",
+            "soprum"
+        ]
+    },
+    {
+        "id": "t5_ext_45",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Vi källsorterar plast och kartong",
+        "th": "พวกเราแยกขยะพลาสติกและกล่องกระดาษค่ะ",
+        "satunFlavor": "คัดแยกพลาสติกกับกล่องกระดาษ ช่วยกันรักษ์โลกน่ารักจังฮู้",
+        "phoneticTh": "วี-แช็ล-ซูร์-เท-ราร์-พลัสต์-อ็อค-คาร์-ทุง",
+        "pronunciationTip": "källsorterar แช็ล-ซูร์-เท-ราร์",
+        "svgScene": "recycle",
+        "distractorsSv": [
+            "Vi slänger allt i samma",
+            "Vi eldar skräp",
+            "Vi sparar kartonger"
+        ],
+        "distractorsTh": [
+            "เราทิ้งรวมกันหมด",
+            "เราเผาขยะ",
+            "เราเก็บกล่องไว้"
+        ],
+        "wordChunks": [
+            "Vi",
+            "källsorterar",
+            "plast",
+            "och",
+            "kartong"
+        ]
+    },
+    {
+        "id": "t5_ext_46",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "Ett stort fönster",
+        "th": "หน้าต่างบานใหญ่",
+        "satunFlavor": "หน้าต่างบานโต เปิดรับลมชมวิว",
+        "phoneticTh": "เอ็ท-สตอร์ท-เฟิน-สเตร์",
+        "pronunciationTip": "ö ใน fönster ทำปากจู๋ เฟิน-สเตร์",
+        "svgScene": "window",
+        "distractorsSv": [
+            "En dörr",
+            "En vägg",
+            "Ett tak"
+        ],
+        "distractorsTh": [
+            "ประตู",
+            "ผนัง",
+            "เพดาน"
+        ],
+        "wordChunks": [
+            "Ett",
+            "stort",
+            "fönster"
+        ]
+    },
+    {
+        "id": "t5_ext_47",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Kan du öppna fönstret?",
+        "th": "คุณช่วยเปิดหน้าต่างหน่อยได้ไหมคะ?",
+        "satunFlavor": "เปิดหน้าต่างรับลมทีต๊ะ ในห้องเริ่มอบอ้าว",
+        "phoneticTh": "คัน-ดู-เอิพ-พนา-เฟิน-สเตร็ต?",
+        "pronunciationTip": "ö ใน öppna ปากจู๋ เอิพ-พนา-เฟิน-สเตร็ต",
+        "svgScene": "window",
+        "distractorsSv": [
+            "Kan du stänga dörren?",
+            "Kan du tända lampan?",
+            "Kan du gå ut?"
+        ],
+        "distractorsTh": [
+            "ช่วยปิดประตูได้ไหม?",
+            "ช่วยเปิดไฟได้ไหม?",
+            "ช่วยออกไปได้ไหม?"
+        ],
+        "wordChunks": [
+            "Kan",
+            "du",
+            "öppna",
+            "fönstret?"
+        ]
+    },
+    {
+        "id": "t5_ext_48",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Stäng fönstret, det drar",
+        "th": "ปิดหน้าต่างเถอะค่ะ มีลมโกรกหนาวเย็น",
+        "satunFlavor": "ปิดหน้าต่างต๊ะ ลมพัดเย็นวูบวาบหนาวสั่นแล้ว",
+        "phoneticTh": "สแต็ง-เฟิน-สเตร็ต-เด-ดรอร์",
+        "pronunciationTip": "drar ออกเสียง ดรอร์ ลากเสียงยาว",
+        "svgScene": "window",
+        "distractorsSv": [
+            "Öppna dörren",
+            "Tänd lampan",
+            "Sätt på radion"
+        ],
+        "distractorsTh": [
+            "เปิดประตู",
+            "เปิดไฟ",
+            "เปิดวิทยุ"
+        ],
+        "wordChunks": [
+            "Stäng",
+            "fönstret,",
+            "det",
+            "drar"
+        ]
+    },
+    {
+        "id": "t5_ext_49",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Kan du tända lampan?",
+        "th": "คุณช่วยเปิดโคมไฟหน่อยได้ไหมคะ?",
+        "satunFlavor": "เปิดไฟทีต๊ะ มืดตึ๊ดตื๋อมองไม่เห็นทาง",
+        "phoneticTh": "คัน-ดู-แทน-ดา-ลัม-พัน?",
+        "pronunciationTip": "tända สระ ä อ้าปากกว้าง แทน-ดา-ลัม-พัน",
+        "svgScene": "lamp",
+        "distractorsSv": [
+            "Kan du släcka lampan?",
+            "Kan du stänga tv:n?",
+            "Kan du titta ut?"
+        ],
+        "distractorsTh": [
+            "ช่วยปิดไฟได้ไหม?",
+            "ช่วยปิดทีวีได้ไหม?",
+            "ช่วยมองออกไปข้างนอกได้ไหม?"
+        ],
+        "wordChunks": [
+            "Kan",
+            "du",
+            "tända",
+            "lampan?"
+        ]
+    },
+    {
+        "id": "t5_ext_50",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Släck lampan när du går",
+        "th": "ปิดไฟด้วยนะคะเวลาคุณเดินออกจากห้อง",
+        "satunFlavor": "ดับไฟกันต๊ะ จะได้ประหยัดเบี้ยค่าไฟ",
+        "phoneticTh": "สแล็ค-ลัม-พัน-แนร์-ดู-กอร์",
+        "pronunciationTip": "släck สระ ä กว้าง สแล็ค-ลัม-พัน",
+        "svgScene": "lamp",
+        "distractorsSv": [
+            "Tänd alla lampor",
+            "Lämna dörren öppen",
+            "Lås inte dörren"
+        ],
+        "distractorsTh": [
+            "เปิดไฟทุกดวง",
+            "เปิดประตูทิ้งไว้",
+            "ไม่ต้องล็อคประตู"
+        ],
+        "wordChunks": [
+            "Släck",
+            "lampan",
+            "när",
+            "du",
+            "går"
+        ]
+    },
+    {
+        "id": "t5_ext_51",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "En tung ytterdörr",
+        "th": "ประตูหน้าบ้านบานหนา",
+        "satunFlavor": "ประตูบ้านบานใหญ่ แข็งแรงกันความหนาว",
+        "phoneticTh": "เอน-ทุง-อึท-เตร์-เดิร์ร",
+        "pronunciationTip": "ytter สระ y ปากจู๋ลึก อึท-เตร์-เดิร์ร",
+        "svgScene": "door",
+        "distractorsSv": [
+            "En innerdörr",
+            "Ett fönster",
+            "En balkong"
+        ],
+        "distractorsTh": [
+            "ประตูด้านใน",
+            "หน้าต่าง",
+            "ระเบียง"
+        ],
+        "wordChunks": [
+            "En",
+            "tung",
+            "ytterdörr"
+        ]
+    },
+    {
+        "id": "t5_ext_52",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Jag låser dörren",
+        "th": "ฉันกำลังล็อคประตูบ้านค่ะ",
+        "satunFlavor": "ลงกลอนใส่กุญแจประตูบ้าน ปลอดภัยบายใจ",
+        "phoneticTh": "ย็อก-โล-เสร์-เดิร์ร-เรน",
+        "pronunciationTip": "låser สระ å ออกเสียงสระโอ โล-เสร์",
+        "svgScene": "door",
+        "distractorsSv": [
+            "Jag öppnar dörren",
+            "Jag knackar på",
+            "Jag tappar nyckeln"
+        ],
+        "distractorsTh": [
+            "ฉันเปิดประตู",
+            "ฉันเคาะประตู",
+            "ฉันทำกุญแจหล่น"
+        ],
+        "wordChunks": [
+            "Jag",
+            "låser",
+            "dörren"
+        ]
+    },
+    {
+        "id": "t5_ext_53",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Någon knackar på dörren",
+        "th": "มีคนกำลังเคาะประตูบ้านค่ะ",
+        "satunFlavor": "มีคนมาเคาะประตูเรือน ก๊อกๆ ใครมานะ",
+        "phoneticTh": "โน-กอน-คนัค-คาร์-โพ-เดิร์ร-เรน",
+        "pronunciationTip": "knackar ออกเสียง คนัค-คาร์",
+        "svgScene": "door",
+        "distractorsSv": [
+            "Dörren är låst",
+            "Ingen är hemma",
+            "Telefonen ringer"
+        ],
+        "distractorsTh": [
+            "ประตูล็อคอยู่",
+            "ไม่มีใครอยู่บ้าน",
+            "โทรศัพท์ดัง"
+        ],
+        "wordChunks": [
+            "Någon",
+            "knackar",
+            "på",
+            "dörren"
+        ]
+    },
+    {
+        "id": "t5_ext_54",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "En ringklocka",
+        "th": "กริ่งหน้าประตูบ้าน",
+        "satunFlavor": "กระดิ่งกดหน้าบ้าน แขกมาเยือน",
+        "phoneticTh": "เอน-ริง-คล็อค-คา",
+        "pronunciationTip": "ring ออกเสียง ริง-คล็อค-คา",
+        "svgScene": "door",
+        "distractorsSv": [
+            "En nyckel",
+            "Ett lås",
+            "Ett handtag"
+        ],
+        "distractorsTh": [
+            "ลูกกุญแจ",
+            "แม่กุญแจ",
+            "ที่จับประตู"
+        ],
+        "wordChunks": [
+            "En",
+            "ringklocka"
+        ]
+    },
+    {
+        "id": "t5_ext_55",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Jag vattnar blommorna",
+        "th": "ฉันกำลังรดน้ำต้นไม้และดอกไม้ค่ะ",
+        "satunFlavor": "รดน้ำดอกไม้สวยๆ ในกระถางสดชื่นใจ",
+        "phoneticTh": "ย็อก-วัตต์-นาร์-บลุม-มูร์-นา",
+        "pronunciationTip": "blommorna สระ o ออกเสียงสระอู บลุม-มูร์-นา",
+        "svgScene": "flower",
+        "distractorsSv": [
+            "Jag plockar bär",
+            "Jag klipper gräset",
+            "Jag planterar träd"
+        ],
+        "distractorsTh": [
+            "ฉันเก็บเบอร์รี่",
+            "ฉันตัดหญ้า",
+            "ฉันปลูกต้นไม้"
+        ],
+        "wordChunks": [
+            "Jag",
+            "vattnar",
+            "blommorna"
+        ]
+    },
+    {
+        "id": "t5_ext_56",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "En grön krukväxt",
+        "th": "ต้นไม้ปลูกในกระถางสีเขียว",
+        "satunFlavor": "ไม้กระถางใบเขียว ประดับเรือนดูสดใส",
+        "phoneticTh": "เอน-เกริน-ครูค-แว็คส์ท",
+        "pronunciationTip": "ö ใน grön ปากจู๋ เกริน-ครูค-แว็คส์ท",
+        "svgScene": "flower",
+        "distractorsSv": [
+            "En plastblomma",
+            "Ett träd",
+            "En buske"
+        ],
+        "distractorsTh": [
+            "ดอกไม้พลาสติก",
+            "ต้นไม้ใหญ่",
+            "พุ่มไม้"
+        ],
+        "wordChunks": [
+            "En",
+            "grön",
+            "krukväxt"
+        ]
+    },
+    {
+        "id": "t5_ext_57",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "En skön balkong",
+        "th": "ระเบียงห้องแสนสบาย",
+        "satunFlavor": "ระเบียงยื่นรับแดด นั่งจิบกาแฟชมวิวบายใจ",
+        "phoneticTh": "เอน-เชิน-บัล-คุง",
+        "pronunciationTip": "skön ออกเสียง เชิน และ balkong ออกเสียง บัล-คุง",
+        "svgScene": "balcony",
+        "distractorsSv": [
+            "En altan",
+            "En trädgård",
+            "Ett tak"
+        ],
+        "distractorsTh": [
+            "ชานเรือน",
+            "สวนหย่อม",
+            "หลังคา"
+        ],
+        "wordChunks": [
+            "En",
+            "skön",
+            "balkong"
+        ]
+    },
+    {
+        "id": "t5_ext_58",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Vi sitter på balkongen",
+        "th": "พวกเรานั่งเล่นอยู่ตรงระเบียงค่ะ",
+        "satunFlavor": "นั่งรับลมตรงระเบียง ดูผู้คนเดินผ่านไปมา",
+        "phoneticTh": "วี-สิต-เตร์-โพ-บัล-คุง-เง็น",
+        "pronunciationTip": "balkongen สระ o ออกเสียงสระอู บัล-คุง-เง็น",
+        "svgScene": "balcony",
+        "distractorsSv": [
+            "Vi är i köket",
+            "Vi sover i sängen",
+            "Vi går i skogen"
+        ],
+        "distractorsTh": [
+            "เราอยู่ในครัว",
+            "เรานอนในเตียง",
+            "เราเดินในป่า"
+        ],
+        "wordChunks": [
+            "Vi",
+            "sitter",
+            "på",
+            "balkongen"
+        ]
+    },
+    {
+        "id": "t5_ext_59",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "En brevlåda",
+        "th": "ตู้รับจดหมาย",
+        "satunFlavor": "ตู้ไปรษณีย์หน้าเรือน ไว้รับจดหมายและใบเสร็จ",
+        "phoneticTh": "เอน-เบรฟ-โล-ดา",
+        "pronunciationTip": "låda สระ å ออกเสียงสระโอ โล-ดา",
+        "svgScene": "mail",
+        "distractorsSv": [
+            "Ett paket",
+            "Ett brev",
+            "En tidning"
+        ],
+        "distractorsTh": [
+            "พัสดุ",
+            "จดหมาย",
+            "หนังสือพิมพ์"
+        ],
+        "wordChunks": [
+            "En",
+            "brevlåda"
+        ]
+    },
+    {
+        "id": "t5_ext_60",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Jag hämtar posten",
+        "th": "ฉันกำลังไปเก็บจดหมายที่ตู้รับไปรษณีย์ค่ะ",
+        "satunFlavor": "ไปเปิดตู้จดหมาย แลดูว่ามีจดหมายส่งมามั้ย",
+        "phoneticTh": "ย็อก-แฮม-ทาร์-พุส-เทน",
+        "pronunciationTip": "posten สระ o ออกเสียงสระอู พุส-เทน",
+        "svgScene": "mail",
+        "distractorsSv": [
+            "Jag skickar ett brev",
+            "Jag skriver ett vykort",
+            "Jag köper frimärken"
+        ],
+        "distractorsTh": [
+            "ฉันส่งจดหมาย",
+            "ฉันเขียนโปสการ์ด",
+            "ฉันซื้อแสตมป์"
+        ],
+        "wordChunks": [
+            "Jag",
+            "hämtar",
+            "posten"
+        ]
+    },
+    {
+        "id": "t5_ext_61",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Jag laddar min mobil",
+        "th": "ฉันกำลังชาร์จแบตโทรศัพท์มือถือค่ะ",
+        "satunFlavor": "เสียบสายชาร์จแบตมือถือ แบตใกล้หมดแล้ว",
+        "phoneticTh": "ย็อก-ลัด-ดาร์-มีน-มู-บีล",
+        "pronunciationTip": "mobil เน้นพยางค์หลัง บีล สระ i ยาว",
+        "svgScene": "phone",
+        "distractorsSv": [
+            "Jag tappar mobilen",
+            "Jag ringer ett samtal",
+            "Jag stänger av den"
+        ],
+        "distractorsTh": [
+            "ฉันทำโทรศัพท์ตก",
+            "ฉันโทรออก",
+            "ฉันปิดเครื่อง"
+        ],
+        "wordChunks": [
+            "Jag",
+            "laddar",
+            "min",
+            "mobil"
+        ]
+    },
+    {
+        "id": "t5_ext_62",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "En laddare till mobilen",
+        "th": "สายชาร์จโทรศัพท์มือถือ",
+        "satunFlavor": "ที่ชาร์จแบตมือถือ พกติดตัวไว้ตลอด",
+        "phoneticTh": "เอน-ลัด-ดา-เรอะ-ทิล-มู-บี-เลน",
+        "pronunciationTip": "laddare สระ a สั้น ลัด-ดา-เรอะ",
+        "svgScene": "phone",
+        "distractorsSv": [
+            "Ett par hörlurar",
+            "Ett batteri",
+            "En datormus"
+        ],
+        "distractorsTh": [
+            "หูฟัง",
+            "แบตเตอรี่",
+            "เมาส์คอมพิวเตอร์"
+        ],
+        "wordChunks": [
+            "En",
+            "laddare",
+            "till",
+            "mobilen"
+        ]
+    },
+    {
+        "id": "t5_ext_63",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "Trådlösa hörlurar",
+        "th": "หูฟังไร้สาย",
+        "satunFlavor": "หูฟังไร้สาย ฟังเพลงฟังบทเรียนภาษาสวีเดนเพลินๆ",
+        "phoneticTh": "โทรด-เลอ-ซา-เฮอร์-ลู-ราร์",
+        "pronunciationTip": "ö ใน lösa และ hör ทำปากจู๋ เลอ-ซา-เฮอร์-ลู-ราร์",
+        "svgScene": "headphones",
+        "distractorsSv": [
+            "En mikrofon",
+            "En högtalare",
+            "En skärm"
+        ],
+        "distractorsTh": [
+            "ไมโครโฟน",
+            "ลำโพง",
+            "หน้าจอ"
+        ],
+        "wordChunks": [
+            "Trådlösa",
+            "hörlurar"
+        ]
+    },
+    {
+        "id": "t5_ext_64",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Jag lyssnar på svensk radio",
+        "th": "ฉันกำลังฟังวิทยุภาษาสวีเดนค่ะ",
+        "satunFlavor": "ฟังวิทยุสวีเดน ฝึกหูฟังภาษาทุกวัน",
+        "phoneticTh": "ย็อก-ลึส-สนาร์-โพ-สเวนสค์-รอ-ดิ-อู",
+        "pronunciationTip": "lyssnar สระ y ทำปากจู๋ลึก ลึส-สนาร์",
+        "svgScene": "radio",
+        "distractorsSv": [
+            "Jag sjunger en sång",
+            "Jag spelar gitarr",
+            "Jag tittar på film"
+        ],
+        "distractorsTh": [
+            "ฉันร้องเพลง",
+            "ฉันเล่นกีตาร์",
+            "ฉันดูหนัง"
+        ],
+        "wordChunks": [
+            "Jag",
+            "lyssnar",
+            "på",
+            "svensk",
+            "radio"
+        ]
+    },
+    {
+        "id": "t5_ext_65",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Jag tittar på nyheterna",
+        "th": "ฉันกำลังดูข่าวทีวีค่ะ",
+        "satunFlavor": "นั่งแลข่าวสวีเดน ได้ความรู้ทันเหตุการณ์",
+        "phoneticTh": "ย็อก-ทิต-ทาร์-โพ-นือ-เฮ-เทร์-นา",
+        "pronunciationTip": "nyheterna สระ y ทำปากจู๋ นือ-เฮ-เทร์-นา",
+        "svgScene": "tv",
+        "distractorsSv": [
+            "Jag läser en bok",
+            "Jag sover",
+            "Jag lagar mat"
+        ],
+        "distractorsTh": [
+            "ฉันอ่านหนังสือ",
+            "ฉันนอน",
+            "ฉันทำกับข้าว"
+        ],
+        "wordChunks": [
+            "Jag",
+            "tittar",
+            "på",
+            "nyheterna"
+        ]
+    },
+    {
+        "id": "t5_ext_66",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "En fjärrkontroll",
+        "th": "รีโมทคอนโทรล",
+        "satunFlavor": "รีโมททีวี กดเปลี่ยนช่องง่ายดาย",
+        "phoneticTh": "เอน-แฟยร์-คอน-ทร็อลล์",
+        "pronunciationTip": "fj ออกเสียง แฟยร์ ควบกล้ำ แฟยร์-คอน-ทร็อลล์",
+        "svgScene": "tv",
+        "distractorsSv": [
+            "En tv-skärm",
+            "En kabel",
+            "En kontakt"
+        ],
+        "distractorsTh": [
+            "จอทีวี",
+            "สายเคเบิล",
+            "ปลั๊กไฟ"
+        ],
+        "wordChunks": [
+            "En",
+            "fjärrkontroll"
+        ]
+    },
+    {
+        "id": "t5_ext_67",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Jag läser en spännande bok",
+        "th": "ฉันกำลังอ่านหนังสือที่น่าตื่นเต้นเล่มหนึ่งค่ะ",
+        "satunFlavor": "อ่านหนังสือน่าตื่นเต้น สนุกเพลินจนวางไม่ลง",
+        "phoneticTh": "ย็อก-แล-เสร์-เอน-สแปน-นัน-เดะ-บุค",
+        "pronunciationTip": "bok สระ o ออกเสียงสระอู บุค",
+        "svgScene": "book",
+        "distractorsSv": [
+            "Jag skriver ett brev",
+            "Jag ritar en bild",
+            "Jag sover"
+        ],
+        "distractorsTh": [
+            "ฉันเขียนจดหมาย",
+            "ฉันวาดรูป",
+            "ฉันนอนหลับ"
+        ],
+        "wordChunks": [
+            "Jag",
+            "läser",
+            "en",
+            "spännande",
+            "bok"
+        ]
+    },
+    {
+        "id": "t5_ext_68",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "Läsglasögon",
+        "th": "แว่นตาสำหรับอ่านหนังสือ",
+        "satunFlavor": "แว่นตาอ่านหนังสือ ใส่แล้วตัวหนังสือชัดแจ๋ว",
+        "phoneticTh": "แลส-กลอส-เออ-กอน",
+        "pronunciationTip": "ögon สระ ö ทำปากจู๋ แลส-กลอส-เออ-กอน",
+        "svgScene": "glasses",
+        "distractorsSv": [
+            "Solglasögon",
+            "Kontaktlinser",
+            "Kikare"
+        ],
+        "distractorsTh": [
+            "แว่นกันแดด",
+            "คอนแทคเลนส์",
+            "กล้องส่องทางไกล"
+        ],
+        "wordChunks": [
+            "Läsglasögon"
+        ]
+    },
+    {
+        "id": "t5_ext_69",
+        "themeId": "everyday",
+        "type": "word",
+        "sv": "Mörka solglasögon",
+        "th": "แว่นตากันแดดสีเข้ม",
+        "satunFlavor": "แว่นกันแดด แดดสวีเดนแยงตาใส่ไว้เท่ระเบิด",
+        "phoneticTh": "เมอร์-คา-ซูล-กลอส-เออ-กอน",
+        "pronunciationTip": "sol สระ o ออกเสียงสระอู ซูล-กลอส-เออ-กอน",
+        "svgScene": "glasses",
+        "distractorsSv": [
+            "Läsglasögon",
+            "Skidglasögon",
+            "Hjälm"
+        ],
+        "distractorsTh": [
+            "แว่นสายตา",
+            "แว่นสกี",
+            "หมวกกันน็อก"
+        ],
+        "wordChunks": [
+            "Mörka",
+            "solglasögon"
+        ]
+    },
+    {
+        "id": "t5_ext_70",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Jag går och lägger mig",
+        "th": "ฉันกำลังจะไปเข้านอนแล้วค่ะ",
+        "satunFlavor": "ง่วงตาจะปิด ขอตัวไปนอนเอาแรงก่อนต๊ะ",
+        "phoneticTh": "ย็อก-กอร์-อ็อค-แล็ก-เกร์-เมย์",
+        "pronunciationTip": "lägger สระ ä ออกเสียงแอ แล็ก-เกร์-เมย์",
+        "svgScene": "night",
+        "distractorsSv": [
+            "Jag vaknar tidigt",
+            "Jag äter frukost",
+            "Jag går till jobbet"
+        ],
+        "distractorsTh": [
+            "ฉันตื่นเช้า",
+            "ฉันกินมื้อเช้า",
+            "ฉันไปทำงาน"
+        ],
+        "wordChunks": [
+            "Jag",
+            "går",
+            "och",
+            "lägger",
+            "mig"
+        ]
+    },
+    {
+        "id": "t5_ext_71",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Jag ställer klockan på sju",
+        "th": "ฉันตั้งนาฬิกาปลุกไว้ตอนเจ็ดโมงเช้าค่ะ",
+        "satunFlavor": "ตั้งนาฬิกาปลุกไว้เจ็ดโมง จะได้ตื่นทันเวลา",
+        "phoneticTh": "ย็อก-สแต็ล-แลร์-คล็อค-คัน-โพ-ชู",
+        "pronunciationTip": "sju ออกเสียง ชู ทำปากจู๋แน่น สแต็ล-แลร์-คล็อค-คัน-โพ-ชู",
+        "svgScene": "alarm",
+        "distractorsSv": [
+            "Klockan är sju",
+            "Jag glömmer klockan",
+            "Klockan stannar"
+        ],
+        "distractorsTh": [
+            "เจ็ดโมงแล้ว",
+            "ฉันลืมนาฬิกา",
+            "นาฬิกาตาย"
+        ],
+        "wordChunks": [
+            "Jag",
+            "ställer",
+            "klockan",
+            "på",
+            "sju"
+        ]
+    },
+    {
+        "id": "t5_ext_72",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Jag drar för gardinerna",
+        "th": "ฉันกำลังดึงรูดปิดผ้าม่านค่ะ",
+        "satunFlavor": "ปิดผ้าม่านหน้าร้อน แดดสวีเดนสว่างทั้งคืนจะได้นอนหลับ",
+        "phoneticTh": "ย็อก-ดรอร์-เฟอร์-การ์-ดี-แนร์-นา",
+        "pronunciationTip": "gardinerna เน้นเสียง ดี การ์-ดี-แนร์-นา",
+        "svgScene": "curtain",
+        "distractorsSv": [
+            "Jag öppnar fönstret",
+            "Jag tänder lampan",
+            "Jag tvättar gardinen"
+        ],
+        "distractorsTh": [
+            "ฉันเปิดหน้าต่าง",
+            "ฉันเปิดไฟ",
+            "ฉันซักผ้าม่าน"
+        ],
+        "wordChunks": [
+            "Jag",
+            "drar",
+            "för",
+            "gardinerna"
+        ]
+    },
+    {
+        "id": "t5_ext_73",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Nu ska jag sova",
+        "th": "ตอนนี้ฉันจะนอนหลับแล้วนะคะ",
+        "satunFlavor": "ถึงเวลานอนหลับพักผ่อนแล้ว หลับฝันดีต๊ะ",
+        "phoneticTh": "นู-สกา-ย็อก-ซู-วา",
+        "pronunciationTip": "sova สระ o ออกเสียงสระอู ซู-วา",
+        "svgScene": "night",
+        "distractorsSv": [
+            "Nu ska jag äta",
+            "Nu ska jag jobba",
+            "Nu ska jag springa"
+        ],
+        "distractorsTh": [
+            "ตอนนี้ฉันจะกิน",
+            "ตอนนี้ฉันจะทำงาน",
+            "ตอนนี้ฉันจะวิ่ง"
+        ],
+        "wordChunks": [
+            "Nu",
+            "ska",
+            "jag",
+            "sova"
+        ]
+    },
+    {
+        "id": "t5_ext_74",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Sov sött och vila ut!",
+        "th": "นอนหลับให้สบายและพักผ่อนให้เต็มที่นะคะ!",
+        "satunFlavor": "นอนหลับบายใจ หลับฝันดีตักตวงการพักผ่อนนะจ๊ะ!",
+        "phoneticTh": "ซูฟ-เซิตต์-อ็อค-วี-ลา-อูท!",
+        "pronunciationTip": "sött สระ ö ทำปากจู๋แน่น ซูฟ-เซิตต์-อ็อค-วี-ลา-อูท",
+        "svgScene": "night",
+        "distractorsSv": [
+            "God morgon!",
+            "Hej då!",
+            "Tack så mycket!"
+        ],
+        "distractorsTh": [
+            "อรุณสวัสดิ์!",
+            "ลาก่อน!",
+            "ขอบคุณมาก!"
+        ],
+        "wordChunks": [
+            "Sov",
+            "sött",
+            "och",
+            "vila",
+            "ut!"
+        ]
+    },
+    {
+        "id": "t5_ext_75",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Dröm söta drömmar",
+        "th": "ขอให้ฝันหวานนะคะ",
+        "satunFlavor": "ฝันหวานบายใจ หลับฝันเห็นแต่เรื่องดีๆ",
+        "phoneticTh": "เดริม-เซอ-ทา-เดริม-มาร์",
+        "pronunciationTip": "ö ใน dröm และ söt ทำปากจู๋ เดริม-เซอ-ทา",
+        "svgScene": "night",
+        "distractorsSv": [
+            "Vakna tidigt",
+            "Stå upp",
+            "Ät frukost"
+        ],
+        "distractorsTh": [
+            "ตื่นเช้า",
+            "ลุกขึ้น",
+            "กินมื้อเช้า"
+        ],
+        "wordChunks": [
+            "Dröm",
+            "söta",
+            "drömmar"
+        ]
+    },
+    {
+        "id": "t5_ext_76",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Jag drack en kopp te innan sängen",
+        "th": "ฉันดื่มชาร้อนหนึ่งถ้วยก่อนนอนค่ะ",
+        "satunFlavor": "จิบชาร้อนอุ่นๆ สักถ้วยก่อนนอน หลับสบายท้อง",
+        "phoneticTh": "ย็อก-ดรัค-เอน-ค็อปป์-เท-อิน-นัน-แซ็ง-เง็น",
+        "pronunciationTip": "drack สระ a สั้น ดรัค-เอน-ค็อปป์-เท",
+        "svgScene": "tea",
+        "distractorsSv": [
+            "Jag drack kaffe",
+            "Jag åt en pizza",
+            "Jag sprang en mil"
+        ],
+        "distractorsTh": [
+            "ฉันดื่มกาแฟ",
+            "ฉันกินพิซซ่า",
+            "ฉันวิ่งสิบกิโล"
+        ],
+        "wordChunks": [
+            "Jag",
+            "drack",
+            "en",
+            "kopp",
+            "te",
+            "innan",
+            "sängen"
+        ]
+    },
+    {
+        "id": "t5_ext_77",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Ikväll är jag ganska trött",
+        "th": "คืนนี้ฉันค่อนข้างเหนื่อยเพลียค่ะ",
+        "satunFlavor": "คืนนี้ล้าเพลียแรง ทำงานมาทั้งวันขอพักผ่อน",
+        "phoneticTh": "อี-คแวลล์-แอร์-ย็อก-กัน-สกา-เทริทท์",
+        "pronunciationTip": "trött สระ ö ทำปากจู๋ เทริทท์",
+        "svgScene": "tired",
+        "distractorsSv": [
+            "Jag är pigg",
+            "Jag har energi",
+            "Jag vill festa"
+        ],
+        "distractorsTh": [
+            "ฉันกระปรี้กระเปร่า",
+            "ฉันมีพลังงาน",
+            "ฉันอยากปาร์ตี้"
+        ],
+        "wordChunks": [
+            "Ikväll",
+            "är",
+            "jag",
+            "ganska",
+            "trött"
+        ]
+    },
+    {
+        "id": "t5_ext_78",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Jag känner mig pigg idag",
+        "th": "วันนี้ฉันรู้สึกสดชื่นกระปรี้กระเปร่ามากค่ะ",
+        "satunFlavor": "วันนี้สดชื่นบายใจ มีพลังพร้อมลุยงาน",
+        "phoneticTh": "ย็อก-แชน-แนร์-เมย์-พิกก์-อี-ด็อก",
+        "pronunciationTip": "pigg สระ i สั้น พิกก์-อี-ด็อก",
+        "svgScene": "happy",
+        "distractorsSv": [
+            "Jag är sjuk",
+            "Jag är trött",
+            "Jag har ont"
+        ],
+        "distractorsTh": [
+            "ฉันป่วย",
+            "ฉันเหนื่อย",
+            "ฉันเจ็บปวด"
+        ],
+        "wordChunks": [
+            "Jag",
+            "känner",
+            "mig",
+            "pigg",
+            "idag"
+        ]
+    },
+    {
+        "id": "t5_ext_79",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Vi städar tillsammans på lördag",
+        "th": "วันเสาร์นี้พวกเราจะทำความสะอาดบ้านด้วยกันค่ะ",
+        "satunFlavor": "วันเสาร์ช่วยกันกวาดถูเรือน สนุกสนานพร้อมหน้า",
+        "phoneticTh": "วี-สแต-ดาร์-ทิล-ซัม-มันส์-โพ-เลอร์-ด็อก",
+        "pronunciationTip": "lördag สระ ö ปากจู๋ เลอร์-ด็อก",
+        "svgScene": "cleaning",
+        "distractorsSv": [
+            "Vi vilar på lördag",
+            "Vi reser bort",
+            "Vi sover hela dagen"
+        ],
+        "distractorsTh": [
+            "เราพักผ่อนวันเสาร์",
+            "เราไปเที่ยวต่างจังหวัด",
+            "เรานอนทั้งวัน"
+        ],
+        "wordChunks": [
+            "Vi",
+            "städar",
+            "tillsammans",
+            "på",
+            "lördag"
+        ]
+    },
+    {
+        "id": "t5_ext_80",
+        "themeId": "everyday",
+        "type": "sentence",
+        "sv": "Allt är rent och fint nu",
+        "th": "ตอนนี้ทุกอย่างสะอาดและเรียบร้อยสวยงามแล้วค่ะ",
+        "satunFlavor": "เรือนสะอาดเอี่ยมอ่อง เรียบร้อยน่าอยู่จังฮู้!",
+        "phoneticTh": "อัลต์-แอร์-เรนท์-อ็อค-ฟีนท์-นู",
+        "pronunciationTip": "rent สระ e ยาว เรนท์ และ fint สระ i ยาว ฟีนท์",
+        "svgScene": "smile",
+        "distractorsSv": [
+            "Allt är smutsigt",
+            "Huset är rörigt",
+            "Vi måste städa om"
+        ],
+        "distractorsTh": [
+            "ทุกอย่างสกปรก",
+            "บ้านรกมาก",
+            "เราต้องทำความสะอาดใหม่"
+        ],
+        "wordChunks": [
+            "Allt",
+            "är",
+            "rent",
+            "och",
+            "fint",
+            "nu"
+        ]
+    },
+    {
+        "id": "t6_ext_01",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "En solig sommardag",
+        "th": "วันในฤดูร้อนที่มีแดดจ้า",
+        "satunFlavor": "วันแดดดีหน้าร้อน แดดอุ่นชวนไปเที่ยวทะเล",
+        "phoneticTh": "เอน-ซู-ลิก-ซุม-มาร์-ด็อก",
+        "pronunciationTip": "solig สระ o ออกเสียงสระอู ซู-ลิก",
+        "svgScene": "sun",
+        "distractorsSv": [
+            "En regnig höstdag",
+            "En kall vinterdag",
+            "En blåsig vårdag"
+        ],
+        "distractorsTh": [
+            "วันฝนตกฤดูใบไม้ร่วง",
+            "วันหนาวฤดูหนาว",
+            "วันลมแรงฤดูใบไม้ผลิ"
+        ],
+        "wordChunks": [
+            "En",
+            "solig",
+            "sommardag"
+        ]
+    },
+    {
+        "id": "t6_ext_02",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "En regnig eftermiddag",
+        "th": "ช่วงบ่ายที่มีฝนตก",
+        "satunFlavor": "บ่ายฝนตกพรำๆ บรรยากาศน่านอน",
+        "phoneticTh": "เอน-เร็ง-นิก-เอฟ-เตร์-มิด-ด็อก",
+        "pronunciationTip": "regnig ออกเสียง เร็ง-นิก",
+        "svgScene": "rain",
+        "distractorsSv": [
+            "En solig morgon",
+            "En stjärnklar natt",
+            "En varm kväll"
+        ],
+        "distractorsTh": [
+            "เช้าแดดออก",
+            "คืนดาวเต็มฟ้า",
+            "ค่ำที่อบอุ่น"
+        ],
+        "wordChunks": [
+            "En",
+            "regnig",
+            "eftermiddag"
+        ]
+    },
+    {
+        "id": "t6_ext_03",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "Hård vind",
+        "th": "ลมพัดแรงกล้า",
+        "satunFlavor": "ลมพัดอู้ พัดใบไม้ปลิวว่อน",
+        "phoneticTh": "ฮอร์ด-วินด์",
+        "pronunciationTip": "hård สระ å ปากกลม ฮอร์ด-วินด์",
+        "svgScene": "wind",
+        "distractorsSv": [
+            "Lugnt väder",
+            "Stilla luft",
+            "Varm sol"
+        ],
+        "distractorsTh": [
+            "อากาศสงบนิ่ง",
+            "ลมสงบ",
+            "แดดอุ่น"
+        ],
+        "wordChunks": [
+            "Hård",
+            "vind"
+        ]
+    },
+    {
+        "id": "t6_ext_04",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Det blåser kraftigt ute",
+        "th": "ข้างนอกมีลมพัดแรงมากค่ะ",
+        "satunFlavor": "ข้างนอกลมแรงจังฮู้ พัดหนาวสั่นเลย",
+        "phoneticTh": "เด-โบล-เสร์-คราฟ-ติกต์-อู-เตะ",
+        "pronunciationTip": "blåser สระ å ปากกลม โบล-เสร์",
+        "svgScene": "wind",
+        "distractorsSv": [
+            "Det är vindstilla",
+            "Det är varmt",
+            "Det snöar lätt"
+        ],
+        "distractorsTh": [
+            "ลมสงบไม่มีลมเลย",
+            "อากาศร้อน",
+            "หิมะตกเบาๆ"
+        ],
+        "wordChunks": [
+            "Det",
+            "blåser",
+            "kraftigt",
+            "ute"
+        ]
+    },
+    {
+        "id": "t6_ext_05",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "Ett mörkt moln",
+        "th": "เมฆสีครึ้มทะมึน",
+        "satunFlavor": "เมฆฝนดำมืดตั้งเค้า ฝนจะเทลงมาแล้ว",
+        "phoneticTh": "เอ็ท-เมอร์คท-มูลน์",
+        "pronunciationTip": "moln สระ o ออกเสียงสระอู มูลน์",
+        "svgScene": "cloud",
+        "distractorsSv": [
+            "En klar himmel",
+            "En solstråle",
+            "En regnbåge"
+        ],
+        "distractorsTh": [
+            "ท้องฟ้าแจ่มใส",
+            "ลำแสงอาทิตย์",
+            "รุ้งกินน้ำ"
+        ],
+        "wordChunks": [
+            "Ett",
+            "mörkt",
+            "moln"
+        ]
+    },
+    {
+        "id": "t6_ext_06",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Himlen är helt grå",
+        "th": "ท้องฟ้าเป็นสีเทาครึ้มไปทั่วทั้งฟ้า",
+        "satunFlavor": "ฟ้ามืดครึ้มสีเทา ไม่เห็นแดดเลย",
+        "phoneticTh": "ฮิม-เลน-แอร์-เฮลต์-โกร",
+        "pronunciationTip": "grå สระ å ปากกลม โกร",
+        "svgScene": "cloud",
+        "distractorsSv": [
+            "Himlen är blå",
+            "Solen skiner starkt",
+            "Det är stjärnklart"
+        ],
+        "distractorsTh": [
+            "ท้องฟ้าสีคราม",
+            "แดดส่องจ้า",
+            "ดาวสว่างชัด"
+        ],
+        "wordChunks": [
+            "Himlen",
+            "är",
+            "helt",
+            "grå"
+        ]
+    },
+    {
+        "id": "t6_ext_07",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Det åskar och blixtrar",
+        "th": "มีฟ้าร้องและฟ้าแลบค่ะ",
+        "satunFlavor": "ฟ้าร้องฟ้าแลบแปลบปลาบ เสียงดังน่ากลัว",
+        "phoneticTh": "เด-โอส-คาร์-อ็อค-บลิคส์-ทราร์",
+        "pronunciationTip": "åskar สระ å ปากกลม โอส-คาร์",
+        "svgScene": "storm",
+        "distractorsSv": [
+            "Solen värmer",
+            "Det är vindstilla",
+            "Fåglarna kvittrar"
+        ],
+        "distractorsTh": [
+            "แดดอุ่น",
+            "ลมสงบนิ่ง",
+            "นกร้องเจื้อยแจ้ว"
+        ],
+        "wordChunks": [
+            "Det",
+            "åskar",
+            "och",
+            "blixtrar"
+        ]
+    },
+    {
+        "id": "t6_ext_08",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "En vacker regnbåge",
+        "th": "รุ้งกินน้ำแสนสวย",
+        "satunFlavor": "สายรุ้งเจ็ดสีหลังฝนซา สวยจับใจ",
+        "phoneticTh": "เอน-วัค-เคร์-เร็งน์-โบ-เกะ",
+        "pronunciationTip": "regnbåge ออกเสียง เร็งน์-โบ-เกะ",
+        "svgScene": "rainbow",
+        "distractorsSv": [
+            "Ett mörkt moln",
+            "En åskblixt",
+            "En hagelskur"
+        ],
+        "distractorsTh": [
+            "เมฆมืด",
+            "สายฟ้าแลบ",
+            "พายุลูกเห็บ"
+        ],
+        "wordChunks": [
+            "En",
+            "vacker",
+            "regnbåge"
+        ]
+    },
+    {
+        "id": "t6_ext_09",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "Tät dimma",
+        "th": "หมอกลงหนาทึบ",
+        "satunFlavor": "หมอกลงหนาตึ๊บ มองทางข้างหน้าไม่ค่อยเห็น",
+        "phoneticTh": "แตรท-ดิม-มา",
+        "pronunciationTip": "tät สระ ä กว้าง แตรท-ดิม-มา",
+        "svgScene": "fog",
+        "distractorsSv": [
+            "Klar sikt",
+            "Solsken",
+            "Ren luft"
+        ],
+        "distractorsTh": [
+            "ทัศนวิสัยชัดเจน",
+            "แดดจ้า",
+            "อากาศแจ่มใส"
+        ],
+        "wordChunks": [
+            "Tät",
+            "dimma"
+        ]
+    },
+    {
+        "id": "t6_ext_10",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Det är minus fem grader",
+        "th": "อุณหภูมิติดลบห้าองศาค่ะ",
+        "satunFlavor": "ติดลบห้าองศา หนาวยะเยือกต้องใส่เสื้อหนาๆ",
+        "phoneticTh": "เด-แอร์-มี-นุส-เฟ็ม-กรอ-เดร์",
+        "pronunciationTip": "minus สระ u ทำปากจู๋ มี-นุส",
+        "svgScene": "cold",
+        "distractorsSv": [
+            "Det är plus tjugo grader",
+            "Det är noll grader",
+            "Det är kokhett"
+        ],
+        "distractorsTh": [
+            "บวกยี่สิบองศา",
+            "ศูนย์องศา",
+            "ร้อนจัด"
+        ],
+        "wordChunks": [
+            "Det",
+            "är",
+            "minus",
+            "fem",
+            "grader"
+        ]
+    },
+    {
+        "id": "t6_ext_11",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Det är tjugofem grader varmt",
+        "th": "อากาศอบอุ่นยี่สิบห้าองศาค่ะ",
+        "satunFlavor": "ยี่สิบห้าองศา อากาศสบายเหมือนอยู่สตูลเลยต๊ะ",
+        "phoneticTh": "เด-แอร์-ชู-กู-เฟ็ม-กรอ-เดร์-วาร์มต์",
+        "pronunciationTip": "tjugofem ชู-กู-เฟ็ม-กรอ-เดร์",
+        "svgScene": "sun",
+        "distractorsSv": [
+            "Det är minusgrader",
+            "Det är iskallt",
+            "Det snöar"
+        ],
+        "distractorsTh": [
+            "ติดลบองศา",
+            "หนาวจัดเป็นน้ำแข็ง",
+            "หิมะตก"
+        ],
+        "wordChunks": [
+            "Det",
+            "är",
+            "tjugofem",
+            "grader",
+            "varmt"
+        ]
+    },
+    {
+        "id": "t6_ext_12",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "En termometer",
+        "th": "ปรอทวัดอุณหภูมิ",
+        "satunFlavor": "เครื่องวัดอุณหภูมิ ติดไว้ดูว่าข้างนอกหนาวแค่ไหน",
+        "phoneticTh": "เอน-แทร์-มู-เม-เตร์",
+        "pronunciationTip": "termometer สระ o ออกเสียง มู แทร์-มู-เม-เตร์",
+        "svgScene": "thermometer",
+        "distractorsSv": [
+            "En klocka",
+            "En våg",
+            "En kompass"
+        ],
+        "distractorsTh": [
+            "นาฬิกา",
+            "ตราชั่ง",
+            "เข็มทิศ"
+        ],
+        "wordChunks": [
+            "En",
+            "termometer"
+        ]
+    },
+    {
+        "id": "t6_ext_13",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "Väderprognosen",
+        "th": "การพยากรณ์อากาศ",
+        "satunFlavor": "รายงานพยากรณ์อากาศ แลดูฝนฟ้าก่อนออกจากบ้าน",
+        "phoneticTh": "แว-แดร์-พรุค-นู-เซน",
+        "pronunciationTip": "prognosen สระ o ออกเสียง พรุค-นู-เซน",
+        "svgScene": "cloud",
+        "distractorsSv": [
+            "Nyheterna",
+            "Sporten",
+            "Tidtabellen"
+        ],
+        "distractorsTh": [
+            "ข่าวทั่วไป",
+            "ข่าวกีฬา",
+            "ตารางเวลาเดินรถ"
+        ],
+        "wordChunks": [
+            "Väderprognosen"
+        ]
+    },
+    {
+        "id": "t6_ext_14",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Vad säger väderprognosen?",
+        "th": "พยากรณ์อากาศว่าอย่างไรบ้างคะ?",
+        "satunFlavor": "พยากรณ์บอกว่าพรุ่งนี้ฝนตกหรือแดดออกนะ",
+        "phoneticTh": "วอด-แซ-เกร์-แว-แดร์-พรุค-นู-เซน?",
+        "pronunciationTip": "säger ออกเสียง แซ-เกร์",
+        "svgScene": "cloud",
+        "distractorsSv": [
+            "Vad är klockan?",
+            "Vad kostar det?",
+            "Vem ringer?"
+        ],
+        "distractorsTh": [
+            "กี่โมงแล้ว?",
+            "ราคาเท่าไร?",
+            "ใครโทรมา?"
+        ],
+        "wordChunks": [
+            "Vad",
+            "säger",
+            "väderprognosen?"
+        ]
+    },
+    {
+        "id": "t6_ext_15",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "Glatt väglag",
+        "th": "สภาพผิวถนนที่ลื่นมาก (มีน้ำแข็งเกาะ)",
+        "satunFlavor": "ถนนลื่นน้ำแข็ง เดินระวังหกล้มนะอันตราย",
+        "phoneticTh": "กลัตต์-แวก-ล็อก",
+        "pronunciationTip": "glatt สระ a สั้น กลัตต์-แวก-ล็อก",
+        "svgScene": "snow",
+        "distractorsSv": [
+            "Torr asfalt",
+            "Grusväg",
+            "Motorväg"
+        ],
+        "distractorsTh": [
+            "ถนนยางมะตอยแห้ง",
+            "ถนนลูกรัง",
+            "มอเตอร์เวย์"
+        ],
+        "wordChunks": [
+            "Glatt",
+            "väglag"
+        ]
+    },
+    {
+        "id": "t6_ext_16",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Se upp, det är halt ute!",
+        "th": "ระวังตัวด้วยนะคะ ข้างนอกถนนลื่นมาก!",
+        "satunFlavor": "ระวังต๊ะ! ถนนหนทางลื่นน้ำแข็ง เดี๋ยวหัวทิ่ม",
+        "phoneticTh": "เซ-อุพ-เด-แอร์-ฮัลต์-อู-เตะ!",
+        "pronunciationTip": "halt สระ a สั้น ลิ้นแตะ lt ฮัลต์",
+        "svgScene": "warning",
+        "distractorsSv": [
+            "Gå snabbt",
+            "Spring fort",
+            "Titta inte ner"
+        ],
+        "distractorsTh": [
+            "เดินเร็วๆ",
+            "วิ่งให้ไว",
+            "ไม่ต้องมองลง"
+        ],
+        "wordChunks": [
+            "Se",
+            "upp,",
+            "det",
+            "är",
+            "halt",
+            "ute!"
+        ]
+    },
+    {
+        "id": "t6_ext_17",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "Tjock is",
+        "th": "แผ่นน้ำแข็งหนา",
+        "satunFlavor": "น้ำแข็งแผ่นหนา เกาะผิวน้ำในทะเลสาบ",
+        "phoneticTh": "ช็อค-อีส",
+        "pronunciationTip": "tjock ออกเสียง ช็อค และ is สระ i ยาว อีส",
+        "svgScene": "ice",
+        "distractorsSv": [
+            "Tunn is",
+            "Kall snö",
+            "Kallt vatten"
+        ],
+        "distractorsTh": [
+            "น้ำแข็งบาง",
+            "หิมะเย็น",
+            "น้ำเย็น"
+        ],
+        "wordChunks": [
+            "Tjock",
+            "is"
+        ]
+    },
+    {
+        "id": "t6_ext_18",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "Ett istäcke",
+        "th": "ชั้นน้ำแข็งที่ปกคลุมผิวน้ำ",
+        "satunFlavor": "น้ำแข็งจับตัวคลุมทะเลสาบ เล่นสเก็ตได้เลย",
+        "phoneticTh": "เอ็ท-อีส-แท็ค-เคะ",
+        "pronunciationTip": "täcke สระ ä กว้าง อีส-แท็ค-เคะ",
+        "svgScene": "ice",
+        "distractorsSv": [
+            "Ett snötäcke",
+            "Ett molntäcke",
+            "En våg"
+        ],
+        "distractorsTh": [
+            "หิมะปกคลุม",
+            "เมฆปกคลุม",
+            "คลื่น"
+        ],
+        "wordChunks": [
+            "Ett",
+            "istäcke"
+        ]
+    },
+    {
+        "id": "t6_ext_19",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Snön smälter i vårsolen",
+        "th": "หิมะกำลังละลายท่ามกลางแดดฤดูใบไม้ผลิค่ะ",
+        "satunFlavor": "หิมะละลายแล้ว แดดอุ่นฤดูใบไม้ผลิมาเยือน บายใจแรง",
+        "phoneticTh": "สเนิน-สแมล-เทร์-อี-วอร์-ซู-เลน",
+        "pronunciationTip": "ö ใน snön ปากจู๋ สเนิน-สแมล-เทร์",
+        "svgScene": "sun",
+        "distractorsSv": [
+            "Det fryser på",
+            "Det snöar mer",
+            "Det är mörkt"
+        ],
+        "distractorsTh": [
+            "น้ำเป็นน้ำแข็ง",
+            "หิมะตกเพิ่ม",
+            "มันมืด"
+        ],
+        "wordChunks": [
+            "Snön",
+            "smälter",
+            "i",
+            "vårsolen"
+        ]
+    },
+    {
+        "id": "t6_ext_20",
+        "themeId": "weather_time",
+        "type": "concept",
+        "sv": "Våren är på väg",
+        "th": "ฤดูใบไม้ผลิกำลังจะมาถึงแล้ว",
+        "satunFlavor": "ฤดูใบไม้ผลิกำลังมาถึง ดอกไม้จะบานสะพรั่งแล้ว",
+        "phoneticTh": "วอ-เรน-แอร์-โพ-แวก",
+        "pronunciationTip": "vår สระ å ปากกลม วอ-เรน",
+        "svgScene": "flower",
+        "distractorsSv": [
+            "Vintern kommer",
+            "Det är höst",
+            "Sommaren är slut"
+        ],
+        "distractorsTh": [
+            "ฤดูหนาวกำลังมา",
+            "เป็นฤดูใบไม้ร่วง",
+            "ฤดูร้อนหมดแล้ว"
+        ],
+        "wordChunks": [
+            "Våren",
+            "är",
+            "på",
+            "väg"
+        ]
+    },
+    {
+        "id": "t6_ext_21",
+        "themeId": "weather_time",
+        "type": "concept",
+        "sv": "Höstens vackra färger",
+        "th": "สีสันอันงดงามของฤดูใบไม้ร่วง",
+        "satunFlavor": "ใบไม้เปลี่ยนสี แดงส้มเหลืองสวยสดใสทั้งป่า",
+        "phoneticTh": "เฮิส-เทนส์-วัค-ครา-แฟร์-เกร์",
+        "pronunciationTip": "höst สระ ö ทำปากจู๋ เฮิส-เทนส์",
+        "svgScene": "autumn",
+        "distractorsSv": [
+            "Vinterns snö",
+            "Sommarens värme",
+            "Vårens knoppar"
+        ],
+        "distractorsTh": [
+            "หิมะหน้าหนาว",
+            "ความอบอุ่นหน้าร้อน",
+            "ยอดอ่อนฤดูใบไม้ผลิ"
+        ],
+        "wordChunks": [
+            "Höstens",
+            "vackra",
+            "färger"
+        ]
+    },
+    {
+        "id": "t6_ext_22",
+        "themeId": "weather_time",
+        "type": "concept",
+        "sv": "Sommarens ljusa nätter",
+        "th": "ค่ำคืนที่สว่างไสวในฤดูร้อน",
+        "satunFlavor": "หน้าร้อนสวีเดนเที่ยงคืนยังสว่างโล่ แปลกตาคนใต้จังฮู้",
+        "phoneticTh": "ซุม-มา-เรนส์-ยู-ซา-แน็ต-เตร์",
+        "pronunciationTip": "ljusa ตัว lj ออกเสียง ย และ u เป็นสระอู ยู-ซา",
+        "svgScene": "sun",
+        "distractorsSv": [
+            "Vinterns mörker",
+            "Höstens regn",
+            "Vårens vind"
+        ],
+        "distractorsTh": [
+            "ความมืดหน้าหนาว",
+            "ฝนหน้าใบไม้ร่วง",
+            "ลมหน้าใบไม้ผลิ"
+        ],
+        "wordChunks": [
+            "Sommarens",
+            "ljusa",
+            "nätter"
+        ]
+    },
+    {
+        "id": "t6_ext_23",
+        "themeId": "weather_time",
+        "type": "concept",
+        "sv": "Vinterns mörka dagar",
+        "th": "วันอันมืดมิดในฤดูหนาว",
+        "satunFlavor": "หน้าหนาวสวีเดนบ่ายสามก็มืดแล้ว จุดเทียนอุ่นใจ",
+        "phoneticTh": "วิน-เทรินส์-เมอร์-คา-ดา-การ์",
+        "pronunciationTip": "mörka สระ ö ทำปากจู๋ เมอร์-คา",
+        "svgScene": "night",
+        "distractorsSv": [
+            "Sommarens sol",
+            "Vårens ljus",
+            "Höstens färger"
+        ],
+        "distractorsTh": [
+            "แดดหน้าร้อน",
+            "แสงสว่างใบไม้ผลิ",
+            "สีสันใบไม้ร่วง"
+        ],
+        "wordChunks": [
+            "Vinterns",
+            "mörka",
+            "dagar"
+        ]
+    },
+    {
+        "id": "t6_ext_24",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "Ett levande ljus",
+        "th": "เทียนไขที่จุดสว่าง",
+        "satunFlavor": "จุดเทียนสร้างความอบอุ่นในเรือนช่วงหน้าหนาว",
+        "phoneticTh": "เอ็ท-เล-วัน-เดะ-ยูส",
+        "pronunciationTip": "ljus ออกเสียง ยูส ลากเสียงยาว",
+        "svgScene": "candle",
+        "distractorsSv": [
+            "En elektrisk lampa",
+            "En ficklampa",
+            "En glödlampa"
+        ],
+        "distractorsTh": [
+            "โคมไฟไฟฟ้า",
+            "ไฟฉาย",
+            "หลอดไฟ"
+        ],
+        "wordChunks": [
+            "Ett",
+            "levande",
+            "ljus"
+        ]
+    },
+    {
+        "id": "t6_ext_25",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Vi tänder levande ljus",
+        "th": "พวกเราจุดเทียนไขสร้างบรรยากาศอบอุ่นค่ะ",
+        "satunFlavor": "จุดเทียนให้เรือนสว่างโรแมนติกและอบอุ่น",
+        "phoneticTh": "วี-แทน-แดร์-เล-วัน-เดะ-ยูส",
+        "pronunciationTip": "tänder สระ ä อ้าปากกว้าง แทน-แดร์-เล-วัน-เดะ-ยูส",
+        "svgScene": "candle",
+        "distractorsSv": [
+            "Vi släcker ljuset",
+            "Vi tänder elden",
+            "Vi köper lampor"
+        ],
+        "distractorsTh": [
+            "เราดับเทียน",
+            "เราจุดกองไฟ",
+            "เราซื้อหลอดไฟ"
+        ],
+        "wordChunks": [
+            "Vi",
+            "tänder",
+            "levande",
+            "ljus"
+        ]
+    },
+    {
+        "id": "t6_ext_26",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "En soluppgång",
+        "th": "พระอาทิตย์ขึ้นยามเช้า",
+        "satunFlavor": "ตะวันขึ้นยามเช้า แสงทองส่องประกายสดชื่น",
+        "phoneticTh": "เอน-ซูล-อุพ-กุง",
+        "pronunciationTip": "gång สระ å ออกเสียงสระโอ/ออ กุง",
+        "svgScene": "sunrise",
+        "distractorsSv": [
+            "En solnedgång",
+            "En månuppgång",
+            "En solförmörkelse"
+        ],
+        "distractorsTh": [
+            "พระอาทิตย์ตก",
+            "พระจันทร์ขึ้น",
+            "สุริยุปราคา"
+        ],
+        "wordChunks": [
+            "En",
+            "soluppgång"
+        ]
+    },
+    {
+        "id": "t6_ext_27",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "En vacker solnedgång",
+        "th": "พระอาทิตย์ตกดินแสนสวย",
+        "satunFlavor": "ตะวันตกดิน ท้องฟ้าสีส้มทองสวยงามจับตา",
+        "phoneticTh": "เอน-วัค-เคร์-ซูล-เนด-กุง",
+        "pronunciationTip": "solnedgång สระ o ออกเสียง ซูล-เนด-กุง",
+        "svgScene": "sunset",
+        "distractorsSv": [
+            "En soluppgång",
+            "Middagsolen",
+            "Månsken"
+        ],
+        "distractorsTh": [
+            "พระอาทิตย์ขึ้น",
+            "แดดเที่ยงวัน",
+            "แสงจันทร์"
+        ],
+        "wordChunks": [
+            "En",
+            "vacker",
+            "solnedgång"
+        ]
+    },
+    {
+        "id": "t6_ext_28",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "En fullmåne",
+        "th": "พระจันทร์เต็มดวง",
+        "satunFlavor": "พระจันทร์วันเพ็ญ สว่างกลมนวลตา",
+        "phoneticTh": "เอน-ฟุลล์-โม-เนอะ",
+        "pronunciationTip": "måne สระ å ปากกลม โม-เนอะ",
+        "svgScene": "moon",
+        "distractorsSv": [
+            "En halvmåne",
+            "En stjärna",
+            "En planet"
+        ],
+        "distractorsTh": [
+            "พระจันทร์ครึ่งดวง",
+            "ดวงดาว",
+            "ดาวเคราะห์"
+        ],
+        "wordChunks": [
+            "En",
+            "fullmåne"
+        ]
+    },
+    {
+        "id": "t6_ext_29",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "Många lysande stjärnor",
+        "th": "ดวงดาวทอแสงระยิบระยับมากมาย",
+        "satunFlavor": "ดาวเต็มท้องฟ้าหน้าหนาว ระยิบระยับสวยจังฮู้",
+        "phoneticTh": "มุง-งา-ลือ-ซัน-เดะ-แชร์ร-นูร์",
+        "pronunciationTip": "stjärnor ออกเสียง แชร์ร-นูร์",
+        "svgScene": "star",
+        "distractorsSv": [
+            "Moln",
+            "Satelliter",
+            "Månen"
+        ],
+        "distractorsTh": [
+            "ก้อนเมฆ",
+            "ดาวเทียม",
+            "ดวงจันทร์"
+        ],
+        "wordChunks": [
+            "Många",
+            "lysande",
+            "stjärnor"
+        ]
+    },
+    {
+        "id": "t6_ext_30",
+        "themeId": "weather_time",
+        "type": "concept",
+        "sv": "Magiskt norrsken",
+        "th": "แสงเหนือออโรราอันมหัศจรรย์",
+        "satunFlavor": "แสงเหนือสีเขียวพลิ้วบนฟ้า ทางเหนือสวีเดน อัศจรรย์ตาจังฮู้",
+        "phoneticTh": "มอ-กิสค์ท-นูร์ร-เชน",
+        "pronunciationTip": "norrsken ออกเสียง นูร์ร-เชน sk ออกเสียง sh",
+        "svgScene": "aurora",
+        "distractorsSv": [
+            "Regnbåge",
+            "Morgonrodnad",
+            "Blixt"
+        ],
+        "distractorsTh": [
+            "รุ้งกินน้ำ",
+            "แสงเงินแสงทอง",
+            "สายฟ้า"
+        ],
+        "wordChunks": [
+            "Magiskt",
+            "norrsken"
+        ]
+    },
+    {
+        "id": "t6_ext_31",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "Måndag morgon",
+        "th": "เช้าวันจันทร์",
+        "satunFlavor": "เช้าวันจันทร์ เริ่มต้นสัปดาห์ทำงานใหม่",
+        "phoneticTh": "มอน-ด็อก-มอร์-กอน",
+        "pronunciationTip": "måndag สระ å ปากกลม มอน-ด็อก",
+        "svgScene": "morning",
+        "distractorsSv": [
+            "Tisdag kväll",
+            "Fredag morgon",
+            "Söndag middag"
+        ],
+        "distractorsTh": [
+            "เย็นวันอังคาร",
+            "เช้าวันศุกร์",
+            "เที่ยงวันอาทิตย์"
+        ],
+        "wordChunks": [
+            "Måndag",
+            "morgon"
+        ]
+    },
+    {
+        "id": "t6_ext_32",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "Tisdag eftermiddag",
+        "th": "บ่ายวันอังคาร",
+        "satunFlavor": "บ่ายวันอังคาร นั่งเรียนภาษาอย่างตั้งใจ",
+        "phoneticTh": "ทีส-ด็อก-เอฟ-เตร์-มิด-ด็อก",
+        "pronunciationTip": "tisdag สระ i ยาว ทีส-ด็อก",
+        "svgScene": "calendar",
+        "distractorsSv": [
+            "Onsdag morgon",
+            "Måndag kväll",
+            "Torsdag natt"
+        ],
+        "distractorsTh": [
+            "เช้าวันพุธ",
+            "ค่ำวันจันทร์",
+            "ดึกวันพฤหัส"
+        ],
+        "wordChunks": [
+            "Tisdag",
+            "eftermiddag"
+        ]
+    },
+    {
+        "id": "t6_ext_33",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "Onsdag kväll",
+        "th": "ค่ำวันพุธ",
+        "satunFlavor": "ค่ำวันพุธ กลางสัปดาห์แล้ว",
+        "phoneticTh": "อูนส์-ด็อก-คแวลล์",
+        "pronunciationTip": "onsdag สระ o ออกเสียงสระอู อูนส์-ด็อก",
+        "svgScene": "night",
+        "distractorsSv": [
+            "Tisdag natt",
+            "Fredag morgon",
+            "Lördag kväll"
+        ],
+        "distractorsTh": [
+            "ดึกวันอังคาร",
+            "เช้าวันศุกร์",
+            "ค่ำวันเสาร์"
+        ],
+        "wordChunks": [
+            "Onsdag",
+            "kväll"
+        ]
+    },
+    {
+        "id": "t6_ext_34",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "Torsdag förmiddag",
+        "th": "สายวันพฤหัสบดี",
+        "satunFlavor": "สายๆ วันพฤหัสบดี เตรียมกินซุปถั่วแพนเค้ก",
+        "phoneticTh": "ทูร์ส-ด็อก-เฟอร์-มิด-ด็อก",
+        "pronunciationTip": "torsdag สระ o ออกเสียงสระอู ทูร์ส-ด็อก",
+        "svgScene": "morning",
+        "distractorsSv": [
+            "Måndag morgon",
+            "Fredag eftermiddag",
+            "Söndag kväll"
+        ],
+        "distractorsTh": [
+            "เช้าวันจันทร์",
+            "บ่ายวันศุกร์",
+            "ค่ำวันอาทิตย์"
+        ],
+        "wordChunks": [
+            "Torsdag",
+            "förmiddag"
+        ]
+    },
+    {
+        "id": "t6_ext_35",
+        "themeId": "weather_time",
+        "type": "concept",
+        "sv": "Äntligen fredag!",
+        "th": "ในที่สุดก็ถึงวันศุกร์แล้ว!",
+        "satunFlavor": "วันศุกร์แล้วโว้ย! เตรียมตัวพักผ่อนสุดสัปดาห์หรอยๆ",
+        "phoneticTh": "แรนต์-ลิก-เก็น-เฟร-ด็อก!",
+        "pronunciationTip": "äntligen สระ ä กว้าง แรนต์-ลิก-เก็น",
+        "svgScene": "happy",
+        "distractorsSv": [
+            "Bara måndag",
+            "Tråkig tisdag",
+            "Svår onsdag"
+        ],
+        "distractorsTh": [
+            "เพิ่งจะวันจันทร์",
+            "วันอังคารน่าเบื่อ",
+            "วันพุธยากจัง"
+        ],
+        "wordChunks": [
+            "Äntligen",
+            "fredag!"
+        ]
+    },
+    {
+        "id": "t6_ext_36",
+        "themeId": "weather_time",
+        "type": "concept",
+        "sv": "Fredagsmys med familjen",
+        "th": "เฟรดักส์มีส (การพักผ่อนสบายๆ ในบ้านคืนวันศุกร์)",
+        "satunFlavor": "คืนวันศุกร์ดูหนัง กินขนมกับครอบครัว ประเพณียอดฮิตสวีเดน",
+        "phoneticTh": "เฟร-ด็อกส์-มึส-เมด-ฟา-มิล-เยน",
+        "pronunciationTip": "mys สระ y ทำปากจู๋แน่น มึส",
+        "svgScene": "family",
+        "distractorsSv": [
+            "Jobba över",
+            "Gå upp tidigt",
+            "Städa garaget"
+        ],
+        "distractorsTh": [
+            "ทำโอที",
+            "ตื่นแต่เช้า",
+            "เก็บโรงรถ"
+        ],
+        "wordChunks": [
+            "Fredagsmys",
+            "med",
+            "familjen"
+        ]
+    },
+    {
+        "id": "t6_ext_37",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "Lördag hela dagen",
+        "th": "วันเสาร์ตลอดทั้งวัน",
+        "satunFlavor": "วันเสาร์เต็มๆ วัน ได้เที่ยวพักผ่อนบายใจ",
+        "phoneticTh": "เลอร์-ด็อก-เฮ-ลา-ดา-เก็น",
+        "pronunciationTip": "lördag สระ ö ปากจู๋ เลอร์-ด็อก",
+        "svgScene": "calendar",
+        "distractorsSv": [
+            "Måndag morgon",
+            "Söndag kväll",
+            "Arbetsdag"
+        ],
+        "distractorsTh": [
+            "เช้าวันจันทร์",
+            "ค่ำวันอาทิตย์",
+            "วันทำงาน"
+        ],
+        "wordChunks": [
+            "Lördag",
+            "hela",
+            "dagen"
+        ]
+    },
+    {
+        "id": "t6_ext_38",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "En lugn söndag",
+        "th": "วันอาทิตย์อันเงียบสงบ",
+        "satunFlavor": "วันอาทิตย์แสนสงบ พักผ่อนเติมพลังในเรือน",
+        "phoneticTh": "เอน-ลุงน์-เซิน-ด็อก",
+        "pronunciationTip": "söndag สระ ö ทำปากจู๋ เซิน-ด็อก",
+        "svgScene": "calm",
+        "distractorsSv": [
+            "En stressig måndag",
+            "En vild lördag",
+            "En arbetsdag"
+        ],
+        "distractorsTh": [
+            "วันจันทร์ที่เครียด",
+            "วันเสาร์สุดเหวี่ยง",
+            "วันทำงาน"
+        ],
+        "wordChunks": [
+            "En",
+            "lugn",
+            "söndag"
+        ]
+    },
+    {
+        "id": "t6_ext_39",
+        "themeId": "weather_time",
+        "type": "concept",
+        "sv": "En ledig helg",
+        "th": "วันหยุดสุดสัปดาห์ที่ไม่ต้องทำงาน",
+        "satunFlavor": "วันหยุดสุดสัปดาห์ ว่างสบายไม่ต้องไปทำงาน",
+        "phoneticTh": "เอน-เล-ดิก-เฮ็ลย์",
+        "pronunciationTip": "helg ออกเสียง เฮ็ลย์ ตัว g เป็นเสียง ย",
+        "svgScene": "calendar",
+        "distractorsSv": [
+            "En arbetsvecka",
+            "En skoldag",
+            "Ett nattskift"
+        ],
+        "distractorsTh": [
+            "สัปดาห์ทำงาน",
+            "วันไปโรงเรียน",
+            "กะดึก"
+        ],
+        "wordChunks": [
+            "En",
+            "ledig",
+            "helg"
+        ]
+    },
+    {
+        "id": "t6_ext_40",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "I januari månad",
+        "th": "ในเดือนมกราคม",
+        "satunFlavor": "เดือนมกราคม หิมะขาวโพลนหนาวสุดๆ",
+        "phoneticTh": "อี-ยัน-นู-ออ-รี-โม-นัด",
+        "pronunciationTip": "januari ตัว j ออกเสียง ย ยัน-นู-ออ-รี",
+        "svgScene": "calendar",
+        "distractorsSv": [
+            "I juli",
+            "I augusti",
+            "I maj"
+        ],
+        "distractorsTh": [
+            "เดือนกรกฎาคม",
+            "เดือนสิงหาคม",
+            "เดือนพฤษภาคม"
+        ],
+        "wordChunks": [
+            "I",
+            "januari",
+            "månad"
+        ]
+    },
+    {
+        "id": "t6_ext_41",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "Kall februari",
+        "th": "เดือนกุมภาพันธ์อันหนาวเย็น",
+        "satunFlavor": "เดือนกุมภาพันธ์ หนาวเย็นยะเยือก กินขนมเซมล่า",
+        "phoneticTh": "คัลล์-เฟ-บรู-ออ-รี",
+        "pronunciationTip": "februari ออกเสียง เฟ-บรู-ออ-รี",
+        "svgScene": "calendar",
+        "distractorsSv": [
+            "Varm juli",
+            "Grön juni",
+            "Solig maj"
+        ],
+        "distractorsTh": [
+            "กรกฎาคมที่อบอุ่น",
+            "มิถุนายนสีเขียว",
+            "พฤษภาคมแดดดี"
+        ],
+        "wordChunks": [
+            "Kall",
+            "februari"
+        ]
+    },
+    {
+        "id": "t6_ext_42",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "Mars med snösmältning",
+        "th": "เดือนมีนาคมที่หิมะเริ่มละลาย",
+        "satunFlavor": "เดือนมีนาคม แดดเริ่มอุ่นหิมะเริ่มละลายแล้ว",
+        "phoneticTh": "มาร์ช-เมด-สเนอ-สแมลต์-นิง",
+        "pronunciationTip": "mars ออกเสียง มาร์ช rs เป็นเสียง sh",
+        "svgScene": "calendar",
+        "distractorsSv": [
+            "Januari",
+            "November",
+            "December"
+        ],
+        "distractorsTh": [
+            "มกราคม",
+            "พฤศจิกายน",
+            "ธันวาคม"
+        ],
+        "wordChunks": [
+            "Mars",
+            "med",
+            "snösmältning"
+        ]
+    },
+    {
+        "id": "t6_ext_43",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "Aprilväder",
+        "th": "สภาพอากาศเดือนเมษายนที่แปรปรวน (เดี๋ยวแดดเดี๋ยวหิมะ)",
+        "satunFlavor": "อากาศเดือนเมษา ผีเข้าผีออก เดี๋ยวแดดเดี๋ยวหิมะตก",
+        "phoneticTh": "อา-พริล-แว-แดร์",
+        "pronunciationTip": "aprilväder ออกเสียง อา-พริล-แว-แดร์",
+        "svgScene": "cloud",
+        "distractorsSv": [
+            "Sommarväder",
+            "Vinterkyla",
+            "Höststorm"
+        ],
+        "distractorsTh": [
+            "อากาศหน้าร้อน",
+            "ความหนาวหน้าหนาว",
+            "พายุใบไม้ร่วง"
+        ],
+        "wordChunks": [
+            "Aprilväder"
+        ]
+    },
+    {
+        "id": "t6_ext_44",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "Vackra maj blommar",
+        "th": "เดือนพฤษภาคมที่ดอกไม้ผลิบานงดงาม",
+        "satunFlavor": "เดือนพฤษภาคม ต้นไม้ผลิยอดเขียวสดใส ดอกไม้บานสะพรั่ง",
+        "phoneticTh": "วัค-ครา-ไม-บลุม-มาร์",
+        "pronunciationTip": "maj ออกเสียงเหมือน ไม",
+        "svgScene": "flower",
+        "distractorsSv": [
+            "Kalla november",
+            "Mörka december",
+            "Vita januari"
+        ],
+        "distractorsTh": [
+            "พฤศจิกายนที่หนาวเย็น",
+            "ธันวาคมที่มืดมิด",
+            "มกราคมสีขาว"
+        ],
+        "wordChunks": [
+            "Vackra",
+            "maj",
+            "blommar"
+        ]
+    },
+    {
+        "id": "t6_ext_45",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "Juni med midsommar",
+        "th": "เดือนมิถุนายนกับเทศกาลมิดซอมมาร์",
+        "satunFlavor": "เดือนมิถุนายน ฉลองเทศกาลมิดซอมมาร์กลางแจ้ง เต้นรอบเสาดอกไม้",
+        "phoneticTh": "ยู-นี-เมด-มิด-ซุม-มาร์",
+        "pronunciationTip": "juni ตัว j ออกเสียง ย และ u ออกเสียงสระอู ยู-นี",
+        "svgScene": "flower",
+        "distractorsSv": [
+            "December med jul",
+            "April med påsk",
+            "Oktober med höst"
+        ],
+        "distractorsTh": [
+            "ธันวาคมกับคริสต์มาส",
+            "เมษายนกับอีสเตอร์",
+            "ตุลาคมกับใบไม้ร่วง"
+        ],
+        "wordChunks": [
+            "Juni",
+            "med",
+            "midsommar"
+        ]
+    },
+    {
+        "id": "t6_ext_46",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "Varmaste juli",
+        "th": "เดือนกรกฎาคมที่อบอุ่นที่สุด",
+        "satunFlavor": "เดือนกรกฎาคม หน้าร้อนสุดฟิน ว่ายน้ำทะเลสาบฉ่ำใจ",
+        "phoneticTh": "วาร์-มัส-เตะ-ยู-ลี",
+        "pronunciationTip": "juli ออกเสียง ยู-ลี",
+        "svgScene": "sun",
+        "distractorsSv": [
+            "Kallaste januari",
+            "Mörkaste december",
+            "Blåsigaste mars"
+        ],
+        "distractorsTh": [
+            "มกราคมที่หนาวที่สุด",
+            "ธันวาคมที่มืดที่สุด",
+            "มีนาคมที่ลมแรงที่สุด"
+        ],
+        "wordChunks": [
+            "Varmaste",
+            "juli"
+        ]
+    },
+    {
+        "id": "t6_ext_47",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "Augusti bjuder på bär",
+        "th": "เดือนสิงหาคมที่มีผลเบอร์รี่ในป่าอุดมสมบูรณ์",
+        "satunFlavor": "เดือนสิงหาคม เข้าป่าเก็บลูกบลูเบอร์รี่สดๆ หรอยแรง",
+        "phoneticTh": "เอา-กุส-ที-บยู-แดร์-โพ-แบร์",
+        "pronunciationTip": "augusti สระ u ปากจู๋ เอา-กุส-ที",
+        "svgScene": "fruit",
+        "distractorsSv": [
+            "Januari med snö",
+            "Mars med kyla",
+            "November med mörker"
+        ],
+        "distractorsTh": [
+            "มกราคมกับหิมะ",
+            "มีนาคมกับความหนาว",
+            "พฤศจิกายนกับความมืด"
+        ],
+        "wordChunks": [
+            "Augusti",
+            "bjuder",
+            "på",
+            "bär"
+        ]
+    },
+    {
+        "id": "t6_ext_48",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "September med svamp",
+        "th": "เดือนกันยายนกับฤดูเก็บเห็ดในป่า",
+        "satunFlavor": "เดือนกันยายน เดินเข้าป่าหาเห็ดแคนทาเรลสีเหลืองอร่าม",
+        "phoneticTh": "เซ็พ-เท็ม-แบร์-เมด-สวัมป์",
+        "pronunciationTip": "svamp ออกเสียง สวัมป์",
+        "svgScene": "forest",
+        "distractorsSv": [
+            "Maj med blommor",
+            "Juli med sol",
+            "Februari med is"
+        ],
+        "distractorsTh": [
+            "พฤษภาคมกับดอกไม้",
+            "กรกฎาคมกับแดด",
+            "กุมภาพันธ์กับน้ำแข็ง"
+        ],
+        "wordChunks": [
+            "September",
+            "med",
+            "svamp"
+        ]
+    },
+    {
+        "id": "t6_ext_49",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "Färgrik oktober",
+        "th": "เดือนตุลาคมที่เต็มไปด้วยสีสันของใบไม้",
+        "satunFlavor": "เดือนตุลาคม ใบไม้สีทองอร่ามตา อากาศเย็นสบาย",
+        "phoneticTh": "แฟร์ย-รีค-อุค-ทู-แบร์",
+        "pronunciationTip": "oktober สระ o ออกเสียง อุค-ทู-แบร์",
+        "svgScene": "autumn",
+        "distractorsSv": [
+            "Vit januari",
+            "Grön juni",
+            "Varm augusti"
+        ],
+        "distractorsTh": [
+            "มกราคมสีขาว",
+            "มิถุนายนสีเขียว",
+            "สิงหาคมที่อบอุ่น"
+        ],
+        "wordChunks": [
+            "Färgrik",
+            "oktober"
+        ]
+    },
+    {
+        "id": "t6_ext_50",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "Mörk november",
+        "th": "เดือนพฤศจิกายนอันมืดมิดและหนาวเย็น",
+        "satunFlavor": "เดือนพฤศจิกายน ฝนพรำฟ้ามืดเร็ว จุดเทียนในเรือนอุ่นใจ",
+        "phoneticTh": "เมอร์ค-นู-แวม-แบร์",
+        "pronunciationTip": "november สระ o ออกเสียง นู-แวม-แบร์",
+        "svgScene": "night",
+        "distractorsSv": [
+            "Ljus juni",
+            "Solig juli",
+            "Varm maj"
+        ],
+        "distractorsTh": [
+            "มิถุนายนที่สว่าง",
+            "กรกฎาคมที่มีแดด",
+            "พฤษภาคมที่อบอุ่น"
+        ],
+        "wordChunks": [
+            "Mörk",
+            "november"
+        ]
+    },
+    {
+        "id": "t6_ext_51",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "Mysig december med jul",
+        "th": "เดือนธันวาคมอันอบอุ่นกับเทศกาลคริสต์มาส",
+        "satunFlavor": "เดือนธันวาคม ฉลองคริสต์มาส กินอาหารอร่อยกับครอบครัว",
+        "phoneticTh": "มึ-ซิก-เด-เซ็ม-แบร์-เมด-ยูล",
+        "pronunciationTip": "jul ออกเสียง ยูล สระ u ปากจู๋ลึก",
+        "svgScene": "christmas",
+        "distractorsSv": [
+            "Juli med bad",
+            "Augusti med bär",
+            "April med vår"
+        ],
+        "distractorsTh": [
+            "กรกฎาคมกับว่ายน้ำ",
+            "สิงหาคมกับเบอร์รี่",
+            "เมษายนกับใบไม้ผลิ"
+        ],
+        "wordChunks": [
+            "Mysig",
+            "december",
+            "med",
+            "jul"
+        ]
+    },
+    {
+        "id": "t6_ext_52",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Klockan är halv åtta",
+        "th": "ตอนนี้เวลาเจ็ดโมงครึ่งค่ะ (ครึ่งแปดตามวิธีนับสวีเดน)",
+        "satunFlavor": "เจ็ดโมงครึ่ง คนสวีเดนเรียก 'ครึ่งแปด' จำให้ดีนะ",
+        "phoneticTh": "คล็อค-คัน-แอร์-ฮัลฟ์-อ็อต-ตา",
+        "pronunciationTip": "halv ออกเสียง ฮัลฟ์ และ åtta ออกเสียง อ็อต-ตา",
+        "svgScene": "clock",
+        "distractorsSv": [
+            "Klockan är åtta",
+            "Klockan är sju",
+            "Klockan är halv sju"
+        ],
+        "distractorsTh": [
+            "แปดโมงตรง",
+            "เจ็ดโมงตรง",
+            "หกโมงครึ่ง"
+        ],
+        "wordChunks": [
+            "Klockan",
+            "är",
+            "halv",
+            "åtta"
+        ]
+    },
+    {
+        "id": "t6_ext_53",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Klockan är kvart över nio",
+        "th": "ตอนนี้เวลาเก้าโมงสิบห้านาทีค่ะ",
+        "satunFlavor": "เก้าโมงสิบห้านาที อีกเดี๋ยวก็ได้เวลาพักเบรก",
+        "phoneticTh": "คล็อค-คัน-แอร์-ควาร์ท-เออ-เวร์-นี-อู",
+        "pronunciationTip": "kvart สระ a สั้น และ över สระ ö ปากจู๋ ควาร์ท-เออ-เวร์",
+        "svgScene": "clock",
+        "distractorsSv": [
+            "Kvart i nio",
+            "Halv nio",
+            "Nio prick"
+        ],
+        "distractorsTh": [
+            "อีกสิบห้านาทีเก้าโมง",
+            "แปดโมงครึ่ง",
+            "เก้าโมงตรง"
+        ],
+        "wordChunks": [
+            "Klockan",
+            "är",
+            "kvart",
+            "över",
+            "nio"
+        ]
+    },
+    {
+        "id": "t6_ext_54",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Klockan är kvart i tio",
+        "th": "ตอนนี้เวลาอีกสิบห้านาทีจะสิบโมงค่ะ (เก้าโมงสี่สิบห้า)",
+        "satunFlavor": "อีกสิบห้านาทีสิบโมง เตรียมตัวให้พร้อม",
+        "phoneticTh": "คล็อค-คัน-แอร์-ควาร์ท-อี-ที-อู",
+        "pronunciationTip": "kvart i tio ควาร์ท-อี-ที-อู",
+        "svgScene": "clock",
+        "distractorsSv": [
+            "Kvart över tio",
+            "Halv tio",
+            "Tio prick"
+        ],
+        "distractorsTh": [
+            "สิบโมงสิบห้า",
+            "เก้าโมงครึ่ง",
+            "สิบโมงตรง"
+        ],
+        "wordChunks": [
+            "Klockan",
+            "är",
+            "kvart",
+            "i",
+            "tio"
+        ]
+    },
+    {
+        "id": "t6_ext_55",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Klockan är prick tolv",
+        "th": "เวลาเที่ยงตรงเป๊ะค่ะ",
+        "satunFlavor": "เที่ยงตรงเป๊ะ ได้เวลากินข้าวเที่ยงแล้ว หิวจังฮู้",
+        "phoneticTh": "คล็อค-คัน-แอร์-พริค-ท็อลฟ์",
+        "pronunciationTip": "prick สระ i สั้น พริค-ท็อลฟ์",
+        "svgScene": "clock",
+        "distractorsSv": [
+            "Klockan är ett",
+            "Klockan är elva",
+            "Halv tolv"
+        ],
+        "distractorsTh": [
+            "บ่ายโมง",
+            "สิบเอ็ดโมง",
+            "สิบเอ็ดโมงครึ่ง"
+        ],
+        "wordChunks": [
+            "Klockan",
+            "är",
+            "prick",
+            "tolv"
+        ]
+    },
+    {
+        "id": "t6_ext_56",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Klockan är fem över två",
+        "th": "เวลาบ่ายสองโมงห้านาทีค่ะ",
+        "satunFlavor": "บ่ายสองห้านาที เวลากำลังเดินไปเรื่อยๆ",
+        "phoneticTh": "คล็อค-คัน-แอร์-เฟ็ม-เออ-เวร์-ทโว",
+        "pronunciationTip": "två สระ å ปากกลม ทโว",
+        "svgScene": "clock",
+        "distractorsSv": [
+            "Fem i två",
+            "Tio över två",
+            "Två prick"
+        ],
+        "distractorsTh": [
+            "อีกห้านาทีบ่ายสอง",
+            "บ่ายสองสิบนาที",
+            "บ่ายสองตรง"
+        ],
+        "wordChunks": [
+            "Klockan",
+            "är",
+            "fem",
+            "över",
+            "två"
+        ]
+    },
+    {
+        "id": "t6_ext_57",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Klockan är tio i tre",
+        "th": "อีกสิบนาทีจะบ่ายสามโมงค่ะ (บ่ายสองโมงห้าสิบ)",
+        "satunFlavor": "อีกสิบนาทีบ่ายสาม จะเลิกเรียนแล้วดีใจแรง",
+        "phoneticTh": "คล็อค-คัน-แอร์-ที-อู-อี-เตร",
+        "pronunciationTip": "tre สระ e ลากยาว เตร",
+        "svgScene": "clock",
+        "distractorsSv": [
+            "Tio över tre",
+            "Halv tre",
+            "Tre prick"
+        ],
+        "distractorsTh": [
+            "บ่ายสามสิบนาที",
+            "บ่ายสองครึ่ง",
+            "บ่ายสามตรง"
+        ],
+        "wordChunks": [
+            "Klockan",
+            "är",
+            "tio",
+            "i",
+            "tre"
+        ]
+    },
+    {
+        "id": "t6_ext_58",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "En hel timme",
+        "th": "เวลาหนึ่งชั่วโมงเต็ม",
+        "satunFlavor": "หนึ่งชั่วโมงเต็ม นั่งคุยกันเพลินแป๊บเดียว",
+        "phoneticTh": "เอน-เฮล-ทิม-เมอะ",
+        "pronunciationTip": "timme สระ i สั้น ทิม-เมอะ",
+        "svgScene": "clock",
+        "distractorsSv": [
+            "En halvtimme",
+            "En minut",
+            "En sekund"
+        ],
+        "distractorsTh": [
+            "ครึ่งชั่วโมง",
+            "หนึ่งนาที",
+            "หนึ่งวินาที"
+        ],
+        "wordChunks": [
+            "En",
+            "hel",
+            "timme"
+        ]
+    },
+    {
+        "id": "t6_ext_59",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "En halvtimme",
+        "th": "เวลาครึ่งชั่วโมง (30 นาที)",
+        "satunFlavor": "ครึ่งชั่วโมง รอแป๊บเดียวเดี๋ยวก็ถึง",
+        "phoneticTh": "เอน-ฮัลฟ์-ทิม-เมอะ",
+        "pronunciationTip": "halv ออกเสียง ฮัลฟ์-ทิม-เมอะ",
+        "svgScene": "clock",
+        "distractorsSv": [
+            "En timme",
+            "Tio minuter",
+            "En sekund"
+        ],
+        "distractorsTh": [
+            "หนึ่งชั่วโมง",
+            "สิบนาที",
+            "หนึ่งวินาที"
+        ],
+        "wordChunks": [
+            "En",
+            "halvtimme"
+        ]
+    },
+    {
+        "id": "t6_ext_60",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Vänta en minut",
+        "th": "กรุณารอสักหนึ่งนาทีนะคะ",
+        "satunFlavor": "รอสักนาทีเดียวต๊ะ แป๊บเดียวจริงๆ",
+        "phoneticTh": "แวน-ตะ-เอน-มิ-นูท",
+        "pronunciationTip": "minut สระ u ออกเสียงสระอู มิ-นูท",
+        "svgScene": "clock",
+        "distractorsSv": [
+            "Gå genast",
+            "Vänta en timme",
+            "Kom tillbaka imorgon"
+        ],
+        "distractorsTh": [
+            "ไปทันที",
+            "รอหนึ่งชั่วโมง",
+            "กลับมาพรุ่งนี้"
+        ],
+        "wordChunks": [
+            "Vänta",
+            "en",
+            "minut"
+        ]
+    },
+    {
+        "id": "t6_ext_61",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Jag kommer om fem minuter",
+        "th": "ฉันจะไปถึงในอีกห้านาทีค่ะ",
+        "satunFlavor": "อีกห้านาทีถึงแล้ว รอแป๊บเดียวนะจ๊ะ",
+        "phoneticTh": "ย็อก-คอม-เมร์-อุม-เฟ็ม-มิ-นู-เทร์",
+        "pronunciationTip": "minuter สระ u เป็นสระอู มิ-นู-เทร์",
+        "svgScene": "clock",
+        "distractorsSv": [
+            "Jag kommer om en timme",
+            "Jag kommer inte",
+            "Jag har redan kommit"
+        ],
+        "distractorsTh": [
+            "ฉันจะไปถึงในหนึ่งชั่วโมง",
+            "ฉันไม่ไป",
+            "ฉันมาถึงแล้ว"
+        ],
+        "wordChunks": [
+            "Jag",
+            "kommer",
+            "om",
+            "fem",
+            "minuter"
+        ]
+    },
+    {
+        "id": "t6_ext_62",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Tiden går så fort",
+        "th": "เวลาผ่านไปรวดเร็วมากเลยค่ะ",
+        "satunFlavor": "เวลาผ่านไปเร็วแรง เผลอแป๊บเดียวหมดวันแล้ว",
+        "phoneticTh": "ที-เด็น-กอร์-โซ-ฟูร์ท",
+        "pronunciationTip": "fort สระ o ออกเสียงสระอู ฟูร์ท",
+        "svgScene": "clock",
+        "distractorsSv": [
+            "Tiden står stilla",
+            "Det är tråkigt",
+            "Klockan går fel"
+        ],
+        "distractorsTh": [
+            "เวลาหยุดนิ่ง",
+            "มันน่าเบื่อ",
+            "นาฬิกาเดินผิด"
+        ],
+        "wordChunks": [
+            "Tiden",
+            "går",
+            "så",
+            "fort"
+        ]
+    },
+    {
+        "id": "t6_ext_63",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Har du tid att prata?",
+        "th": "คุณมีเวลาคุยสักครู่ไหมคะ?",
+        "satunFlavor": "พอมีเวลาแหลง (คุย) กันสักเดี๋ยวไหมต๊ะ",
+        "phoneticTh": "ฮาร์-ดู-ทีด-อัท-พรอ-ตา?",
+        "pronunciationTip": "prata สระ a ยาว พรอ-ตา",
+        "svgScene": "dialog",
+        "distractorsSv": [
+            "Är du upptagen?",
+            "Varför ringer du?",
+            "Vad gör du nu?"
+        ],
+        "distractorsTh": [
+            "คุณยุ่งไหม?",
+            "โทรมาทำไม?",
+            "ตอนนี้ทำอะไรอยู่?"
+        ],
+        "wordChunks": [
+            "Har",
+            "du",
+            "tid",
+            "att",
+            "prata?"
+        ]
+    },
+    {
+        "id": "t6_ext_64",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Jag har lite bråttom nu",
+        "th": "ตอนนี้ฉันกำลังรีบอยู่นิดหน่อยค่ะ",
+        "satunFlavor": "ตอนนี้กำลังรีบด่วนจังฮู้ เดี๋ยวคุยกันใหม่นะ",
+        "phoneticTh": "ย็อก-ฮาร์-ลี-เตะ-บร็อต-ทุม-นู",
+        "pronunciationTip": "bråttom สระ å สั้น บร็อต-ทุม",
+        "svgScene": "running",
+        "distractorsSv": [
+            "Jag har gott om tid",
+            "Jag är ledig",
+            "Jag sitter och vilar"
+        ],
+        "distractorsTh": [
+            "ฉันมีเวลาเหลือเฟือ",
+            "ฉันว่าง",
+            "ฉันนั่งพักผ่อนอยู่"
+        ],
+        "wordChunks": [
+            "Jag",
+            "har",
+            "lite",
+            "bråttom",
+            "nu"
+        ]
+    },
+    {
+        "id": "t6_ext_65",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Vi har gott om tid",
+        "th": "พวกเรามีเวลาเหลือเฟือสบายๆ ค่ะ",
+        "satunFlavor": "มีเวลาลุยเหม็ด ไม่ต้องรีบ ค่อยๆ เดินสบายใจ",
+        "phoneticTh": "วี-ฮาร์-ก็อตต์-อุม-ทีด",
+        "pronunciationTip": "gott สระ o สั้น ก็อตต์-อุม-ทีด",
+        "svgScene": "calm",
+        "distractorsSv": [
+            "Vi har bråttom",
+            "Tiden är ute",
+            "Vi är försenade"
+        ],
+        "distractorsTh": [
+            "เรารีบ",
+            "หมดเวลาแล้ว",
+            "เรามาสาย"
+        ],
+        "wordChunks": [
+            "Vi",
+            "har",
+            "gott",
+            "om",
+            "tid"
+        ]
+    },
+    {
+        "id": "t6_ext_66",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Bussen är i tid idag",
+        "th": "วันนี้รถเมล์มาตรงเวลาเป๊ะค่ะ",
+        "satunFlavor": "รถเมล์มาตรงเวลาเป๊ะ สบายใจไม่ต้องยืนรอหนาว",
+        "phoneticTh": "บุส-เซน-แอร์-อี-ทีด-อี-ด็อก",
+        "pronunciationTip": "i tid ออกเสียง อี-ทีด",
+        "svgScene": "bus",
+        "distractorsSv": [
+            "Bussen är försenad",
+            "Bussen är inställd",
+            "Bussen har gått"
+        ],
+        "distractorsTh": [
+            "รถเมล์มาสาย",
+            "รถเมล์ถูกยกเลิก",
+            "รถเมล์ออกไปแล้ว"
+        ],
+        "wordChunks": [
+            "Bussen",
+            "är",
+            "i",
+            "tid",
+            "idag"
+        ]
+    },
+    {
+        "id": "t6_ext_67",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Tåget är tyvärr försenat",
+        "th": "รถไฟล่าช้ากว่าเวลาเดิมอย่างน่าเสียดายค่ะ",
+        "satunFlavor": "รถไฟมาสาย ดีเลย์ซะแล้ว ยืนรอหนาวสั่นเลย",
+        "phoneticTh": "โท-เก็ต-แอร์-ทือ-แวร์-เฟอร์-เซ-นัต",
+        "pronunciationTip": "tyvärr สระ y จู๋ปาก ทือ-แวร์",
+        "svgScene": "train",
+        "distractorsSv": [
+            "Tåget är i tid",
+            "Tåget är tidigt",
+            "Tåget kommer nu"
+        ],
+        "distractorsTh": [
+            "รถไฟตรงเวลา",
+            "รถไฟมาก่อนเวลา",
+            "รถไฟกำลังมาตอนนี้"
+        ],
+        "wordChunks": [
+            "Tåget",
+            "är",
+            "tyvärr",
+            "försenat"
+        ]
+    },
+    {
+        "id": "t6_ext_68",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Förlåt att jag kommer för sent",
+        "th": "ขอโทษด้วยนะคะที่ฉันมาสาย",
+        "satunFlavor": "ขอโทษด้วยจ้าที่มาสาย รถติดอากาศหนาว",
+        "phoneticTh": "เฟอร์-โลท-อัท-ย็อก-คอม-เมร์-เฟอร์-เซนต์",
+        "pronunciationTip": "förlåt สระ å ปากกลม เฟอร์-โลท",
+        "svgScene": "apology",
+        "distractorsSv": [
+            "Tack för att du kom",
+            "Jag är först här",
+            "Varför väntar du?"
+        ],
+        "distractorsTh": [
+            "ขอบคุณที่คุณมา",
+            "ฉันมาถึงคนแรก",
+            "ทำไมคุณถึงรอ?"
+        ],
+        "wordChunks": [
+            "Förlåt",
+            "att",
+            "jag",
+            "kommer",
+            "för",
+            "sent"
+        ]
+    },
+    {
+        "id": "t6_ext_69",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Det gör ingenting, välkommen!",
+        "th": "ไม่เป็นไรเลยค่ะ ยินดีต้อนรับค่ะ!",
+        "satunFlavor": "ไม่พรือ (ไม่เป็นไร) จ้า เข้ามาเลย ยินดีต้อนรับ!",
+        "phoneticTh": "เด-เยอร์-อิง-เง็น-ทิง-แวล-คอม-เม็น!",
+        "pronunciationTip": "gör ออกเสียง เยอร์ สระ ö ปากจู๋",
+        "svgScene": "smile",
+        "distractorsSv": [
+            "Du är för sen",
+            "Gå hem igen",
+            "Vi är arga"
+        ],
+        "distractorsTh": [
+            "คุณสายเกินไป",
+            "กลับบ้านไปเลย",
+            "พวกเราโกรธ"
+        ],
+        "wordChunks": [
+            "Det",
+            "gör",
+            "ingenting,",
+            "välkommen!"
+        ]
+    },
+    {
+        "id": "t6_ext_70",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Vilket datum är det idag?",
+        "th": "วันนี้เป็นวันที่เท่าไหร่คะ?",
+        "satunFlavor": "วันนี้วันที่เท่าใดนะ ถามปฏิทินดูหน่อย",
+        "phoneticTh": "วิล-เก็ต-ดา-ตุม-แอร์-เด-อี-ด็อก?",
+        "pronunciationTip": "datum สระ a ยาว ดา-ตุม",
+        "svgScene": "calendar",
+        "distractorsSv": [
+            "Vad är klockan?",
+            "Vilken dag är det?",
+            "Vilket år är det?"
+        ],
+        "distractorsTh": [
+            "กี่โมงแล้ว?",
+            "วันนี้วันอะไร?",
+            "ปีนี้ปีอะไร?"
+        ],
+        "wordChunks": [
+            "Vilket",
+            "datum",
+            "är",
+            "det",
+            "idag?"
+        ]
+    },
+    {
+        "id": "t6_ext_71",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Idag är det den femtonde maj",
+        "th": "วันนี้เป็นวันที่สิบห้าพฤษภาคมค่ะ",
+        "satunFlavor": "วันนี้วันที่สิบห้าพฤษภา ดอกไม้เริ่มบานแล้ว",
+        "phoneticTh": "อี-ด็อก-แอร์-เด-เดน-เฟ็ม-ทูน-เดะ-ไม",
+        "pronunciationTip": "femtonde สระ o ออกเสียงสระอู เฟ็ม-ทูน-เดะ",
+        "svgScene": "calendar",
+        "distractorsSv": [
+            "Den första april",
+            "Den sista december",
+            "Den tionde juni"
+        ],
+        "distractorsTh": [
+            "วันที่หนึ่งเมษายน",
+            "วันสุดท้ายของธันวาคม",
+            "วันที่สิบมิถุนายน"
+        ],
+        "wordChunks": [
+            "Idag",
+            "är",
+            "det",
+            "den",
+            "femtonde",
+            "maj"
+        ]
+    },
+    {
+        "id": "t6_ext_72",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "Förra veckan",
+        "th": "สัปดาห์ที่แล้ว / อาทิตย์ก่อน",
+        "satunFlavor": "อาทิตย์ที่แล้ว ผ่านไปไวเหมือนโกหก",
+        "phoneticTh": "เฟอร์-รา-แว็ค-คัน",
+        "pronunciationTip": "förra สระ ö ทำปากจู๋ เฟอร์-รา-แว็ค-คัน",
+        "svgScene": "calendar",
+        "distractorsSv": [
+            "Nästa vecka",
+            "Denna vecka",
+            "Om två veckor"
+        ],
+        "distractorsTh": [
+            "สัปดาห์หน้า",
+            "สัปดาห์นี้",
+            "อีกสองสัปดาห์"
+        ],
+        "wordChunks": [
+            "Förra",
+            "veckan"
+        ]
+    },
+    {
+        "id": "t6_ext_73",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "Nästa vecka",
+        "th": "สัปดาห์หน้า / อาทิตย์ถัดไป",
+        "satunFlavor": "อาทิตย์หน้า มีนัดสำคัญต้องเตรียมตัว",
+        "phoneticTh": "แนส-ตา-แว็ค-คัน",
+        "pronunciationTip": "nästa สระ ä อ้าปากกว้าง แนส-ตา-แว็ค-คัน",
+        "svgScene": "calendar",
+        "distractorsSv": [
+            "Förra veckan",
+            "För två veckor sedan",
+            "Igår"
+        ],
+        "distractorsTh": [
+            "สัปดาห์ที่แล้ว",
+            "เมื่อสองสัปดาห์ก่อน",
+            "เมื่อวาน"
+        ],
+        "wordChunks": [
+            "Nästa",
+            "vecka"
+        ]
+    },
+    {
+        "id": "t6_ext_74",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Vi ses nästa måndag",
+        "th": "พวกเราเจอกันใหม่วันจันทร์หน้านะคะ",
+        "satunFlavor": "ไว้เจอกันวันจันทร์หน้า เดินทางปลอดภัยบายใจต๊ะ",
+        "phoneticTh": "วี-เซส-แนส-ตา-มอน-ด็อก",
+        "pronunciationTip": "ses สระ e ยาว เซส-แนส-ตา-มอน-ด็อก",
+        "svgScene": "wave",
+        "distractorsSv": [
+            "Vi ses imorgon",
+            "Vi ses ikväll",
+            "Vi ses aldrig"
+        ],
+        "distractorsTh": [
+            "เจอกันพรุ่งนี้",
+            "เจอกันคืนนี้",
+            "เราไม่เจอกันอีก"
+        ],
+        "wordChunks": [
+            "Vi",
+            "ses",
+            "nästa",
+            "måndag"
+        ]
+    },
+    {
+        "id": "t6_ext_75",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "Förra året",
+        "th": "ปีที่แล้ว",
+        "satunFlavor": "ปีกลาย (ปีที่แล้ว) เพิ่งย้ายมาอยู่สวีเดนใหม่ๆ",
+        "phoneticTh": "เฟอร์-รา-โอ-เร็ต",
+        "pronunciationTip": "året สระ å ปากกลม โอ-เร็ต",
+        "svgScene": "calendar",
+        "distractorsSv": [
+            "Nästa år",
+            "I år",
+            "Om tio år"
+        ],
+        "distractorsTh": [
+            "ปีหน้า",
+            "ปีนี้",
+            "อีกสิบปี"
+        ],
+        "wordChunks": [
+            "Förra",
+            "året"
+        ]
+    },
+    {
+        "id": "t6_ext_76",
+        "themeId": "weather_time",
+        "type": "word",
+        "sv": "Nästa år",
+        "th": "ปีหน้า",
+        "satunFlavor": "ปีหน้า ตั้งเป้าพูดสวีเดนให้คล่องปร๋อ",
+        "phoneticTh": "แนส-ตา-ออร์",
+        "pronunciationTip": "år ออกเสียง ออร์ ลากยาว",
+        "svgScene": "calendar",
+        "distractorsSv": [
+            "Förra året",
+            "I år",
+            "För fem år sedan"
+        ],
+        "distractorsTh": [
+            "ปีที่แล้ว",
+            "ปีนี้",
+            "เมื่อห้าปีที่แล้ว"
+        ],
+        "wordChunks": [
+            "Nästa",
+            "år"
+        ]
+    },
+    {
+        "id": "t6_ext_77",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Hur länge har du bott här?",
+        "th": "คุณอาศัยอยู่ที่นี่มานานแค่ไหนแล้วคะ?",
+        "satunFlavor": "มาอยู่ที่นี่กี่ปีแล้วจ๊ะ เริ่มชินกับความหนาวหรือยัง",
+        "phoneticTh": "ฮูร์-แล็ง-เงะ-ฮาร์-ดู-บุทท์-แฮร์?",
+        "pronunciationTip": "bott สระ o ออกเสียงสระอู บุทท์-แฮร์",
+        "svgScene": "home",
+        "distractorsSv": [
+            "Vart ska du flytta?",
+            "Var bor du nu?",
+            "När kom du igår?"
+        ],
+        "distractorsTh": [
+            "คุณจะย้ายไปไหน?",
+            "ตอนนี้คุณอยู่ที่ไหน?",
+            "เมื่อวานคุณมากี่โมง?"
+        ],
+        "wordChunks": [
+            "Hur",
+            "länge",
+            "har",
+            "du",
+            "bott",
+            "här?"
+        ]
+    },
+    {
+        "id": "t6_ext_78",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Jag har bott här i två år",
+        "th": "ฉันอาศัยอยู่ที่นี่มาได้สองปีแล้วค่ะ",
+        "satunFlavor": "อยู่สวีเดนมาสองปีแล้ว อากาศหนาวแต่ก็บายใจดี",
+        "phoneticTh": "ย็อก-ฮาร์-บุทท์-แฮร์-อี-ทโว-ออร์",
+        "pronunciationTip": "två år ทโว-ออร์ สระ å ปากกลมทั้งคู่",
+        "svgScene": "home",
+        "distractorsSv": [
+            "Jag kom igår",
+            "Jag stannar en månad",
+            "Jag flyttar imorgon"
+        ],
+        "distractorsTh": [
+            "ฉันมาเมื่อวาน",
+            "ฉันอยู่หนึ่งเดือน",
+            "ฉันย้ายพรุ่งนี้"
+        ],
+        "wordChunks": [
+            "Jag",
+            "har",
+            "bott",
+            "här",
+            "i",
+            "två",
+            "år"
+        ]
+    },
+    {
+        "id": "t6_ext_79",
+        "themeId": "weather_time",
+        "type": "concept",
+        "sv": "Vårdagjämning",
+        "th": "วันวสันตวิษุวัต (กลางวันยาวเท่ากับกลางคืนในฤดูใบไม้ผลิ)",
+        "satunFlavor": "วันที่กลางวันยาวเท่ากลางคืน สัญญาณว่าหน้าร้อนใกล้มาถึงแล้ว",
+        "phoneticTh": "วอร์-ด็อก-แย็มนิง",
+        "pronunciationTip": "vårdagjämning วอร์-ด็อก-แย็มนิง",
+        "svgScene": "sun",
+        "distractorsSv": [
+            "Hösttermin",
+            "Vintervila",
+            "Sommarlov"
+        ],
+        "distractorsTh": [
+            "เทอมฤดูใบไม้ร่วง",
+            "พักผ่อนฤดูหนาว",
+            "ปิดเทอมฤดูร้อน"
+        ],
+        "wordChunks": [
+            "Vårdagjämning"
+        ]
+    },
+    {
+        "id": "t6_ext_80",
+        "themeId": "weather_time",
+        "type": "concept",
+        "sv": "Sommartid och vintertid",
+        "th": "เวลาฤดูร้อนและเวลาฤดูหนาว (การปรับเข็มนาฬิกา)",
+        "satunFlavor": "ปรับเวลาหน้าร้อนหน้าหนาว เลื่อนเข็มนาฬิกาหนึ่งชั่วโมง",
+        "phoneticTh": "ซุม-มาร์-ทีด-อ็อค-วิน-เทร์-ทีด",
+        "pronunciationTip": "sommartid ซุม-มาร์-ทีด",
+        "svgScene": "clock",
+        "distractorsSv": [
+            "Dag och natt",
+            "Sol och måne",
+            "Värme och kyla"
+        ],
+        "distractorsTh": [
+            "กลางวันและกลางคืน",
+            "พระอาทิตย์และพระจันทร์",
+            "ร้อนและหนาว"
+        ],
+        "wordChunks": [
+            "Sommartid",
+            "och",
+            "vintertid"
+        ]
+    },
+    {
+        "id": "t6_ext_81",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Vi ställer fram klockan en timme",
+        "th": "พวกเราปรับเลื่อนเข็มนาฬิกาไปข้างหน้าหนึ่งชั่วโมงค่ะ",
+        "satunFlavor": "เลื่อนนาฬิกาไปข้างหน้าหนึ่งชั่วโมง เข้าสู่เวลาหน้าร้อน",
+        "phoneticTh": "วี-สแต็ล-แลร์-ฟรัม-คล็อค-คัน-เอน-ทิม-เมอะ",
+        "pronunciationTip": "fram สระ a สั้น ฟรัม-คล็อค-คัน",
+        "svgScene": "clock",
+        "distractorsSv": [
+            "Vi ställer tillbaka klockan",
+            "Vi stannar klockan",
+            "Vi kastar klockan"
+        ],
+        "distractorsTh": [
+            "เราปรับนาฬิกาถอยหลัง",
+            "เราหยุดนาฬิกา",
+            "เราทิ้งนาฬิกา"
+        ],
+        "wordChunks": [
+            "Vi",
+            "ställer",
+            "fram",
+            "klockan",
+            "en",
+            "timme"
+        ]
+    },
+    {
+        "id": "t6_ext_82",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Vi ställer tillbaka klockan på hösten",
+        "th": "พวกเราปรับหมุนเข็มนาฬิกากลับหนึ่งชั่วโมงในฤดูใบไม้ร่วงค่ะ",
+        "satunFlavor": "หมุนเวลากลับหนึ่งชั่วโมง ได้นอนเพิ่มอีกหนึ่งชั่วโมงบายใจแรง",
+        "phoneticTh": "วี-สแต็ล-แลร์-ทิล-บอ-คา-คล็อค-คัน-โพ-เฮิส-เทน",
+        "pronunciationTip": "hösten สระ ö ปากจู๋ เฮิส-เทน",
+        "svgScene": "clock",
+        "distractorsSv": [
+            "Vi ställer fram klockan",
+            "Vi glömmer klockan",
+            "Vi köper ny klocka"
+        ],
+        "distractorsTh": [
+            "เราเลื่อนนาฬิกาไปข้างหน้า",
+            "เราลืมนาฬิกา",
+            "เราซื้อนาฬิกาใหม่"
+        ],
+        "wordChunks": [
+            "Vi",
+            "ställer",
+            "tillbaka",
+            "klockan",
+            "på",
+            "hösten"
+        ]
+    },
+    {
+        "id": "t6_ext_83",
+        "themeId": "weather_time",
+        "type": "sentence",
+        "sv": "Tiden läker alla sår",
+        "th": "เวลาจะเยียวยาทุกบาดแผลค่ะ (สุภาษิตสวีเดน)",
+        "satunFlavor": "กาลเวลาจะเยียวยาทุกสิ่ง สุภาษิตให้กำลังใจ สู้ๆ นะจ๊ะ!",
+        "phoneticTh": "ที-เด็น-แล-แกร์-อัล-ลา-ซอร์",
+        "pronunciationTip": "läker สระ ä กว้าง แล-แกร์ และ sår สระ å ซอร์",
+        "svgScene": "heart",
+        "distractorsSv": [
+            "Tid är pengar",
+            "Bättre sent än aldrig",
+            "Morgonstund har guld i mun"
+        ],
+        "distractorsTh": [
+            "เวลาคือเงินทอง",
+            "มาช้ายังดีกว่าไม่มา",
+            "ตื่นเช้าได้เปรียบ"
+        ],
+        "wordChunks": [
+            "Tiden",
+            "läker",
+            "alla",
+            "sår"
+        ]
+    }
+]
