@@ -166,9 +166,15 @@
 
         <!-- Temaväljare: Rutnät med kategorikort -->
         <div class="themes-section">
-          <div class="section-header">
-            <h2 class="section-title">2. Välj tema att träna</h2>
-            <span class="section-subtitle">เลือกหมวดหมู่ที่อยากเรียน</span>
+          <div class="section-header themes-header-row">
+            <div>
+              <h2 class="section-title">2. Välj tema att träna</h2>
+              <span class="section-subtitle">เลือกหมวดหมู่ที่อยากเรียน</span>
+            </div>
+            <button type="button" class="theme-info-circle-btn" id="btn-theme-info-circle" title="วิธีเก็บให้ครบ 100% (Hur du når 100%)" aria-label="วิธีเก็บ 100% ในแต่ละหมวด">
+              <span class="info-letter-badge">i</span>
+              <span class="info-btn-text th-text">วิธีได้ 100%</span>
+            </button>
           </div>
 
           <div class="themes-grid" id="themes-grid">
@@ -341,6 +347,65 @@
         </div>
       </aside>
     </section>
+
+    <!-- ================================================================
+         PRATBUBBLA: HUR MAN FÅR 100% PER TEMA (På enkel och varm thailändska)
+         ================================================================ -->
+    <div class="theme-info-bubble-overlay" id="theme-info-bubble-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="วิธีเก็บ 100% ในแต่ละหมวด">
+      <div class="theme-info-speech-bubble" id="theme-info-speech-bubble">
+        <div class="bubble-header-row">
+          <div class="bubble-avatar-title">
+            <span class="bubble-mascot-icon" aria-hidden="true">🐴</span>
+            <div>
+              <h3 class="bubble-title-th">วิธีเก็บวงแหวนให้ครบ 100% เต็ม!</h3>
+              <p class="bubble-subtitle-sv">Så här når du 100% på ett tema</p>
+            </div>
+          </div>
+          <button type="button" class="bubble-close-btn" id="btn-close-theme-bubble" aria-label="Stäng pratbubbla">✕</button>
+        </div>
+
+        <div class="bubble-content-body">
+          <div class="bubble-step-card">
+            <div class="bubble-step-icon">⭐</div>
+            <div class="bubble-step-text">
+              <strong class="th-text">1. ฝึกสะสมให้ครบทั้ง 16 คำ (5 ดาวเต็ม)</strong>
+              <p class="th-text">ในแต่ละหมวดมีคำศัพท์และประโยค 16 ข้อ แต่ละคำจะมีระดับ 1–5 ดาว ยิ่งตอบถูกบ่อยๆ ดาวจะเพิ่มขึ้นเรื่อยๆ จนเต็ม 5 ดาวจ้า!</p>
+            </div>
+          </div>
+
+          <div class="bubble-step-card">
+            <div class="bubble-step-icon">📅</div>
+            <div class="bubble-step-text">
+              <strong class="th-text">2. แวะมาฝึกซ้ำเรื่อยๆ ในแต่ละวัน</strong>
+              <p class="th-text">ไม่ต้องรีบวันเดียวจ้า! แอปจะนำคำเดิมกลับมาทบทวนให้จำแม่น (หลัง 4 ชม., 24 ชม., 3 วัน) เมื่อครบ 5 ดาวทั้ง 16 คำ วงแหวนจะเปลี่ยนเป็นสีทอง 100% ทันที! ✨</p>
+            </div>
+          </div>
+
+          <div class="bubble-step-card">
+            <div class="bubble-step-icon">👑</div>
+            <div class="bubble-step-text">
+              <strong class="th-text">3. ลุย "บอสประจำหมวด" (Tema-Bossen)</strong>
+              <p class="th-text">ไปที่แท็บ <strong>ลานประลอง (🏆)</strong> แล้วกดสู้บอส 10 ข้อ เพื่อคว้าเหรียญทองประจำหมวดมาครอง!</p>
+            </div>
+          </div>
+
+          <div class="bubble-satun-callout">
+            <span class="satun-emoji">🌴</span>
+            <span class="satun-callout-text th-text">ค่อยๆ ฝึกวันละนิด แหลงสวีเดนคล่องปร๋อแน่นอน สู้ๆ นะจ๊ะคนเก่ง!</span>
+          </div>
+        </div>
+
+        <div class="bubble-actions-row">
+          <button type="button" class="bubble-listen-btn" id="btn-theme-bubble-speak" title="กดฟังเสียงอธิบาย">
+            <span>🔊</span>
+            <span class="th-text">ฟังเสียง</span>
+          </button>
+          <button type="button" class="btn-3d btn-green bubble-ok-btn" id="btn-ack-theme-bubble">
+            เข้าใจแล้วจ้า • เริ่มฝึกเลย!
+          </button>
+        </div>
+      </div>
+    </div>
 
   </div>
 

@@ -1819,6 +1819,274 @@ body {
   margin-top: 2px;
 }
 
+/* ==========================================================================
+   INFO-RING (i) & PRATBUBBLA FÖR 100% PER TEMA
+   ========================================================================== */
+
+.themes-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.theme-info-circle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+  border: 1.5px solid #93C5FD;
+  color: #1D4ED8;
+  border-radius: 999px;
+  padding: 4px 10px 4px 6px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(37, 99, 235, 0.12);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  -webkit-tap-highlight-color: transparent;
+  flex-shrink: 0;
+}
+
+.theme-info-circle-btn:active {
+  transform: scale(0.94);
+  background: #BFDBFE;
+}
+
+.info-letter-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);
+  color: #FFFFFF;
+  font-size: 0.86rem;
+  font-weight: 900;
+  font-family: Georgia, serif;
+  font-style: italic;
+  box-shadow: 0 1px 3px rgba(29, 78, 216, 0.3);
+}
+
+.info-btn-text {
+  font-family: var(--font-th);
+  font-size: 0.80rem;
+  font-weight: 700;
+  color: #1E40AF;
+}
+
+/* Pratbubbla Popover Overlay */
+.theme-info-bubble-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.52);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.theme-info-bubble-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.theme-info-speech-bubble {
+  position: relative;
+  background: #FFFFFF;
+  border: 2.5px solid #3B82F6;
+  border-radius: 24px;
+  padding: 20px 18px 18px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.35), 0 0 0 6px rgba(59, 130, 246, 0.12);
+  transform: scale(0.9) translateY(12px);
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.theme-info-bubble-overlay.open .theme-info-speech-bubble {
+  transform: scale(1) translateY(0);
+}
+
+.bubble-header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+  border-bottom: 1.5px solid #F1F5F9;
+  padding-bottom: 10px;
+}
+
+.bubble-avatar-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bubble-mascot-icon {
+  font-size: 1.7rem;
+  line-height: 1;
+  background: #EFF6FF;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid #BFDBFE;
+  flex-shrink: 0;
+}
+
+.bubble-title-th {
+  font-family: var(--font-th);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #1E3A8A;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.bubble-subtitle-sv {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #64748B;
+  margin-top: 2px;
+}
+
+.bubble-close-btn {
+  background: #F1F5F9;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 1rem;
+  font-weight: 900;
+  color: #64748B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+}
+
+.bubble-close-btn:active {
+  background: #E2E8F0;
+  transform: scale(0.92);
+}
+
+.bubble-content-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.bubble-step-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 10px 12px;
+}
+
+.bubble-step-icon {
+  font-size: 1.3rem;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.bubble-step-text {
+  flex: 1;
+}
+
+.bubble-step-text strong {
+  display: block;
+  font-family: var(--font-th);
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #1E293B;
+  line-height: 1.3;
+}
+
+.bubble-step-text p {
+  font-family: var(--font-th);
+  font-size: 0.82rem;
+  color: #475569;
+  margin: 3px 0 0;
+  line-height: 1.4;
+}
+
+.bubble-satun-callout {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #FAF5FF;
+  border: 1px solid #E9D5FF;
+  border-radius: 12px;
+  padding: 8px 12px;
+}
+
+.bubble-satun-callout .satun-emoji {
+  font-size: 1.15rem;
+  flex-shrink: 0;
+}
+
+.bubble-satun-callout .satun-callout-text {
+  font-family: var(--font-th);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #7E22CE;
+  line-height: 1.35;
+}
+
+.bubble-actions-row {
+  display: flex;
+  gap: 8px;
+}
+
+.bubble-listen-btn {
+  background: #EFF6FF;
+  color: #1D4ED8;
+  border: 1.5px solid #93C5FD;
+  border-radius: 14px;
+  padding: 10px 14px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.bubble-listen-btn:active {
+  background: #DBEAFE;
+  transform: scale(0.96);
+}
+
+.bubble-ok-btn {
+  flex: 1;
+  min-height: 48px;
+  font-size: 0.9rem;
+}
+
 
 
 /* ANIMATIONS.CSS */
@@ -3861,9 +4129,15 @@ body.app-theme-sunset {
 
         <!-- Temaväljare: Rutnät med kategorikort -->
         <div class="themes-section">
-          <div class="section-header">
-            <h2 class="section-title">2. Välj tema att träna</h2>
-            <span class="section-subtitle">เลือกหมวดหมู่ที่อยากเรียน</span>
+          <div class="section-header themes-header-row">
+            <div>
+              <h2 class="section-title">2. Välj tema att träna</h2>
+              <span class="section-subtitle">เลือกหมวดหมู่ที่อยากเรียน</span>
+            </div>
+            <button type="button" class="theme-info-circle-btn" id="btn-theme-info-circle" title="วิธีเก็บให้ครบ 100% (Hur du når 100%)" aria-label="วิธีเก็บ 100% ในแต่ละหมวด">
+              <span class="info-letter-badge">i</span>
+              <span class="info-btn-text th-text">วิธีได้ 100%</span>
+            </button>
           </div>
 
           <div class="themes-grid" id="themes-grid">
@@ -4036,6 +4310,65 @@ body.app-theme-sunset {
         </div>
       </aside>
     </section>
+
+    <!-- ================================================================
+         PRATBUBBLA: HUR MAN FÅR 100% PER TEMA (På enkel och varm thailändska)
+         ================================================================ -->
+    <div class="theme-info-bubble-overlay" id="theme-info-bubble-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="วิธีเก็บ 100% ในแต่ละหมวด">
+      <div class="theme-info-speech-bubble" id="theme-info-speech-bubble">
+        <div class="bubble-header-row">
+          <div class="bubble-avatar-title">
+            <span class="bubble-mascot-icon" aria-hidden="true">🐴</span>
+            <div>
+              <h3 class="bubble-title-th">วิธีเก็บวงแหวนให้ครบ 100% เต็ม!</h3>
+              <p class="bubble-subtitle-sv">Så här når du 100% på ett tema</p>
+            </div>
+          </div>
+          <button type="button" class="bubble-close-btn" id="btn-close-theme-bubble" aria-label="Stäng pratbubbla">✕</button>
+        </div>
+
+        <div class="bubble-content-body">
+          <div class="bubble-step-card">
+            <div class="bubble-step-icon">⭐</div>
+            <div class="bubble-step-text">
+              <strong class="th-text">1. ฝึกสะสมให้ครบทั้ง 16 คำ (5 ดาวเต็ม)</strong>
+              <p class="th-text">ในแต่ละหมวดมีคำศัพท์และประโยค 16 ข้อ แต่ละคำจะมีระดับ 1–5 ดาว ยิ่งตอบถูกบ่อยๆ ดาวจะเพิ่มขึ้นเรื่อยๆ จนเต็ม 5 ดาวจ้า!</p>
+            </div>
+          </div>
+
+          <div class="bubble-step-card">
+            <div class="bubble-step-icon">📅</div>
+            <div class="bubble-step-text">
+              <strong class="th-text">2. แวะมาฝึกซ้ำเรื่อยๆ ในแต่ละวัน</strong>
+              <p class="th-text">ไม่ต้องรีบวันเดียวจ้า! แอปจะนำคำเดิมกลับมาทบทวนให้จำแม่น (หลัง 4 ชม., 24 ชม., 3 วัน) เมื่อครบ 5 ดาวทั้ง 16 คำ วงแหวนจะเปลี่ยนเป็นสีทอง 100% ทันที! ✨</p>
+            </div>
+          </div>
+
+          <div class="bubble-step-card">
+            <div class="bubble-step-icon">👑</div>
+            <div class="bubble-step-text">
+              <strong class="th-text">3. ลุย "บอสประจำหมวด" (Tema-Bossen)</strong>
+              <p class="th-text">ไปที่แท็บ <strong>ลานประลอง (🏆)</strong> แล้วกดสู้บอส 10 ข้อ เพื่อคว้าเหรียญทองประจำหมวดมาครอง!</p>
+            </div>
+          </div>
+
+          <div class="bubble-satun-callout">
+            <span class="satun-emoji">🌴</span>
+            <span class="satun-callout-text th-text">ค่อยๆ ฝึกวันละนิด แหลงสวีเดนคล่องปร๋อแน่นอน สู้ๆ นะจ๊ะคนเก่ง!</span>
+          </div>
+        </div>
+
+        <div class="bubble-actions-row">
+          <button type="button" class="bubble-listen-btn" id="btn-theme-bubble-speak" title="กดฟังเสียงอธิบาย">
+            <span>🔊</span>
+            <span class="th-text">ฟังเสียง</span>
+          </button>
+          <button type="button" class="btn-3d btn-green bubble-ok-btn" id="btn-ack-theme-bubble">
+            เข้าใจแล้วจ้า • เริ่มฝึกเลย!
+          </button>
+        </div>
+      </div>
+    </div>
 
   </div>
 
@@ -6723,6 +7056,50 @@ body.app-theme-sunset {
         window.VisualEngine?.haptic?.('light', e.currentTarget);
         window.GamificationModals?.openXPModal?.();
       });
+
+      // Info-ring (i) & Pratbubbla för 100% per tema
+      document.getElementById('btn-theme-info-circle')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.openThemeInfoBubble();
+      });
+
+      document.getElementById('btn-close-theme-bubble')?.addEventListener('click', () => {
+        this.closeThemeInfoBubble();
+      });
+
+      document.getElementById('btn-ack-theme-bubble')?.addEventListener('click', () => {
+        this.closeThemeInfoBubble();
+      });
+
+      document.getElementById('theme-info-bubble-overlay')?.addEventListener('click', (e) => {
+        if (e.target.id === 'theme-info-bubble-overlay') {
+          this.closeThemeInfoBubble();
+        }
+      });
+
+      document.getElementById('btn-theme-bubble-speak')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        window.VisualEngine?.haptic?.('light', e.currentTarget);
+        const thaiSpeech = 'วิธีเก็บวงแหวนให้ครบ 100 เปอร์เซ็นต์ ฝึกสะสมดาวให้ครบทั้ง 16 คำจนได้ 5 ดาว แวะมาฝึกซ้ำเรื่อยๆ ในแต่ละวัน และพิชิตบอสประจำหมวดเพื่อรับเหรียญทองค่ะ สู้ๆ นะคะ';
+        window.SpeechEngine?.speakThai?.(thaiSpeech);
+      });
+    },
+
+    openThemeInfoBubble() {
+      const overlay = document.getElementById('theme-info-bubble-overlay');
+      if (!overlay) return;
+      window.SpeechEngine?.playSound?.('tap');
+      window.VisualEngine?.haptic?.('light', overlay);
+      overlay.classList.add('open');
+      overlay.setAttribute('aria-hidden', 'false');
+    },
+
+    closeThemeInfoBubble() {
+      const overlay = document.getElementById('theme-info-bubble-overlay');
+      if (!overlay) return;
+      overlay.classList.remove('open');
+      overlay.setAttribute('aria-hidden', 'true');
+      window.SpeechEngine?.stopAudio?.();
     },
 
     refreshAll() {
@@ -6839,6 +7216,14 @@ body.app-theme-sunset {
           window.SpeechEngine.playSound('tap');
           window.VisualEngine.haptic('light', card);
           LessonController.startThemeLesson(themeId);
+        });
+      });
+
+      // Klick på framstegsring eller procent-chip öppnar också 100%-info
+      grid.querySelectorAll('.theme-ring-wrapper, .theme-status-chip').forEach((el) => {
+        el.addEventListener('click', (e) => {
+          e.stopPropagation();
+          UIController.openThemeInfoBubble();
         });
       });
     },

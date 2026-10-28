@@ -2677,6 +2677,50 @@
         window.VisualEngine?.haptic?.('light', e.currentTarget);
         window.GamificationModals?.openXPModal?.();
       });
+
+      // Info-ring (i) & Pratbubbla för 100% per tema
+      document.getElementById('btn-theme-info-circle')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.openThemeInfoBubble();
+      });
+
+      document.getElementById('btn-close-theme-bubble')?.addEventListener('click', () => {
+        this.closeThemeInfoBubble();
+      });
+
+      document.getElementById('btn-ack-theme-bubble')?.addEventListener('click', () => {
+        this.closeThemeInfoBubble();
+      });
+
+      document.getElementById('theme-info-bubble-overlay')?.addEventListener('click', (e) => {
+        if (e.target.id === 'theme-info-bubble-overlay') {
+          this.closeThemeInfoBubble();
+        }
+      });
+
+      document.getElementById('btn-theme-bubble-speak')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        window.VisualEngine?.haptic?.('light', e.currentTarget);
+        const thaiSpeech = 'วิธีเก็บวงแหวนให้ครบ 100 เปอร์เซ็นต์ ฝึกสะสมดาวให้ครบทั้ง 16 คำจนได้ 5 ดาว แวะมาฝึกซ้ำเรื่อยๆ ในแต่ละวัน และพิชิตบอสประจำหมวดเพื่อรับเหรียญทองค่ะ สู้ๆ นะคะ';
+        window.SpeechEngine?.speakThai?.(thaiSpeech);
+      });
+    },
+
+    openThemeInfoBubble() {
+      const overlay = document.getElementById('theme-info-bubble-overlay');
+      if (!overlay) return;
+      window.SpeechEngine?.playSound?.('tap');
+      window.VisualEngine?.haptic?.('light', overlay);
+      overlay.classList.add('open');
+      overlay.setAttribute('aria-hidden', 'false');
+    },
+
+    closeThemeInfoBubble() {
+      const overlay = document.getElementById('theme-info-bubble-overlay');
+      if (!overlay) return;
+      overlay.classList.remove('open');
+      overlay.setAttribute('aria-hidden', 'true');
+      window.SpeechEngine?.stopAudio?.();
     },
 
     refreshAll() {
@@ -2793,6 +2837,14 @@
           window.SpeechEngine.playSound('tap');
           window.VisualEngine.haptic('light', card);
           LessonController.startThemeLesson(themeId);
+        });
+      });
+
+      // Klick på framstegsring eller procent-chip öppnar också 100%-info
+      grid.querySelectorAll('.theme-ring-wrapper, .theme-status-chip').forEach((el) => {
+        el.addEventListener('click', (e) => {
+          e.stopPropagation();
+          UIController.openThemeInfoBubble();
         });
       });
     },

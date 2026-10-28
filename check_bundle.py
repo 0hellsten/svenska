@@ -34,7 +34,9 @@ checks = {
     'Streak pill': 'id="streak-pill"' in dom_only,
     'Gems pill': 'id="gems-pill"' in dom_only,
     'XP pill': 'id="xp-pill"' in dom_only,
-    'Welcome banner with Satun dialect': 'Hej! มาแหลงสวีเดนกันต๊ะ' in dom_only
+    'Welcome banner with Satun dialect': 'Hej! มาแหลงสวีเดนกันต๊ะ' in dom_only,
+    'Info-ring (i) button': 'id="btn-theme-info-circle"' in dom_only,
+    'Theme 100% info speech bubble': 'id="theme-info-bubble-overlay"' in dom_only
 }
 
 all_ok = True
