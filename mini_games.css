@@ -266,3 +266,69 @@
   .mg-dialog *, .mg-game-card { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   .mg-baking-progress::after { width: 100%; }
 }
+
+/* Thai is the UI language. Swedish is explicitly marked learning content. */
+#view-games, .mg-dialog, .mg-home-link { font-family: var(--font-body-th); }
+.mg-lobby h1, .mg-card-heading h2, .mg-header-title h2, .mg-setup h3, .mg-phase-panel h3, .mg-result h3 { font-family: var(--font-th); font-weight: 500; line-height: 1.5; letter-spacing: 0; }
+.mg-lobby h1 { font-size: 31px; }
+.mg-eyebrow, .mg-header-title p, .mg-cover-sign, .mg-shelf-heading h3, .mg-tray-label, .mg-result-stamp { letter-spacing: .01em; text-transform: none; line-height: 1.8; }
+.mg-eyebrow { font-size: 11px; }
+.mg-card-heading h2 { font-size: 22px; }
+.mg-lobby-lead, .mg-card-copy p, .mg-setup-lead, .mg-feedback, .mg-mode-description { line-height: 1.9; }
+.mg-learning-goal { font-size: 12px; line-height: 1.9; padding: 11px 14px; margin: 15px auto; max-width: 510px; border-radius: 10px; background: #eaf0e0; color: #63745d; }
+.mg-learning-goal > strong { font-weight: 700; }
+.mg-header-title { min-width: 0; }
+.mg-header-title h2 { font-size: 22px; }
+.mg-header-title p { font-size: 10px; }
+.mg-instruction strong[lang="th"] { font-family: var(--font-th); font-weight: 500; font-size: 23px; line-height: 1.6; letter-spacing: 0; }
+.mg-dialog [lang="sv"], .mg-sv-phrase { font-family: var(--font-sv); }
+.mg-sv-phrase { color: #5f775d; font-weight: 900; }
+.mg-instruction .mg-th { margin-top: 5px; font-size: 12px; }
+.mg-cover-note { font-family: var(--font-body-th); font-size: 13px; font-style: normal; }
+.mg-order-bubble > .mg-th { font-size: 12px; }
+.mg-result h3 { font-size: 30px; }
+.mg-toggle, .mg-mode-btn, .mg-primary, .mg-secondary, .mg-listen-btn { line-height: 1.5; }
+.mg-recipe-choice strong { font-family: var(--font-body-th); }
+.mg-ingredient .mg-th { font-size: 9px; }
+.mg-course-card { padding: 21px; margin: 0 0 26px; border: 1px solid #c7d1b3; border-radius: 20px; background: linear-gradient(130deg,#f1f3e6,#fff9e8); color: #53664b; box-shadow: 0 5px 0 #d9dfc340; }
+.mg-course-card h2 { margin: 7px 0; font-size: 18px; line-height: 1.8; }
+.mg-course-card p { font-size: 12px; line-height: 1.95; }
+.mg-course-card progress { display: block; width: 100%; height: 9px; margin: 15px 0; accent-color: #7f9873; }
+.mg-course-card summary { cursor: pointer; font-size: 12px; font-weight: 700; }
+.mg-course-options, .mg-pack-options { display: grid; gap: 10px; margin: 22px 0; text-align: left; }
+.mg-pack-options { grid-template-columns: repeat(2,minmax(0,1fr)); }
+.mg-course-options button, .mg-pack-options button { display: flex; flex-direction: column; gap: 4px; padding: 14px 16px; border: 1px solid #dcd6bf; border-radius: 13px; background: #fffaf0; color: #6a684e; text-align: left; line-height: 1.9; font-family: var(--font-body-th); }
+.mg-course-options button[aria-pressed=true], .mg-pack-options button[aria-pressed=true] { border: 2px solid #819b75; padding: 13px 15px; background: #edf0df; box-shadow: 0 3px 0 #d6dfc8; }
+.mg-course-options button:disabled { opacity: .5; cursor: default; }
+.mg-course-options strong, .mg-pack-options strong { font-size: 13px; }
+.mg-course-options small, .mg-pack-options small { font-size: 11px; font-weight: 400; }
+.mg-result-reward small { display: block; font-size: 12px; line-height: 1.9; font-weight: 400; max-width: 490px; }
+.mg-album-word > .ze-animal-art { width: 65px; height: 65px; }
+.mg-memory-front > .ze-animal-art { width: 88%; height: 85%; }
+.mg-album-word > span[lang=th] { font-size: 11px; font-weight: 400; line-height: 1.8; }
+@media(max-width:400px) { .mg-course-card { padding: 16px; } .mg-course-card h2 { font-size: 16px; } .mg-pack-options { gap: 7px; } .mg-pack-options button { padding: 10px; } .mg-pack-options button[aria-pressed=true] { padding: 9px; } }
+/* Thai vowels and tone marks need readable type even on a narrow phone. */
+.mg-memory-intro { font-size: 13px; line-height: 1.9; }
+.mg-feedback { font-size: 12px; line-height: 1.9; }
+.mg-instruction small, .mg-shelf-heading p { font-size: 12px; line-height: 1.9; }
+.mg-header-title p { font-size: 10px; line-height: 1.8; }
+@media(max-width:600px) {
+  .mg-ingredients-grid { grid-template-columns: repeat(4,minmax(0,1fr)); }
+  .mg-ingredient-label { font-size: 11px; }
+  .mg-ingredient .mg-th { font-size: 10px; }
+  .mg-memory-front small { font-size: 10px; }
+  .mg-memory-front .mg-th { font-size: 10px; }
+  .mg-game-progress { font-size: 11px; }
+}
+@media (max-width: 650px) {
+  .mg-header-title h2 { font-size: 18px; }
+  .mg-header-title p { font-size: 8px; }
+  .mg-toggle { max-width: 88px; font-size: 10px; }
+  .mg-setup h3 { font-size: 25px; }
+  .mg-lobby h1 { font-size: 28px; }
+  .mg-game-progress { letter-spacing: 0; }
+  .mg-shelf-heading h3 { font-size: 11px; }
+  .mg-instruction strong[lang="th"] { font-size: 19px; }
+  .mg-result h3 { font-size: 25px; }
+  .mg-memory-intro { line-height: 1.9; }
+}

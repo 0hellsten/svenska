@@ -344,7 +344,7 @@
     {
       id: 'rounded_vowels_y_o_u',
       pattern: /[yöü]/i,
-      titleSv: 'Rundade vokaler (Y / Ö)',
+      titleSv: 'สระห่อปาก (Y / Ö)',
       tipTh: 'ห่อปากกลมๆ เหมือนกำลังจะเป่าเทียน แล้วออกเสียงค้างไว้ (เสียง Y และ Ö)',
       satunTip: 'ห่อปากจู๋นิดๆ เหมือนเป่าเทียนนะจ๊ะ อย่าฉีกยิ้มกว้างเกินไป',
       mouthType: 'rounded'
@@ -352,7 +352,7 @@
     {
       id: 'vowel_a_ring_dots',
       pattern: /[åä]/i,
-      titleSv: 'Svenska Å och Ä',
+      titleSv: 'เสียงสระสวีเดน Å และ Ä',
       tipTh: 'เสียง Å ออกคล้าย "ออ" ลึกๆ ส่วนเสียง Ä อ้าปากกว้างคล้ายเสียง "แอ"',
       satunTip: 'คำที่มี Å ออกเสียง "ออ" ชัดๆ ส่วน Ä ออกเสียง "แอ" กว้างๆ เลยจ้า',
       mouthType: 'open'
@@ -360,7 +360,7 @@
     {
       id: 'labiodental_v',
       pattern: /\bv|v/i,
-      titleSv: 'Svenskt V-ljud (V vs W)',
+      titleSv: 'เสียง V สวีเดน (V กับ W)',
       tipTh: 'แตะฟันบนลงบนริมฝีปากล่างเบาๆ ให้สั่นนิดๆ (ต่างจาก ว.แหวน ในภาษาไทย)',
       satunTip: 'คนไทยชอบเผลอออกเสียงเป็น ว.แหวน ลองเอาฟันบนแตะริมฝีปากล่างนิดนึงนะ หรอยเลย!',
       mouthType: 'teeth_lip'
@@ -368,7 +368,7 @@
     {
       id: 'trill_r_vs_l',
       pattern: /r/i,
-      titleSv: 'R-ljudet (R vs L)',
+      titleSv: 'เสียง R (R กับ L)',
       tipTh: 'แตะปลายลิ้นหลังฟันบนแล้วกระดกลิ้นเบาๆ สำหรับตัว R (ระวังสลับกับ ล.ลิง)',
       satunTip: 'ยกปลายลิ้นแตะเพดานปากนิดนึง ออกเสียง R ชัดๆ แบบคนใต้แหลง ร.เรือ เลยจ้า!',
       mouthType: 'tongue_up'
@@ -376,7 +376,7 @@
     {
       id: 'sje_tje_sound',
       pattern: /(sj|skj|stj|sk[eiyäö]|tj|kj|hj|jätt)/i,
-      titleSv: 'Svenskt Sje- / Tje-ljud',
+      titleSv: 'เสียง sj และ tj',
       tipTh: 'พ่นลมออกเบาๆ เหมือนเสียงลมพัด "ฮู่ว/ชู่ว" ในลำคอสำหรับเสียง sj/sk',
       satunTip: 'เสียงควบกล้ำสวีเดน พ่นลมนุ่มๆ ออกมาจากปาก ไม่ต้องเกร็งนะจ๊ะ',
       mouthType: 'airflow'
@@ -567,7 +567,7 @@
     const matched = THAI_SV_PHONETIC_CHALLENGES.filter((c) => c.pattern.test(svText));
     const primary = matched[0] || {
       id: 'general_rhythm',
-      titleSv: 'Svensk språkmelodi',
+      titleSv: 'จังหวะและทำนองภาษาสวีเดน',
       tipTh: 'ออกเสียงพยัญชนะต้นให้ชัด และลากเสียงสระตัวแรกยาวขึ้นนิดนึงตามจังหวะสวีเดน',
       satunTip: 'ค่อยๆ แหลงตามคำอ่านไทยช้าๆ ชัดๆ ไม่ต้องรีบนะจ๊ะ',
       mouthType: 'open'
@@ -691,7 +691,7 @@
      Nivå 2: Online Studio-kvalitet TTS (Google Swedish Studio Audio via HTML5 Audio)
              - Fungerar direkt i ALLA webbläsare (iPhone Safari, Mac, Windows, Android)
              - Kräver INTE att enheten har installerat svenska språkpaket!
-             - Stödjer normal hastighet och Sköldpadds-tempo (0.60x / speed 0.3)
+             - Stödjer normal hastighet och ฟังช้า ๆ (0.60x / speed 0.3)
      Nivå 3: Robust Fallback till Web Speech API med iOS Safari AudioContext unlock,
              resumption-kontroll och watchdogs
      ========================================================================== */
@@ -815,7 +815,7 @@
     },
 
     /**
-     * Hämtar sparad talhastighet (Standard: 0.88x, Snabbt: 1.0x, Extra snabbt: 1.15x)
+     * รับรางวัลr sparad talhastighet (Standard: 0.88x, Snabbt: 1.0x, เร็วขึ้น: 1.15x)
      */
     getSpeechRate() {
       const stored = localStorage.getItem('swedish_speech_rate');
@@ -1270,7 +1270,7 @@
             if (onStateChange) onStateChange('analyzing');
             window.VisualEngine?.Mascot?.setState('idle');
 
-            // Stäng audioConfig så att Azure SpeechRecognizer tar emot EOF och slutför bedömningen direkt
+            // ปิด audioConfig så att Azure SpeechRecognizer tar emot EOF och slutför bedömningen direkt
             if (this._audioConfig) {
               try {
                 this._audioConfig.close();
@@ -1403,7 +1403,7 @@
               const isPass = pronScore >= 75;
               const status = isPass ? 'pass' : (pronScore >= 50 ? 'almost' : 'retry');
 
-              // 1-3 animerad fyllda guldstjärnor vid >= 75
+              // 1-3 animerad fyllda guldดาว vid >= 75
               let starsCount = 0;
               if (pronScore >= 90) starsCount = 3;
               else if (pronScore >= 80) starsCount = 2;
@@ -1612,7 +1612,7 @@
         window.VisualEngine?.triggerConfetti?.();
         if (evaluation.starsCount === 3) {
           window.VisualEngine?.Mascot?.say?.(
-            'สุดยอด 3 ดาวทอง! สำเนียงเป๊ะมาก! (3 Guldstjärnor!)',
+            'สุดยอด 3 ดาวทอง! สำเนียงเป๊ะมาก! (3 Guldดาว!)',
             'หรอยจังฮู้! 3 ดาวเต็มๆ เก่งระดับนายหัวแล้วน้องเหอ!',
             'correct',
             4500
@@ -1814,7 +1814,7 @@
 
         SoundFX.unlockiOSAudio();
 
-        // iOS Safari Fix a: Stäng av all syntes och vänta 200ms så ljudsystemet nollställs
+        // iOS Safari Fix a: ปิด av all syntes och vänta 200ms så ljudsystemet nollställs
         if ('speechSynthesis' in window) {
           try {
             window.speechSynthesis.cancel();
@@ -2048,7 +2048,7 @@
               ${msg}
             </p>
             <div style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 10px; padding: 10px; font-size: 0.78rem; color: #166534; margin-bottom: 14px;">
-              🔒 <strong>Privat & skyddat:</strong> Nyckeln sparas endast i enhetens lokala minne (localStorage) och skickas aldrig till något git-arkiv.
+              🔒 <strong>เก็บเฉพาะในอุปกรณ์นี้:</strong> รหัสเชื่อมต่อบันทึกไว้ในเบราว์เซอร์ของอุปกรณ์นี้
             </div>
             <div style="margin-bottom: 14px;">
               <input type="password" id="input-new-groq-key" placeholder="gsk_..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
@@ -2059,7 +2059,7 @@
                 Avbryt
               </button>
               <button type="button" class="btn-3d btn-green" id="btn-save-groq-key" style="min-height: 42px; padding: 6px 18px; font-size: 0.84rem; font-weight: 900;">
-                Spara nyckel
+                บันทึกการเชื่อมต่อ
               </button>
             </div>
           </div>
@@ -2113,11 +2113,11 @@
               <span>🔑</span>
               <span>Hantera API-nycklar</span>
             </div>
-            <button type="button" class="lesson-close-btn" id="btn-close-key-manager-modal" aria-label="Stäng">✕</button>
+            <button type="button" class="lesson-close-btn" id="btn-close-key-manager-modal" aria-label="ปิด">✕</button>
           </div>
 
           <div style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 12px; padding: 12px; font-size: 0.8rem; color: #166534; margin-bottom: 16px; line-height: 1.45;">
-            🔒 <strong>100% säkert & dolt från Git:</strong><br>
+            🔒 <strong>ข้อมูลการเชื่อมต่อของอุปกรณ์:</strong><br>
             Nycklarna du anger här sparas uteslutande i din webbläsares lokala minne (localStorage). De kan aldrig checkas in eller laddas upp till GitHub!
           </div>
 
@@ -2127,7 +2127,7 @@
               🚀 Groq Whisper API-nyckel:
             </label>
             <div style="font-size: 0.74rem; color: var(--text-secondary); margin-bottom: 6px;">
-              Status: ${currentGroq ? `<span style="color:#16A34A; font-weight:800;">Aktiv (${maskedGroq})</span>` : '<span style="color:#DC2626; font-weight:800;">Ej konfigurerad</span>'}
+              Status: ${currentGroq ? `<span style="color:#16A34A; font-weight:800;">ใช้อยู่ (${maskedGroq})</span>` : '<span style="color:#DC2626; font-weight:800;">ยังไม่ได้เชื่อมต่อ</span>'}
             </div>
             <input type="password" id="input-mgr-groq-key" placeholder="${currentGroq ? 'Klistra in ny nyckel för att byta...' : 'gsk_...'}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
               style="width: 100%; box-sizing: border-box; padding: 10px 12px; border-radius: 10px; border: 2px solid var(--border-light); font-size: 0.88rem; font-family: monospace;" />
@@ -2136,12 +2136,12 @@
           <!-- 2. Microsoft Azure Speech-nyckel (Valfritt) -->
           <div style="margin-bottom: 18px;">
             <label style="display: block; font-weight: 900; font-size: 0.86rem; margin-bottom: 4px;">
-              🎯 Microsoft Azure Speech-nyckel (Valfritt):
+              🎯 รหัสเชื่อมต่อ Azure Speech (ไม่บังคับ):
             </label>
             <div style="font-size: 0.74rem; color: var(--text-secondary); margin-bottom: 6px;">
-              Status: ${currentAzure ? `<span style="color:#16A34A; font-weight:800;">Aktiv (${maskedAzure})</span>` : '<span style="color:#64748B; font-weight:700;">Ej konfigurerad</span>'}
+              Status: ${currentAzure ? `<span style="color:#16A34A; font-weight:800;">ใช้อยู่ (${maskedAzure})</span>` : '<span style="color:#64748B; font-weight:700;">ยังไม่ได้เชื่อมต่อ</span>'}
             </div>
-            <input type="password" id="input-mgr-azure-key" placeholder="${currentAzure ? 'Klistra in ny Azure-nyckel...' : 'Azure Key 1...'}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+            <input type="password" id="input-mgr-azure-key" placeholder="${currentAzure ? 'ใส่รหัสเชื่อมต่อ Azure ใหม่…' : 'Azure Key 1...'}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
               style="width: 100%; box-sizing: border-box; padding: 10px 12px; border-radius: 10px; border: 2px solid var(--border-light); font-size: 0.88rem; font-family: monospace;" />
           </div>
 
@@ -2152,7 +2152,7 @@
               🗑️ Rensa nycklar
             </button>
             <button type="button" class="btn-3d btn-green" id="btn-save-mgr-keys" style="min-height: 44px; padding: 8px 20px; font-size: 0.88rem; font-weight: 900;">
-              💾 Spara i webbläsaren
+              💾 บันทึกในเบราว์เซอร์นี้
             </button>
           </div>
         </div>
@@ -2432,7 +2432,7 @@
      5. MODAL FÖR INSTÄLLNINGAR (SettingsUI)
      - Växla mellan Groq Whisper, Microsoft Azure Speech och iOS Inbyggd diktering
      - Mata in och spara Groq API-nyckel & Azure prenumerationsnyckel i localStorage
-     - Testa mikrofon och högtalare med ett klick
+     - ทดสอบไมโครโฟน och högtalare med ett klick
      ========================================================================== */
 
   const SettingsUI = {
@@ -2466,18 +2466,18 @@
       backdrop.id = 'settings-modal-backdrop';
 
       backdrop.innerHTML = `
-        <div class="settings-modal-card" role="dialog" aria-label="Ljud- och talinställningar">
+        <div class="settings-modal-card" role="dialog" aria-label="ตั้งค่าเสียงและการพูด">
           <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-light); padding-bottom: 10px;">
             <div style="font-weight: 900; font-size: 1.15rem; color: var(--text-main);">
-              ⚙️ Ljud- och röstinställningar
+              ⚙️ ตั้งค่าเสียงและการพูด
             </div>
-            <button type="button" class="lesson-close-btn" id="btn-close-settings-modal" aria-label="Stäng">✕</button>
+            <button type="button" class="lesson-close-btn" id="btn-close-settings-modal" aria-label="ปิด">✕</button>
           </div>
 
           <!-- Val av taligenkänningsmotor (Inga API-nycklar visas för användaren) -->
           <div>
             <label style="font-weight: 900; font-size: 0.88rem; display: block; margin-bottom: 6px;">
-              🎙️ Välj taligenkänningsmotor:
+              🎙️ เลือกระบบฟังและตรวจเสียงพูด:
             </label>
 
             <div style="display: flex; flex-direction: column; gap: 8px;">
@@ -2485,10 +2485,10 @@
               <div class="settings-engine-radio-card" id="card-engine-groq">
                 <div style="display: flex; align-items: center; justify-content: space-between;">
                   <span style="font-weight: 900; font-size: 0.95rem;">🚀 Groq Whisper AI</span>
-                  <span class="satun-badge" style="background: var(--emerald-soft); color: var(--emerald-dark); border-color: var(--emerald);">Rekommenderas</span>
+                  <span class="satun-badge" style="background: var(--emerald-soft); color: var(--emerald-dark); border-color: var(--emerald);">แนะนำ</span>
                 </div>
                 <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 4px; line-height: 1.4;">
-                  Snabb och förlåtande AI-igenkänning med hög träffsäkerhet för svenskt tal.
+                  ฟังคำพูดสวีเดนและช่วยตรวจว่าออกเสียงคำไหน เหมาะสำหรับการฝึกประจำวัน
                 </p>
               </div>
 
@@ -2496,43 +2496,43 @@
               <div class="settings-engine-radio-card" id="card-engine-azure">
                 <div style="display: flex; align-items: center; justify-content: space-between;">
                   <span style="font-weight: 900; font-size: 0.95rem;">🎯 Microsoft Azure AI</span>
-                  <span class="satun-badge" style="background: #E0E7FF; color: #3730A3; border-color: #A5B4FC;">Detaljerat uttal</span>
+                  <span class="satun-badge" style="background: #E0E7FF; color: #3730A3; border-color: #A5B4FC;">วิเคราะห์การออกเสียง</span>
                 </div>
                 <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 4px; line-height: 1.4;">
-                  Avancerad uttalsanalys på fonem- och stavelsenivå med uttalspoäng, flyt och melodi.
+                  ช่วยวิเคราะห์เสียงและพยางค์ พร้อมคำแนะนำการออกเสียง
                 </p>
               </div>
 
               <!-- 3. iOS Inbyggd Diktering -->
               <div class="settings-engine-radio-card" id="card-engine-webkit">
                 <div style="display: flex; align-items: center; justify-content: space-between;">
-                  <span style="font-weight: 900; font-size: 0.95rem;">📱 Apple iOS Inbyggd diktering</span>
-                  <span class="satun-badge">Lokal</span>
+                  <span style="font-weight: 900; font-size: 0.95rem;">📱 ระบบเสียงพูดของ iOS</span>
+                  <span class="satun-badge">ในอุปกรณ์</span>
                 </div>
                 <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 4px; line-height: 1.4;">
-                  Apples inbyggda röstigenkänning som körs lokalt i Safari på telefonen.
+                  ใช้ระบบรู้จำเสียงที่มีใน Safari บนโทรศัพท์
                 </p>
               </div>
             </div>
           </div>
 
-          <!-- Val av taltempo för uppspelning (Standard 0.88x, Snabbt 1.0x eller Extra snabbt 1.15x) -->
+          <!-- Val av taltempo för uppspelning (Standard 0.88x, Snabbt 1.0x eller เร็วขึ้น 1.15x) -->
           <div>
             <label style="font-weight: 900; font-size: 0.88rem; display: block; margin-bottom: 6px;">
-              ⚡ Taltempo för svenskt tal:
+              ⚡ ความเร็วเสียงสวีเดน:
             </label>
             <div style="display: flex; gap: 8px;">
               <button type="button" class="settings-speed-btn" id="btn-speed-088" data-speed="0.88" style="flex: 1;">
                 <div style="font-size: 0.95rem; font-weight: 900;">🐢 0.88x</div>
-                <div style="font-size: 0.72rem; font-weight: 700; opacity: 0.85; margin-top: 2px;">Standard (Lugnt)</div>
+                <div style="font-size: 0.72rem; font-weight: 700; opacity: 0.85; margin-top: 2px;">ช้า สบาย ๆ</div>
               </button>
               <button type="button" class="settings-speed-btn" id="btn-speed-100" data-speed="1.0" style="flex: 1;">
                 <div style="font-size: 0.95rem; font-weight: 900;">⚡ 1.0x</div>
-                <div style="font-size: 0.72rem; font-weight: 700; opacity: 0.85; margin-top: 2px;">Snabbt (Normalt)</div>
+                <div style="font-size: 0.72rem; font-weight: 700; opacity: 0.85; margin-top: 2px;">ความเร็วปกติ</div>
               </button>
               <button type="button" class="settings-speed-btn" id="btn-speed-115" data-speed="1.15" style="flex: 1;">
                 <div style="font-size: 0.95rem; font-weight: 900;">🚀 1.15x</div>
-                <div style="font-size: 0.72rem; font-weight: 700; opacity: 0.85; margin-top: 2px;">Extra snabbt</div>
+                <div style="font-size: 0.72rem; font-weight: 700; opacity: 0.85; margin-top: 2px;">เร็วขึ้น</div>
               </button>
             </div>
           </div>
@@ -2540,14 +2540,14 @@
           <!-- Testpanel: Högtalare & Mikrofon -->
           <div style="background: var(--surface-muted); border-radius: 16px; padding: 14px; border: 2px solid var(--border-light);">
             <div style="font-weight: 900; font-size: 0.86rem; margin-bottom: 8px;">
-              🎛️ Testa ljud och mikrofon:
+              🎛️ ทดสอบเสียงและไมโครโฟน:
             </div>
             <div style="display: flex; gap: 8px;">
               <button type="button" class="btn-3d btn-blue" id="btn-test-speaker" style="flex: 1; min-height: 48px; font-size: 0.82rem; display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
-                <span class="audio-btn-icon">${window.VisualEngine ? window.VisualEngine.getAudioIconSVG('speaker', 18) : '🔊'}</span> Testa högtalare
+                <span class="audio-btn-icon">${window.VisualEngine ? window.VisualEngine.getAudioIconSVG('speaker', 18) : '🔊'}</span> ทดสอบลำโพง
               </button>
               <button type="button" class="btn-3d btn-green" id="btn-test-mic" style="flex: 1; min-height: 48px; font-size: 0.82rem; display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
-                <span class="audio-btn-icon" id="test-mic-icon">${window.VisualEngine ? window.VisualEngine.Library.microphone() : '🎙️'}</span> <span id="test-mic-label">Testa mikrofon</span>
+                <span class="audio-btn-icon" id="test-mic-icon">${window.VisualEngine ? window.VisualEngine.Library.microphone() : '🎙️'}</span> <span id="test-mic-label">ทดสอบไมโครโฟน</span>
               </button>
             </div>
             <div id="settings-test-status" style="font-size: 0.82rem; font-weight: 700; color: var(--text-main); margin-top: 10px; text-align: center; min-height: 24px; line-height: 1.4;"></div>
@@ -2556,14 +2556,14 @@
           <!-- Hantera API-nycklar (Skyddat lokalt i webbläsaren) -->
           <div style="margin-top: 2px;">
             <button type="button" class="btn-3d btn-surface w-full" id="btn-open-key-manager" style="min-height: 42px; font-size: 0.84rem; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 8px;">
-              <span>🔑</span> <span>Hantera API-nycklar (Groq Whisper & Azure)</span>
+              <span>🔑</span> <span>จัดการการเชื่อมต่อเสียง (Groq / Azure)</span>
             </button>
             <div id="key-manager-status-indicator" style="font-size: 0.74rem; color: var(--text-secondary); text-align: center; margin-top: 4px; font-weight: 700;"></div>
           </div>
 
           <!-- Spara-knapp -->
           <button type="button" class="btn-3d btn-green w-full" id="btn-save-settings" style="min-height: 52px; font-size: 1rem; margin-top: 4px;">
-            💾 Spara inställningar
+            💾 บันทึกการตั้งค่า
           </button>
         </div>
       `;
@@ -2636,7 +2636,7 @@
         const speedText = curRate >= 1.1 ? 'extra snabbt (1.15x)' : curRate >= 0.95 ? 'snabbt (1.0x)' : 'standard (0.88x)';
         if (statusEl) statusEl.innerHTML = `🔊 Spelar upp i ${speedText}...`;
         AudioPlayer.speakSwedish('Hej! Nu fungerar högtalaren med valt taltempo.', curRate, () => {
-          if (statusEl) statusEl.innerHTML = `<span style="color: #166534;">✅ Högtalaren fungerar utmärkt i ${speedText}!</span>`;
+          if (statusEl) statusEl.innerHTML = `<span style="color: #166534;">✅ ลำโพงทำงานแล้วที่ความเร็ว ${speedText}!</span>`;
         });
       });
 
@@ -2653,17 +2653,17 @@
         }
 
         SoundFX.playSound('tap');
-        if (micLabel) micLabel.textContent = 'Lyssnar...';
+        if (micLabel) micLabel.textContent = 'กำลังฟัง…';
         if (micBtn) {
           micBtn.style.background = '#EF4444';
           micBtn.style.borderColor = '#DC2626';
         }
         if (statusEl) {
-          statusEl.innerHTML = '<span style="color: #B91C1C; font-weight: 800;">🔴 Mikrofonen lyssnar... Säg t.ex. "Hej" nu!</span>';
+          statusEl.innerHTML = '<span style="color: #B91C1C; font-weight: 800;">🔴 ไมโครโฟนกำลังฟัง ลองพูด “Hej” ได้เลย!</span>';
         }
 
         const resetBtnUI = () => {
-          if (micLabel) micLabel.textContent = 'Testa mikrofon';
+          if (micLabel) micLabel.textContent = 'ทดสอบไมโครโฟน';
           if (micBtn) {
             micBtn.style.background = '';
             micBtn.style.borderColor = '';
@@ -2678,7 +2678,7 @@
           },
           onAudioLevel: (lvl) => {
             if (lvl > 0.15 && statusEl) {
-              statusEl.innerHTML = `<span style="color: #166534; font-weight: 800;">🎙️ Röstsignal upptäckt: ${'●'.repeat(Math.min(6, Math.max(1, Math.round(lvl * 6))))}</span>`;
+              statusEl.innerHTML = `<span style="color: #166534; font-weight: 800;">🎙️ ตรวจพบเสียงพูด: ${'●'.repeat(Math.min(6, Math.max(1, Math.round(lvl * 6))))}</span>`;
             }
           },
           onResult: (res) => {
@@ -2688,8 +2688,8 @@
               const heard = res.transcript || res.evaluation?.spokenClean || 'Hej';
               const score = res.evaluation?.pronScore || res.evaluation?.score || 95;
               statusEl.innerHTML = `
-                <span style="color: #166534; font-weight: 900;">✅ Mikrofonen fungerar utmärkt!</span><br>
-                <span style="color: #475569; font-size: 0.8rem;">Vi hörde: <strong>"${heard}"</strong> (Uttal: ${score}%)</span>
+                <span style="color: #166534; font-weight: 900;">✅ ไมโครโฟนทำงานแล้ว!</span><br>
+                <span style="color: #475569; font-size: 0.8rem;">ได้ยินว่า: <strong>"${heard}"</strong> (การออกเสียง: ${score}%)</span>
               `;
             }
           },
@@ -2762,21 +2762,21 @@
     const isAzure = activePref === 'azure';
     const isGroq = activePref === 'groq';
 
-    let badgeText = '📱 Röstigenkänning Aktiv';
+    let badgeText = '📱 Röstigenkänning ใช้อยู่';
     if (isAzure) {
       badgeText = '🎯 AI-Uttalsbedömning (sv-SE)';
     } else if (isGroq && speechJudgeInstance.isGroqReady()) {
-      badgeText = '🚀 Whisper AI Aktiv';
+      badgeText = '🚀 Whisper AI ใช้อยู่';
     }
 
     stage.innerHTML = `
       <div class="exercise-badge-row">
-        <span class="exercise-type-tag">${q.typeLabel || 'Uttal • ฝึกพูด'}</span>
+        <span class="exercise-type-tag">${q.typeLabel || 'ฝึกพูด'}</span>
         <span class="satun-badge">
           ${badgeText}
         </span>
       </div>
-      <h2 class="exercise-prompt-sv">${q.promptSv || 'Säg på svenska'}</h2>
+      <h2 class="exercise-prompt-sv">${q.promptTh || 'ลองพูดเป็นภาษาสวีเดน'}</h2>
       <p class="exercise-prompt-th">${q.promptTh || 'แตะปุ่มไมโครโฟนแล้วออกเสียง'}</p>
 
       <div class="pronunciation-card" style="padding: 16px; margin-bottom: 12px;">
@@ -2796,13 +2796,13 @@
           <strong>${item.th || ''}</strong> • <span style="color:#7B2CBF;">🌴 ${item.satun || ''}</span>
         </div>
 
-        <!-- Två tydliga ljudknappar (🔊 Normal/Snabbt & 🐢 Sköldpadda 0.60x) -->
+        <!-- Två tydliga ljudknappar (🔊 ฟังปกติ/Snabbt & 🐢 ฟังช้า ๆ 0.60x) -->
         <div style="display: flex; justify-content: center; gap: 10px; margin-top: 12px;">
           <button type="button" class="btn-3d btn-blue" id="btn-pronun-listen" style="min-height: 54px; flex: 1; padding: 8px 12px; font-size: 0.88rem; display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
-            <span class="audio-btn-icon">${window.VisualEngine ? window.VisualEngine.getAudioIconSVG('speaker', 20) : '🔊'}</span> ${AudioPlayer.getSpeechRate() >= 0.95 ? 'Snabbt' : 'Normal'} (${AudioPlayer.getSpeechRate()}x)
+            <span class="audio-btn-icon">${window.VisualEngine ? window.VisualEngine.getAudioIconSVG('speaker', 20) : '🔊'}</span> ${AudioPlayer.getSpeechRate() >= 0.95 ? 'เร็ว' : 'ปกติ'} (${AudioPlayer.getSpeechRate()}x)
           </button>
           <button type="button" class="btn-3d" id="btn-pronun-slow" style="min-height: 54px; flex: 1; padding: 8px 12px; font-size: 0.88rem; background: var(--lavender); color: #FFF; border-color: var(--lavender); box-shadow: 0 4px 0 var(--lavender-dark); display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
-            <span class="audio-btn-icon">${window.VisualEngine ? window.VisualEngine.getAudioIconSVG('turtle', 20) : '🐢'}</span> Sköldpadda (0.60x)
+            <span class="audio-btn-icon">${window.VisualEngine ? window.VisualEngine.getAudioIconSVG('turtle', 20) : '🐢'}</span> ฟังช้า ๆ (0.60x)
           </button>
         </div>
       </div>
@@ -2814,7 +2814,7 @@
             <span class="stat-icon-svg" style="width: 32px; height: 32px;">${window.VisualEngine ? window.VisualEngine.Library.microphone() : '🎙️'}</span>
           </div>
           <span class="mic-btn-status-label" id="mic-btn-status-label">
-            Lyssna på mig
+            ฟังฉันพูด
           </span>
         </button>
 
@@ -2888,9 +2888,9 @@
       if (state === 'recording') {
         micBtn.classList.add('state-recording');
         micIcon.innerHTML = '🔴';
-        micLabel.innerHTML = 'Spelar in...<br>(Klicka för att stoppa)';
+        micLabel.innerHTML = 'กำลังฟัง…<br>(แตะเพื่อหยุด)';
         meterBar?.classList.add('active');
-        if (hearingText) hearingText.textContent = '🎧 Lyssnar på dig... Tala nu!';
+        if (hearingText) hearingText.textContent = '🎧 กำลังฟัง ลองพูดได้เลย!';
       } else if (state === 'analyzing') {
         micBtn.classList.add('state-analyzing');
         micIcon.innerHTML = '<span class="mic-spin-star">⭐</span>';
@@ -2900,7 +2900,7 @@
       } else {
         micBtn.classList.add('state-idle');
         micIcon.innerHTML = '🎙️';
-        micLabel.innerHTML = 'Lyssna på mig';
+        micLabel.innerHTML = 'ฟังฉันพูด';
         meterBar?.classList.remove('active');
         volBars.forEach((b) => (b.style.height = '6px'));
       }
@@ -2916,7 +2916,7 @@
         } else {
           hearingText.innerHTML = evaluation.spokenClean
             ? `Appen hörde: <strong>"${evaluation.spokenRaw || evaluation.spokenClean}"</strong> (${evaluation.score}%)`
-            : 'Inget tal uppfattades • ลองกดแล้วพูดใหม่อีกครั้งนะ';
+            : 'ลองกดแล้วพูดใหม่อีกครั้งนะ';
         }
       }
 
@@ -2929,7 +2929,7 @@
           if (lessonCtrl) lessonCtrl.pronunciationPassed = true;
           if (checkBtn) {
             checkBtn.disabled = false;
-            checkBtn.textContent = 'FORTSÄTT (GODKÄNT!) • ไปต่อเลย';
+            checkBtn.textContent = 'ไปต่อเลย';
           }
         }
 
@@ -2938,7 +2938,7 @@
         if (isPass) {
           const count = Math.max(1, Math.min(3, evaluation.starsCount || (evaluation.pronScore >= 90 ? 3 : evaluation.pronScore >= 80 ? 2 : 1)));
           starsHtml = `
-            <div class="azure-stars-row ${count === 3 ? 'all-three' : ''}" title="${count} av 3 stjärnor">
+            <div class="azure-stars-row ${count === 3 ? 'all-three' : ''}" title="${count} av 3 ดาว">
               <span class="azure-star-item star-1 ${count >= 1 ? 'earned' : 'unearned'}">⭐</span>
               <span class="azure-star-item star-2 ${count >= 2 ? 'earned' : 'unearned'}">⭐</span>
               <span class="azure-star-item star-3 ${count >= 3 ? 'earned' : 'unearned'}">⭐</span>
@@ -3045,9 +3045,9 @@
             ${!isPass ? `
               <div style="display: flex; gap: 8px; margin-top: 6px;">
                 <button type="button" class="btn-3d btn-coral" id="btn-azure-retry-mic" style="min-height: 48px; flex: 1; padding: 8px 12px; font-size: 0.84rem;">
-                  🎙️ Prova igen • ลองใหม่นะจ๊ะ
+                  🎙️ ลองใหม่นะจ๊ะ
                 </button>
-                <button type="button" class="btn-3d btn-surface" id="btn-azure-listen-slow" style="min-height: 48px; padding: 8px 12px; font-size: 0.84rem;" title="Sköldpadda 0.60x">
+                <button type="button" class="btn-3d btn-surface" id="btn-azure-listen-slow" style="min-height: 48px; padding: 8px 12px; font-size: 0.84rem;" title="ฟังช้า ๆ 0.60x">
                   🐢 0.60x
                 </button>
               </div>
@@ -3069,7 +3069,7 @@
         if (lessonCtrl) lessonCtrl.pronunciationPassed = true;
         if (checkBtn) {
           checkBtn.disabled = false;
-          checkBtn.textContent = 'FORTSÄTT (GODKÄNT!) • ไปต่อเลย';
+          checkBtn.textContent = 'ไปต่อเลย';
         }
 
         evalSlot.innerHTML = `
@@ -3122,7 +3122,7 @@
 
             <div style="display: flex; gap: 8px; margin-top: 4px;">
               <button type="button" class="btn-3d btn-warm" id="btn-eval-retry-mic" style="min-height: 48px; flex: 1; padding: 8px 12px; font-size: 0.84rem;">
-                🎙️ Prova igen • พูดอีกครั้ง
+                🎙️ พูดอีกครั้ง
               </button>
               <button type="button" class="btn-3d btn-surface" id="btn-eval-play-slow" style="min-height: 48px; padding: 8px 12px; font-size: 0.84rem;">
                 🐢 0.60x
@@ -3161,7 +3161,7 @@
 
             <div style="display: flex; gap: 8px; margin-top: 4px;">
               <button type="button" class="btn-3d btn-coral" id="btn-retry-mic-again" style="min-height: 48px; flex: 1; padding: 8px 12px; font-size: 0.84rem;">
-                🎙️ Prova igen • ลองใหม่นะจ๊ะ
+                🎙️ ลองใหม่นะจ๊ะ
               </button>
               <button type="button" class="btn-3d btn-surface" id="btn-retry-turtle" style="min-height: 48px; padding: 8px 12px; font-size: 0.84rem;">
                 🐢 Lyssna
@@ -3246,7 +3246,7 @@
       });
     });
 
-    // Aktivera progressiv fonetisk ledtråd (suddig/blurrad thai-fonetik)
+    // เลือกใช้ progressiv fonetisk ledtråd (suddig/blurrad thai-fonetik)
     window.PhoneticBlurHelper?.bindEvents(stage);
   }
 

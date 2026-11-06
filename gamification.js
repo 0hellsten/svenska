@@ -8,16 +8,16 @@
  *    - "Snabb-Sprinten" (60s på tid med +2s bonus & 1x-5x Combo XP)
  *    - "Uttals-Utmaningen" (10 röst-kort, Brons -> Silver -> Guld -> Diamant)
  *    - "Tema-Bossen" (Slutprov per kategori, belönar Guld-märke)
- * 2. LÖSNING PÅ POÄNGINFLATIONEN & UTÖKAD BELÖNINGSEKONOMI:
+ * 2. LÖSNING PÅ POÄNGINFLATIONEN & UTÖKAD รางวัลSEKONOMI:
  *    - Spelbara Boosters & Juvel-sinks:
- *      * 🛡️ Streak-Freeze (Frys Streaken, skyddar mot streak-förlust)
+ *      * 🛡️ โล่รักษาสตรีค (Frys Streaken, skyddar mot streak-förlust)
  *      * ⚡ Dubbel-XP Booster (30 minuter 2x XP på allt)
- *      * 🎁 Lyckolåda / Gåvo-kista (Mystery Box med slumpmässiga storvinster)
+ *      * 🎁 กล่องตัวช่วย / Gåvo-kista (Mystery Box med slumpmässiga storvinster)
  *    - 10 st Maskot-accessoarer i balanserade prisklasser (25–350 💎)
  *      med pixelperfekt centrering direkt på Nong Dalas huvud (x=50)
  *    - 6 st Upplåsbara färgteman (inkl. Norrsken & Satun Sunset)
  *    - Samlaralbum med 8 upplåsbara Prestationsmärken (Badges)
- * 3. "MINA ORD"-BANK (1–5 stjärnor, dual-speed lyssning & röstträning)
+ * 3. "MINA ORD"-BANK (1–5 ดาว, dual-speed lyssning & röstträning)
  * 4. VÄLKOMSTSKÄRM & LOKAL IPHONE-SAFARI INTEGRATION
  * ============================================================================
  */
@@ -225,7 +225,7 @@
   const SHOP_BOOSTERS = [
     {
       id: 'streak_freeze',
-      nameSv: 'Streak-Freeze (Frys Streaken)',
+      nameSv: 'โล่รักษาสตรีค (Frys Streaken)',
       nameTh: 'น้ำแข็งกันสตรีคหลุด',
       satunDesc: 'ลืมเข้าเรียนวันไหน สตรีคก็ไม่หลุด! (เก็บได้สูงสุด 2 ชิ้น)',
       icon: '🛡️',
@@ -241,9 +241,9 @@
     },
     {
       id: 'mystery_box',
-      nameSv: 'Lyckolåda / Gåvo-kista',
+      nameSv: 'กล่องตัวช่วย / Gåvo-kista',
       nameTh: 'กล่องสุ่มนำโชค Wilawan',
-      satunDesc: 'ลุ้นรับเพชรโบนัสก้อนโต (+150 💎), XP มหาศาล หรือไอเทมลับ!',
+      satunDesc: 'กล่องตัวช่วยฝึก: โล่รักษาวันฝึกหรือตัวช่วย XP 30 นาที ไม่มีรางวัลแต้มก้อนใหญ่',
       icon: '🎁',
       costGems: 50
     }
@@ -315,7 +315,7 @@
       nameTh: 'ก้าวแรกสู่สวีเดน',
       icon: '🥇',
       target: 25,
-      rewardGems: 25,
+      rewardGems: 4,
       checkUnlocked: (state, sm) => (sm.state.totalXP || 0) >= 25
     },
     {
@@ -324,7 +324,7 @@
       nameTh: 'สปรินเตอร์สายฟ้า',
       icon: '⚡',
       target: 65,
-      rewardGems: 30,
+      rewardGems: 5,
       checkUnlocked: (state) => (state.sprint60BestScore || 0) >= 65
     },
     {
@@ -333,7 +333,7 @@
       nameTh: 'เสียงทองคำไมโครโฟน',
       icon: '🎙️',
       target: 5,
-      rewardGems: 35,
+      rewardGems: 5,
       checkUnlocked: (state) => ['Guld', 'Diamant'].includes(state.pronunChallengeBestTier)
     },
     {
@@ -342,7 +342,7 @@
       nameTh: 'ผู้พิทักษ์เปลวไฟ 7 วัน',
       icon: '🔥',
       target: 7,
-      rewardGems: 40,
+      rewardGems: 6,
       checkUnlocked: (state, sm) => (sm.state.streakDays || 1) >= 7
     },
     {
@@ -351,7 +351,7 @@
       nameTh: 'ผู้พิชิตบอสประจำหมวด',
       icon: '👑',
       target: 3,
-      rewardGems: 45,
+      rewardGems: 7,
       checkUnlocked: (state) => Object.keys(state.bossClearedThemes || {}).length >= 3
     },
     {
@@ -360,8 +360,8 @@
       nameTh: 'เซียนคลังคำศัพท์ 50 คำ',
       icon: '📚',
       target: 50,
-      rewardGems: 40,
-      checkUnlocked: (state, sm) => Object.keys(sm.state.srsData || {}).length >= 50
+      rewardGems: 6,
+      checkUnlocked: (state, sm) => Object.values(sm.state.srsData || {}).filter(r => r.correctCount > 0 || r.repetitions > 0 || r.masteryLevel > 0).length >= 50
     },
     {
       id: 'fashionista',
@@ -369,7 +369,7 @@
       nameTh: 'เจ้าแม่แฟชั่นสตูล',
       icon: '🛍️',
       target: 4,
-      rewardGems: 35,
+      rewardGems: 5,
       checkUnlocked: (state) => (state.ownedAccessories || []).length >= 4
     },
     {
@@ -378,7 +378,7 @@
       nameTh: 'เศรษฐีเพชร 300 เม็ด',
       icon: '💎',
       target: 300,
-      rewardGems: 60,
+      rewardGems: 8,
       checkUnlocked: (state, sm) => (sm.state.gems || 0) >= 300
     }
   ];
@@ -401,7 +401,7 @@
           titleTh: 'ฝึกพูดภาษาสวีเดนใส่ไมโครโฟน 8 ครั้ง',
           progress: 0,
           target: 8,
-          rewardGems: 30,
+          rewardGems: 5,
           claimed: false
         },
         combo_3: {
@@ -411,7 +411,7 @@
           titleTh: 'ตอบถูกติดต่อกัน 5 ข้อรวด (Combo 5x)',
           progress: 0,
           target: 5,
-          rewardGems: 25,
+          rewardGems: 4,
           claimed: false
         },
         train_15min: {
@@ -421,7 +421,7 @@
           titleTh: 'ใช้เวลาฝึกภาษาสวีเดนครบ 15 นาทีวันนี้',
           progress: 0,
           target: 15,
-          rewardGems: 40,
+          rewardGems: 6,
           claimed: false
         }
       }
@@ -501,7 +501,7 @@
                 titleTh: 'ใช้เวลาฝึกภาษาสวีเดนครบ 15 นาทีวันนี้',
                 progress: Math.min(15, old.progress || 0),
                 target: 15,
-                rewardGems: 40,
+                rewardGems: 6,
                 claimed: false
               };
               this.save();
@@ -692,7 +692,7 @@
           ${showPlus2Sec ? `<span class="bonus-time-badge">+2s ⚡</span>` : ''}
         </div>
         <div style="font-weight: 900; font-size: 0.88rem; color: var(--emerald-dark);">
-          ✅ ${this.sprint60CorrectCount} rätt • ⭐ ${this.sprint60ScoreXP} XP
+          ✅ ${this.sprint60CorrectCount} ข้อถูก · ⭐ ${this.sprint60ScoreXP} คะแนน
         </div>
         <div class="satun-badge" style="background: var(--gold-soft); color: #92400E; border-color: var(--gold);">
           🔥 Combo ${mult}x XP
@@ -730,7 +730,7 @@
       Part5State.save();
 
       const sm = window.GameEngine.StateManager;
-      sm.addGems(15);
+      const earnedGems = sm.addGems(2);
       sm.save();
 
       window.SpeechEngine?.playSound('fanfare');
@@ -743,22 +743,22 @@
         <div style="text-align: center; padding: 18px 8px; display: flex; flex-direction: column; align-items: center; gap: 12px;">
           <div class="trophy-hero-anim">${window.VisualEngine.getTrophySVG(86)}</div>
           <span class="satun-badge" style="font-size: 0.9rem;">
-            ${isNewRecord ? '🎉 NYTT REKORD! • ทำลายสถิติใหม่ หรอยจังฮู้!' : '⚡ Snabb-Sprinten Klar!'}
+            ${isNewRecord ? '🎉 ทำลายสถิติใหม่ หรอยจังฮู้!' : '⚡ Snabb-Sprinten Klar!'}
           </span>
           <h2 style="font-size: 1.6rem; font-weight: 900; color: var(--emerald-dark);">
-            ${this.sprint60ScoreXP} XP på 60 sekunder!
+            ${this.sprint60ScoreXP} คะแนน ใน 60 วินาที!
           </h2>
           <p class="th-text" style="color: var(--text-secondary); font-size: 0.94rem;">
             คุณตอบถูกทั้งหมด <strong>${this.sprint60CorrectCount} ข้อ</strong> พร้อมโบนัสเวลา +2 วินาทีต่อข้อ!
           </p>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; margin: 6px 0;">
             <div class="arena-card" style="margin: 0; text-align: center; background: var(--gold-soft); border-color: var(--gold);">
-              <div style="font-size: 0.76rem; font-weight: 800; color: var(--gold-deep);">PERSONBÄSTA</div>
+              <div style="font-size: 0.76rem; font-weight: 800; color: var(--gold-deep);">สถิติดีที่สุด</div>
               <div style="font-size: 1.4rem; font-weight: 900; color: #78350F;">🏆 ${Part5State.data.sprint60BestScore} XP</div>
             </div>
             <div class="arena-card" style="margin: 0; text-align: center; background: var(--emerald-soft); border-color: var(--emerald);">
-              <div style="font-size: 0.76rem; font-weight: 800; color: var(--emerald-dark);">BELÖNING</div>
-              <div style="font-size: 1.4rem; font-weight: 900; color: var(--emerald-dark);">+15 💎</div>
+              <div style="font-size: 0.76rem; font-weight: 800; color: var(--emerald-dark);">รางวัล</div>
+              <div style="font-size: 1.4rem; font-weight: 900; color: var(--emerald-dark);">+${earnedGems} 💎</div>
             </div>
           </div>
           <div style="display: flex; gap: 10px; width: 100%; margin-top: 8px;">
@@ -806,7 +806,7 @@
         <div style="display: flex; justify-content: space-between; align-items: center;">
           <div style="font-weight: 900; font-size: 0.9rem; color: #1E3A8A; display: flex; align-items: center; gap: 6px;">
             <span class="stat-icon-svg" style="width: 20px; height: 20px;">${window.VisualEngine.getMedalSVG(tier.id, 20)}</span>
-            <span>Svenska Uttals-Stjärna: ${tier.labelSv}</span>
+            <span>ดาวการฝึกออกเสียง: ${tier.labelSv}</span>
           </div>
           <span style="font-size: 0.78rem; font-weight: 800; color: var(--sky-dark);">
             Fråga ${Math.min(10, completedCount + 1)} / 10
@@ -814,16 +814,16 @@
         </div>
         <div class="star-tiers-row">
           <div class="star-tier-step ${completedCount >= 0 ? 'reached' : ''}">
-            <span class="stat-icon-svg" style="width: 16px; height: 16px; vertical-align: middle;">${window.VisualEngine.getMedalSVG('brons', 16)}</span> Brons
+            <span class="stat-icon-svg" style="width: 16px; height: 16px; vertical-align: middle;">${window.VisualEngine.getMedalSVG('brons', 16)}</span> ทองแดง
           </div>
           <div class="star-tier-step ${completedCount >= 3 ? 'reached' : ''}">
-            <span class="stat-icon-svg" style="width: 16px; height: 16px; vertical-align: middle;">${window.VisualEngine.getMedalSVG('silver', 16)}</span> Silver
+            <span class="stat-icon-svg" style="width: 16px; height: 16px; vertical-align: middle;">${window.VisualEngine.getMedalSVG('silver', 16)}</span> เงิน
           </div>
           <div class="star-tier-step ${completedCount >= 6 ? 'reached' : ''}">
-            <span class="stat-icon-svg" style="width: 16px; height: 16px; vertical-align: middle;">${window.VisualEngine.getMedalSVG('guld', 16)}</span> Guld
+            <span class="stat-icon-svg" style="width: 16px; height: 16px; vertical-align: middle;">${window.VisualEngine.getMedalSVG('guld', 16)}</span> ทอง
           </div>
           <div class="star-tier-step ${completedCount >= 9 ? 'reached' : ''}">
-            <span class="stat-icon-svg" style="width: 16px; height: 16px; vertical-align: middle;">${window.VisualEngine.getMedalSVG('diamant', 16)}</span> Diamant
+            <span class="stat-icon-svg" style="width: 16px; height: 16px; vertical-align: middle;">${window.VisualEngine.getMedalSVG('diamant', 16)}</span> เพชร
           </div>
         </div>
       `;
@@ -848,7 +848,7 @@
 
       window.VisualEngine?.Mascot?.setState('streak_fire');
       window.VisualEngine?.Mascot?.say(
-        `👑 Tema-Boss: ${theme.titleSv}! 10 frågor – du klarar det!`,
+        `👑 Tema-Boss: ${theme.titleTh}! 10 frågor – du klarar det!`,
         `มาลุยบอสประจำหมวด "${theme.titleTh}" กันตะเอง! 10 ข้อรับเหรียญทอง!`,
         'encourage',
         4500
@@ -871,7 +871,7 @@
           <span style="font-size: 1.4rem;">👑</span>
           <div>
             <div style="font-weight: 900; font-size: 0.88rem; color: #78350F;">
-              TEMA-BOSS: ${theme.titleSv}
+              TEMA-BOSS: ${theme.titleTh}
             </div>
             <div class="th-text" style="font-size: 0.76rem; color: #92400E;">
               ด่านบอสชิงเหรียญทอง • ข้อที่ ${questionNumber} / 10
@@ -957,18 +957,19 @@
 
     // Koppla Dubbel-XP Booster så den multiplicerar intjänad XP automatiskt
     const origAddXP = stateMgr.addXP.bind(stateMgr);
-    stateMgr.addXP = function (amount) {
-      const isDouble = Part5State.isDoubleXpActive();
+    stateMgr.addXP = function (amount, options = {}) {
+      const isDouble = options.allowBooster !== false && Part5State.isDoubleXpActive();
       const finalXP = isDouble ? amount * 2 : amount;
-      origAddXP(finalXP);
+      const granted = origAddXP(finalXP, options);
       if (isDouble) {
         window.VisualEngine?.Mascot?.say(
-          `⚡ 2x XP Aktiv! Du fick +${finalXP} XP!`,
-          `พลังคูณสองทำงาน! รับคะแนนดับเบิ้ล +${finalXP} แต้ม!`,
+          `⚡ 2x XP ใช้อยู่! Du fick +${granted} XP!`,
+          `พลังคูณสองทำงาน! รับคะแนนดับเบิ้ล +${granted} แต้ม!`,
           'happy',
           2500
         );
       }
+      return granted;
     };
 
     const origRenderCurrent = lessonCtrl.renderCurrentQuestion.bind(lessonCtrl);
@@ -1010,7 +1011,7 @@
           const mult = ArenaModes.getComboMultiplier(ArenaModes.sprint60ComboCount);
           const bonusXP = 10 * mult;
           ArenaModes.sprint60ScoreXP += bonusXP;
-          stateMgr.addXP(bonusXP);
+          // Sprint combo is a local score; base answers already award bounded XP.
           ArenaModes.injectSprint60HUD(true);
         }
       } else if (this.options?.isSnabbSprint60) {
@@ -1033,10 +1034,11 @@
         return;
       }
       if (this.options?.isPronunciationChallenge) {
+        const firstVoice = !Part5State.data.pronunChallengeBestTier;
         Part5State.data.pronunChallengeBestTier = 'Diamant';
         Part5State.data.pronunChallengeBestScore = 10;
         Part5State.save();
-        stateMgr.addGems(25);
+        const earnedGems = stateMgr.addGems(firstVoice ? 5 : 0);
         window.SpeechEngine?.playSound('fanfare');
         window.VisualEngine?.triggerConfetti();
 
@@ -1048,7 +1050,7 @@
         stage.innerHTML = `
           <div style="text-align: center; padding: 20px 10px; display: flex; flex-direction: column; align-items: center; gap: 12px;">
             <div class="trophy-hero-anim">${window.VisualEngine.Library.gem(86)}</div>
-            <span class="satun-badge">🎙️ Svenska Uttals-Stjärna: DIAMANT!</span>
+            <span class="satun-badge">🎙️ ดาวการฝึกออกเสียง: DIAMANT!</span>
             <h2 style="font-size: 1.6rem; font-weight: 900; color: var(--sky-dark);">
               10 av 10 Uttal Klara!
             </h2>
@@ -1057,11 +1059,11 @@
             </p>
             <div class="arena-card" style="width: 100%; text-align: center; background: var(--gold-soft); border-color: var(--gold);">
               <div style="font-weight: 900; font-size: 1.3rem; color: #78350F; display: flex; align-items: center; justify-content: center; gap: 6px;">
-                +25 <span class="stat-icon-svg" style="width: 22px; height: 22px;">${window.VisualEngine.getStatIconSVG('gem', 22)}</span> Juveler & +${this.sessionXP} <span class="stat-icon-svg" style="width: 22px; height: 22px;">${window.VisualEngine.getStatIconSVG('xp', 22)}</span> XP
+                +${earnedGems} <span class="stat-icon-svg" style="width: 22px; height: 22px;">${window.VisualEngine.getStatIconSVG('gem', 22)}</span> เพชร และ +${this.sessionXP} <span class="stat-icon-svg" style="width: 22px; height: 22px;">${window.VisualEngine.getStatIconSVG('xp', 22)}</span> XP
               </div>
             </div>
             <button type="button" class="btn-3d btn-green w-full" id="btn-finish-pronun-challenge">
-              TILLBAKA • กลับหน้าแข่งขัน
+              ย้อนกลับ • กลับหน้าแข่งขัน
             </button>
           </div>
         `;
@@ -1071,13 +1073,14 @@
 
       if (this.options?.isThemeBoss && this.options?.bossTheme) {
         const bossTheme = this.options.bossTheme;
+        const firstBoss = !Part5State.data.bossClearedThemes[bossTheme.id]?.cleared;
         Part5State.data.bossClearedThemes[bossTheme.id] = {
           cleared: true,
           bestScore: 10,
           date: Part5State.getTodayIso()
         };
         stateMgr.state.themeStars[bossTheme.id] = 3;
-        stateMgr.addGems(30);
+        const earnedGems = stateMgr.addGems(firstBoss ? 5 : 0);
         Part5State.save();
 
         window.SpeechEngine?.playSound('fanfare');
@@ -1092,18 +1095,18 @@
           <div style="text-align: center; padding: 20px 10px; display: flex; flex-direction: column; align-items: center; gap: 12px;">
             <div class="trophy-hero-anim">${window.VisualEngine.Library.crown()}</div>
             <span class="satun-badge" style="background: var(--gold-soft); color: #78350F; border-color: var(--gold);">
-              🏅 GULD-MÄRKE UPPLÅST!
+              🏅 ได้ตราความสำเร็จแล้ว!
             </span>
             <h2 style="font-size: 1.55rem; font-weight: 900; color: #92400E;">
-              Tema-Boss Besegrad: ${bossTheme.titleSv}!
+              จบทบทวนหมวด: ${bossTheme.titleTh}!
             </h2>
             <div class="arena-card" style="margin: 0; text-align: center; background: var(--emerald-soft); border-color: var(--emerald); width: 100%;">
               <div style="font-size: 1.25rem; font-weight: 900; color: var(--emerald-dark); display: flex; align-items: center; justify-content: center; gap: 6px;">
-                +30 <span class="stat-icon-svg" style="width: 22px; height: 22px;">${window.VisualEngine.getStatIconSVG('gem', 22)}</span> Juveler & Guld-Märke
+                +${earnedGems} <span class="stat-icon-svg" style="width: 22px; height: 22px;">${window.VisualEngine.getStatIconSVG('gem', 22)}</span> เพชรและตราความสำเร็จ
               </div>
             </div>
             <button type="button" class="btn-3d btn-green w-full" id="btn-finish-boss-lesson" style="margin-top: 6px;">
-              FORTSÄTT • กลับสู่แอป
+              กลับสู่แอป
             </button>
           </div>
         `;
@@ -1116,7 +1119,7 @@
   }
 
   /* ==========================================================================
-     9. BELÖNINGSBUTIK, BOOSTERS, SAMLARALBUM & RENDERING
+     9. รางวัลSBUTIK, BOOSTERS, SAMLARALBUM & RENDERING
      ========================================================================== */
 
   const CompeteAndShopUI = {
@@ -1140,7 +1143,7 @@
       competeSection.innerHTML = `
         <div class="section-header" style="margin-bottom: 12px;">
           <div>
-            <h2 class="section-title" style="font-size: 1.25rem;">🏆 Tävlingar, Boosters & Garderob</h2>
+            <h2 class="section-title" style="font-size: 1.25rem;">🏆 กิจกรรมท้าทาย ตัวช่วย และของแต่งตัว</h2>
             <p class="section-subtitle">ท้าดวล 3 รูปแบบ • ไอเทมบูสเตอร์ • ร้านแต่งตัว & เหรียญรางวัล</p>
           </div>
           <div style="display: flex; gap: 6px;">
@@ -1155,20 +1158,20 @@
             <div class="arena-icon-badge" style="background: var(--sky-soft); color: var(--sky-dark);">${window.VisualEngine.getArenaIconSVG('sprint')}</div>
             <div style="flex: 1;">
               <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="font-weight: 900; font-size: 1.05rem;">1. Snabb-Sprinten (60 sekunder)</h3>
+                <h3 style="font-weight: 900; font-size: 1.05rem;">1. ตอบไวใน 60 วินาที</h3>
                 <span class="satun-badge">+2s & 5x Combo</span>
               </div>
               <p class="th-text" style="font-size: 0.84rem; color: var(--text-secondary); margin-top: 2px;">
-                ตอบคำศัพท์และฝึกพูดให้ได้มากที่สุดใน 60 วินาที! ตอบถูกรับโบนัสเวลา <strong>+2 วินาที</strong> และตัวคูณคะแนน <strong>2x, 3x, 5x XP</strong>
+                ตอบคำศัพท์และฝึกพูดให้ได้มากที่สุดใน 60 วินาที! ตอบถูกรับโบนัสเวลา <strong>+2 วินาที</strong> และตัวคูณคะแนน <strong>2x, 3x, 5x (คะแนนเฉพาะรอบ ไม่ใช่ XP เพิ่ม)</strong>
               </p>
             </div>
           </div>
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 0.84rem; font-weight: 800; color: var(--text-secondary);">
-            <span>🏆 Personbästa (Highscore):</span>
-            <span style="color: #B45309; font-weight: 900;">${sprintBest} XP (${Part5State.data.sprint60BestWords || 0} rätt)</span>
+            <span>🏆 คะแนนท้าทายสูงสุด:</span>
+            <span style="color: #B45309; font-weight: 900;">${sprintBest} คะแนน (${Part5State.data.sprint60BestWords || 0} ข้อถูก)</span>
           </div>
           <button type="button" class="btn-3d btn-blue w-full" id="btn-start-sprint60">
-            ⚡ Starta Snabb-Sprinten (60s) • เริ่มเลย!
+            ⚡ เริ่มเลย!
           </button>
         </div>
 
@@ -1178,30 +1181,30 @@
             <div class="arena-icon-badge" style="background: var(--emerald-soft); color: var(--emerald-dark);">${window.VisualEngine.getArenaIconSVG('voice')}</div>
             <div style="flex: 1;">
               <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="font-weight: 900; font-size: 1.05rem;">2. Uttals-Utmaningen (10 Röst-kort)</h3>
+                <h3 style="font-weight: 900; font-size: 1.05rem;">2. ฝึกออกเสียง 10 ข้อ</h3>
                 <span class="satun-badge">🌟 ${starTier}</span>
               </div>
               <p class="th-text" style="font-size: 0.84rem; color: var(--text-secondary); margin-top: 2px;">
-                พูดคำและประโยคสวีเดน 10 ข้อรวดด้วยไมโครโฟน! เติบโตจาก <strong>Brons ➔ Silver ➔ Guld ➔ Diamant</strong>
+                พูดคำและประโยคสวีเดน 10 ข้อรวดด้วยไมโครโฟน! เติบโตจาก <strong>ทองแดง ➔ เงิน ➔ ทอง ➔ เพชร</strong>
               </p>
             </div>
           </div>
           <div class="star-tiers-row" style="margin-bottom: 10px;">
             <div class="star-tier-step reached">
-              <span class="stat-icon-svg" style="width: 16px; height: 16px; vertical-align: middle;">${window.VisualEngine.getMedalSVG('brons', 16)}</span> Brons
+              <span class="stat-icon-svg" style="width: 16px; height: 16px; vertical-align: middle;">${window.VisualEngine.getMedalSVG('brons', 16)}</span> ทองแดง
             </div>
             <div class="star-tier-step ${['Silver', 'Guld', 'Diamant'].includes(starTier) ? 'reached' : ''}">
-              <span class="stat-icon-svg" style="width: 16px; height: 16px; vertical-align: middle;">${window.VisualEngine.getMedalSVG('silver', 16)}</span> Silver
+              <span class="stat-icon-svg" style="width: 16px; height: 16px; vertical-align: middle;">${window.VisualEngine.getMedalSVG('silver', 16)}</span> เงิน
             </div>
             <div class="star-tier-step ${['Guld', 'Diamant'].includes(starTier) ? 'reached' : ''}">
-              <span class="stat-icon-svg" style="width: 16px; height: 16px; vertical-align: middle;">${window.VisualEngine.getMedalSVG('guld', 16)}</span> Guld
+              <span class="stat-icon-svg" style="width: 16px; height: 16px; vertical-align: middle;">${window.VisualEngine.getMedalSVG('guld', 16)}</span> ทอง
             </div>
             <div class="star-tier-step ${starTier === 'Diamant' ? 'reached' : ''}">
-              <span class="stat-icon-svg" style="width: 16px; height: 16px; vertical-align: middle;">${window.VisualEngine.getMedalSVG('diamant', 16)}</span> Diamant
+              <span class="stat-icon-svg" style="width: 16px; height: 16px; vertical-align: middle;">${window.VisualEngine.getMedalSVG('diamant', 16)}</span> เพชร
             </div>
           </div>
           <button type="button" class="btn-3d btn-green w-full" id="btn-start-pronun-challenge">
-            🎙️ Starta Uttals-Utmaningen • ท้าดวลไมค์
+            🎙️ ท้าดวลไมค์
           </button>
         </div>
 
@@ -1211,11 +1214,11 @@
             <div class="arena-icon-badge" style="background: var(--gold-soft); color: #92400E;">${window.VisualEngine.getArenaIconSVG('boss')}</div>
             <div style="flex: 1;">
               <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="font-weight: 900; font-size: 1.05rem;">3. Tema-Bossen (Slutprov 10 frågor)</h3>
+                <h3 style="font-weight: 900; font-size: 1.05rem;">3. ทบทวนประจำหมวด 10 ข้อ</h3>
                 <span class="satun-badge">🏅 ${clearedBossCount}/${themes.length} Guld</span>
               </div>
               <p class="th-text" style="font-size: 0.84rem; color: var(--text-secondary); margin-top: 2px;">
-                ทดสอบไฟนอล 10 ข้อผสมกับ Wilawan ผ่านแล้วรับเหรียญทองประจำหมวด + 30 💎!
+                ทดสอบไฟนอล 10 ข้อผสมกับ Wilawan ครั้งแรกได้ตราประจำหมวดและเพชรสูงสุด 5 เม็ด ตามเพดานรายวัน
               </p>
             </div>
           </div>
@@ -1225,14 +1228,14 @@
                 .map((t) => {
                   const isCleared = Boolean(Part5State.data.bossClearedThemes?.[t.id]?.cleared);
                   return `<option value="${t.id}" ${t.id === this.selectedBossThemeId ? 'selected' : ''}>
-                    ${isCleared ? '👑 [GULD KLAR] ' : '🎯 '}${t.icon} ${t.titleSv} (${t.titleTh})
+                    ${isCleared ? '👑 [ผ่านแล้ว] ' : '🎯 '}${t.icon} ${t.titleTh}
                   </option>`;
                 })
                 .join('')}
             </select>
           </div>
           <button type="button" class="btn-3d btn-yellow w-full" id="btn-start-theme-boss">
-            👑 Utmana Tema-Bossen • ดวลไฟนอล
+            👑 ดวลไฟนอล
           </button>
         </div>
 
@@ -1242,8 +1245,8 @@
             <div class="arena-icon-badge" style="background: var(--lavender-soft); color: #7B2CBF; font-size: 1.5rem; display: flex; align-items: center; justify-content: center;">🇸🇪</div>
             <div style="flex: 1;">
               <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="font-weight: 900; font-size: 1.05rem;">4. Begrepps-Mästaren (Kultur & Samhälle)</h3>
-                <span class="satun-badge" style="background: #EDE9FE; color: #6D28D9;">🇸🇪 10 Begrepp</span>
+                <h3 style="font-weight: 900; font-size: 1.05rem;">4. คำศัพท์วัฒนธรรมและสังคม</h3>
+                <span class="satun-badge" style="background: #EDE9FE; color: #6D28D9;">🇸🇪 10 คำสำคัญ</span>
               </div>
               <p class="th-text" style="font-size: 0.84rem; color: var(--text-secondary); margin-top: 2px;">
                 ท้าดวล 10 คำศัพท์วัฒนธรรมสวีเดนที่จำเป็นที่สุด: Fika, Lagom, Allemansrätten, Sambo, Swish, VAB, Panta!
@@ -1251,7 +1254,7 @@
             </div>
           </div>
           <button type="button" class="btn-3d w-full" id="btn-start-culture-boss" style="min-height: 48px; background: #8B5CF6; color: #fff; border-color: #7C3AED; box-shadow: 0 4px 0 #6D28D9;">
-            🇸🇪 Starta Begrepps-Mästaren • ลุยคำศัพท์วัฒนธรรม
+            🇸🇪 ลุยคำศัพท์วัฒนธรรม
           </button>
         </div>
 
@@ -1261,16 +1264,16 @@
             <div class="arena-icon-badge" style="background: #FCE7F3; color: #DB2777; font-size: 1.5rem; display: flex; align-items: center; justify-content: center;">⚡</div>
             <div style="flex: 1;">
               <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="font-weight: 900; font-size: 1.05rem;">5. Ordjakten (Speed Word Match)</h3>
-                <span class="satun-badge" style="background: #FCE7F3; color: #BE185D;">⚡ 3 Ronder</span>
+                <h3 style="font-weight: 900; font-size: 1.05rem;">5. จับคู่คำอย่างรวดเร็ว</h3>
+                <span class="satun-badge" style="background: #FCE7F3; color: #BE185D;">⚡ 3 รอบ</span>
               </div>
               <p class="th-text" style="font-size: 0.84rem; color: var(--text-secondary); margin-top: 2px;">
-                จับคู่คำศัพท์ภาษาสวีเดนและไทยให้เร็วที่สุด ทำลายสถิติความเร็วรับโบนัสเพชร +20 💎!
+                จับคู่คำศัพท์ภาษาสวีเดนและไทยให้เร็วที่สุด จับคู่ให้คล่องขึ้น คะแนนในสนามใช้เปรียบเทียบสถิติ ไม่เพิ่ม XP ซ้ำ
               </p>
             </div>
           </div>
           <button type="button" class="btn-3d w-full" id="btn-start-speed-match" style="min-height: 48px; background: #EC4899; color: #fff; border-color: #DB2777; box-shadow: 0 4px 0 #BE185D;">
-            ⚡ Starta Ordjakten • เริ่มจับคู่ด่วน
+            ⚡ เริ่มจับคู่ด่วน
           </button>
         </div>
 
@@ -1280,11 +1283,11 @@
             <div class="arena-icon-badge" style="background: var(--sky-soft); color: var(--sky-dark);">${window.VisualEngine.Library.lightning(28)}</div>
             <div style="flex: 1;">
               <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="font-weight: 900; font-size: 1.05rem;">Magiska Boosters & Lyckolåda</h3>
-                <span class="satun-badge">🛡️ ${freezes}/2 Frys</span>
+                <h3 style="font-weight: 900; font-size: 1.05rem;">ตัวช่วยฝึกและกล่องของขวัญ</h3>
+                <span class="satun-badge">🛡️ ${freezes}/2 โล่</span>
               </div>
               <p class="th-text" style="font-size: 0.83rem; color: var(--text-secondary);">
-                ใช้เพชรซื้อไอเทมช่วยเหลือที่มีประโยชน์จริง หรือเสี่ยงโชคลุ้นรางวัลใหญ่!
+                ใช้เพชรซื้อไอเทมช่วยเหลือที่มีประโยชน์จริง หรือลองเปิดกล่องตัวช่วยฝึก
               </p>
             </div>
           </div>
@@ -1292,26 +1295,26 @@
           <div class="booster-grid">
             <div class="booster-item-card">
               <div class="booster-svg-icon">${window.VisualEngine.getBoosterSVG('streak_freeze', 44)}</div>
-              <div style="font-weight: 900; font-size: 0.84rem;">Streak-Freeze</div>
+              <div style="font-weight: 900; font-size: 0.84rem;">โล่รักษาสตรีค</div>
               <div class="th-text" style="font-size: 0.72rem; color: var(--text-secondary);">กันสตรีคหลุด (${freezes}/2)</div>
               <button type="button" class="btn-3d btn-blue w-full" data-buy-booster="streak_freeze" style="min-height: 40px; font-size: 0.78rem; padding: 4px;" ${freezes >= 2 ? 'disabled' : ''}>
-                ${freezes >= 2 ? 'Fullt (2/2)' : '35 💎'}
+                ${freezes >= 2 ? 'ครบแล้ว (2/2)' : '35 💎'}
               </button>
             </div>
 
             <div class="booster-item-card">
               <div class="booster-svg-icon">${window.VisualEngine.getBoosterSVG('double_xp', 44)}</div>
-              <div style="font-weight: 900; font-size: 0.84rem;">2x XP (30 min)</div>
-              <div class="th-text" style="font-size: 0.72rem; color: var(--text-secondary);">${isDoubleXp ? 'Redan aktiv!' : 'แต้มคูณสอง'}</div>
+              <div style="font-weight: 900; font-size: 0.84rem;">XP สองเท่า (30 นาที)</div>
+              <div class="th-text" style="font-size: 0.72rem; color: var(--text-secondary);">${isDoubleXp ? 'กำลังใช้อยู่' : 'แต้มคูณสอง'}</div>
               <button type="button" class="btn-3d btn-yellow w-full" data-buy-booster="double_xp" style="min-height: 40px; font-size: 0.78rem; padding: 4px;" ${isDoubleXp ? 'disabled' : ''}>
-                ${isDoubleXp ? '⚡ Aktiv' : '45 💎'}
+                ${isDoubleXp ? '⚡ ใช้อยู่' : '45 💎'}
               </button>
             </div>
 
             <div class="booster-item-card">
               <div class="booster-svg-icon">${window.VisualEngine.getBoosterSVG('mystery_box', 44)}</div>
-              <div style="font-weight: 900; font-size: 0.84rem;">Lyckolåda</div>
-              <div class="th-text" style="font-size: 0.72rem; color: var(--text-secondary);">ลุ้นรางวัลใหญ่!</div>
+              <div style="font-weight: 900; font-size: 0.84rem;">กล่องตัวช่วย</div>
+              <div class="th-text" style="font-size: 0.72rem; color: var(--text-secondary);">โล่หรือตัวช่วย XP</div>
               <button type="button" class="btn-3d btn-green w-full" data-buy-booster="mystery_box" style="min-height: 40px; font-size: 0.78rem; padding: 4px;">
                 50 💎
               </button>
@@ -1325,8 +1328,8 @@
             <div class="arena-icon-badge" style="background: var(--emerald-soft); color: var(--emerald-dark);">${window.VisualEngine.Library.target(28)}</div>
             <div style="flex: 1;">
               <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="font-weight: 900; font-size: 1.05rem;">Dagliga Uppdrag • ภารกิจประจำวัน</h3>
-                <span class="satun-badge">Förnyas dagligen</span>
+                <h3 style="font-weight: 900; font-size: 1.05rem;">ภารกิจประจำวัน</h3>
+                <span class="satun-badge">เริ่มใหม่ทุกวัน</span>
               </div>
             </div>
           </div>
@@ -1340,7 +1343,7 @@
                     <div style="flex: 1;">
                       <div style="font-weight: 900; font-size: 0.92rem; display: flex; align-items: center; gap: 4px;">
                         <span class="quest-svg-icon">${window.VisualEngine.getQuestIconSVG(q.id, 20)}</span>
-                        <span>${q.titleSv}</span>
+                        <span>${q.titleTh}</span>
                       </div>
                       <div class="th-text" style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">
                         ${q.titleTh} <strong>(${q.progress}/${q.target})</strong>
@@ -1355,7 +1358,7 @@
                           ? `<span class="satun-badge" style="background: var(--emerald-soft); color: var(--emerald-dark); border-color: var(--emerald);">✅ Klar</span>`
                           : isReady
                           ? `<button type="button" class="btn-3d btn-yellow" data-claim-daily="${q.id}" style="min-height: 44px; padding: 6px 12px; font-size: 0.82rem;">
-                              +${q.rewardGems} 💎 Hämta
+                              +${q.rewardGems} 💎 รับรางวัล
                             </button>`
                           : `<button type="button" class="btn-3d btn-surface" disabled style="min-height: 44px; padding: 6px 12px; font-size: 0.82rem; opacity: 0.5; cursor: not-allowed;">
                               +${q.rewardGems} 💎
@@ -1375,7 +1378,7 @@
             <div class="arena-icon-badge" style="background: var(--lavender-soft); color: #7B2CBF;">${window.VisualEngine.Library.ribbon(28)}</div>
             <div style="flex: 1;">
               <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="font-weight: 900; font-size: 1.05rem;">Wilawans Garderob (10 st)</h3>
+                <h3 style="font-weight: 900; font-size: 1.05rem;">ตู้เสื้อผ้าของวิลาวัน · 10 แบบ</h3>
                 <span class="satun-badge">💎 ${gems}</span>
               </div>
               <p class="th-text" style="font-size: 0.83rem; color: var(--text-secondary);">
@@ -1390,15 +1393,12 @@
               ${window.VisualEngine.Mascot.getSVG(78, 'celebrating')}
             </div>
             <div style="flex: 1;">
-              <div style="font-weight: 900; font-size: 0.94rem;">Wilawan bär:</div>
+              <div style="font-weight: 900; font-size: 0.94rem;">ของที่วิลาวันใส่อยู่:</div>
               <div class="th-text" style="font-size: 0.85rem; color: #7B2CBF; font-weight: 700;">
                 ${
                   Part5State.data.equippedAccessory
-                    ? MASCOT_ACCESSORIES.find((a) => a.id === Part5State.data.equippedAccessory)?.nameSv +
-                      ' (' +
-                      MASCOT_ACCESSORIES.find((a) => a.id === Part5State.data.equippedAccessory)?.nameTh +
-                      ')'
-                    : 'Ingen accessoar vald'
+                    ? MASCOT_ACCESSORIES.find((a) => a.id === Part5State.data.equippedAccessory)?.nameTh
+                    : 'ยังไม่ได้เลือกของแต่งตัว'
                 }
               </div>
             </div>
@@ -1411,16 +1411,16 @@
               return `
                 <div class="wardrobe-item-card ${equipped ? 'equipped' : ''}">
                   <div class="wardrobe-svg-icon">${window.VisualEngine.getAccessorySVG(acc.id, 46)}</div>
-                  <div style="font-weight: 900; font-size: 0.86rem;">${acc.nameSv}</div>
+                  <div style="font-weight: 900; font-size: 0.86rem;">${acc.nameTh}</div>
                   <div class="th-text" style="font-size: 0.74rem; color: var(--text-secondary);">${acc.nameTh}</div>
                   <button type="button" class="btn-3d ${
                     equipped ? 'btn-green' : owned ? 'btn-blue' : 'btn-yellow'
                   } w-full" data-wardrobe-acc="${acc.id}" style="min-height: 42px; padding: 4px 8px; font-size: 0.78rem; margin-top: 4px;">
                     ${
                       equipped
-                        ? '✅ Påklädd (Ta av)'
+                        ? '✅ ใส่อยู่ (ถอด)'
                         : owned
-                        ? '👕 Klä på'
+                        ? '👕 สวมใส่'
                         : `💎 ${acc.costGems}`
                     }
                   </button>
@@ -1435,7 +1435,7 @@
           <div class="arena-card-header">
             <div class="arena-icon-badge" style="background: var(--sky-soft); color: var(--sky-dark);">${window.VisualEngine.Library.palette(28)}</div>
             <div style="flex: 1;">
-              <h3 style="font-weight: 900; font-size: 1.05rem;">Färgteman för Appen (6 st)</h3>
+              <h3 style="font-weight: 900; font-size: 1.05rem;">สีของแอป 6 แบบ</h3>
             </div>
           </div>
           <div class="wardrobe-grid">
@@ -1445,11 +1445,11 @@
               return `
                 <div class="wardrobe-item-card ${active ? 'equipped' : ''}">
                   <div style="width: 44px; height: 26px; border-radius: 8px; background: ${theme.previewBg}; border: 1.5px solid var(--border-medium);"></div>
-                  <div style="font-weight: 900; font-size: 0.84rem;">${theme.nameSv}</div>
+                  <div style="font-weight: 900; font-size: 0.84rem;">${theme.nameTh}</div>
                   <button type="button" class="btn-3d ${
                     active ? 'btn-green' : owned ? 'btn-blue' : 'btn-yellow'
                   } w-full" data-color-theme="${theme.id}" style="min-height: 40px; padding: 4px 8px; font-size: 0.76rem; margin-top: 4px;">
-                    ${active ? '✨ Aktiv' : owned ? 'Aktivera' : `💎 ${theme.costGems}`}
+                    ${active ? '✨ ใช้อยู่' : owned ? 'เลือกใช้' : `💎 ${theme.costGems}`}
                   </button>
                 </div>
               `;
@@ -1462,9 +1462,9 @@
           <div class="arena-card-header">
             <div class="arena-icon-badge" style="background: var(--gold-soft); color: #92400E;">${window.VisualEngine.Library.badge_medal(28)}</div>
             <div style="flex: 1;">
-              <h3 style="font-weight: 900; font-size: 1.05rem;">Samlaralbum & Prestationsmärken</h3>
+              <h3 style="font-weight: 900; font-size: 1.05rem;">อัลบั้มความสำเร็จ</h3>
               <p class="th-text" style="font-size: 0.82rem; color: var(--text-secondary);">
-                สะสมเหรียญรางวัลเกียรติยศเพื่อรับเพชรโบนัสก้อนโต!
+                สะสมตราความสำเร็จ รับเพชรเล็กน้อยตามเพดานรายวัน
               </p>
             </div>
           </div>
@@ -1476,16 +1476,16 @@
                 <div class="badge-item-card ${isUnlocked ? 'unlocked' : ''}">
                   <div class="badge-svg-icon">${window.VisualEngine.Library.badge_medal(34)}</div>
                   <div style="flex: 1;">
-                    <div style="font-weight: 900; font-size: 0.82rem;">${b.nameSv}</div>
+                    <div style="font-weight: 900; font-size: 0.82rem;">${b.nameTh}</div>
                     <div class="th-text" style="font-size: 0.72rem; color: var(--text-secondary);">${b.nameTh}</div>
                     ${
                       isClaimed
-                        ? `<span class="satun-badge" style="font-size: 0.68rem; padding: 1px 6px;">✅ Hämtad</span>`
+                        ? `<span class="satun-badge" style="font-size: 0.68rem; padding: 1px 6px;">✅ รับรางวัลd</span>`
                         : isUnlocked
                         ? `<button type="button" class="btn-3d btn-yellow" data-claim-badge="${b.id}" style="min-height: 34px; padding: 2px 8px; font-size: 0.72rem; margin-top: 3px;">
-                            +${b.rewardGems} 💎 Hämta
+                            +${b.rewardGems} 💎 รับรางวัล
                           </button>`
-                        : `<span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Låst (+${b.rewardGems} 💎)</span>`
+                        : `<span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">ยังไม่เปิด (+${b.rewardGems} 💎)</span>`
                     }
                   </div>
                 </div>
@@ -1570,7 +1570,7 @@
       if ((sm.state.gems || 0) < b.costGems) {
         window.SpeechEngine?.playSound('retry');
         window.VisualEngine?.Mascot?.say(
-          `Du behöver ${b.costGems} 💎 juveler för ${b.nameSv}!`,
+          `Du behöver ${b.costGems} 💎 juveler för ${b.nameTh}!`,
           `เพชรยังไม่พอนะจ๊ะ (ต้องใช้ ${b.costGems} 💎) ฝึกบทเรียนเพื่อสะสมเพิ่มต๊ะ!`,
           'encourage',
           3500
@@ -1588,7 +1588,7 @@
         window.SpeechEngine?.playSound('correct');
         window.VisualEngine?.triggerConfetti();
         window.VisualEngine?.Mascot?.say(
-          `🛡️ Streak-Freeze aktiverad! Din streak är skyddad!`,
+          `🛡️ โล่รักษาสตรีค aktiverad! Din streak är skyddad!`,
           `น้ำแข็งกันสตรีคหลุดทำงานแล้ว! สบายใจได้เลยจ้า!`,
           'correct',
           4000
@@ -1633,33 +1633,17 @@
       let prizeDesc = '';
       let prizeIcon = '🎁';
 
-      if (roll < 0.25) {
-        // Storvinst 150 Juveler!
-        prizeIcon = '💎';
-        prizeTitle = 'STORVINST: +150 Juveler!';
-        prizeDesc = 'หรอยจังฮู้! แจ็กพอตแตก ได้รับเพชรโบนัส +150 💎!';
-        sm.addGems(150);
-      } else if (roll < 0.55) {
-        // +150 XP
-        prizeIcon = '⭐';
-        prizeTitle = 'XP-FLOD: +150 XP!';
-        prizeDesc = 'ได้รับคะแนนประสบการณ์สะสมมหาศาล +150 XP!';
-        sm.addXP(150);
-      } else if (roll < 0.8) {
-        // Streak Freeze
-        prizeIcon = '🛡️';
-        prizeTitle = 'STREAK-SKYDD: +1 Streak-Freeze!';
-        prizeDesc = 'ได้รับโล่น้ำแข็งป้องกันสตรีคหลุดอัตโนมัติ!';
-        Part5State.data.streakFreezesCount = Math.min(2, (Part5State.data.streakFreezesCount || 0) + 1);
-        Part5State.save();
+      if (roll < 0.5) {
+        prizeIcon = '🛡️'; prizeTitle = 'โล่รักษาวันฝึก +1';
+        prizeDesc = 'เก็บโล่ไว้ช่วยรักษาสตรีคเมื่อพลาดหนึ่งวัน สูงสุด 2 ชิ้น';
+        if ((Part5State.data.streakFreezesCount || 0) < 2) Part5State.data.streakFreezesCount = (Part5State.data.streakFreezesCount || 0) + 1;
+        else { prizeIcon = '⚡'; prizeTitle = 'ตัวช่วย XP 30 นาที'; prizeDesc = 'มีโล่ครบแล้ว จึงได้ตัวช่วยฝึกแทน ใช้กับบทเรียน ภายใต้เพดาน 180 XP ต่อวัน'; Part5State.data.doubleXpActiveUntil = Math.max(Date.now(), Part5State.data.doubleXpActiveUntil || 0) + 30 * 60 * 1000; }
       } else {
-        // Super 2x XP
-        prizeIcon = '⚡';
-        prizeTitle = 'SUPER-BOOST: 45 min Dubbel-XP!';
-        prizeDesc = 'พลังคูณสองนานขึ้นเป็นพิเศษถึง 45 นาที!';
-        Part5State.data.doubleXpActiveUntil = Date.now() + 45 * 60 * 1000;
-        Part5State.save();
+        prizeIcon = '⚡'; prizeTitle = 'ตัวช่วย XP 30 นาที';
+        prizeDesc = 'เพิ่ม XP จากบทเรียนเป็นเวลา 30 นาที เกมใช้รางวัลภารกิจเดิม และยังมีเพดานรายวัน';
+        Part5State.data.doubleXpActiveUntil = Math.max(Date.now(), Part5State.data.doubleXpActiveUntil || 0) + 30 * 60 * 1000;
       }
+      Part5State.save();
 
       window.SpeechEngine?.playSound('fanfare');
       window.VisualEngine?.triggerConfetti();
@@ -1667,11 +1651,11 @@
       backdrop.innerHTML = `
         <div class="welcome-onboard-card" style="border-color: #38BDF8;">
           <div style="font-size: 4rem; animation: trophyBounce 1s infinite;">${prizeIcon}</div>
-          <span class="satun-badge">🎁 Wilawans Lyckolåda Öppnad!</span>
+          <span class="satun-badge">🎁 เปิดกล่องตัวช่วยของวิลาวันแล้ว</span>
           <h2 style="font-size: 1.45rem; font-weight: 900; color: var(--emerald-dark);">${prizeTitle}</h2>
           <p class="th-text" style="font-size: 0.95rem; color: var(--text-secondary);">${prizeDesc}</p>
           <button type="button" class="btn-3d btn-green w-full" id="btn-close-mystery-box" style="margin-top: 10px;">
-            HÄMTA VINST • รับรางวัล
+            รับตัวช่วย
           </button>
         </div>
       `;
@@ -1699,13 +1683,13 @@
       Part5State.data.claimedBadges.push(badgeId);
       Part5State.save();
 
-      sm.addGems(b.rewardGems);
+      const earnedGems = sm.addGems(b.rewardGems);
 
       window.SpeechEngine?.playSound('fanfare');
       window.VisualEngine?.triggerConfetti();
       window.VisualEngine?.Mascot?.say(
-        `🏅 Prestationsmärke upplåst: ${b.nameSv}!`,
-        `ปลดล็อกเหรียญตราสำเร็จ! รับ +${b.rewardGems} 💎!`,
+        `🏅 Prestationsmärke upplåst: ${b.nameTh}!`,
+        `ปลดล็อกเหรียญตราสำเร็จ! รับ +${earnedGems} 💎!`,
         'celebrating',
         4000
       );
@@ -1716,6 +1700,7 @@
     handleClaimDailyQuest(questId, btnEl) {
       const q = Part5State.data.dailyQuestsData?.items?.[questId];
       if (!q || q.claimed) return;
+      q.rewardGems = Math.min(6, q.rewardGems);
       if (q.progress < q.target) {
         window.SpeechEngine?.playSound('retry');
         return false;
@@ -1743,7 +1728,7 @@
         Part5State.save();
         window.SpeechEngine?.playSound('correct');
         window.VisualEngine?.renderMascot('celebrating');
-        window.VisualEngine?.Mascot?.say(`✨ ${acc.nameSv}!`, `${acc.satunDesc}`, 'correct', 4000);
+        window.VisualEngine?.Mascot?.say(`✨ ${acc.nameTh}!`, `${acc.satunDesc}`, 'correct', 4000);
         this.renderCompeteArena();
         return;
       }
@@ -1768,7 +1753,7 @@
       window.SpeechEngine?.playSound('fanfare');
       window.VisualEngine?.triggerConfetti();
       window.VisualEngine?.renderMascot('celebrating');
-      window.VisualEngine?.Mascot?.say(`🎉 ${acc.nameSv}!`, `${acc.satunDesc}`, 'correct', 4500);
+      window.VisualEngine?.Mascot?.say(`🎉 ${acc.nameTh}!`, `${acc.satunDesc}`, 'correct', 4500);
       window.GameEngine?.UIController?.renderTopbar?.();
 
       this.renderCompeteArena();
@@ -1808,39 +1793,9 @@
      XP-NIVÅER & BERÄKNING
      ========================================================================== */
 
-  const XP_LEVELS = [
-    { level: 1, titleSv: 'Nybörjare', titleTh: 'ผู้เริ่มต้น', minXP: 0, maxXP: 100, icon: '🌱', desc: 'Börja din resa i det svenska språket!' },
-    { level: 2, titleSv: 'Flitig Upptäckare', titleTh: 'นักสำรวจผู้ขยัน', minXP: 100, maxXP: 300, icon: '🧭', desc: 'Du bygger dina första meningar och ordförråd.' },
-    { level: 3, titleSv: 'Satun-Stjärna', titleTh: 'ดาวเด่นสตูล', minXP: 300, maxXP: 650, icon: '⭐', desc: 'Ditt självförtroende i uttal och ordkunskap glänser!' },
-    { level: 4, titleSv: 'Ordmästare', titleTh: 'ปรมาจารย์คำศัพท์', minXP: 650, maxXP: 1200, icon: '📚', desc: 'Ett djupt och stabilt svenskt ordförråd.' },
-    { level: 5, titleSv: 'Uttals-Virtuos', titleTh: 'เซียนสำเนียงสวีเดน', minXP: 1200, maxXP: 2000, icon: '🎙️', desc: 'Nära perfekt svenskt uttal och flyt!' },
-    { level: 6, titleSv: 'Svensk-Mästare', titleTh: 'แชมเปี้ยนภาษาสวีเดน', minXP: 2000, maxXP: 3200, icon: '👑', desc: 'Du behärskar vardagsspråk och kultur suveränt.' },
-    { level: 7, titleSv: 'Nordisk Legend', titleTh: 'ตำนานนอร์ดิกสูงสุด', minXP: 3200, maxXP: 999999, icon: '🏆', desc: 'Högsta möjliga hedersgrad!' }
-  ];
-
+  const XP_LEVELS = window.LearningProgress.levels;
   function getXPLevelInfo(totalXP = 0) {
-    let current = XP_LEVELS[0];
-    for (let i = XP_LEVELS.length - 1; i >= 0; i--) {
-      if (totalXP >= XP_LEVELS[i].minXP) {
-        current = XP_LEVELS[i];
-        break;
-      }
-    }
-    const next = XP_LEVELS.find((l) => l.level === current.level + 1) || null;
-    const xpInLevel = Math.max(0, totalXP - current.minXP);
-    const xpSpan = next ? next.minXP - current.minXP : 1000;
-    const progressPct = next ? Math.min(100, Math.round((xpInLevel / xpSpan) * 100)) : 100;
-    const remainingToNext = next ? Math.max(0, next.minXP - totalXP) : 0;
-
-    return {
-      current,
-      next,
-      totalXP,
-      xpInLevel,
-      xpSpan,
-      progressPct,
-      remainingToNext
-    };
+    return window.LearningProgress.levelInfo(totalXP, window.GameEngine?.StateManager?.state || {});
   }
 
   /* ==========================================================================
@@ -1899,7 +1854,7 @@
                 </div>
               </div>
             </div>
-            <button type="button" class="lesson-close-btn" id="btn-close-stats-modal" aria-label="Stäng">✕</button>
+            <button type="button" class="lesson-close-btn" id="btn-close-stats-modal" aria-label="ปิด">✕</button>
           </div>
 
           <!-- Streak Hero Banner -->
@@ -1912,7 +1867,7 @@
               เรียนติดต่อกัน ${streakDays} วัน สตรีคไม่หลุด!
             </div>
             <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.9); border: 1.5px solid #FDBA74; border-radius: 999px; padding: 4px 14px; margin-top: 10px; font-size: 0.82rem; font-weight: 800; color: #9A3412;">
-              <span>🛡️ Streak-Freeze:</span>
+              <span>🛡️ โล่รักษาสตรีค:</span>
               <span style="color: #0369A1;">${freezes} / 2 aktiva skydd</span>
             </div>
           </div>
@@ -1922,7 +1877,7 @@
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
               <div style="font-weight: 900; font-size: 0.95rem; display: flex; align-items: center; gap: 6px;">
                 <span>⏱️</span>
-                <span>Dagens Träningstid</span>
+                <span>เวลาฝึกวันนี้</span>
               </div>
               <span class="satun-badge" style="background: ${minutesDone >= 15 ? 'var(--emerald-soft)' : '#FEF3C7'}; color: ${minutesDone >= 15 ? 'var(--emerald-dark)' : '#92400E'}; font-weight: 900;">
                 ${minutesDone} / 15 minuter
@@ -1955,7 +1910,7 @@
             <div style="background: var(--surface); border: 2px solid var(--border-light); border-radius: 16px; padding: 12px; text-align: center;">
               <div style="font-size: 1.5rem;">🌟</div>
               <div style="font-weight: 900; font-size: 1.15rem; color: var(--emerald-dark); margin-top: 2px;">${masteredCount} Ord</div>
-              <div style="font-size: 0.76rem; color: var(--text-secondary); font-weight: 700;">Bemästrade (4-5★)</div>
+              <div style="font-size: 0.76rem; color: var(--text-secondary); font-weight: 700;">คำที่ฝึกคล่องขึ้น (4–5★)</div>
             </div>
             <div style="background: var(--surface); border: 2px solid var(--border-light); border-radius: 16px; padding: 12px; text-align: center;">
               <div style="font-size: 1.5rem;">👑</div>
@@ -1976,7 +1931,7 @@
 
           <!-- Fotknapp -->
           <button type="button" class="btn-3d btn-green w-full" id="btn-stats-continue" style="min-height: 48px; font-size: 0.95rem; margin-top: 4px;">
-            Fortsätt träna • ลุยต่อเลย
+            ลุยต่อเลย
           </button>
         </div>
       `;
@@ -2042,7 +1997,7 @@
       const mascotSize = isMagnified ? 220 : 135;
 
       const equippedAcc = MASCOT_ACCESSORIES.find((a) => a.id === Part5State.data.equippedAccessory);
-      const equippedName = equippedAcc ? `${equippedAcc.nameSv} (${equippedAcc.nameTh})` : 'Ingen accessoar vald';
+      const equippedName = equippedAcc ? equippedAcc.nameTh : 'ยังไม่ได้เลือกของแต่งตัว';
       const equippedDesc = equippedAcc ? equippedAcc.satunDesc : 'Välj en fin hatt eller pynt nedan!';
 
       this.shopBackdrop.innerHTML = `
@@ -2059,14 +2014,14 @@
                 </div>
               </div>
             </div>
-            <button type="button" class="lesson-close-btn" id="btn-close-shop-modal" aria-label="Stäng">✕</button>
+            <button type="button" class="lesson-close-btn" id="btn-close-shop-modal" aria-label="ปิด">✕</button>
           </div>
 
           <!-- Saldobanner -->
           <div style="background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%); border: 2px solid #BAE6FD; border-radius: 20px; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.08);">
             <div>
               <div style="font-size: 0.75rem; font-weight: 800; color: #0284C7; text-transform: uppercase; letter-spacing: 0.5px;">Ditt Juvelsaldo</div>
-              <div style="font-size: 1.6rem; font-weight: 900; color: #0369A1;">💎 ${gems} Juveler</div>
+              <div style="font-size: 1.6rem; font-weight: 900; color: #0369A1;">💎 ${gems} เพชร</div>
             </div>
             <div class="satun-badge" style="background: #FFFFFF; color: #0284C7; border: 1.5px solid #BAE6FD; font-size: 0.8rem;">
               🛍️ Lull-lull & Teman
@@ -2078,9 +2033,9 @@
             <div style="display: flex; justify-content: space-between; align-items: center;">
               <div style="font-weight: 900; font-size: 0.98rem; display: flex; align-items: center; gap: 6px;">
                 <span>🎨</span>
-                <span>Färgteman för Appen (6 st)</span>
+                <span>สีของแอป 6 แบบ</span>
               </div>
-              <span style="font-size: 0.76rem; color: var(--text-secondary); font-weight: 700;">Byt färg direkt</span>
+              <span style="font-size: 0.76rem; color: var(--text-secondary); font-weight: 700;">เปลี่ยนสีได้ทันที</span>
             </div>
             <div class="wardrobe-grid">
               ${APP_COLOR_THEMES.map((theme) => {
@@ -2090,13 +2045,13 @@
                 return `
                   <div class="wardrobe-item-card ${active ? 'equipped' : ''}" style="padding: 10px;">
                     <div style="width: 100%; height: 32px; border-radius: 10px; background: ${theme.previewBg}; border: 1.5px solid var(--border-medium); margin-bottom: 6px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);"></div>
-                    <div style="font-weight: 900; font-size: 0.82rem; line-height: 1.2;">${theme.nameSv}</div>
+                    <div style="font-weight: 900; font-size: 0.82rem; line-height: 1.2;">${theme.nameTh}</div>
                     <div class="th-text" style="font-size: 0.72rem; color: var(--text-secondary); margin-top: 2px;">${theme.nameTh}</div>
                     <button type="button" class="btn-3d ${active ? 'btn-green' : owned ? 'btn-blue' : 'btn-yellow'} w-full"
                       data-shopmodal-theme="${theme.id}"
                       style="min-height: 38px; padding: 4px 6px; font-size: 0.76rem; margin-top: 6px;"
                       ${!owned && !canAfford ? 'disabled style="min-height: 38px; padding: 4px 6px; font-size: 0.76rem; margin-top: 6px; opacity:0.55; cursor:not-allowed;"' : ''}>
-                      ${active ? '✨ Aktiv' : owned ? 'Aktivera' : `💎 ${theme.costGems} Köp`}
+                      ${active ? '✨ ใช้อยู่' : owned ? 'เลือกใช้' : `💎 ${theme.costGems} Köp`}
                     </button>
                   </div>
                 `;
@@ -2118,7 +2073,7 @@
             <div class="shop-mascot-stage ${isMagnified ? 'stage-magnified' : ''}" id="shop-mascot-stage">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                 <div style="text-align: left;">
-                  <div style="font-weight: 800; font-size: 0.75rem; color: var(--text-secondary);">Wilawan bär:</div>
+                  <div style="font-weight: 800; font-size: 0.75rem; color: var(--text-secondary);">ของที่วิลาวันใส่อยู่:</div>
                   <div style="font-weight: 900; font-size: 0.92rem; color: #7B2CBF;">${equippedName}</div>
                 </div>
                 <button type="button" id="btn-toggle-shop-mascot-zoom" class="satun-badge" style="cursor: pointer; background: #F3E8FF; color: #7B2CBF; border-color: #D8B4FE; font-weight: 800; font-size: 0.74rem;">
@@ -2159,13 +2114,13 @@
                 return `
                   <div class="wardrobe-item-card ${equipped ? 'equipped' : ''}" style="padding: 10px;">
                     <div class="wardrobe-svg-icon" style="height: 44px;">${window.VisualEngine.getAccessorySVG(acc.id, 44)}</div>
-                    <div style="font-weight: 900; font-size: 0.82rem; line-height: 1.2;">${acc.nameSv}</div>
+                    <div style="font-weight: 900; font-size: 0.82rem; line-height: 1.2;">${acc.nameTh}</div>
                     <div class="th-text" style="font-size: 0.72rem; color: var(--text-secondary); margin-top: 2px;">${acc.nameTh}</div>
                     <button type="button" class="btn-3d ${equipped ? 'btn-green' : owned ? 'btn-blue' : 'btn-yellow'} w-full"
                       data-shopmodal-acc="${acc.id}"
                       style="min-height: 38px; padding: 4px 6px; font-size: 0.76rem; margin-top: 6px;"
                       ${!owned && !canAfford ? 'disabled style="min-height: 38px; padding: 4px 6px; font-size: 0.76rem; margin-top: 6px; opacity:0.55; cursor:not-allowed;"' : ''}>
-                      ${equipped ? '✅ Påklädd' : owned ? '👕 Klä på' : `💎 ${acc.costGems}`}
+                      ${equipped ? '✅ ใส่อยู่' : owned ? '👕 สวมใส่' : `💎 ${acc.costGems}`}
                     </button>
                   </div>
                 `;
@@ -2177,13 +2132,13 @@
           <div style="display: flex; flex-direction: column; gap: 8px;">
             <div style="font-weight: 900; font-size: 0.98rem; display: flex; align-items: center; gap: 6px;">
               <span>⚡</span>
-              <span>Spelbara Boosters & Lyckolåda</span>
+              <span>ตัวช่วยฝึกและกล่องของขวัญ</span>
             </div>
             <div class="booster-grid">
               <!-- Booster 1: Streak Freeze -->
               <div class="booster-item-card" style="padding: 10px;">
                 <div class="booster-svg-icon">${window.VisualEngine.getBoosterSVG('streak_freeze', 38)}</div>
-                <div style="font-weight: 900; font-size: 0.82rem;">Streak-Freeze</div>
+                <div style="font-weight: 900; font-size: 0.82rem;">โล่รักษาสตรีค</div>
                 <div class="th-text" style="font-size: 0.72rem; color: var(--text-secondary);">${freezes}/2 sparade</div>
                 <button type="button" class="btn-3d btn-blue w-full" data-shopmodal-booster="streak_freeze" style="min-height: 36px; font-size: 0.76rem; padding: 2px;" ${freezes >= 2 || gems < 35 ? 'disabled' : ''}>
                   ${freezes >= 2 ? 'Fullt' : '35 💎'}
@@ -2194,17 +2149,17 @@
               <div class="booster-item-card" style="padding: 10px;">
                 <div class="booster-svg-icon">${window.VisualEngine.getBoosterSVG('double_xp', 38)}</div>
                 <div style="font-weight: 900; font-size: 0.82rem;">2x XP (30m)</div>
-                <div class="th-text" style="font-size: 0.72rem; color: var(--text-secondary);">${isDoubleXp ? 'Aktiv!' : 'แต้มคูณสอง'}</div>
+                <div class="th-text" style="font-size: 0.72rem; color: var(--text-secondary);">${isDoubleXp ? 'ใช้อยู่!' : 'แต้มคูณสอง'}</div>
                 <button type="button" class="btn-3d btn-yellow w-full" data-shopmodal-booster="double_xp" style="min-height: 36px; font-size: 0.76rem; padding: 2px;" ${isDoubleXp || gems < 45 ? 'disabled' : ''}>
-                  ${isDoubleXp ? '⚡ Aktiv' : '45 💎'}
+                  ${isDoubleXp ? '⚡ ใช้อยู่' : '45 💎'}
                 </button>
               </div>
 
               <!-- Booster 3: Mystery Box -->
               <div class="booster-item-card" style="padding: 10px;">
                 <div class="booster-svg-icon">${window.VisualEngine.getBoosterSVG('mystery_box', 38)}</div>
-                <div style="font-weight: 900; font-size: 0.82rem;">Lyckolåda</div>
-                <div class="th-text" style="font-size: 0.72rem; color: var(--text-secondary);">ลุ้นรางวัลใหญ่!</div>
+                <div style="font-weight: 900; font-size: 0.82rem;">กล่องตัวช่วย</div>
+                <div class="th-text" style="font-size: 0.72rem; color: var(--text-secondary);">โล่หรือตัวช่วย XP</div>
                 <button type="button" class="btn-3d btn-green w-full" data-shopmodal-booster="mystery_box" style="min-height: 36px; font-size: 0.76rem; padding: 2px;" ${gems < 50 ? 'disabled' : ''}>
                   50 💎
                 </button>
@@ -2306,44 +2261,44 @@
       const claimedBadges = Part5State.data.claimedBadges || [];
 
       this.xpBackdrop.innerHTML = `
-        <div class="gamification-modal-card" role="dialog" aria-label="Samlaralbum och XP-Nivåer">
+        <div class="gamification-modal-card" role="dialog" aria-label="ระดับและอัลบั้มความสำเร็จ">
           <div class="gamification-modal-header">
             <div style="display: flex; align-items: center; gap: 8px;">
               <span style="font-size: 1.6rem;">⚡</span>
               <div>
                 <div style="font-weight: 900; font-size: 1.15rem; color: var(--text-main);">
-                  Samlaralbum & XP-Nivåer
+                  ระดับและอัลบั้มความสำเร็จ
                 </div>
                 <div class="th-text" style="font-size: 0.78rem; color: var(--text-secondary);">
                   ระดับเลเวล XP และอัลบั้มเหรียญเกียรติยศ
                 </div>
               </div>
             </div>
-            <button type="button" class="lesson-close-btn" id="btn-close-xp-modal" aria-label="Stäng">✕</button>
+            <button type="button" class="lesson-close-btn" id="btn-close-xp-modal" aria-label="ปิด">✕</button>
           </div>
 
           <!-- XP Level Card -->
           <div style="background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%); border: 2px solid #FCD34D; border-radius: 20px; padding: 16px; text-align: center; box-shadow: 0 4px 12px rgba(217, 119, 6, 0.08);">
             <div style="font-size: 3rem; line-height: 1;">${levelInfo.current.icon}</div>
             <div style="font-size: 1.45rem; font-weight: 900; color: #92400E; margin-top: 4px;">
-              Nivå ${levelInfo.current.level}: ${levelInfo.current.titleSv}
+              ระดับ ${levelInfo.current.level}: ${levelInfo.current.titleSv}
             </div>
             <div class="th-text" style="font-size: 0.84rem; color: #B45309; font-weight: 700; margin-top: 2px;">
-              ${levelInfo.current.titleTh} • ${totalXP} XP Totalt
+              ${levelInfo.current.titleTh} • ${totalXP} XP สะสม
             </div>
 
             <!-- Level Progress Bar -->
             <div style="margin-top: 12px;">
               <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 800; color: #92400E; margin-bottom: 4px;">
-                <span>Framsteg mot Nästa Nivå:</span>
-                <span>${levelInfo.next ? `${levelInfo.remainingToNext} XP kvar` : 'Maxnivå uppnådd!'}</span>
+                <span>ความคืบหน้าระดับถัดไป:</span>
+                <span>${levelInfo.next ? `ยังขาด ${levelInfo.remainingToNext} XP` : 'ถึงระดับสูงสุดแล้ว'}</span>
               </div>
               <div style="height: 12px; background: rgba(0,0,0,0.08); border-radius: 999px; overflow: hidden; border: 1.5px solid #FBBF24;">
                 <div style="height: 100%; width: ${levelInfo.progressPct}%; background: linear-gradient(90deg, #F59E0B, #D97706); border-radius: 999px; transition: width 0.4s ease;"></div>
               </div>
             </div>
             <div style="font-size: 0.78rem; color: #78350F; margin-top: 8px;">
-              ${levelInfo.current.desc}
+              ${levelInfo.current.desc}<p>${levelInfo.requirement}</p><p>วันนี้เกมสูงสุด 60 XP · ทั้งแอป 180 XP · 20 เพชร</p>
             </div>
           </div>
 
@@ -2352,10 +2307,10 @@
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
               <div style="font-weight: 900; font-size: 1rem; display: flex; align-items: center; gap: 6px;">
                 <span>🏆</span>
-                <span>Samlaralbum & Badges</span>
+                <span>อัลบั้มความสำเร็จ</span>
               </div>
               <span class="satun-badge" style="font-size: 0.75rem;">
-                ${claimedBadges.length} / 8 Hämtade
+                ${claimedBadges.length} / 8 รางวัลที่รับแล้ว
               </span>
             </div>
             <div class="badges-grid">
@@ -2366,17 +2321,17 @@
                   <div class="badge-item-card ${isUnlocked ? 'unlocked' : ''}" style="padding: 10px;">
                     <div class="badge-svg-icon">${window.VisualEngine.Library.badge_medal(34)}</div>
                     <div style="flex: 1;">
-                      <div style="font-weight: 900; font-size: 0.84rem;">${b.nameSv}</div>
+                      <div style="font-weight: 900; font-size: 0.84rem;">${b.nameTh}</div>
                       <div class="th-text" style="font-size: 0.72rem; color: var(--text-secondary);">${b.nameTh}</div>
                       ${
                         isClaimed
-                          ? `<span class="satun-badge" style="font-size: 0.7rem; padding: 2px 8px; margin-top: 4px; display: inline-block;">✅ Hämtad (+${b.rewardGems} 💎)</span>`
+                          ? `<span class="satun-badge" style="font-size: 0.7rem; padding: 2px 8px; margin-top: 4px; display: inline-block;">✅ รับแล้ว</span>`
                           : isUnlocked
                           ? `<button type="button" class="btn-3d btn-yellow" data-xpmodal-claim="${b.id}" style="min-height: 36px; padding: 4px 10px; font-size: 0.78rem; margin-top: 4px;">
-                              +${b.rewardGems} 💎 Hämta Belöning!
+                              +${b.rewardGems} 💎 รับรางวัล (ตามเพดานรายวัน)
                             </button>`
                           : `<div style="font-size: 0.74rem; color: var(--text-muted); font-weight: 700; margin-top: 4px;">
-                              🔒 Låst (Ge järnet för att nå kravet!)
+                              🔒 ฝึกต่อเพื่อปลดล็อกรางวัลนี้
                              </div>`
                       }
                     </div>
@@ -2389,17 +2344,17 @@
           <!-- XP-Nivåtrappan -->
           <div style="background: var(--surface-muted); border: 2px solid var(--border-light); border-radius: 18px; padding: 12px 14px;">
             <div style="font-weight: 900; font-size: 0.88rem; margin-bottom: 8px;">
-              🌟 Alla XP-Nivåer & Titlar:
+              🌟 เส้นทางระดับการฝึกของเรา:
             </div>
             <div style="display: flex; flex-direction: column; gap: 6px; font-size: 0.8rem;">
               ${XP_LEVELS.map((lvl) => {
                 const isCurrent = lvl.level === levelInfo.current.level;
-                const isReached = totalXP >= lvl.minXP;
+                const isReached = levelInfo.reached(lvl);
                 return `
                   <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 8px; border-radius: 8px; background: ${isCurrent ? '#FEF3C7' : isReached ? '#F1F5F9' : 'transparent'}; font-weight: ${isCurrent ? '900' : '600'};">
-                    <span>${lvl.icon} Nivå ${lvl.level}: ${lvl.titleSv}</span>
+                    <span>${lvl.icon} ระดับ ${lvl.level}: ${lvl.titleSv}</span>
                     <span style="color: ${isReached ? '#059669' : '#94A3B8'}; font-weight: 800;">
-                      ${isCurrent ? '⭐ DU ÄR HÄR' : isReached ? '✓ Klar' : `${lvl.minXP} XP`}
+                      ${isCurrent ? '⭐ อยู่ตรงนี้' : isReached ? '✓ ผ่านแล้ว' : `${lvl.minXP} XP`}
                     </span>
                   </div>
                 `;
@@ -2450,28 +2405,28 @@
       summaryEl.innerHTML = `
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 10px;">
           <div>
-            <div style="font-weight: 900; font-size: 1rem;">🌟 Mina Ord – Ordbok & Röstträning</div>
+            <div style="font-weight: 900; font-size: 1rem;">🌟 คำศัพท์ของฉัน · ทบทวนและฝึกพูด</div>
             <div class="th-text" style="font-size: 0.82rem; color: var(--text-secondary);">
               ฝึกแล้ว <strong>${learnedItems.length}</strong> / ${allItems.length} คำ • ระดับ 4–5 ดาว <strong>${masteredItems.length}</strong> คำ
             </div>
           </div>
-          <span class="satun-badge">🎙️ Öva uttal när som helst</span>
+          <span class="satun-badge">🎙️ ฝึกพูดเมื่อไรก็ได้</span>
         </div>
 
         <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px;">
           <input
             type="search"
             id="mina-ord-search"
-            placeholder="🔍 Sök ord på svenska eller thai..."
+            placeholder="🔍 ค้นหาคำ på svenska eller thai..."
             value="${Part5State.data.vocabSearchQuery || ''}"
             class="th-text"
             style="flex: 1; min-width: 180px; padding: 9px 12px; border-radius: 12px; border: 2px solid var(--border-light); font-size: 0.86rem; font-weight: 700;"
           />
           <select id="mina-ord-filter" class="th-text" style="padding: 9px 12px; border-radius: 12px; border: 2px solid var(--border-light); font-size: 0.85rem; font-weight: 800; background: #fff;">
-            <option value="all" ${currentFilter === 'all' ? 'selected' : ''}>📚 Alla ord (${allItems.length})</option>
-            <option value="learned" ${currentFilter === 'learned' ? 'selected' : ''}>⭐ Lärda ord (${learnedItems.length})</option>
-            <option value="sentences" ${currentFilter === 'sentences' ? 'selected' : ''}>💬 Endast meningar</option>
-            ${themes.map((t) => `<option value="${t.id}" ${currentFilter === t.id ? 'selected' : ''}>${t.icon} ${t.titleSv}</option>`).join('')}
+            <option value="all" ${currentFilter === 'all' ? 'selected' : ''}>📚 คำศัพท์ทั้งหมด (${allItems.length})</option>
+            <option value="learned" ${currentFilter === 'learned' ? 'selected' : ''}>⭐ คำที่เคยฝึก (${learnedItems.length})</option>
+            <option value="sentences" ${currentFilter === 'sentences' ? 'selected' : ''}>💬 เฉพาะประโยค</option>
+            ${themes.map((t) => `<option value="${t.id}" ${currentFilter === t.id ? 'selected' : ''}>${t.icon} ${t.titleTh}</option>`).join('')}
           </select>
         </div>
       `;
@@ -2518,19 +2473,19 @@
                 </div>
                 <div style="text-align: right; flex-shrink: 0;">
                   <div>${starsHtml}</div>
-                  <div style="font-size: 0.7rem; font-weight: 800; color: var(--text-muted);">${starCount}/5 stjärnor</div>
+                  <div style="font-size: 0.7rem; font-weight: 800; color: var(--text-muted);">${starCount}/5 ดาว</div>
                 </div>
               </div>
 
               <div style="display: flex; gap: 8px;">
                 <button type="button" class="btn-3d btn-blue" data-vocab-normal="${item.id}" style="min-height: 44px; flex: 1; padding: 6px 10px; font-size: 0.82rem;">
-                  🔊 Normal
+                  🔊 ฟังปกติ
                 </button>
                 <button type="button" class="btn-3d" data-vocab-turtle="${item.id}" style="min-height: 44px; flex: 1; padding: 6px 10px; font-size: 0.82rem; background: var(--lavender-soft); color: #7B2CBF; border-color: #D8B4FE;">
-                  🐢 Sköldpadda
+                  🐢 ฟังช้า ๆ
                 </button>
                 <button type="button" class="btn-3d btn-green" data-vocab-practice-mic="${item.id}" style="min-height: 44px; flex: 1.2; padding: 6px 10px; font-size: 0.82rem;">
-                  🎙️ Öva uttal
+                  🎙️ ฝึกออกเสียง
                 </button>
               </div>
             </div>
@@ -2584,10 +2539,10 @@
       const mouthGuide = window.SpeechEngine.PhoneticEvaluator.getMouthGuideForTarget(item);
 
       backdrop.innerHTML = `
-        <div class="voice-practice-sheet" role="dialog" aria-label="Öva uttal på ${item.sv}">
+        <div class="voice-practice-sheet" role="dialog" aria-label="ฝึกออกเสียง på ${item.sv}">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-            <span class="satun-badge">🎙️ Röstträning i Mina Ord</span>
-            <button type="button" class="lesson-close-btn" id="btn-close-voice-modal" aria-label="Stäng">✕</button>
+            <span class="satun-badge">🎙️ ฝึกพูดจากคำศัพท์ของฉัน</span>
+            <button type="button" class="lesson-close-btn" id="btn-close-voice-modal" aria-label="ปิด">✕</button>
           </div>
 
           <div class="pronunciation-card" style="padding: 14px; margin-bottom: 12px;">
@@ -2607,10 +2562,10 @@
             </div>
             <div style="display: flex; gap: 8px; margin-top: 10px;">
               <button type="button" class="btn-3d btn-blue" id="btn-modal-listen-normal" style="flex: 1; min-height: 48px; font-size: 0.85rem;">
-                🔊 Normal (0.88x)
+                🔊 ฟังปกติ (0.88x)
               </button>
               <button type="button" class="btn-3d" id="btn-modal-listen-turtle" style="flex: 1; min-height: 48px; font-size: 0.85rem; background: var(--lavender); color: #fff;">
-                🐢 Sköldpadda (0.60x)
+                🐢 ฟังช้า ๆ (0.60x)
               </button>
             </div>
           </div>
@@ -2618,7 +2573,7 @@
           <div class="mic-stage-box" style="gap: 8px;">
             <button type="button" class="mic-record-btn state-idle" id="btn-modal-mic-start" aria-label="Tryck och prata">
               <div class="mic-btn-icon-wrap" id="modal-mic-icon">🎙️</div>
-              <span class="mic-btn-status-label" id="modal-mic-label">Lyssna på mig</span>
+              <span class="mic-btn-status-label" id="modal-mic-label">ฟังฉันพูด</span>
             </button>
             <div class="live-hearing-pill" id="modal-hearing-pill">
               <span>👂</span>
@@ -2683,7 +2638,7 @@
             if (state === 'recording') {
               micBtn.classList.add('state-recording');
               if (micIcon) micIcon.textContent = '🔴';
-              if (micLabel) micLabel.innerHTML = 'Spelar in...<br>(Klicka för att stoppa)';
+              if (micLabel) micLabel.innerHTML = 'กำลังฟัง…<br>(แตะเพื่อหยุด)';
             } else if (state === 'analyzing') {
               micBtn.classList.add('state-analyzing');
               if (micIcon) micIcon.innerHTML = '<span class="mic-spin-star">⭐</span>';
@@ -2691,14 +2646,14 @@
             } else {
               micBtn.classList.add('state-idle');
               if (micIcon) micIcon.textContent = '🎙️';
-              if (micLabel) micLabel.textContent = 'Lyssna på mig';
+              if (micLabel) micLabel.textContent = 'ฟังฉันพูด';
             }
           },
           onResult: (res) => {
             micBtn.classList.remove('state-recording', 'state-analyzing');
             micBtn.classList.add('state-idle');
             if (micIcon) micIcon.textContent = '🎙️';
-            if (micLabel) micLabel.textContent = 'Lyssna på mig';
+            if (micLabel) micLabel.textContent = 'ฟังฉันพูด';
 
             const evalRes = res.evaluation;
             if (hearingText) {
@@ -2707,7 +2662,7 @@
 
             if (evalRes.status === 'pass') {
               srs.recordReview(item.id, 5);
-              window.GameEngine.StateManager.addXP(10);
+              const earnedXP = window.GameEngine.StateManager.addXP(4);
               Part5State.incrementQuest('speak_5', 1);
               window.GameEngine.UIController.renderTopbar();
 
@@ -2717,7 +2672,7 @@
                     🌟 GODKÄNT! (${evalRes.score}%) • หรอยจังฮู้!
                   </div>
                   <div class="th-text" style="font-size: 0.84rem; margin-top: 4px;">
-                    +10 XP & Stjärnnivån för <strong>"${item.sv}"</strong> har höjts! ⭐
+                    +${earnedXP} XP · ทบทวนคำว่า <strong>"${item.sv}"</strong> ได้รับการบันทึกแล้ว ⭐
                   </div>
                 </div>
               `;
@@ -2725,7 +2680,7 @@
               evalSlot.innerHTML = `
                 <div class="pronun-feedback-card ${evalRes.status === 'almost' ? 'tier-almost' : 'tier-retry'}">
                   <div style="font-weight: 900; font-size: 0.98rem;">
-                    ${evalRes.status === 'almost' ? '💛 Nästan rätt!' : '🧡 Prova igen!'} (${evalRes.score}%)
+                    ${evalRes.status === 'almost' ? '💛 Nästan rätt!' : '🧡 ลองใหม่ได้เลยจ้า'} (${evalRes.score}%)
                   </div>
                   <div class="th-text" style="font-size: 0.83rem; margin-top: 4px;">
                     ${evalRes.feedbackTh}
@@ -2752,19 +2707,19 @@
       }
 
       overlay.innerHTML = `
-        <div class="welcome-onboard-card" role="dialog" aria-label="Välkommen till Svenska med Wilawan">
+        <div class="welcome-onboard-card" role="dialog" aria-label="ยินดีต้อนรับวิลาวัน">
           <div style="width: 108px; height: 108px;">
             ${window.VisualEngine.Mascot.getSVG(108, 'celebrating')}
           </div>
           <span class="satun-badge">🌴 ยินดีต้อนรับสู่ Svenska från Grunden (Satun Edition)</span>
           <h1 style="font-size: 1.45rem; font-weight: 900; color: var(--text-main); line-height: 1.25;">
-            Välkommen! • สวัสดีจ้า มาฝึกภาษาสวีเดนสนุกๆ กันต๊ะ!
+            สวัสดีจ้า มาฝึกภาษาสวีเดนสนุกๆ กันต๊ะ!
           </h1>
           <p class="th-text" style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5;">
-            แอปฝึกพูดสวีเดนสำหรับคนใต้ (สำเนียงสตูล) 💛 เสียงอ่านชัดเจน โหมดเต่าพูดช้า 🐢 พร้อม AI ตรวจการออกเสียง Groq Whisper แม่นยำ 100%!
+            แอปฝึกพูดสวีเดนสำหรับคนใต้ (สำเนียงสตูล) 💛 เสียงอ่านชัดเจน โหมดเต่าพูดช้า 🐢 พร้อม AI ตรวจการออกเสียง และตัวช่วยฟังคำพูดเพื่อฝึกออกเสียง
           </p>
           <button type="button" class="btn-3d btn-green w-full" id="btn-unlock-ios-start" style="font-size: 1.02rem; min-height: 58px;">
-            🔊 Aktivera Ljud & Börja Träna • เปิดเสียงแล้วเริ่มเลย!
+            🔊 เปิดเสียงแล้วเริ่มเลย!
           </button>
         </div>
       `;
@@ -2773,7 +2728,7 @@
         window.VisualEngine?.haptic('light', e.currentTarget);
         window.SpeechEngine?.SoundFX?.unlockiOSAudio?.();
         window.SpeechEngine?.playSound?.('fanfare');
-        window.SpeechEngine?.speakSwedish?.('Hej och välkommen! Nu tränar vi svenska tillsammans!', 0.88);
+        window.SpeechEngine?.speakThai?.('สวัสดีจ้าวิลาวัน มาเรียนภาษาสวีเดนด้วยกันต๊ะ');
 
         Part5State.data.welcomeCompleted = true;
         Part5State.save();
@@ -2815,6 +2770,11 @@
 
   function initPart5() {
     Part5State.load();
+    for (const [id, reward] of Object.entries({ speak_5: 5, combo_3: 4, train_15min: 6 })) {
+      const quest = Part5State.data.dailyQuestsData?.items?.[id];
+      if (quest) quest.rewardGems = reward;
+    }
+    Part5State.save();
     hookMascotWardrobe();
     hookLessonController();
     hookUIController();

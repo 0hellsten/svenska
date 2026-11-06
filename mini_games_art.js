@@ -84,8 +84,17 @@
   function cover(type) {
     if (type === 'zoo') return window.ZooArt.cover();
     if (type === 'kitchen') return `<div class="mg-cover mg-cover-kitchen">${kitchen()}<div class="mg-cover-bowl">${bowl()}</div><div class="mg-cover-food mg-cover-food-one">${icon('egg')}</div><div class="mg-cover-food mg-cover-food-two">${icon('flour')}</div></div>`;
-    if (type === 'cafe') return `<div class="mg-cover mg-cover-cafe"><div class="mg-cafe-awning"></div><span class="mg-cover-sign">LILLA FIKET</span><div class="mg-cover-cup">${icon('coffee')}</div><div class="mg-cover-bun">${icon('bun')}</div><div class="mg-cover-plant">${icon('flower')}</div></div>`;
-    return `<div class="mg-cover mg-cover-memory">${garland()}<span class="mg-cover-note">ett litet ord, ett stort minne.</span></div>`;
+    if (type === 'cafe') return `<div class="mg-cover mg-cover-cafe"><div class="mg-cafe-awning"></div><span class="mg-cover-sign">คาเฟ่เล็ก ๆ ของเรา</span><div class="mg-cover-cup">${icon('coffee')}</div><div class="mg-cover-bun">${icon('bun')}</div><div class="mg-cover-plant">${icon('flower')}</div></div>`;
+    return `<div class="mg-cover mg-cover-memory">${garland()}<span class="mg-cover-note">ภาพเล็ก ๆ ช่วยให้จำคำใหม่</span></div>`;
   }
-  window.MiniGameArt = { icon, garland, kitchen, bowl, cake, oven, cover };
+  function recipe(id) {
+    if (id === 'cake') return cake();
+    if (id === 'cookies') return icon('cookies');
+    if (id === 'buns') return icon('bun');
+    const pie = id === 'blueberry' || id === 'apple';
+    const fill = { blueberry: '#7d87ab', apple: '#d7b277', lemoncake: '#f0d277', banana: '#bb956e', carrotcake: '#d7a06c' }[id] || '#e0bb84';
+    const topping = id === 'lemoncake' ? '<path d="M49 21a11 11 0 0 1 17 8l-17-1z" fill="#f8df8c"/><path d="m50 23 14 5m-8-7 4 6" stroke="#fff8d9"/>' : id === 'carrotcake' ? '<path d="m36 25 5-10 5 9-7 10z" fill="#d88c53"/><path d="m41 17-3-7m4 6 5-7" stroke="#80966d"/>' : id === 'banana' ? '<path d="M48 18q8 12 18 1-4 17-17 11z" fill="#edd29b"/>' : '';
+    return `<svg class="mg-illustration" viewBox="0 0 80 80" fill="none" stroke="#8c7559" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="40" cy="64" rx="33" ry="7" fill="#e0e2d2"/><ellipse cx="40" cy="62" rx="29" ry="5" fill="#faf4e4"/>${pie ? `<path d="M13 40h54l-5 20q-22 9-44 0z" fill="#d9ac70"/><ellipse cx="40" cy="40" rx="27" ry="17" fill="${fill}"/><path d="m20 30 38 21M14 41l31 16m-1-33 22 13M56 28 28 54m33-13-13 14M37 25 17 45" stroke="#edc58d" stroke-width="5"/><ellipse cx="40" cy="40" rx="27" ry="17"/>` : `<path d="m15 38 27-18 25 16v22l-25 7-27-8z" fill="${fill}"/><path d="m15 38 27 7 25-9v9l-25 8-27-6z" fill="#fff1d2"/><path d="m15 38 27 7 25-9-25-16z" fill="${id === 'carrotcake' ? '#f5ead3' : '#f7dda0'}"/><path d="M24 52h1m9 7h1m20-5h1" stroke="#9f7b52" stroke-width="2"/>${topping}`}</svg>`;
+  }
+  window.MiniGameArt = { icon, garland, kitchen, bowl, cake, oven, cover, recipe };
 })();

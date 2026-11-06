@@ -31,6 +31,14 @@
 .ze-kicker { display: block; color: #bfae7c; letter-spacing: .18em; font-size: 9px; font-weight: 900; line-height: 1.6; }
 .ze-th { display: none; font-family: var(--font-body-th); font-size: 11px; line-height: 1.8; color: #a8bbad; }
 .ze-thai .ze-th { display: block; }
+.ze-episodes { display: grid; gap: 9px; margin: 25px 0; }
+.ze-episodes button { display: flex; flex-direction: column; gap: 4px; text-align: left; padding: 13px 15px; border: 1px solid #85927b66; border-radius: 10px; background: #142b2bdb; color: #eadfbe; font-family: var(--font-body-th); line-height: 1.8; }
+.ze-episodes button strong { font-size: 13px; }
+.ze-episodes button small { font-size: 11px; color: #b3c3ac; }
+.ze-episodes button[aria-pressed=true] { border-color: #ddc58d; background: #3d4936ed; box-shadow: inset 3px 0 #ddc58d; }
+.ze-episodes button:disabled { opacity: .45; cursor: default; }
+.ze-answer-choices button { white-space: normal; line-height: 1.8; }
+.ze-answer-choices button[lang=th] { font-family: var(--font-body-th); }
 .ze-primary, .ze-secondary { display: inline-flex; align-items: center; justify-content: center; gap: 11px; min-height: 47px; border: 1px solid #d1b77b; border-radius: 6px; padding: 12px 17px; background: #dfc88f; color: #273b34; font-weight: 900; font-size: 12px; box-shadow: 0 3px 0 #8b784d; transition: background .2s,transform .2s; }
 .ze-primary:hover { background: #efdda9; }
 .ze-primary:active { transform: translateY(2px); }
@@ -337,4 +345,57 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .ze-dialog *, .ze-dialog *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+.ze-dialog { --ze-header-height: 72px; font-family: var(--font-body-th); }
+.ze-header { height: var(--ze-header-height); }
+.ze-brand { min-width: 0; }
+.ze-brand h2, .ze-intro h1, .ze-chapter-row h3, .ze-panel-head h3, .ze-map-stop strong, .ze-reward > strong, .ze-ending h1 { font-family: var(--font-th); font-weight: 500; font-style: normal; line-height: 1.5; letter-spacing: 0; }
+.ze-brand h2 { font-size: 22px; }
+.ze-kicker, .ze-brand > span, .ze-radio-name, .ze-letter-label, .ze-paper-label, .ze-field-note > span, .ze-inventory > span, .ze-journal-list h4 { letter-spacing: .02em; line-height: 1.8; text-transform: none; }
+.ze-dialog .ze-kicker { font-size: 10px; }
+.ze-intro-copy h1 { font-size: 41px; line-height: 1.5; }
+.ze-intro-copy h1 em, .ze-ending h1 em { font-family: var(--font-th); font-style: normal; }
+.ze-intro-prologue, .ze-letter p { font-family: var(--font-body-th); font-size: 13px; font-style: normal; line-height: 2; }
+.ze-learning-goal { font-size: 11px; line-height: 1.9; color: #bfd0b3; margin: 12px 0; }
+.ze-learning-goal > strong { display: block; font-weight: 700; color: #dbd4a5; margin-bottom: 6px; }
+.ze-learning-goal p { line-height: 1.9; }
+.ze-intro-meta > span { font-size: 10px; }
+.ze-intro-seal span { font-family: var(--font-body-th); font-style: normal; line-height: 1.6; }
+.ze-clue > p, .ze-empty-note { font-family: var(--font-body-th); font-style: normal; font-size: 15px; line-height: 1.9; }
+.ze-panel-head > p, .ze-radio p { font-size: 12px; line-height: 1.9; }
+.ze-panel-head h3 { font-size: 24px; }
+.ze-dialog [lang="sv"] { font-family: var(--font-sv); }
+.ze-discovery-note > p[lang="sv"] { font-size: 19px; line-height: 1.7; }
+.ze-discovery-note > p.ze-th { font-family: var(--font-body-th); font-size: 12px; line-height: 1.9; }
+.ze-cover > strong { font-family: var(--font-th); font-weight: 500; font-size: 30px; }
+.ze-cover > strong span, .ze-cover-kicker { font-family: var(--font-body-th); font-size: 10px; letter-spacing: .01em; line-height: 1.8; }
+.ze-mini-evidence > span { display: flex; align-items: center; justify-content: space-between; gap: 6px; font-size: 11px; color: #b4c4ab; padding: 7px; border: 1px solid #8d9b7a2e; border-radius: 4px; }
+.ze-mini-evidence > span > span, .ze-mini-evidence > span > span > span, .ze-mini-evidence small { display: block; width: auto; padding: 0; border: 0; }
+.ze-mini-evidence small { font-size: 10px; margin-top: 4px; }
+.ze-order-slots .ze-token-label, .ze-order-slots .ze-token-label span, .ze-order-slots .ze-token-label small { width: auto; height: auto; background: transparent; border-radius: 0; display: block; text-align: left; }
+.ze-order-slots .ze-token-label { flex: 1; line-height: 1.8; }
+.ze-order-slots .ze-token-label span { color: #e3d6ae; font-size: 12px; }
+.ze-order-slots .ze-token-label small { font-size: 10px; }
+.ze-word-bank button > span, .ze-step-bank button > span { display: block; }
+.ze-word-bank button small, .ze-step-bank button small { font-family: var(--font-body-th); font-size: 10px; line-height: 1.7; color: #b9cba8; margin-top: 4px; }
+.ze-ending h1 { font-size: 38px; }
+.ze-intro, .ze-game-body, .ze-ending { height: calc(100% - var(--ze-header-height)); }
+@media (max-width: 760px) {
+  .ze-dialog { --ze-header-height: calc(78px + env(safe-area-inset-top,0px)); }
+  .ze-header { padding-top: calc(9px + env(safe-area-inset-top,0px)); }
+  .ze-brand h2 { font-size: 17px; line-height: 1.5; }
+  .ze-brand > span { font-size: 7px; }
+  .ze-language { font-size: 9px; min-width: 39px; padding: 3px; }
+  .ze-intro-copy h1 { font-size: 33px; }
+  .ze-intro-copy { padding-top: 28px; }
+  .ze-chapter-row h3 { font-size: 23px; }
+  .ze-panel-head h3 { font-size: 25px; }
+  .ze-clue > p { font-size: 18px; }
+  .ze-ending h1 { font-size: 29px; }
+  .ze-primary { font-size: 11px; line-height: 1.8; }
+}
+@media (max-width: 360px) {
+  .ze-header .ze-found-count { display: none; }
+  .ze-brand h2 { font-size: 16px; }
 }

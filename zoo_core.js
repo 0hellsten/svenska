@@ -83,12 +83,74 @@
       sentence: 'Kameleonten klättrar längs grenen.', position: 'längs', choices: ['en kameleont', 'en orm', 'en sengångare'],
       note: 'Lapp 4: ”grinden”.', words: ['grinden'] }
   ];
+  // Thai is the language of play. Swedish names, sentences and puzzle tokens
+  // remain learning material; narrative and navigation never depend on Swedish.
+  const roomThai = {
+    forest: {
+      titleTh: 'สวนป่าเบิร์ช', subtitleTh: 'เงามืดที่มีใบหู',
+      storyTh: 'เสียงวิทยุดังขึ้น ซิกเนบอกว่า “รหัสล็อกเก่าใช้ได้แม้ไฟดับจ้า สัตว์สี่ตัวมีป้ายทองเหลืองคนละหมายเลข สังเกตที่ซ่อน แล้วอ่านบันทึกเพื่อเรียงรหัสให้ถูกนะ”',
+      goalTh: 'ฝึกชื่อสัตว์และคำบอกตำแหน่งภาษาสวีเดน เมื่อพบสัตว์ ให้เลือกชื่อที่ถูก แล้วเก็บหมายเลขไว้ไขรหัส',
+      puzzleTitleTh: 'รหัสลับของคนดูแลสวน', rewardTh: 'ตราต้นเบิร์ช',
+      puzzleClueTh: 'เริ่มจากผู้เฝ้ามองทางเดิน ตามด้วยตัวที่พักระหว่างก้อนหิน ต่อด้วยแขกตัวน้อยใต้เก้าอี้ และปิดท้ายด้วยเจ้าหางฟู ใช้หมายเลขของสัตว์ตามลำดับนี้นะ'
+    },
+    wetland: {
+      titleTh: 'อ่าวกก', subtitleTh: 'เงาสะท้อนที่ไม่ได้อยู่นิ่ง',
+      storyTh: 'หลังประตูป่าเบิร์ชคืออ่าวเงียบ ๆ สะพานยังลดอยู่ ที่โรงควบคุมน้ำมีป้ายไม้สี่แผ่น เสียงซิกเนกระซิบว่า “น้ำต้องเดินทางตามลำดับ อ่านบันทึกที่สัตว์แต่ละตัวทิ้งไว้ แล้วช่วยเปิดทางกันต๊ะ”',
+      goalTh: 'ฝึกคำสั่งสวีเดนสี่คำและคำว่า “ก่อน–หลัง” ในปริศนา แตะป้ายคำสั่งเพื่อเรียงขั้นตอนการเปิดสะพาน',
+      puzzleTitleTh: 'กลไกประตูน้ำสี่ขั้น', rewardTh: 'ตราสายน้ำ',
+      puzzleClueTh: 'ต้องเติมน้ำในรางก่อนเปิดประตูน้ำ เปิดประตูน้ำแล้วจึงยกสะพานได้ เมื่อสะพานยกแล้วค่อยจุดโคมไฟ เรียงป้ายคำสั่งภาษาสวีเดนตามลำดับนี้ แล้วลองเปิดกลไก'
+    },
+    greenhouse: {
+      titleTh: 'เรือนกระจก', subtitleTh: 'ประโยคสุดท้ายของค่ำคืน',
+      storyTh: 'ประตูเรือนกระจกค่อย ๆ เปิด ดอกไม้กลางคืนเริ่มบาน กุญแจสำรองรออยู่ด้านใน ซิกเนบอกว่า “เปิดโคมไฟกลางคืนนะ สีเล็ก ๆ บนใบไม้จะช่วยให้เห็นความลับที่ซ่อนอยู่”',
+      goalTh: 'ฝึกชื่อสัตว์อีกสี่ตัว แล้วนำคำสวีเดนจากบันทึกมาเรียงเป็นประโยคเพื่อเปิดประตูทางออก',
+      puzzleTitleTh: 'ประโยคเปิดประตูยามค่ำ', rewardTh: 'ตราดอกไม้',
+      puzzleClueTh: 'เมื่อโคมไฟส่องสว่าง เราก็สามารถเปิดประตูได้ ใช้คำภาษาสวีเดนจากบันทึกให้ครบ เริ่มประโยคด้วย “När” ซึ่งแปลว่า “เมื่อ” แล้วเรียงส่วนที่เหลือให้เป็นประโยคเดียว'
+    }
+  };
+  const animalThai = {
+    owl: { clueTh: 'ผู้เฝ้ายามเงียบ ๆ มองตามทางเดิน แต่เท้าไม่เคยจากกิ่งไม้', hintsTh: ['มองขึ้นไปสูง ๆ ตรงที่ต้นเบิร์ชแยกกิ่ง', 'ดวงตาเล็กสองดวงซ่อนอยู่ในลายเปลือกไม้ทางซ้ายของภาพ', 'มองตรงกิ่งคด เหนือทางเดิน ใกล้โพรงต้นไม้'], sentenceTh: 'นกฮูกเกาะอยู่เหนือทางเดิน', noteTh: 'หมายเลขของผู้เฝ้ามองทางเดินเป็นตัวแรกของรหัส' },
+    lynx: { clueTh: 'ก้อนหินเหมือนมีใบหูงอกออกมา ที่ปลายหูมีพู่สีดำเล็ก ๆ', hintsTh: ['ตามขอบก้อนหินไปทางขวาของกึ่งกลางภาพ', 'มีบางอย่างลายจุดพักอยู่ระหว่างหินที่มีมอส', 'ใบหน้าคล้ายแมวกลืนอยู่ในเงาของช่องหิน'], sentenceTh: 'แมวป่าลิงซ์พักอยู่ระหว่างก้อนหิน', noteTh: 'หมายเลขของตัวที่พักระหว่างก้อนหินอยู่ถัดจากผู้เฝ้ามองบนต้นไม้' },
+    hedgehog: { clueTh: 'ใต้ที่นั่งพักของคนเดินเหนื่อย มีแขกตัวเล็กที่พกแปรงไว้บนหลัง', hintsTh: ['มองใกล้พื้น ทางครึ่งซ้ายของภาพ', 'ในเงาใต้เก้าอี้มีขามากกว่าขาเก้าอี้สี่ขา', 'มองใต้เก้าอี้ ติดกับกองใบไม้'], sentenceTh: 'เม่นซ่อนตัวอยู่ใต้เก้าอี้', noteTh: 'แขกตัวน้อยใต้เก้าอี้เป็นหมายเลขรองสุดท้าย' },
+    fox: { clueTh: 'สีของฤดูใบไม้ร่วงมาเร็วจัง ใบไม้สีสนิมใบหนึ่งกลับมีปลายหางสีขาว', hintsTh: ['เลื่อนสายตาลงไปทางขวาของภาพ', 'เฟิร์นสีแดงซ่อนหางฟู ๆ ไว้', 'หลังลำต้นที่ล้มอยู่มีใบหน้าปลายแหลมโผล่มา'], sentenceTh: 'สุนัขจิ้งจอกนอนอยู่หลังลำต้น', noteTh: 'เจ้าหางฟูเป็นหมายเลขสุดท้ายของรหัส' },
+    beaver: { clueTh: 'ริมฝั่งมีเศษไม้กระจายอยู่ เจ้าของรอยแทะมีหางแบนคล้ายไม้พาย', hintsTh: ['มองในกองไม้ริมฝั่งทางซ้าย', 'แผ่นหลังสีน้ำตาลดูคล้ายส่วนหนึ่งของท่อนไม้', 'ดูข้างท่อนไม้ ตรงขอบน้ำ'], sentenceTh: 'บีเวอร์นั่งอยู่ข้างลำต้น', noteTh: 'เติมน้ำในรางก่อนเปิดประตูน้ำ' },
+    heron: { clueTh: 'กกต้นหนึ่งไม่ไหวตามลม มันมีจะงอยปากและขาเรียวสองขา', hintsTh: ['มองในกอสูง ๆ ทางขวา', 'คอยาวเส้นหนึ่งวางตัวตามแนวตั้งของกก', 'นกสีเทายืนอยู่ในช่องระหว่างต้นกก'], sentenceTh: 'นกกระสายืนอยู่ในกอกก', noteTh: 'เปิดประตูน้ำก่อนยกสะพาน' },
+    frog: { clueTh: 'มอสเล็ก ๆ บนก้อนหินมีดวงตาสองดวง และกำลังรอจังหวะกระโดด', hintsTh: ['มองแถวก้อนหินเตี้ย ๆ ทางซ้ายของกึ่งกลาง', 'สีเขียวบนสีเขียวมองยาก ลองขยายภาพนะ', 'บนหินเรียบระหว่างใบไม้ มีเจ้าตัวเล็กนั่งอยู่'], sentenceTh: 'กบนั่งอยู่บนก้อนหิน', noteTh: 'ยกสะพานก่อนจุดโคมไฟ' },
+    otter: { clueTh: 'ใครกำลังวาดวงกลมบนน้ำ จมูกสีเข้มโผล่ระหว่างใบบัวจนเงาสะท้อนแตกเป็นวง', hintsTh: ['มองในน้ำ ใต้แนวสะพาน', 'หัวเล็กกับหลังโค้งดูคล้ายระลอกน้ำสีเข้ม', 'มองระหว่างใบบัว ทางขวาของกึ่งกลางภาพ'], sentenceTh: 'นากว่ายน้ำอยู่หน้ากอกก', noteTh: 'การจุดโคมไฟเป็นสัญญาณขั้นสุดท้าย' },
+    sloth: { clueTh: 'ก้อนขนเหมือนห่อผ้าห้อยอยู่โดยไม่มีเชือก กรงเล็บยาวยึดกับกิ่งไม้', hintsTh: ['มองในกิ่งไม้ที่ห้อยอยู่ทางซ้าย', 'ขนของมันดูคล้ายมอสสีเทาเขียว', 'ใต้กิ่งไม้ด้านบน มีใบหน้าเล็ก ๆ ซ่อนอยู่'], sentenceTh: 'สลอธห้อยอยู่ใต้กิ่งไม้', noteTh: 'บันทึกแผ่นที่ 1: คำว่า “När” และ “lyktan”' },
+    butterfly: { clueTh: 'กล้วยไม้ดอกหนึ่งบินมาพักบนใบไม้ แสงโคมกลางคืนจะเผยสีอีกแบบของมัน', hintsTh: ['มองทางขวาของกึ่งกลางเรือนกระจก', 'เปิดโคมไฟกลางคืน ลายบนปีกจะดูต่างออกไป', 'ในกลุ่มดอกไม้สีอ่อน มีปีกเล็ก ๆ คู่หนึ่งพักอยู่'], sentenceTh: 'ผีเสื้อพักอยู่บนใบไม้', noteTh: 'บันทึกแผ่นที่ 2: คำว่า “lyser” และ “kan”' },
+    snake: { clueTh: 'เถาวัลย์เส้นหนึ่งเลื้อยต่อไปหลังกระถาง แต่ปลายของมันมีลิ้นแยกเป็นสองแฉก', hintsTh: ['มองใกล้พื้นทางซ้าย', 'ตามเส้นสีเขียวบาง ๆ รอบกระถาง', 'หลังกระถางดินเผามีหัวเรียวเล็กโผล่มา'], sentenceTh: 'งูเลื้อยอยู่หลังกระถาง', noteTh: 'บันทึกแผ่นที่ 3: คำว่า “vi” และ “öppna”' },
+    chameleon: { clueTh: 'กิ่งไม้มีลายขดเป็นวง ดวงตาข้างหนึ่งมองไปคนละทางกับลำตัว', hintsTh: ['มองในเฟิร์นทางขวาของภาพ', 'แสงโคมกลางคืนช่วยให้แยกหางที่ขดออกจากกิ่งไม้', 'บนกิ่งหนา ๆ มีนักปีนสีเขียวตัวเล็กซ่อนอยู่'], sentenceTh: 'คาเมเลียนปีนไปตามกิ่งไม้', noteTh: 'บันทึกแผ่นที่ 4: คำว่า “grinden”' }
+  };
+  rooms.forEach(room => Object.assign(room, roomThai[room.id]));
+  animals.forEach(animal => Object.assign(animal, animalThai[animal.id]));
   const byId = Object.fromEntries(animals.map(animal => [animal.id, animal]));
   const sluiceSteps = [
-    { id: 'fill', text: 'Fyll rännan' }, { id: 'open', text: 'Öppna slussen' },
-    { id: 'raise', text: 'Höj bron' }, { id: 'light', text: 'Tänd lyktan' }
+    { id: 'fill', text: 'Fyll rännan', th: 'เติมน้ำในราง' }, { id: 'open', text: 'Öppna slussen', th: 'เปิดประตูน้ำ' },
+    { id: 'raise', text: 'Höj bron', th: 'ยกสะพาน' }, { id: 'light', text: 'Tänd lyktan', th: 'จุดโคมไฟ' }
   ];
   const phrase = ['När', 'lyktan', 'lyser', 'kan', 'vi', 'öppna', 'grinden'];
+  const phraseTh = { När: 'เมื่อ', lyktan: 'โคมไฟ', lyser: 'ส่องสว่าง', kan: 'สามารถ', vi: 'พวกเรา', öppna: 'เปิด', grinden: 'ประตู' };
+  const episodes = [
+    { th: 'คืนแรก · ผู้ดูแลคนใหม่', goal: 'ชื่อสัตว์ 12 ชนิด', story: 'ไฟดับในคืนแรก ซิกเนฝากสมุดให้เราเรียนรู้ชื่อเพื่อนร่วมสวนสัตว์และตามหากุญแจสำรอง' },
+    { th: 'คืนที่สอง · แผนที่ของเงา', goal: 'คำบอกตำแหน่ง เช่น under, bakom, mellan', story: 'ซิกเนขอให้ช่วยตรวจแผนที่ที่อยู่ของสัตว์ ดูว่าแต่ละตัวอยู่เหนือ ใต้ ระหว่าง หรือหลังสิ่งใด แล้วบันทึกคำสวีเดนให้ถูก' },
+    { th: 'คืนที่สาม · สมุดที่สลับหน้า', goal: 'อ่านประโยคแล้วเทียบกับภาพ', story: 'ลมพัดบันทึกของซิกเนปะปนกัน ตามหาสัตว์แล้วเลือกประโยคที่บอกตำแหน่งตรงกับภาพ เพื่อจัดสมุดให้ถูกก่อนเปิดสวนพรุ่งนี้' },
+    { th: 'คืนสุดท้าย · เสียงจากวิทยุ', goal: 'ฟังประโยคสวีเดนแล้วเข้าใจตำแหน่ง', story: 'คืนนี้เรารับเวรเอง ซิกเนส่งประโยคสวีเดนทางวิทยุ ฟังให้ดีแล้วเลือกความหมายของตำแหน่ง มีปุ่มฟังช้าและตัวช่วยเสมอจ้า' }
+  ];
+  const positionTh = { ovanför: 'อยู่เหนือ', mellan: 'อยู่ระหว่าง', under: 'อยู่ใต้', bakom: 'อยู่ข้างหลัง', bredvid: 'อยู่ข้าง ๆ', i: 'อยู่ใน', på: 'อยู่บน', framför: 'อยู่ข้างหน้า', ovanpå: 'อยู่บนด้านบน', längs: 'ไปตามแนว' };
+  function challenge(state, animalId) {
+    const a = byId[animalId], episode = state.episode || 0;
+    if (!episode) return { question: 'เลือกชื่อสัตว์ตัวนี้เป็นภาษาสวีเดน', choices: a.choices, answer: a.sv, lang: 'sv', audio: a.sv };
+    const other = Object.keys(positionTh).filter(p => p !== a.position && !(['på', 'ovanpå'].includes(a.position) && ['på', 'ovanpå'].includes(p)));
+    const offset = animals.indexOf(a) % other.length;
+    const positions = [a.position, other[offset], other[(offset + 3) % other.length]];
+    if (episode === 1) return { question: `“${a.sentenceTh}” เลือกคำบอกตำแหน่งเป็นภาษาสวีเดน`, choices: positions, answer: a.position, lang: 'sv', audio: a.sentence };
+    if (episode === 2) {
+      const replace = p => p === a.position ? a.sentence : a.sentence.replace(a.position === 'i' ? 'inne i' : a.position, p);
+      return { question: 'ประโยคไหนบอกตำแหน่งในภาพได้ถูกต้อง?', choices: positions.map(replace), answer: a.sentence, lang: 'sv', audio: a.sentence };
+    }
+    return { question: 'ฟังประโยคสวีเดน แล้วเลือกความหมายของคำบอกตำแหน่ง ฟังซ้ำช้า ๆ ได้จ้า', choices: positions.map(p => positionTh[p]), answer: positionTh[a.position], lang: 'th', audio: a.sentence };
+  }
   function shuffle(list, random = Math.random) {
     const copy = list.slice();
     for (let i = copy.length - 1; i > 0; i--) {
@@ -96,9 +158,9 @@
     }
     return copy;
   }
-  function create(random = Math.random) {
+  function create(random = Math.random, episode = 0) {
     const digits = shuffle([2, 3, 4, 5, 6, 7, 8, 9], random).slice(0, 4);
-    return { version: 1, status: 'playing', room: 0, found: [], solved: [],
+    return { version: 1, episode: Number.isInteger(episode) && episodes[episode] ? episode : 0, status: 'playing', room: 0, found: [], solved: [],
       marks: Object.fromEntries(rooms[0].animals.map((id, i) => [id, digits[i]])),
       trackOrder: Object.fromEntries(rooms.map(room => [room.id, shuffle(room.animals, random)])),
       hints: {}, hard: true, lamp: false, mistakes: 0, locks: { forest: '', wetland: [], greenhouse: [] },
@@ -111,7 +173,7 @@
   function identify(state, animalId, answer) {
     if (state.status !== 'playing' || !available(state, animalId)) return 'locked';
     if (state.found.includes(animalId)) return 'already';
-    if (byId[animalId].sv !== answer) { state.mistakes++; return 'retry'; }
+    if (challenge(state, animalId).answer !== answer) { state.mistakes++; return 'retry'; }
     state.found.push(animalId); return 'found';
   }
   function hint(state, animalId) {
@@ -140,7 +202,7 @@
     try {
       const data = typeof raw === 'string' ? JSON.parse(raw) : raw;
       if (!data || data.version !== 1 || !Array.isArray(data.found) || !Array.isArray(data.solved)) return null;
-      const state = create();
+      const state = create(Math.random, data.episode);
       const marks = rooms[0].animals.map(id => data.marks?.[id]);
       if (marks.some(n => !Number.isInteger(n) || n < 2 || n > 9) || new Set(marks).size !== 4) return null;
       state.marks = Object.fromEntries(rooms[0].animals.map((id, i) => [id, marks[i]]));
@@ -172,7 +234,7 @@
       return state;
     } catch (_) { return null; }
   }
-  const api = { rooms, animals, byId, sluiceSteps, phrase, create, available, foundInRoom, identify, hint, code, solve, go, restore, shuffle };
+  const api = { rooms, animals, byId, sluiceSteps, phrase, phraseTh, episodes, challenge, positionTh, create, available, foundInRoom, identify, hint, code, solve, go, restore, shuffle };
   if (typeof module === 'object' && module.exports) module.exports = api;
   else root.ZooCore = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

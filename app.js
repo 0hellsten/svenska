@@ -854,7 +854,7 @@
   window.PhoneticBlurHelper = PhoneticBlurHelper;
 
   /* ==========================================================================
-     3. KROK 3: window.SpeechEngine (TTS, Långsam Sköldpadda, Ljudeffekter & Tal)
+     3. KROK 3: window.SpeechEngine (TTS, Långsam ฟังช้า ๆ, Ljudeffekter & Tal)
      ========================================================================== */
 
   window.SpeechEngine = Object.assign(window.SpeechEngine || {}, {
@@ -900,7 +900,7 @@
           playTone(659.25, 0, 0.08, 'sine', 0.14);
           playTone(987.77, 0.07, 0.16, 'sine', 0.15);
         } else if (effect === 'retry') {
-          // Varm, mjuk ton vid "Nästan! Prova igen" (aldrig hård/straffande)
+          // Varm, mjuk ton vid "เกือบถูกแล้ว ลองอีกครั้งจ้า" (aldrig hård/straffande)
           playTone(392.0, 0, 0.14, 'sine', 0.12);
           playTone(349.23, 0.12, 0.22, 'sine', 0.12);
         } else if (effect === 'fanfare') {
@@ -952,7 +952,7 @@
     },
 
     speakSlow(text, onEnd = null) {
-      // Sköldpadds-tempo (0.60x) för extra tydlig artikulation
+      // ฟังช้า ๆ (0.60x) för extra tydlig artikulation
       if (window.AudioPlayer?.speakSlow) {
         return window.AudioPlayer.speakSlow(text, onEnd);
       }
@@ -1067,7 +1067,7 @@
     return {
       totalXP: 0,
       dailyXP: 0,
-      dailyGoalXP: 100,
+      dailyGoalXP: 60,
       gems: 50,
       streakDays: 1,
       lastActiveDate: getTodayISO(),
@@ -1089,9 +1089,9 @@
         highScoreAttack: 0,
         dailyQuestsDate: getTodayISO(),
         quests: {
-          xp_50: { progress: 0, target: 50, claimed: false, rewardGems: 15, titleSv: 'Samla 50 XP idag', titleTh: 'สะสมครบ 50 XP วันนี้' },
-          lessons_1: { progress: 0, target: 1, claimed: false, rewardGems: 20, titleSv: 'Klara 1 lektion', titleTh: 'เรียนจบ 1 บทเรียน' },
-          turtle_3: { progress: 0, target: 3, claimed: false, rewardGems: 15, titleSv: 'Lyssna i sköldpadds-tempo 3 ggr', titleTh: 'กดฟังเสียงเต่าช้าๆ 3 ครั้ง' }
+          xp_50: { progress: 0, target: 50, claimed: false, rewardGems: 3, titleSv: 'Samla 50 XP idag', titleTh: 'สะสมครบ 50 XP วันนี้' },
+          lessons_1: { progress: 0, target: 1, claimed: false, rewardGems: 4, titleSv: 'Klara 1 lektion', titleTh: 'เรียนจบ 1 บทเรียน' },
+          turtle_3: { progress: 0, target: 3, claimed: false, rewardGems: 3, titleSv: 'Lyssna i sköldpadds-tempo 3 ggr', titleTh: 'กดฟังเสียงเต่าช้าๆ 3 ครั้ง' }
         }
       }
     };
@@ -1108,7 +1108,7 @@
           this.state = {
             ...createDefaultState(),
             ...parsed,
-            dailyGoalXP: Math.max(100, parsed.dailyGoalXP || 100),
+            dailyGoalXP: 60,
             themeStars: { ...createDefaultState().themeStars, ...(parsed.themeStars || {}) },
             srsData: { ...(parsed.srsData || {}) },
             competition: {
@@ -1124,6 +1124,7 @@
       } catch (_) {
         this.state = createDefaultState();
       }
+      for (const [id, reward] of Object.entries({ xp_50: 3, lessons_1: 4, turtle_3: 3 })) this.state.competition.quests[id].rewardGems = reward;
       this._checkDayRollover();
       this.save();
     },
@@ -1157,18 +1158,23 @@
       }
     },
 
-    addXP(amount) {
-      this.state.totalXP += amount;
-      this.state.dailyXP += amount;
-      window.GameEngine.updateQuestProgress('xp_50', amount);
+    addXP(amount, options = {}) {
+      this._checkDayRollover();
+      const granted = window.LearningProgress.awardXP(this.state, amount, options, options.day);
+      this.state.totalXP += granted;
+      this.state.dailyXP += granted;
+      window.GameEngine.updateQuestProgress('xp_50', granted);
       this.save();
       UIController.renderTopbar();
+      return granted;
     },
 
     addGems(amount) {
-      this.state.gems += amount;
+      const granted = window.LearningProgress.awardGems(this.state, amount);
+      this.state.gems += granted;
       this.save();
       UIController.renderTopbar();
+      return granted;
     }
   };
 
@@ -1376,7 +1382,7 @@
 
       return {
         type: 'image_choice',
-        typeLabel: '🖼️ Bild & Ljud • รูปภาพและเสียง',
+        typeLabel: '🖼️ รูปภาพและเสียง',
         promptSv: 'Välj rätt svenskt ord',
         promptTh: 'เลือกคำภาษาสวีเดนที่ตรงกับภาพและความหมาย',
         targetItem,
@@ -1397,7 +1403,7 @@
 
       return {
         type: 'sentence_builder',
-        typeLabel: '🧩 Bygg meningen • เรียงประโยค',
+        typeLabel: '🧩 เรียงประโยค',
         promptSv: 'Bygg meningen på svenska',
         promptTh: 'แตะลูกโป่งคำศัพท์เพื่อเรียงเป็นประโยคภาษาสวีเดน',
         targetItem,
@@ -1415,7 +1421,7 @@
 
       return {
         type: 'listen_understand',
-        typeLabel: '🎧 Lyssna & Förstå • ฟังและเลือกความหมาย',
+        typeLabel: '🎧 ฟังและเลือกความหมาย',
         promptSv: 'Lyssna och välj rätt betydelse',
         promptTh: 'กดฟังเสียงปกติ (🔊) หรือเสียงเต่าช้าๆ (🐢) แล้วเลือกความหมายที่ถูกต้อง',
         targetItem,
@@ -1427,7 +1433,7 @@
     createPronunciationQuestion(targetItem) {
       return {
         type: 'pronunciation',
-        typeLabel: '🎙️ Uttalsövning • ฝึกพูดออกเสียง',
+        typeLabel: '🎙️ ฝึกพูดออกเสียง',
         promptSv: 'Säg frasen högt på svenska',
         promptTh: 'ฟังเสียงตัวอย่าง แล้วกดไมโครโฟนเพื่อแหลงสวีเดนตามคำอ่าน',
         targetItem
@@ -1445,7 +1451,7 @@
 
       return {
         type: 'matching_sprint',
-        typeLabel: '⚡ Matchnings-sprint • จับคู่คำศัพท์ 5 คู่',
+        typeLabel: '⚡ จับคู่คำศัพท์ 5 คู่',
         promptSv: 'Para ihop svenska och thailändska!',
         promptTh: 'แตะจับคู่คำภาษาสวีเดน (ซ้าย) กับภาษาไทย (ขวา) ให้ครบ 5 คู่!',
         targetItem: fivePairs[0],
@@ -1490,7 +1496,7 @@
 
       return {
         type: 'cloze_context',
-        typeLabel: '🧩 Kontextlucka • เติมคำในช่องว่าง',
+        typeLabel: '🧩 เติมคำในช่องว่าง',
         promptSv: 'Vilket ord saknas i meningen?',
         promptTh: 'เลือกคำศัพท์ที่ถูกต้องเพื่อเติมลงในประโยคให้สมบูรณ์',
         targetItem,
@@ -1529,7 +1535,7 @@
 
       return {
         type: 'dialogue_scenario',
-        typeLabel: '💬 Vardagsdialog • บทสนทนาใช้จริง',
+        typeLabel: '💬 บทสนทนาใช้จริง',
         promptSv: 'Vad svarar du i samtalet?',
         promptTh: 'เลือกคำตอบที่สุภาพและเป็นธรรมชาติที่สุดในสถานการณ์จริง',
         targetItem,
@@ -1557,7 +1563,7 @@
 
       return {
         type: 'concept_quiz',
-        typeLabel: '🇸🇪 Svenskt Begrepp • วัฒนธรรมสวีเดน',
+        typeLabel: '🇸🇪 วัฒนธรรมสวีเดน',
         promptSv: `Vad innebär "${conceptName}"?`,
         promptTh: `คำว่า "${conceptName}" (${targetItem.phoneticTh || targetItem.phonetic}) มีความหมายอย่างไรในสังคมสวีเดน?`,
         targetItem,
@@ -1596,12 +1602,12 @@
       const q = StateManager.state.competition.quests[questKey];
       if (!q || q.claimed || q.progress < q.target) return;
       q.claimed = true;
-      StateManager.addGems(q.rewardGems);
+      const earnedGems = StateManager.addGems(q.rewardGems);
       window.SpeechEngine.playSound('fanfare');
       window.VisualEngine.triggerConfetti();
       if (btnElement) {
         const rect = btnElement.getBoundingClientRect();
-        window.VisualEngine.spawnFloatingXP(q.rewardGems, rect.left + rect.width / 2, rect.top);
+        window.VisualEngine.spawnFloatingXP(earnedGems, rect.left + rect.width / 2, rect.top);
       }
       UIController.renderCompeteView();
     },
@@ -1610,7 +1616,7 @@
       const allItems = window.ContentDB.getAllItems();
       const q = QuestionGenerator.createMatchingSprintQuestion(allItems, allItems);
       LessonController.startCustomQueue([q], {
-        title: 'Tidstävling • จับคู่สายฟ้าแลบ',
+        title: 'จับคู่สายฟ้าแลบ',
         isTimedSprintArena: true
       });
     },
@@ -1624,7 +1630,7 @@
           : QuestionGenerator.createListenUnderstandQuestion(item, allItems)
       );
       LessonController.startCustomQueue(queue, {
-        title: 'Poängjakt • ล่าแต้มคอมโบ',
+        title: 'ล่าแต้มคอมโบ',
         isScoreAttackArena: true
       });
     }
@@ -1725,7 +1731,7 @@
 
       const checkBtn = document.getElementById('btn-check-answer');
       checkBtn.disabled = true;
-      checkBtn.textContent = 'KONTROLLERA • ตรวจคำตอบ';
+      checkBtn.textContent = 'ตรวจคำตอบ';
       document.getElementById('lesson-bottom-bar').style.display =
         q.type === 'matching_sprint' ? 'none' : 'block';
 
@@ -1758,8 +1764,8 @@
           <span class="exercise-type-tag">${q.typeLabel}</span>
           <span class="satun-badge">🌴 สำเนียงสตูล</span>
         </div>
-        <h2 class="exercise-prompt-sv">${q.promptSv}</h2>
-        <p class="exercise-prompt-th">${q.promptTh}</p>
+        <h2 class="exercise-prompt-sv">${q.promptTh}</h2>
+
 
         <div class="illustration-showcase">
           <div class="illustration-svg-box">
@@ -1773,7 +1779,7 @@
                 <span class="audio-btn-icon">${window.VisualEngine.getAudioIconSVG('speaker', 20)}</span> Lyssna
               </button>
               <button type="button" class="btn-3d" id="btn-play-slow" style="min-height: 46px; padding: 6px 12px; font-size: 0.84rem; background: var(--lavender-soft); color: #7B2CBF; border-color: #D8B4FE; box-shadow: 0 3px 0 #C084FC; display: inline-flex; align-items: center; gap: 6px;">
-                <span class="audio-btn-icon">${window.VisualEngine.getAudioIconSVG('turtle', 20)}</span> Långsamt
+                <span class="audio-btn-icon">${window.VisualEngine.getAudioIconSVG('turtle', 20)}</span> ฟังช้า ๆ
               </button>
             </div>
           </div>
@@ -1831,11 +1837,11 @@
         <div class="exercise-badge-row">
           <span class="exercise-type-tag">${q.typeLabel}</span>
           <button type="button" class="btn-3d btn-surface" id="btn-sentence-audio" style="min-height: 44px; padding: 6px 12px; font-size: 0.82rem;">
-            🔊 Lyssna • ฟังประโยค
+            🔊 ฟังประโยค
           </button>
         </div>
-        <h2 class="exercise-prompt-sv">${q.promptSv}</h2>
-        <p class="exercise-prompt-th">${q.promptTh}</p>
+        <h2 class="exercise-prompt-sv">${q.promptTh}</h2>
+
 
         <div class="sentence-source-card">
           <div class="sentence-th-main">${item.th}</div>
@@ -1927,18 +1933,18 @@
           <span class="exercise-type-tag">${q.typeLabel}</span>
           <span class="satun-badge">👂 ฝึกหูให้คุ้นเสียงสวีเดน</span>
         </div>
-        <h2 class="exercise-prompt-sv">${q.promptSv}</h2>
-        <p class="exercise-prompt-th">${q.promptTh}</p>
+        <h2 class="exercise-prompt-sv">${q.promptTh}</h2>
+
 
         <div class="audio-players-row">
           <button type="button" class="btn-3d btn-blue audio-big-btn" id="btn-listen-normal">
             <span class="audio-btn-icon">${window.VisualEngine.getAudioIconSVG('speaker', 28)}</span>
-            <span class="audio-btn-caption">Normal • ปกติ</span>
+            <span class="audio-btn-caption">ปกติ</span>
           </button>
 
           <button type="button" class="btn-3d audio-turtle-btn" id="btn-listen-turtle">
             <span class="audio-btn-icon">${window.VisualEngine.getAudioIconSVG('turtle', 28)}</span>
-            <span class="audio-btn-caption">Långsam • ช้าๆ</span>
+            <span class="audio-btn-caption">ช้าๆ</span>
           </button>
         </div>
 
@@ -1992,8 +1998,8 @@
           <span class="exercise-type-tag">${q.typeLabel}</span>
           <span class="satun-badge">🌴 สำเนียงสตูล</span>
         </div>
-        <h2 class="exercise-prompt-sv">${q.promptSv}</h2>
-        <p class="exercise-prompt-th">${q.promptTh}</p>
+        <h2 class="exercise-prompt-sv">${q.promptTh}</h2>
+
 
         <div class="pronunciation-card">
           <div class="pronun-illu-showcase" style="margin: 0 auto 8px; width: 68px; height: 68px;">${window.VisualEngine.getItemIllustrationSVG(item, 68)}</div>
@@ -2005,10 +2011,10 @@
 
           <div style="display: flex; justify-content: center; gap: 10px; margin-top: 12px;">
             <button type="button" class="btn-3d btn-blue" id="btn-pronun-listen" style="min-height: 48px; padding: 8px 14px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 6px;">
-              <span class="audio-btn-icon">${window.VisualEngine.getAudioIconSVG('speaker', 20)}</span> Lyssna först
+              <span class="audio-btn-icon">${window.VisualEngine.getAudioIconSVG('speaker', 20)}</span> ฟังก่อนนะ
             </button>
             <button type="button" class="btn-3d" id="btn-pronun-slow" style="min-height: 48px; padding: 8px 14px; font-size: 0.85rem; background: var(--lavender-soft); color: #7B2CBF; border-color: #D8B4FE; box-shadow: 0 3px 0 #C084FC; display: inline-flex; align-items: center; gap: 6px;">
-              <span class="audio-btn-icon">${window.VisualEngine.getAudioIconSVG('turtle', 20)}</span> Sköldpadda
+              <span class="audio-btn-icon">${window.VisualEngine.getAudioIconSVG('turtle', 20)}</span> ฟังช้า ๆ
             </button>
           </div>
         </div>
@@ -2109,8 +2115,8 @@
           <span class="exercise-type-tag">${q.typeLabel}</span>
           <span class="sprint-timer-display" id="sprint-timer-val">⏱️ 0.0 s</span>
         </div>
-        <h2 class="exercise-prompt-sv">${q.promptSv}</h2>
-        <p class="exercise-prompt-th">${q.promptTh}</p>
+        <h2 class="exercise-prompt-sv">${q.promptTh}</h2>
+
 
         <div class="matching-columns">
           <div class="match-col" id="match-col-sv">
@@ -2206,12 +2212,11 @@
                 StateManager.save();
               }
 
-              this.sessionXP += 15;
-              StateManager.addXP(15);
+              this.sessionXP += StateManager.addXP(6);
 
               this.showFeedbackSheet(
                 true,
-                `5 av 5 par klara på ${finalSec.toFixed(1)} sekunder! • จับคู่ครบทั้ง 5 คู่ใน ${finalSec.toFixed(1)} วินาที หรอยจังฮู้!`,
+                `5 av 5 par klara på ${finalSec.toFixed(1)} จับคู่ครบทั้ง 5 คู่ใน ${finalSec.toFixed(1)} วินาที หรอยจังฮู้!`,
                 q.targetItem
               );
             }
@@ -2241,8 +2246,8 @@
           <span class="exercise-type-tag">${q.typeLabel}</span>
           <span class="satun-badge">🌴 สำเนียงสตูล</span>
         </div>
-        <h2 class="exercise-prompt-sv">${q.promptSv}</h2>
-        <p class="exercise-prompt-th">${q.promptTh}</p>
+        <h2 class="exercise-prompt-sv">${q.promptTh}</h2>
+
 
         <div class="cloze-sentence-card">
           <div class="cloze-sentence-text" id="cloze-sentence-view">
@@ -2303,8 +2308,8 @@
           <span class="exercise-type-tag">${q.typeLabel}</span>
           <span class="satun-badge">🗣️ สถานการณ์จริง</span>
         </div>
-        <h2 class="exercise-prompt-sv">${q.promptSv}</h2>
-        <p class="exercise-prompt-th">${q.promptTh}</p>
+        <h2 class="exercise-prompt-sv">${q.promptTh}</h2>
+
 
         <div class="dialogue-speech-card">
           <div class="dialogue-speaker-row">
@@ -2359,8 +2364,8 @@
           <span class="exercise-type-tag">${q.typeLabel}</span>
           <span class="satun-badge">🇸🇪 รู้ไว้ได้ใช้จริง</span>
         </div>
-        <h2 class="exercise-prompt-sv">${q.promptSv}</h2>
-        <p class="exercise-prompt-th">${q.promptTh}</p>
+        <h2 class="exercise-prompt-sv">${q.promptTh}</h2>
+
 
         <div class="concept-hero-card" style="border: 2px solid #8B5CF6; background: linear-gradient(135deg, #FFFFFF 0%, #FAF5FF 100%); border-radius: 18px; padding: 16px; text-align: center; margin-bottom: 12px;">
           <div style="font-size: 2.2rem; margin-bottom: 4px;">🇸🇪</div>
@@ -2421,7 +2426,7 @@
         isCorrect = this.selectedOptionId === item.id;
         explanation = isCorrect
           ? `"${item.sv}" (${item.phonetic}) = ${item.th} • 💬 ${item.satun}`
-          : `Tips: "${item.sv}" betyder "${item.th}" (${item.satun}). Prova igen! • ลองเลือกใหม่อีกครั้งนะจ๊ะ`;
+          : `Tips: "${item.sv}" betyder "${item.th}" (${item.satun}). ลองใหม่ได้เลยจ้า • ลองเลือกใหม่อีกครั้งนะจ๊ะ`;
       } else if (q.type === 'sentence_builder') {
         const userSentence = this.selectedTokens.map((t) => t.word).join(' ').trim();
         const targetSentence = q.correctTokens.join(' ').trim();
@@ -2435,18 +2440,17 @@
       } else if (q.type === 'cloze_context' || q.type === 'dialogue_scenario' || q.type === 'concept_quiz') {
         isCorrect = this.selectedOptionId === 'correct' || this.selectedOptionId === item.id;
         explanation = isCorrect
-          ? `🌟 Rätt! "${item.sv}" = ${item.th} • 🌴 ${item.satun}`
-          : `💡 Rätt svar är: "${q.correctAnswerText || item.sv}" (${item.th}). Prova igen! • ลองเลือกใหม่อีกครั้งนะจ๊ะ`;
+          ? `🌟 ถูกต้อง! "${item.sv}" = ${item.th} • 🌴 ${item.satun}`
+          : `💡 คำตอบที่ถูกคือ: "${q.correctAnswerText || item.sv}" (${item.th}). ลองใหม่ได้เลยจ้า • ลองเลือกใหม่อีกครั้งนะจ๊ะ`;
       }
 
       if (isCorrect) {
         this.combo += 1;
-        const baseXP = 10;
-        const comboBonus = Math.min(10, (this.combo - 1) * 2);
+        const baseXP = 4;
+        const comboBonus = Math.min(2, this.combo - 1);
         const penalty = this.currentQuestionPenalty || 0;
-        const gainedXP = Math.max(5, baseXP + comboBonus - penalty);
+        const gainedXP = StateManager.addXP(Math.max(2, baseXP + comboBonus - penalty));
         this.sessionXP += gainedXP;
-        StateManager.addXP(gainedXP);
         SRSManager.recordReview(item.id, 5);
 
         const checkBtn = document.getElementById('btn-check-answer');
@@ -2457,11 +2461,11 @@
 
         let finalExplanation = explanation;
         if (penalty > 0) {
-          finalExplanation += ` (💡 -${penalty} XP ledtrådsavdrag)`;
+          finalExplanation += ` (ใช้คำใบ้ช่วยฝึก)`;
         }
         this.showFeedbackSheet(true, finalExplanation, item);
       } else {
-        // Mjuk "Nästan! Prova igen" – aldrig straffande!
+        // Mjuk "เกือบถูกแล้ว ลองอีกครั้งจ้า" – aldrig straffande!
         this.combo = 1;
         SRSManager.recordReview(item.id, 2);
         window.SpeechEngine.playSound('retry');
@@ -2482,18 +2486,18 @@
 
       if (isCorrect) {
         sheet.classList.add('state-correct');
-        titleEl.innerHTML = '✅ Strålande! • หรอยจังฮู้ เก่งมาก!';
+        titleEl.innerHTML = '✅ หรอยจังฮู้ เก่งมาก!';
         continueBtn.className = 'btn-3d btn-green w-full';
-        continueBtn.textContent = 'FORTSÄTT • ไปต่อเลย';
+        continueBtn.textContent = 'ไปต่อเลย';
         continueBtn.onclick = () => {
           this.currentIndex += 1;
           this.renderCurrentQuestion();
         };
       } else {
         sheet.classList.add('state-retry');
-        titleEl.innerHTML = '🧡 Nästan! Prova igen • เกือบถูกแล้ว ลองใหม่นะจ๊ะ';
+        titleEl.innerHTML = '🧡 เกือบถูกแล้ว ลองอีกครั้งจ้า • เกือบถูกแล้ว ลองใหม่นะจ๊ะ';
         continueBtn.className = 'btn-3d btn-warm w-full';
-        continueBtn.textContent = 'PROVA IGEN • ลองอีกครั้ง';
+        continueBtn.textContent = 'ลองอีกครั้ง';
         continueBtn.onclick = () => {
           this.hideFeedbackSheet();
         };
@@ -2517,12 +2521,12 @@
       if (fill) fill.style.width = '100%';
       document.getElementById('lesson-bottom-bar').style.display = 'none';
 
-      // Uppdatera stjärnor för temat och daglig utmaning
+      // Uppdatera ดาว för temat och daglig utmaning
       if (this.themeId && this.themeId !== 'all') {
         const currentStars = StateManager.state.themeStars[this.themeId] || 0;
         StateManager.state.themeStars[this.themeId] = Math.min(3, currentStars + 1);
       }
-      StateManager.addGems(10);
+      const earnedGems = StateManager.addGems(2);
       window.GameEngine.updateQuestProgress('lessons_1', 1);
 
       if (this.options?.isScoreAttackArena) {
@@ -2541,7 +2545,7 @@
           <div style="width: 86px; height: 86px; margin: 0 auto;">${window.VisualEngine.getCelebrationSVG(86)}</div>
           <span class="satun-badge">🌴 หรอยจังฮู้! เยี่ยมที่สุดเลย</span>
           <h2 style="font-size: 1.65rem; font-weight: 900; color: var(--emerald-dark);">
-            Lektionen klar! • เรียนจบแล้วจ้า!
+            เรียนจบแล้วจ้า!
           </h2>
           <p class="th-text" style="color: var(--text-secondary); font-size: 0.96rem;">
             คุณเก่งขึ้นทุกวัน! ระบบ SM-2 ได้บันทึกเวลาทบทวนคำศัพท์ให้เรียบร้อยแล้ว
@@ -2549,21 +2553,21 @@
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; margin: 10px 0;">
             <div class="arena-card" style="margin: 0; text-align: center; background: var(--gold-soft); border-color: var(--gold);">
-              <div style="font-size: 0.8rem; font-weight: 800; color: var(--gold-deep);">INTJÄNAD XP</div>
+              <div style="font-size: 0.8rem; font-weight: 800; color: var(--gold-deep);">XP ที่ได้รับ</div>
               <div style="font-size: 1.5rem; font-weight: 900; color: #4A3500; display: flex; align-items: center; justify-content: center; gap: 4px;">
                 +${this.sessionXP} <span class="stat-icon-svg" style="width: 22px; height: 22px;">${window.VisualEngine.getStatIconSVG('xp', 22)}</span>
               </div>
             </div>
             <div class="arena-card" style="margin: 0; text-align: center; background: var(--sky-soft); border-color: var(--sky);">
-              <div style="font-size: 0.8rem; font-weight: 800; color: var(--sky-dark);">BELÖNING</div>
+              <div style="font-size: 0.8rem; font-weight: 800; color: var(--sky-dark);">รางวัล</div>
               <div style="font-size: 1.5rem; font-weight: 900; color: var(--sky-dark); display: flex; align-items: center; justify-content: center; gap: 4px;">
-                +10 <span class="stat-icon-svg" style="width: 22px; height: 22px;">${window.VisualEngine.getStatIconSVG('gem', 22)}</span>
+                +${earnedGems} <span class="stat-icon-svg" style="width: 22px; height: 22px;">${window.VisualEngine.getStatIconSVG('gem', 22)}</span>
               </div>
             </div>
           </div>
 
           <button type="button" class="btn-3d btn-green w-full" id="btn-finish-lesson-home" style="margin-top: 8px;">
-            TILLBAKA TILL HEM • กลับหน้าแรก
+            กลับหน้าแรก • กลับหน้าแรก
           </button>
         </div>
       `;
@@ -2746,8 +2750,10 @@
       const pct = Math.min(100, Math.round((dailyXP / dailyGoalXP) * 100));
       if (dailyXpLabelEl) {
         dailyXpLabelEl.textContent =
-          `Dagens mål • เป้าหมายวันนี้: ${dailyXP} / ${dailyGoalXP} XP`;
+          `เป้าหมายวันนี้: ${dailyXP} / ${dailyGoalXP} XP`;
       }
+      const dailyTrack = document.querySelector('.daily-xp-track');
+      if (dailyTrack) { dailyTrack.setAttribute('aria-valuemax', dailyGoalXP); dailyTrack.setAttribute('aria-valuenow', Math.min(dailyXP, dailyGoalXP)); }
       if (dailyXpFillEl) {
         dailyXpFillEl.style.width = `${pct}%`;
       }
@@ -2761,7 +2767,7 @@
       if (textEl) {
         textEl.textContent =
           due.length > 0
-            ? 'คำศัพท์ถึงเวลาทบทวน (SM-2)'
+            ? 'คำศัพท์ถึงเวลาทบทวน'
             : 'ทบทวนครบแล้ว! ฝึกเพิ่มเพื่อสะสมดาวได้เลย';
       }
     },
@@ -2773,11 +2779,11 @@
       const themes = window.ContentDB.getThemes();
       const mode = StateManager.state.selectedTrainingMode || 'mix';
       const modeNames = {
-        mix: 'Träna Mix • ฝึกผสม',
-        words: 'Träna Ord • ฝึกคำศัพท์',
-        sentences: 'Meningar • เรียงประโยค',
-        listen: 'Lyssna • ฝึกฟัง',
-        speak: 'Prata • ฝึกพูด'
+        mix: 'ฝึกผสม',
+        words: 'ฝึกคำศัพท์',
+        sentences: 'เรียงประโยค',
+        listen: 'ฝึกฟัง',
+        speak: 'ฝึกพูด'
       };
 
       grid.innerHTML = themes
@@ -2792,7 +2798,7 @@
             .map((idx) => `<span class="star-slot ${idx <= starsEarned ? 'earned' : ''}">★</span>`)
             .join('');
 
-          const cleanTitle = theme.shortTitleSv || theme.titleSv.replace(/^\d+\.\s*/, '');
+          const cleanTitle = theme.titleTh;
           const cleanSatun = theme.shortSatun || theme.satunNote;
 
           return `
@@ -2806,15 +2812,15 @@
 
               <div class="theme-col-center">
                 <div class="theme-top-meta">
-                  <span class="theme-chapter-chip">Tema ${theme.order}</span>
-                  <div class="theme-stars-row" aria-label="${starsEarned} av 3 stjärnor">
+                  <span class="theme-chapter-chip">หมวด ${theme.order}</span>
+                  <div class="theme-stars-row" aria-label="${starsEarned} จาก 3 ดาว">
                     ${starsHTML}
                   </div>
                   <span class="theme-status-chip">${progressPct}%</span>
                 </div>
 
                 <h3 class="theme-title-sv">${cleanTitle}</h3>
-                <p class="theme-title-th">${theme.titleTh}</p>
+
 
                 <div class="theme-meta-tags">
                   <span class="theme-satun-note">🌴 ${cleanSatun}</span>
@@ -2823,7 +2829,7 @@
 
               <div class="theme-col-right">
                 <button type="button" class="btn-3d ${progressPct === 100 ? 'btn-yellow' : 'btn-green'} theme-start-btn" data-start-theme="${theme.id}">
-                  ${progressPct === 100 ? '⭐ Repetera' : progressPct > 0 ? 'Fortsätt ›' : 'Starta ›'}
+                  ${progressPct === 100 ? '⭐ ทบทวน' : progressPct > 0 ? 'เล่นต่อ ›' : 'เริ่ม ›'}
                 </button>
               </div>
             </article>
@@ -2855,7 +2861,7 @@
       if (bestTimeEl) {
         bestTimeEl.textContent = comp.bestSprintSeconds
           ? `${comp.bestSprintSeconds.toFixed(1)} sek ⚡`
-          : 'Ingen tid än • ลองเล่นเลย!';
+          : 'ลองเล่นเลย!';
       }
 
       const highAttackEl = document.getElementById('high-score-attack');
@@ -2873,7 +2879,7 @@
           return `
             <div class="quest-item">
               <div style="flex: 1;">
-                <div style="font-weight: 800; font-size: 0.92rem;">${q.titleSv}</div>
+                <div style="font-weight: 800; font-size: 0.92rem;">${q.titleTh}</div>
                 <div class="th-text" style="font-size: 0.8rem; color: var(--text-secondary);">
                   ${q.titleTh} (${q.progress}/${q.target})
                 </div>
@@ -2921,12 +2927,12 @@
       summaryEl.innerHTML = `
         <div style="display: flex; justify-content: space-between; align-items: center;">
           <div>
-            <div style="font-weight: 900; font-size: 0.95rem;">SM-2 Repetition & Ordförråd</div>
+            <div style="font-weight: 900; font-size: 0.95rem;">คำศัพท์และการทบทวน</div>
             <div class="th-text" style="font-size: 0.82rem; color: var(--text-secondary);">
               ฝึกแล้ว ${learnedCount} / ${items.length} คำ • จำแม่นระดับสูง ${masteredCount} คำ
             </div>
           </div>
-          <span class="satun-badge">🧠 SM-2 Aktiv</span>
+          <span class="satun-badge">🧠 SM-2 ใช้อยู่</span>
         </div>
       `;
 
@@ -2957,7 +2963,7 @@
                 <button type="button" class="btn-3d btn-blue" data-speak-sv="${item.id}" style="min-height: 48px; padding: 8px 12px; font-size: 0.9rem;" title="Lyssna normal">
                   🔊
                 </button>
-                <button type="button" class="btn-3d" data-speak-slow="${item.id}" style="min-height: 48px; padding: 8px 12px; font-size: 0.9rem; background: var(--lavender-soft); color: #7B2CBF; border-color: #D8B4FE; box-shadow: 0 3px 0 #C084FC;" title="Sköldpadds-tempo">
+                <button type="button" class="btn-3d" data-speak-slow="${item.id}" style="min-height: 48px; padding: 8px 12px; font-size: 0.9rem; background: var(--lavender-soft); color: #7B2CBF; border-color: #D8B4FE; box-shadow: 0 3px 0 #C084FC;" title="ฟังช้า ๆ">
                   🐢
                 </button>
               </div>

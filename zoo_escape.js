@@ -2,6 +2,7 @@
 (function () {
   'use strict';
   const C = window.ZooCore, A = window.ZooArt;
+  const P = window.LearningProgress;
   const KEY = 'wilawan_nattnyckeln_v1';
   const $ = (selector, parent = document) => parent.querySelector(selector);
   const esc = value => String(value).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
@@ -13,8 +14,8 @@
     try {
       const data = JSON.parse(localStorage.getItem(KEY)) || {};
       return { run: C.restore(data.run), completed: Number.isSafeInteger(data.completed) && data.completed >= 0 ? data.completed : 0,
-        thai: data.thai === true, rewardedRun: Number.isFinite(data.rewardedRun) ? data.rewardedRun : null };
-    } catch (_) { return { run: null, completed: 0, thai: false, rewardedRun: null }; }
+        episode: Number.isInteger(data.episode) && C.episodes[data.episode] ? data.episode : 0, uiLocale: 'th-v1', thai: data.uiLocale === 'th-v1' ? data.thai !== false : true, rewardedRun: Number.isFinite(data.rewardedRun) ? data.rewardedRun : null };
+    } catch (_) { return { run: null, completed: 0, episode: 0, uiLocale: 'th-v1', thai: true, rewardedRun: null }; }
   }
   function save() {
     profile.run = state;
@@ -23,6 +24,7 @@
   function sound(id) { window.SpeechEngine?.playSound?.(id); }
   function tracks() { return state.trackOrder[C.rooms[state.room].id]; }
   function say(text, slow = false) { window.SpeechEngine?.speakSwedish?.(text, slow ? .6 : .88); }
+  function narrate(text) { window.SpeechEngine?.speakThai?.(text); }
   function stop() {
     clearTimeout(pulseTimer); pulseTimer = null; pulseId = null;
     pointerStart?.viewport?.classList.remove('ze-panning'); pointerStart = null;
@@ -31,7 +33,7 @@
   function open(returnTarget) {
     opener = returnTarget || document.activeElement;
     if (!dialog) {
-      dialog = document.createElement('dialog'); dialog.className = 'ze-dialog';
+      dialog = document.createElement('dialog'); dialog.className = 'ze-dialog'; dialog.lang = 'th';
       dialog.setAttribute('aria-labelledby', 'ze-title'); document.body.appendChild(dialog);
       dialog.addEventListener('click', onClick);
       dialog.addEventListener('cancel', event => { event.preventDefault(); close(); });
@@ -59,7 +61,7 @@
         if (gesture?.viewport?.hasPointerCapture(event.pointerId)) gesture.viewport.releasePointerCapture(event.pointerId);
         if (gesture?.moved) { captureView(); return; }
         if (!event.target.closest('.ze-world') || event.target.closest('button') || !gesture) return;
-        if (Math.hypot(event.clientX - gesture.x, event.clientY - gesture.y) < 8) notify('Bara löv och skuggor här. Förstora bilden och följ konturerna.');
+        if (Math.hypot(event.clientX - gesture.x, event.clientY - gesture.y) < 8) notify('ตรงนี้มีแต่ใบไม้กับเงาจ้า ลองขยายภาพแล้วตามรอยรูปร่างดูนะ');
       });
       dialog.addEventListener('pointercancel', () => { pointerStart?.viewport?.classList.remove('ze-panning'); pointerStart = null; });
     }
@@ -69,21 +71,23 @@
   }
   function close() { save(); stop(); if (dialog?.open) dialog.close(); window.SmallGames?.renderLobby(); }
   function header(intro = false) {
-    return `<header class="ze-header"><button type="button" class="ze-icon-button" data-ze="close" aria-label="Tillbaka till småspelen">←</button><div class="ze-brand"><span>BJÖRKGLÄNTANS DJURPARK</span><h2 id="ze-title">Nattnyckeln</h2></div><div class="ze-header-actions">${!intro ? `<span class="ze-found-count">${A.icon('eye')} ${state.found.length}<small>/ 12</small></span><button type="button" class="ze-icon-button ${panel === 'journal' ? 'active' : ''}" data-ze="journal" aria-label="Öppna fältboken">${A.icon('book')}</button><button type="button" class="ze-icon-button ${panel === 'map' ? 'active' : ''}" data-ze="map" aria-label="Visa parkens karta">${A.icon('compass')}</button>` : ''}<button type="button" class="ze-language" data-ze="thai" aria-label="Thailändskt stöd" aria-pressed="${profile.thai}">ไทย</button></div></header>`;
+    return `<header class="ze-header"><button type="button" class="ze-icon-button" data-ze="close" aria-label="กลับไปเลือกเกม">←</button><div class="ze-brand"><span>ความลับในสวนสัตว์ยามค่ำ</span><h2 id="ze-title">กุญแจแห่งรัตติกาล</h2></div><div class="ze-header-actions">${!intro ? `<span class="ze-found-count" aria-label="พบสัตว์แล้ว ${state.found.length} จาก 12 ตัว">${A.icon('eye')} ${state.found.length}<small>/ 12</small></span><button type="button" class="ze-icon-button ${panel === 'journal' ? 'active' : ''}" data-ze="journal" aria-label="เปิดสมุดบันทึก">${A.icon('book')}</button><button type="button" class="ze-icon-button ${panel === 'map' ? 'active' : ''}" data-ze="map" aria-label="ดูแผนที่สวนสัตว์">${A.icon('compass')}</button>` : ''}<button type="button" class="ze-language" data-ze="thai" aria-label="แสดงคำแปลไทยของคำสวีเดนที่กำลังฝึก" aria-pressed="${profile.thai}">คำแปล</button></div></header>`;
   }
   function applyClasses() {
     dialog.className = 'ze-dialog' + (profile.thai ? ' ze-thai' : '') + (state?.hard !== false ? ' ze-hard' : '') + (state?.lamp ? ' ze-lamp-on' : '');
   }
   function renderIntro() {
     applyClasses();
+    const course = P.stats(P.state(), 'zoo');
+    const episodes = `<div class="ze-episodes"><span class="ze-kicker">เลือกเวรตรวจสวนสัตว์ · ${course.completed} / 4 คืน</span>${C.episodes.map((e,i) => `<button type="button" data-ze="episode" data-episode="${i}" aria-pressed="${profile.episode === i}" ${P.unlocked(P.state(), `zoo:${i}`) ? '' : 'disabled'}><strong>${P.done(P.state(), `zoo:${i}`) ? '✓ ' : ''}${e.th}</strong><small>${e.goal}</small></button>`).join('')}</div>`;
     const canResume = state?.status === 'playing';
-    dialog.innerHTML = `${header(true)}<div class="ze-intro">${A.image('forest', 'ze-intro-image')}<div class="ze-intro-vignette"></div><div class="ze-intro-copy"><span class="ze-kicker">ETT SVENSKT MYSTERIUM · TRE KAPITEL</span><h1>Parken har stängt.<br><em>Spåren finns kvar.</em></h1><p class="ze-intro-prologue">21.47. Sommarstormen har tystnat. Men strömmen är borta, personalgrinden är låst och din första kvällsrond är långt ifrån över.</p><div class="ze-letter"><span class="ze-letter-label">ETT MEDDELANDE FRÅN SIGNE</span><p>”Jag är i nattstallet. Reservnyckeln finns i vinterträdgården. Vaktmästaren lämnade tre mekaniska lås längs vägen. Följ mina anteckningar, hitta djuren och läs platserna där de gömmer sig. Vi ses vid grinden.”</p><span class="ze-signature">— Signe, parkvakt</span></div><p class="ze-th" lang="th">ไฟดับและประตูสวนสัตว์ล็อกอยู่ ค้นหาสัตว์ที่ซ่อนอยู่ทั้ง 12 ตัว อ่านคำใบ้ภาษาสวีเดน แล้วไขปริศนา 3 ด่านเพื่อหากุญแจสำรอง</p><div class="ze-intro-meta"><span>${A.icon('eye')} 12 dolda djur</span><span>${A.icon('lock')} 3 olika lås</span><span>${A.icon('moon')} Ingen nedräkning</span></div><div class="ze-intro-buttons">${canResume ? `<button type="button" class="ze-primary" data-ze="resume">Fortsätt kvällsronden <span>${state.found.length}/12 →</span></button><button type="button" class="ze-text-button" data-ze="new-confirm">Börja en ny omgång</button>` : `<button type="button" class="ze-primary" data-ze="new">Öppna fältboken ${A.icon('book')}</button>`}</div><p class="ze-intro-footnote">En berättelse att spela på svenska. Lyssna, undersök och lägg märke till det lilla.</p></div><div class="ze-intro-seal">${A.icon('key')}<span>Tre sigill.<br>En väg ut.</span></div></div>`;
+    dialog.innerHTML = `${header(true)}<div class="ze-intro">${A.image('forest', 'ze-intro-image')}<div class="ze-intro-vignette"></div><div class="ze-intro-copy"><span class="ze-kicker">ผจญภัยไขปริศนา · 4 คืน · คืนละ 3 บท · 48 ร่องรอย</span><h1>สวนสัตว์ปิดแล้ว<br><em>แต่ร่องรอยยังอยู่</em></h1><p class="ze-intro-prologue">${C.episodes[profile.episode].story}</p><div class="ze-letter"><span class="ze-letter-label">ข้อความจากซิกเน ผู้ดูแลสวนสัตว์</span><p>“ฉันอยู่ที่คอกพักสัตว์นะ กุญแจสำรองอยู่ในเรือนกระจก ระหว่างทางมีล็อกกลไกเก่าอยู่สามด่าน อ่านบันทึกของฉัน ตามหาสัตว์ และสังเกตที่ซ่อนของพวกมัน แล้วมาเจอกันที่ประตูจ้า”</p><span class="ze-signature">— ซิกเน ผู้ดูแลสวนสัตว์</span></div><div class="ze-learning-goal"><strong>เกมนี้ฝึกอะไร?</strong><p>ฝึกชื่อสัตว์ คำบอกตำแหน่ง คำสั่ง และการเรียงประโยคภาษาสวีเดน วิธีเล่นและคำใบ้เป็นภาษาไทย เลือกคำสวีเดนที่ถูกเพื่อเก็บเบาะแสและหาทางออกกันต๊ะ</p></div><div class="ze-intro-meta"><span>${A.icon('eye')} สัตว์ซ่อนอยู่ 12 ตัว</span><span>${A.icon('lock')} ปริศนา 3 ด่าน</span><span>${A.icon('moon')} ไม่จับเวลา</span></div>${episodes}<div class="ze-intro-buttons">${canResume ? `<button type="button" class="ze-primary" data-ze="resume">เล่นต่อ · ${C.episodes[state.episode].th} <span>${state.found.length}/12 →</span></button><button type="button" class="ze-text-button" data-ze="new-confirm">เริ่มรอบใหม่</button>` : `<button type="button" class="ze-primary" data-ze="new">เปิดสมุดแล้วเริ่มผจญภัย ${A.icon('book')}</button>`}</div><p class="ze-intro-footnote">ค่อย ๆ หาได้ตามสบาย แตะฟังคำสวีเดนซ้ำได้ และปิดเกมกลับมาเล่นต่อได้เสมอ</p></div><div class="ze-intro-seal">${A.icon('key')}<span>ตราสามดวง<br>หนึ่งทางออก</span></div></div>`;
   }
   function start(fresh) {
-    if (fresh || !state) { state = C.create(); roomViews = {}; }
+    if (fresh || !state) { if (!P.unlocked(P.state(), `zoo:${profile.episode}`)) return; state = C.create(Math.random, profile.episode); roomViews = {}; }
     screen = state.status === 'escaped' ? 'ending' : 'play'; panel = 'search'; inspected = null; zoom = 1;
     selectedTrack = tracks().find(id => !state.found.includes(id)) || tracks()[0];
-    message = 'Förstora bilden för att undersöka. Dra med musen eller svep över bilden för att se dig omkring.'; tone = '';
+    message = C.episodes[state.episode].story + ' กด + เพื่อขยายภาพ แล้วลากหรือปัดเพื่อค้นหา'; tone = '';
     save(); if (screen === 'ending') renderEnding(); else renderGame();
   }
   function captureView() {
@@ -101,7 +105,7 @@
     const room = C.rooms[state.room];
     const count = C.foundInRoom(state).length;
     const isSolved = state.solved.includes(room.id);
-    dialog.innerHTML = `${header()}<div class="ze-game-body"><main class="ze-stage"><div class="ze-chapter-row"><div><span class="ze-kicker">KAPITEL ${room.chapter} / 03</span><h3>${room.title}</h3></div><span class="ze-chapter-found">${count} av 4 spår säkrade ${count === 4 ? '✓' : ''}</span></div><div class="ze-viewport" aria-label="${room.title}. Förstora bilden och leta efter fyra dolda djur."><div class="ze-world" style="--ze-zoom:${zoom}">${A.image(room.id, 'ze-background')}<div class="ze-world-atmosphere" aria-hidden="true"></div>${room.animals.map((id, i) => animalButton(C.byId[id], i)).join('')}${A.foreground(room.id)}<div class="ze-fireflies" aria-hidden="true">${Array.from({ length: 7 }, (_, i) => `<i style="--n:${i};left:${12 + i * 13}%;top:${28 + i % 3 * 18}%"></i>`).join('')}</div></div></div><div class="ze-stage-controls"><div class="ze-zoom-controls"><button type="button" data-ze="zoom-out" aria-label="Förminska bilden" ${zoom <= 1 ? 'disabled' : ''}>−</button><span>${Math.round(zoom * 100)}%</span><button type="button" data-ze="zoom-in" aria-label="Förstora bilden" ${zoom >= 3 ? 'disabled' : ''}>+</button></div><button type="button" class="ze-tool-button" data-ze="difficulty" aria-pressed="${!state.hard}" title="Gör djurens konturer något tydligare">${A.icon('eye')} ${state.hard ? 'Midnatt · svår' : 'Skymning · tydligare'}</button>${state.solved.length >= 2 ? `<button type="button" class="ze-tool-button ${state.lamp ? 'active' : ''}" data-ze="lamp" aria-pressed="${state.lamp}">${A.icon('lamp')} Nattlampa</button>` : `<span class="ze-pan-tip">${A.icon('lens')} Förstora & undersök</span>`}</div><div id="ze-status" class="ze-status" role="status" aria-live="polite" data-tone="${tone}">${esc(message || 'Följ spåren. I den här parken är en kontur sällan hela sanningen.')}</div><div class="ze-radio"><div class="ze-radio-portrait">${A.portrait()}</div><div><span class="ze-radio-name">SIGNE <small>· PARKRADION</small></span><p>${room.story}</p><p class="ze-th" lang="th">${room.th}</p><button type="button" class="ze-text-button" data-ze="radio">${A.icon('sound')} Lyssna på radion</button></div></div><div class="ze-inventory" aria-label="Dina föremål"><span>RYGGSÄCK</span><button type="button" data-ze="journal">${A.icon('book')} Fältbok</button>${state.solved.length >= 1 ? `<button type="button" data-ze="binoculars">${A.icon('lens')} Kikare</button>` : ''}${state.solved.length >= 2 ? `<button type="button" data-ze="lamp">${A.icon('lamp')} Nattlampa</button>` : ''}<div class="ze-sigils" aria-label="${state.solved.length} av 3 sigill">${C.rooms.map((r, i) => `<span class="${state.solved.includes(r.id) ? 'earned' : ''}" title="${r.reward}">${A.icon(['leaf', 'water', 'flower'][i])}</span>`).join('')}</div></div></main><aside class="ze-sidebar" aria-label="Fältbok och ledtrådar">${renderPanel(room, count, isSolved)}</aside></div>`;
+    dialog.innerHTML = `${header()}<div class="ze-game-body"><main class="ze-stage"><div class="ze-chapter-row"><div><span class="ze-kicker">คืน ${state.episode + 1} · บท ${room.chapter} / 03</span><h3>${room.titleTh}</h3></div><span class="ze-chapter-found">${count} จาก 4 ร่องรอยที่พบแล้ว ${count === 4 ? '✓' : ''}</span></div><div class="ze-viewport" aria-label="${room.titleTh}. ขยายภาพแล้วหาสัตว์ที่ซ่อนอยู่ 4 ตัว"><div class="ze-world" style="--ze-zoom:${zoom}">${A.image(room.id, 'ze-background')}<div class="ze-world-atmosphere" aria-hidden="true"></div>${room.animals.map((id, i) => animalButton(C.byId[id], i)).join('')}${A.foreground(room.id)}<div class="ze-fireflies" aria-hidden="true">${Array.from({ length: 7 }, (_, i) => `<i style="--n:${i};left:${12 + i * 13}%;top:${28 + i % 3 * 18}%"></i>`).join('')}</div></div></div><div class="ze-stage-controls"><div class="ze-zoom-controls"><button type="button" data-ze="zoom-out" aria-label="ย่อภาพ" ${zoom <= 1 ? 'disabled' : ''}>−</button><span>${Math.round(zoom * 100)}%</span><button type="button" data-ze="zoom-in" aria-label="ขยายภาพ" ${zoom >= 3 ? 'disabled' : ''}>+</button></div><button type="button" class="ze-tool-button" data-ze="difficulty" aria-pressed="${!state.hard}" title="ปรับให้มองเห็นรูปร่างของสัตว์ชัดขึ้น">${A.icon('eye')} ${state.hard ? 'กลางคืน · ยาก' : 'แสงอ่อน · มองง่าย'}</button>${state.solved.length >= 2 ? `<button type="button" class="ze-tool-button ${state.lamp ? 'active' : ''}" data-ze="lamp" aria-pressed="${state.lamp}">${A.icon('lamp')} โคมกลางคืน</button>` : `<span class="ze-pan-tip">${A.icon('lens')} ขยายภาพแล้วค้นหา</span>`}</div><div id="ze-status" class="ze-status" role="status" aria-live="polite" data-tone="${tone}">${esc(message || 'ตามคำใบ้แล้วมองให้ดี บางอย่างที่เหมือนใบไม้หรือก้อนหินอาจมีชีวิตอยู่นะ')}</div><div class="ze-radio"><div class="ze-radio-portrait">${A.portrait()}</div><div><span class="ze-radio-name">ซิกเน <small>· วิทยุสวนสัตว์</small></span><p>${room.storyTh}</p><p class="ze-learning-goal">${C.episodes[state.episode].goal} · ${room.goalTh}</p><button type="button" class="ze-text-button" data-ze="radio">${A.icon('sound')} ฟังเรื่องราวภาษาไทย</button></div></div><div class="ze-inventory" aria-label="ของในกระเป๋า"><span>กระเป๋า</span><button type="button" data-ze="journal">${A.icon('book')} สมุดบันทึก</button>${state.solved.length >= 1 ? `<button type="button" data-ze="binoculars">${A.icon('lens')} กล้องส่อง</button>` : ''}${state.solved.length >= 2 ? `<button type="button" data-ze="lamp">${A.icon('lamp')} โคมกลางคืน</button>` : ''}<div class="ze-sigils" aria-label="ตราประทับ ${state.solved.length} จาก 3 ดวง">${C.rooms.map((r, i) => `<span class="${state.solved.includes(r.id) ? 'earned' : ''}" title="${r.rewardTh}">${A.icon(['leaf', 'water', 'flower'][i])}</span>`).join('')}</div></div></main><aside class="ze-sidebar" aria-label="สมุดบันทึกและคำใบ้">${renderPanel(room, count, isSolved)}</aside></div>`;
     const viewport = $('.ze-viewport', dialog), view = roomViews[state.room];
     fitWorld();
     if (view) { viewport.scrollLeft = view.x; viewport.scrollTop = view.y; }
@@ -122,7 +126,7 @@
   }
   function animalButton(animal, index) {
     const found = state.found.includes(animal.id);
-    return `<button type="button" class="ze-animal ${found ? 'ze-found' : ''} ${pulseId === animal.id ? 'ze-hint-pulse' : ''}" data-ze="inspect" data-animal="${animal.id}" aria-label="${found ? 'Återse ' + animal.sv : 'Undersök spår ' + (tracks().indexOf(animal.id) + 1) + ': ' + animal.clue}" style="left:${animal.x / 12}%;top:${animal.y / 8}%;width:${animal.w / 12}%;height:${animal.h / 8}%">${A.animal(animal.id)}${found ? `<span class="ze-found-pin">${A.icon('check')}</span>` : ''}</button>`;
+    return `<button type="button" class="ze-animal ${found ? 'ze-found' : ''} ${pulseId === animal.id ? 'ze-hint-pulse' : ''}" data-ze="inspect" data-animal="${animal.id}" aria-label="${found ? 'ดูอีกครั้ง: ' + animal.sv : 'สำรวจร่องรอยที่ ' + (tracks().indexOf(animal.id) + 1) + ': ' + animal.clueTh}" style="left:${animal.x / 12}%;top:${animal.y / 8}%;width:${animal.w / 12}%;height:${animal.h / 8}%">${A.animal(animal.id)}${found ? `<span class="ze-found-pin">${A.icon('check')}</span>` : ''}</button>`;
   }
   function renderPanel(room, count, isSolved) {
     if (panel === 'map') return renderMap();
@@ -132,25 +136,30 @@
     const target = C.byId[selectedTrack] || C.byId[room.animals[0]];
     const already = state.found.includes(target.id);
     const hintCount = state.hints[target.id] || 0;
-    return `<div class="ze-panel-head"><span class="ze-kicker">SIGNE HAR LÄMNAT FYRA SPÅR</span><h3>Det gömda livet.</h3><p>Välj ett spår. Sök i bilden. När du hittar något behöver du också veta vad det heter.</p></div><div class="ze-track-tabs" role="group" aria-label="Välj ett spår att följa">${tracks().map((id, i) => `<button type="button" data-ze="track" data-animal="${id}" aria-pressed="${selectedTrack === id}" aria-label="Spår ${i + 1}${state.found.includes(id) ? ', hittat' : ''}">${state.found.includes(id) ? '✓' : '0' + (i + 1)}</button>`).join('')}</div><div class="ze-clue"><span class="ze-paper-label">SPÅR ${tracks().indexOf(target.id) + 1}</span><p>${already ? target.sentence : target.clue}</p>${already ? `<span class="ze-clue-stamp">ANTECKNAT I FÄLTBOKEN</span>` : ''}<button type="button" class="ze-text-button" data-ze="listen-clue">${A.icon('sound')} Lyssna långsamt</button></div>${!already ? `<div class="ze-hint-area">${hintCount ? `<p class="ze-hint-copy">${target.hints[hintCount - 1]}</p>` : '<p>Varje spår har tre steg av hjälp. Den sista ledtråden visar ett litet område i bilden.</p>'}<button type="button" class="ze-secondary" data-ze="hint">${hintCount >= 3 ? 'Visa området igen' : 'Be Signe om en ledtråd'} <span>${Math.min(3, hintCount + 1)} / 3</span></button></div>` : ''}<div class="ze-panel-bottom"><div class="ze-dots">${tracks().map(id => `<span class="${state.found.includes(id) ? 'filled' : ''}"></span>`).join('')}</div><button type="button" class="ze-primary" data-ze="puzzle">${A.icon(isSolved ? 'check' : 'lock')} ${isSolved ? 'Grinden är öppen' : count === 4 ? 'Undersök låset' : 'Se områdets lås'} <span>→</span></button></div>`;
+    return `<div class="ze-panel-head"><span class="ze-kicker">ซิกเนฝากร่องรอยไว้ 4 จุด</span><h3>ชีวิตที่ซ่อนอยู่</h3><p>เลือกคำใบ้ แล้วหาสัตว์ในภาพ เมื่อพบแล้ว ตอบคำถามภาษาสวีเดนของคืนนี้ให้ถูกเพื่อเก็บบันทึก</p></div><div class="ze-track-tabs" role="group" aria-label="เลือกคำใบ้ที่ต้องการตามหา">${tracks().map((id, i) => `<button type="button" data-ze="track" data-animal="${id}" aria-pressed="${selectedTrack === id}" aria-label="คำใบ้ที่ ${i + 1}${state.found.includes(id) ? ' พบแล้ว' : ''}">${state.found.includes(id) ? '✓' : '0' + (i + 1)}</button>`).join('')}</div><div class="ze-clue"><span class="ze-paper-label">คำใบ้ที่ ${tracks().indexOf(target.id) + 1}</span><p>${already ? target.sentenceTh : target.clueTh}</p>${already ? `<span class="ze-clue-stamp">บันทึกลงสมุดแล้ว</span>` : ''}<button type="button" class="ze-text-button" data-ze="listen-clue">${A.icon('sound')} ฟังคำใบ้ภาษาไทย</button></div>${!already ? `<div class="ze-hint-area">${hintCount ? `<p class="ze-hint-copy">${target.hintsTh[hintCount - 1]}</p>` : '<p>ถ้าหาไม่เจอ ขอความช่วยเหลือได้ 3 ขั้น ขั้นสุดท้ายจะแสดงบริเวณเล็ก ๆ ในภาพให้ดูจ้า</p>'}<button type="button" class="ze-secondary" data-ze="hint">${hintCount >= 3 ? 'แสดงบริเวณอีกครั้ง' : 'ขอคำใบ้เพิ่มจากซิกเน'} <span>${Math.min(3, hintCount + 1)} / 3</span></button></div>` : ''}<div class="ze-panel-bottom"><div class="ze-dots">${tracks().map(id => `<span class="${state.found.includes(id) ? 'filled' : ''}"></span>`).join('')}</div><button type="button" class="ze-primary" data-ze="puzzle">${A.icon(isSolved ? 'check' : 'lock')} ${isSolved ? 'ประตูเปิดแล้ว' : count === 4 ? 'ไปไขปริศนาล็อก' : 'ดูล็อกของบริเวณนี้'} <span>→</span></button></div>`;
   }
+  function animalsIndex(id) { return C.animals.findIndex(a => a.id === id); }
   function renderDiscovery(animal) {
-    const found = state.found.includes(animal.id);
-    return `<div class="ze-panel-head"><span class="ze-kicker">${found ? 'ETT SPÅR SÄKRAT' : 'NÅGOT RÖR SIG I SKUGGAN'}</span><h3>${found ? animal.sv : 'Vad har du hittat?'}</h3></div><div class="ze-discovery-art">${A.animal(animal.id)}</div>${found ? `<div class="ze-discovery-note"><p>${animal.sentence}</p><p class="ze-th" lang="th">${animal.th}</p><button type="button" class="ze-text-button" data-ze="listen-animal">${A.icon('sound')} Lyssna på meningen</button><div class="ze-field-note"><span>${state.room === 0 ? 'MÄSSINGSMÄRKE' : 'UR SIGNES FÄLTBOK'}</span>${state.room === 0 ? `<strong class="ze-mark-digit">${state.marks[animal.id]}</strong>` : ''}<p>${animal.note}</p></div></div><button type="button" class="ze-primary" data-ze="search">${C.foundInRoom(state).length === 4 ? 'Alla fyra hittade · till låset →' : 'Fortsätt undersöka →'}</button>` : `<p class="ze-discovery-question">Välj djurets svenska namn.</p><div class="ze-answer-choices">${animal.choices.map(choice => `<button type="button" data-ze="identify" data-answer="${esc(choice)}">${choice}</button>`).join('')}</div><p class="ze-th ze-identify-translation" lang="th">${animal.th}</p><button type="button" class="ze-text-button" data-ze="search">Tillbaka till bilden</button>`}`;
+    const found = state.found.includes(animal.id), challenge = C.challenge(state, animal.id);
+    const choices = C.shuffle(challenge.choices, () => .47 + (animalsIndex(animal.id) % 3) * .13);
+    return `<div class="ze-panel-head"><span class="ze-kicker">${found ? 'เก็บร่องรอยได้แล้ว เก่งจังฮู้!' : 'มีบางอย่างอยู่ในเงา'}</span><h3 lang="${found ? 'sv' : 'th'}">${found ? animal.sv : 'เราพบตัวอะไรนะ?'}</h3></div><div class="ze-discovery-art">${A.animal(animal.id)}</div>${found ? `<div class="ze-discovery-note"><p lang="sv">${animal.sentence}</p><p class="ze-th" lang="th">${animal.sentenceTh}</p><button type="button" class="ze-text-button" data-ze="listen-animal">${A.icon('sound')} ฟังประโยคสวีเดนช้า ๆ</button><div class="ze-field-note"><span>${state.room === 0 ? 'หมายเลขบนป้ายทองเหลือง' : 'จากสมุดของซิกเน'}</span>${state.room === 0 ? `<strong class="ze-mark-digit">${state.marks[animal.id]}</strong>` : ''}<p>${animal.noteTh}</p></div></div><button type="button" class="ze-primary" data-ze="search">${C.foundInRoom(state).length === 4 ? 'พบครบ 4 ตัวแล้ว · ไปไขล็อก →' : 'ตามหาตัวต่อไป →'}</button>` : `<p class="ze-discovery-question">${challenge.question}</p>${state.episode === 3 ? `<button type="button" class="ze-secondary" data-ze="listen-challenge">${A.icon('sound')} ฟังประโยคสวีเดนช้า ๆ</button>` : ''}<div class="ze-answer-choices">${choices.map(choice => `<button type="button" lang="${challenge.lang}" data-ze="identify" data-answer="${esc(choice)}">${choice}</button>`).join('')}</div>${state.episode === 0 ? `<p class="ze-th ze-identify-translation" lang="th">คำใบ้ความหมาย: ${animal.th}</p>` : ''}<button type="button" class="ze-text-button" data-ze="search">กลับไปค้นหาในภาพ</button>`}`;
   }
   function renderJournal() {
-    return `<div class="ze-panel-head"><span class="ze-kicker">SIGNES FÄLTBOK</span><h3>Kvällens fynd.</h3><p>Ord, platser och ledtrådar. Tryck på en anteckning för att lyssna.</p></div><div class="ze-journal-list">${C.rooms.map(room => `<section><h4>${room.title} <span>${C.foundInRoom(state, C.rooms.indexOf(room)).length}/4</span></h4>${state.found.filter(id => C.byId[id].room === room.id).map(id => {
+    return `<div class="ze-panel-head"><span class="ze-kicker">สมุดบันทึกของซิกเน</span><h3>สิ่งที่พบในคืนนี้</h3><p>แตะบันทึกเพื่อฟังประโยคสวีเดน อ่านคำอธิบายไทยและเก็บเบาะแสไว้ไขปริศนา</p></div><div class="ze-journal-list">${C.rooms.map(room => `<section><h4>${room.titleTh} <span>${C.foundInRoom(state, C.rooms.indexOf(room)).length}/4</span></h4>${state.found.filter(id => C.byId[id].room === room.id).map(id => {
       const animal = C.byId[id];
-      return `<button type="button" class="ze-journal-entry" data-ze="journal-word" data-animal="${id}">${A.animal(id)}<span><strong>${animal.sv}</strong><span>${animal.sentence}</span><small>${room.id === 'forest' ? 'Märke ' + state.marks[id] + ' · ' : ''}${animal.note}</small><span class="ze-th" lang="th">${animal.th}</span></span></button>`;
-    }).join('') || '<p class="ze-empty-note">Inga anteckningar ännu.</p>'}</section>`).join('')}</div><button type="button" class="ze-secondary" data-ze="search">Tillbaka till sökandet</button>`;
+      return `<button type="button" class="ze-journal-entry" data-ze="journal-word" data-animal="${id}">${A.animal(id)}<span><strong lang="sv">${animal.sv}</strong><span lang="sv">${animal.sentence}</span><span class="ze-th" lang="th">${animal.sentenceTh}</span><small>${room.id === 'forest' ? 'หมายเลข ' + state.marks[id] + ' · ' : ''}${animal.noteTh}</small></span></button>`;
+    }).join('') || '<p class="ze-empty-note">ยังไม่มีบันทึกในบริเวณนี้</p>'}</section>`).join('')}</div><button type="button" class="ze-secondary" data-ze="search">กลับไปค้นหาต่อ</button>`;
   }
   function renderMap() {
-    return `<div class="ze-panel-head"><span class="ze-kicker">BJÖRKGLÄNTANS GAMLA PARKKARTA</span><h3>En väg genom natten.</h3><p>Du kan återvända till öppna områden. Nästa grind kräver områdets alla fyra djur och ett löst lås.</p></div><div class="ze-map-path">${C.rooms.map((room, i) => `<button type="button" class="ze-map-stop ${state.room === i ? 'current' : ''}" data-ze="travel" data-room="${i}" ${i > state.solved.length ? 'disabled' : ''}><span>${i > state.solved.length ? A.icon('lock') : state.solved.includes(room.id) ? A.icon('check') : room.chapter}</span><div><strong>${room.title}</strong><small>${room.subtitle}</small></div></button>`).join('')}<div class="ze-map-exit">${A.icon('key')} Personalgrinden</div></div><button type="button" class="ze-secondary" data-ze="search">Tillbaka till bilden</button>`;
+    return `<div class="ze-panel-head"><span class="ze-kicker">แผนที่เก่าของสวนสัตว์</span><h3>ทางเดินผ่านค่ำคืน</h3><p>กลับไปบริเวณที่เปิดแล้วได้เสมอ หากจะไปต่อ ต้องหาสัตว์ให้ครบ 4 ตัวและไขล็อกของบริเวณนั้นก่อนนะ</p></div><div class="ze-map-path">${C.rooms.map((room, i) => `<button type="button" class="ze-map-stop ${state.room === i ? 'current' : ''}" data-ze="travel" data-room="${i}" ${i > state.solved.length ? 'disabled' : ''}><span>${i > state.solved.length ? A.icon('lock') : state.solved.includes(room.id) ? A.icon('check') : room.chapter}</span><div><strong>${room.titleTh}</strong><small>${room.subtitleTh}</small></div></button>`).join('')}<div class="ze-map-exit">${A.icon('key')} ประตูเจ้าหน้าที่</div></div><button type="button" class="ze-secondary" data-ze="search">กลับไปค้นหาในภาพ</button>`;
   }
   function renderPuzzle(room, count, solved) {
     const missing = count < 4;
     const values = state.locks[room.id];
-    return `<div class="ze-panel-head"><span class="ze-kicker">${room.reward.toLocaleUpperCase('sv')}</span><h3>${room.puzzleTitle}</h3><p>${missing ? 'Låset saknar ledtrådar. Hitta och namnge områdets fyra djur först.' : solved ? 'Mekanismen har vaknat. Vägen vidare är öppen.' : room.puzzleClue}</p><button type="button" class="ze-text-button" data-ze="listen-lock">${A.icon('sound')} Lyssna på ledtråden</button></div>${missing ? `<div class="ze-locked-art">${A.icon('lock')}<span>${count} / 4 spår</span></div>` : solved ? `<div class="ze-reward">${A.icon(['leaf', 'water', 'flower'][state.room])}<strong>${room.reward}</strong><p>${state.room === 0 ? 'En kikare låg bakom låset. Använd den för att studera viken.' : 'En nattlampa väntade vid bron. Ta den med till växthuset.'}</p><button type="button" class="ze-primary" data-ze="next">${state.room === 0 ? 'Följ stigen till Vassviken' : 'Gå in i Vinterträdgården'} →</button></div>` : `<div class="ze-puzzle-workspace">${state.room === 0 ? `<div class="ze-code-slots" aria-label="Inmatad kod: ${values || 'tom'}">${Array.from({ length: 4 }, (_, i) => `<span>${values[i] || '·'}</span>`).join('')}</div><div class="ze-keypad">${[1, 2, 3, 4, 5, 6, 7, 8, 9, '↺', 0, '⌫'].map(key => `<button type="button" data-ze="digit" data-digit="${key}" aria-label="${key === '⌫' ? 'Radera sista siffran' : key === '↺' ? 'Töm koden' : 'Siffra ' + key}">${key}</button>`).join('')}</div><div class="ze-mini-evidence">${C.rooms[0].animals.slice().sort((a, b) => C.byId[a].sv.localeCompare(C.byId[b].sv, 'sv')).map(id => `<span>${C.byId[id].sv}<b>${state.marks[id]}</b></span>`).join('')}</div>` : state.room === 1 ? `<div class="ze-order-slots" aria-label="Vald ordning">${Array.from({ length: 4 }, (_, i) => `<button type="button" data-ze="remove-step" data-index="${i}" ${!values[i] ? 'disabled' : ''}><span>${i + 1}</span>${values[i] ? C.sluiceSteps.find(step => step.id === values[i]).text + ' ×' : 'Välj en skylt'}</button>`).join('')}</div><div class="ze-step-bank">${[C.sluiceSteps[2], C.sluiceSteps[0], C.sluiceSteps[3], C.sluiceSteps[1]].map(step => `<button type="button" data-ze="step" data-step="${step.id}" ${values.includes(step.id) ? 'disabled' : ''}>${step.text}</button>`).join('')}</div>` : `<div class="ze-sentence-slots" aria-label="Din mening">${values.length ? values.map((word, i) => `<button type="button" data-ze="remove-word" data-index="${i}">${word} ×</button>`).join('') : '<span>Bygg meningen här…</span>'}</div><div class="ze-word-bank">${state.wordOrder.map(word => `<button type="button" data-ze="word" data-word="${word}" ${values.includes(word) ? 'disabled' : ''}>${word}</button>`).join('')}</div><p class="ze-th" lang="th">เมื่อโคมไฟส่องสว่าง เราก็สามารถเปิดประตูได้</p>`}<button type="button" class="ze-primary" data-ze="try-lock" ${state.room === 0 ? values.length < 4 ? 'disabled' : '' : values.length < (state.room === 1 ? 4 : 7) ? 'disabled' : ''}>${A.icon('key')} Prova ${state.room === 2 ? 'lösenordet' : 'låset'} →</button></div>`}<div class="ze-puzzle-links"><button type="button" class="ze-text-button" data-ze="journal">${A.icon('book')} Läs dina anteckningar</button><button type="button" class="ze-text-button" data-ze="search">Tillbaka till bilden</button></div>`;
+    return `<div class="ze-panel-head"><span class="ze-kicker">${room.rewardTh}</span><h3>${room.puzzleTitleTh}</h3><p>${missing ? 'ยังมีเบาะแสไม่ครบ หาสัตว์แล้วเลือกชื่อให้ถูกทั้ง 4 ตัวก่อนนะ' : solved ? 'กลไกทำงานแล้ว ทางไปต่อเปิดแล้วจ้า' : room.puzzleClueTh}</p><button type="button" class="ze-text-button" data-ze="listen-lock">${A.icon('sound')} ฟังวิธีไขปริศนาภาษาไทย</button></div>${missing ? `<div class="ze-locked-art">${A.icon('lock')}<span>พบแล้ว ${count} จาก 4 ตัว</span></div>` : solved ? `<div class="ze-reward">${A.icon(['leaf', 'water', 'flower'][state.room])}<strong>${room.rewardTh}</strong><p>${state.room === 0 ? 'มีกล้องส่องอยู่หลังล็อก เอาไว้ขยายภาพแล้วค้นหาร่องรอยที่อ่าวนะ' : 'มีโคมไฟกลางคืนรออยู่ที่สะพาน เก็บไปส่องหาสัตว์ในเรือนกระจกกัน'}</p><button type="button" class="ze-primary" data-ze="next">${state.room === 0 ? 'เดินต่อไปอ่าวกก' : 'เข้าไปในเรือนกระจก'} →</button></div>` : `<div class="ze-puzzle-workspace">${state.room === 0 ? `<div class="ze-code-slots" aria-label="รหัสที่ใส่: ${values || 'ยังว่าง'}">${Array.from({ length: 4 }, (_, i) => `<span>${values[i] || '·'}</span>`).join('')}</div><div class="ze-keypad">${[1, 2, 3, 4, 5, 6, 7, 8, 9, '↺', 0, '⌫'].map(key => `<button type="button" data-ze="digit" data-digit="${key}" aria-label="${key === '⌫' ? 'ลบตัวเลขสุดท้าย' : key === '↺' ? 'ล้างรหัสทั้งหมด' : 'เลข ' + key}">${key}</button>`).join('')}</div><div class="ze-mini-evidence">${C.rooms[0].animals.slice().sort((a, b) => C.byId[a].sv.localeCompare(C.byId[b].sv, 'sv')).map(id => `<span><span><span lang="sv">${C.byId[id].sv}</span><small class="ze-th" lang="th">${C.byId[id].th}</small></span><b>${state.marks[id]}</b></span>`).join('')}</div>` : state.room === 1 ? `<div class="ze-order-slots" aria-label="ลำดับที่เราเลือก">${Array.from({ length: 4 }, (_, i) => {
+      const step = C.sluiceSteps.find(step => step.id === values[i]);
+      return `<button type="button" data-ze="remove-step" data-index="${i}" ${!step ? 'disabled' : ''}><span>${i + 1}</span>${step ? `<span class="ze-token-label"><span lang="sv">${step.text} ×</span><small class="ze-th" lang="th">${step.th}</small></span>` : 'เลือกป้ายมาใส่ตรงนี้'}</button>`;
+    }).join('')}</div><div class="ze-step-bank">${[C.sluiceSteps[2], C.sluiceSteps[0], C.sluiceSteps[3], C.sluiceSteps[1]].map(step => `<button type="button" data-ze="step" data-step="${step.id}" ${values.includes(step.id) ? 'disabled' : ''}><span lang="sv">${step.text}</span><small class="ze-th" lang="th">${step.th}</small></button>`).join('')}</div>` : `<div class="ze-sentence-slots" aria-label="ประโยคสวีเดนที่เราเรียง">${values.length ? values.map((word, i) => `<button type="button" lang="sv" data-ze="remove-word" data-index="${i}">${word} ×</button>`).join('') : '<span>แตะคำศัพท์มาเรียงตรงนี้…</span>'}</div><div class="ze-word-bank">${state.wordOrder.map(word => `<button type="button" data-ze="word" data-word="${word}" ${values.includes(word) ? 'disabled' : ''}><span lang="sv">${word}</span><small class="ze-th" lang="th">${C.phraseTh[word]}</small></button>`).join('')}</div><p class="ze-learning-goal">ความหมายที่ต้องการ: เมื่อโคมไฟส่องสว่าง เราก็สามารถเปิดประตูได้</p>`}<button type="button" class="ze-primary" data-ze="try-lock" ${values.length < (state.room === 0 || state.room === 1 ? 4 : 7) ? 'disabled' : ''}>${A.icon('key')} ${state.room === 2 ? 'ลองใช้ประโยคเปิดประตู' : 'ลองเปิดล็อก'} →</button></div>`}<div class="ze-puzzle-links"><button type="button" class="ze-text-button" data-ze="journal">${A.icon('book')} อ่านบันทึกที่เก็บไว้</button><button type="button" class="ze-text-button" data-ze="search">กลับไปค้นหาในภาพ</button></div>`;
   }
   function notify(text, style = '') {
     message = text; tone = style;
@@ -199,22 +208,23 @@
     const action = button.dataset.ze;
     if (action === 'close') return close();
     if (action === 'thai') { profile.thai = !profile.thai; save(); dialog.classList.toggle('ze-thai', profile.thai); button.setAttribute('aria-pressed', String(profile.thai)); return; }
+    if (action === 'episode') { const episode = Number(button.dataset.episode); if (P.unlocked(P.state(), `zoo:${episode}`)) { profile.episode = episode; save(); renderIntro(); } return; }
     if (action === 'resume') return start(false);
     if (action === 'new') return start(true);
     if (action === 'new-confirm') {
-      $('.ze-intro-buttons', dialog).innerHTML = '<p>Den sparade kvällsronden ersätts om du börjar om.</p><button type="button" class="ze-primary" data-ze="new">Starta en ny kvällsrond</button><button type="button" class="ze-text-button" data-ze="resume">Behåll och fortsätt</button>'; return;
+      $('.ze-intro-buttons', dialog).innerHTML = '<p>ถ้าเริ่มใหม่ ความคืบหน้าของรอบที่บันทึกไว้จะถูกแทนที่นะ</p><button type="button" class="ze-primary" data-ze="new">เริ่มรอบใหม่</button><button type="button" class="ze-text-button" data-ze="resume">เก็บรอบเดิมแล้วเล่นต่อ</button>'; return;
     }
     if (screen === 'ending') {
       if (action === 'ending-word') say(C.byId[button.dataset.animal].sentence, true);
-      if (action === 'replay') { screen = 'intro'; state = null; save(); renderIntro(); }
+      if (action === 'replay') { profile.episode = Math.min(3, (state.episode || 0) + 1); screen = 'intro'; state = null; save(); renderIntro(); }
       return;
     }
     if (screen !== 'play') return;
     if (action === 'zoom-in') return setZoom(zoom + .5);
     if (action === 'zoom-out') return setZoom(zoom - .5);
-    if (action === 'binoculars') { setZoom(zoom >= 2 ? 1 : 2.5); $('.ze-viewport', dialog)?.scrollIntoView({ block: 'nearest' }); notify('Kikaren är inställd. Dra eller svep i bilden för att följa spåren.'); return; }
-    if (action === 'difficulty') { state.hard = !state.hard; save(); applyClasses(); button.innerHTML = `${A.icon('eye')} ${state.hard ? 'Midnatt · svår' : 'Skymning · tydligare'}`; button.setAttribute('aria-pressed', String(!state.hard)); return; }
-    if (action === 'lamp' && state.solved.length >= 2) { state.lamp = !state.lamp; save(); renderGame(); notify(state.lamp ? 'Nattlampans ljus gör små färgskiftningar lättare att se.' : 'Nattlampan är släckt.'); return; }
+    if (action === 'binoculars') { setZoom(zoom >= 2 ? 1 : 2.5); $('.ze-viewport', dialog)?.scrollIntoView({ block: 'nearest' }); notify('เปิดกล้องส่องแล้ว ลากหรือปัดภาพเพื่อมองตามร่องรอยได้เลย'); return; }
+    if (action === 'difficulty') { state.hard = !state.hard; save(); applyClasses(); button.innerHTML = `${A.icon('eye')} ${state.hard ? 'กลางคืน · ยาก' : 'แสงอ่อน · มองง่าย'}`; button.setAttribute('aria-pressed', String(!state.hard)); return; }
+    if (action === 'lamp' && state.solved.length >= 2) { state.lamp = !state.lamp; save(); renderGame(); notify(state.lamp ? 'เปิดโคมกลางคืนแล้ว สีเล็ก ๆ ที่ซ่อนอยู่จะมองเห็นได้ง่ายขึ้น' : 'ปิดโคมกลางคืนแล้ว'); return; }
     if (action === 'map' || action === 'journal' || action === 'puzzle') return showPanel(action);
     if (action === 'search') {
       inspected = null;
@@ -225,25 +235,27 @@
       $('.ze-stage', dialog)?.scrollIntoView({ block: 'nearest' }); return;
     }
     if (action === 'track') { selectedTrack = button.dataset.animal; panel = 'search'; renderGame(); return; }
-    if (action === 'inspect') { inspected = button.dataset.animal; selectedTrack = inspected; sound('tap'); showPanel('found'); return; }
+    if (action === 'inspect') { inspected = button.dataset.animal; selectedTrack = inspected; sound('tap'); showPanel('found'); if (state.episode === 3 && !state.found.includes(inspected)) say(C.challenge(state, inspected).audio, true); return; }
+    if (action === 'listen-challenge') return say(C.challenge(state, inspected).audio, true);
     if (action === 'identify') {
       const result = C.identify(state, inspected, button.dataset.answer);
       save();
-      if (result === 'retry') { button.classList.add('ze-wrong-answer'); button.setAttribute('aria-invalid', 'true'); notify('Titta en gång till. Lägg märke till öronen, svansen eller formen.', 'retry'); sound('retry'); return; }
+      if (result === 'retry') { button.classList.add('ze-wrong-answer'); button.setAttribute('aria-invalid', 'true'); notify('ลองดูอีกครั้งนะ ดูภาพและตำแหน่ง ฟังช้า ๆ แล้วลองเลือกคำตอบใหม่ได้จ้า', 'retry'); sound('retry'); return; }
       if (result === 'found' || result === 'already') {
-        sound('correct'); message = C.byId[inspected].sentence + ' Ett nytt spår finns i fältboken.'; tone = 'correct';
+        sound('correct'); message = C.byId[inspected].sentenceTh + ' บันทึกร่องรอยใหม่ลงสมุดแล้วจ้า'; tone = 'correct';
         showPanel('found'); say(C.byId[inspected].sentence, true);
       }
       return;
     }
-    if (action === 'listen-clue') return say(state.found.includes(selectedTrack) ? C.byId[selectedTrack].sentence : C.byId[selectedTrack].clue, true);
+    if (action === 'listen-clue') return narrate(state.found.includes(selectedTrack) ? C.byId[selectedTrack].sentenceTh : C.byId[selectedTrack].clueTh);
     if (action === 'listen-animal') return say(C.byId[inspected].sentence, true);
     if (action === 'journal-word') return say(C.byId[button.dataset.animal].sentence, true);
-    if (action === 'radio') return say(C.rooms[state.room].story);
-    if (action === 'listen-lock') return say(C.rooms[state.room].puzzleClue, true);
+    if (action === 'radio') return narrate(C.rooms[state.room].storyTh);
+    if (action === 'listen-lock') return narrate(C.rooms[state.room].puzzleClueTh);
     if (action === 'hint') {
-      const text = C.hint(state, selectedTrack); save();
-      if (!text) return;
+      const hintResult = C.hint(state, selectedTrack); save();
+      if (!hintResult) return;
+      const text = C.byId[selectedTrack].hintsTh[state.hints[selectedTrack] - 1];
       if (state.hints[selectedTrack] >= 3) {
         clearTimeout(pulseTimer); pulseId = selectedTrack; renderGame(); setZoom(Math.max(1.5, zoom), C.byId[selectedTrack]);
         $('.ze-stage', dialog)?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
@@ -261,7 +273,7 @@
         $('.ze-game-body', dialog).scrollTop = 0;
         zoom = roomViews[next]?.zoom || 1; panel = 'search'; inspected = null;
         selectedTrack = tracks().find(id => !state.found.includes(id)) || tracks()[0];
-        message = C.rooms[next].subtitle + '.'; tone = ''; save(); renderGame();
+        message = C.rooms[next].subtitleTh; tone = ''; save(); renderGame();
       }
       return;
     }
@@ -278,29 +290,29 @@
     if (['step', 'remove-step', 'word', 'remove-word'].includes(action)) { tone = ''; save(); renderGame(); return; }
     if (action === 'try-lock') {
       const result = C.solve(state, state.room, values); save();
-      if (result === 'retry') { sound('retry'); notify(state.room === 0 ? 'Låset klickar till men öppnas inte. Läs platsernas ordning igen.' : state.room === 1 ? 'Mekanismen stannar. Vad måste hända innan bron kan höjas?' : 'Orden finns där. Läs meningen högt och tänk på ordningen efter ”När lyktan lyser”.', 'retry'); }
-      if (result === 'missing') notify('Fyra säkra observationer behövs innan låset kan öppnas.');
+      if (result === 'retry') { sound('retry'); notify(state.room === 0 ? 'ได้ยินเสียงคลิก แต่ล็อกยังไม่เปิด ลองอ่านลำดับที่ซ่อนของสัตว์อีกครั้งนะ' : state.room === 1 ? 'กลไกหยุดแล้ว ก่อนจะยกสะพานต้องทำอะไรก่อนนะ? แตะป้ายในช่องเพื่อนำออก แล้วเรียงใหม่ได้เลย' : 'มีคำครบแล้วจ้า ลองสลับลำดับ หลัง “När lyktan lyser” ให้ใช้ “kan vi” ก่อน “öppna grinden” แตะคำเพื่อนำออกแล้วเรียงใหม่ได้เลย', 'retry'); }
+      if (result === 'missing') notify('ต้องหาสัตว์และเลือกชื่อให้ถูกครบ 4 ตัวก่อนจึงจะเปิดล็อกได้');
       if (result === 'solved') {
         sound('fanfare');
         if (state.status === 'escaped') return finish();
-        message = C.rooms[state.room].reward + ' är ditt. Vägen vidare är öppen.'; tone = 'correct'; renderGame();
-        say('Låset öppnas. Bra gjort!');
+        message = C.rooms[state.room].rewardTh + ' อยู่ในมือเราแล้ว ทางไปต่อเปิดแล้วจ้า'; tone = 'correct'; renderGame();
+        narrate('เปิดล็อกได้แล้ว เก่งมากจ้า');
       }
     }
   }
   function finish() {
     screen = 'ending';
     if (profile.rewardedRun !== state.startedAt) {
-      const xp = profile.completed === 0 ? 60 : 15;
+      profile.lastReward = P.complete(window.GameEngine.StateManager, `zoo:${state.episode}`, 'zoo:' + state.startedAt, 15 / (15 + state.mistakes));
       profile.completed++; profile.rewardedRun = state.startedAt; save();
-      window.GameEngine?.StateManager?.addXP(xp); window.SmallGames?.renderLobby();
+      window.SmallGames?.renderLobby();
     }
-    stop(); renderEnding(); say('Grinden är öppen. Du hittade vägen genom natten. Vi ses i morgon, nattväktare.');
+    stop(); renderEnding(); narrate('ประตูเปิดแล้วจ้า เราหาทางผ่านค่ำคืนนี้ได้สำเร็จ ไว้เจอกันใหม่นะ ผู้ดูแลสวนสัตว์คนเก่ง');
   }
   function renderEnding() {
     applyClasses();
     const hints = Object.values(state.hints).reduce((sum, n) => sum + n, 0);
-    dialog.innerHTML = `${header(true)}<div class="ze-ending"><div class="ze-ending-hero">${A.image('greenhouse')}<div></div><span class="ze-kicker">BJÖRKGLÄNTAN · KVÄLLSRONDEN ÄR AVKLARAD</span><div class="ze-ending-key">${A.icon('key')}</div><h1>Grinden är öppen.<br><em>Du hittade vägen.</em></h1><p>Radion vaknar till liv. ”Jag ser lyktan!” Signe vinkar från stigen. I fickan ligger reservnyckeln. I fältboken finns tolv djur, tolv platser och en hel kväll på svenska.</p></div><div class="ze-ending-body"><div class="ze-ending-stats"><span><strong>12 / 12</strong>djur hittade</span><span><strong>3 / 3</strong>lås öppnade</span><span><strong>${hints}</strong>ledtrådssteg</span></div><span class="ze-kicker">TA MED DIG ORDEN HEM · TRYCK FÖR ATT LYSSNA</span><div class="ze-ending-words">${C.animals.map(animal => `<button type="button" data-ze="ending-word" data-animal="${animal.id}">${A.animal(animal.id)}<strong>${animal.sv}</strong><span>${animal.sentence}</span><span class="ze-th" lang="th">${animal.th}</span></button>`).join('')}</div><div class="ze-ending-buttons"><button type="button" class="ze-primary" data-ze="replay">En ny kväll i Björkgläntan →</button><button type="button" class="ze-secondary" data-ze="close">Till småspelen</button></div></div></div>`;
+    dialog.innerHTML = `${header(true)}<div class="ze-ending"><div class="ze-ending-hero">${A.image('greenhouse')}<div></div><span class="ze-kicker">ภารกิจตรวจสวนสัตว์คืนนี้สำเร็จแล้ว</span><div class="ze-ending-key">${A.icon('key')}</div><h1>ประตูเปิดแล้วจ้า<br><em>เราหาทางออกเจอแล้ว</em></h1><p>วิทยุดังขึ้นอีกครั้ง “ฉันเห็นแสงโคมแล้ว!” ซิกเนโบกมือจากทางเดิน กุญแจสำรองอยู่ในกระเป๋า และในสมุดมีสัตว์สิบสองตัว ที่ซ่อนสิบสองแห่ง กับคำสวีเดนที่เราได้เรียนรู้ตลอดคืนนี้</p></div><div class="ze-ending-body"><div class="ze-ending-stats"><span><strong>12 / 12</strong>สัตว์ที่พบแล้ว</span><span><strong>3 / 3</strong>ล็อกที่เปิดแล้ว</span><span><strong>${hints}</strong>ขั้นคำใบ้ที่ใช้</span></div><span class="ze-kicker">เก็บคำศัพท์กลับบ้าน · แตะฟังแล้วลองพูดตามได้เลยต๊ะ</span><div class="ze-learning-goal"><strong>+${profile.lastReward?.xp || 0} XP${profile.lastReward?.gems ? ` · +${profile.lastReward.gems} เพชร` : ''} · คืนที่ ${state.episode + 1} สำเร็จ</strong><p>${profile.lastReward?.message || 'บันทึกความคืบหน้าแล้ว'}</p></div><div class="ze-ending-words">${C.animals.map(animal => `<button type="button" data-ze="ending-word" data-animal="${animal.id}" aria-label="ฟังประโยคสวีเดนเกี่ยวกับ ${animal.th}">${A.animal(animal.id)}<strong lang="sv">${animal.sv}</strong><span lang="sv">${animal.sentence}</span><span class="ze-th" lang="th">${animal.sentenceTh}</span></button>`).join('')}</div><div class="ze-ending-buttons"><button type="button" class="ze-primary" data-ze="replay">${state.episode < 3 ? 'ไปเวรตรวจคืนถัดไป →' : 'เลือกคืนเพื่อทบทวน →'}</button><button type="button" class="ze-secondary" data-ze="close">กลับไปเลือกเกม</button></div></div></div>`;
     const heading = $('.ze-ending h1', dialog); heading.tabIndex = -1; heading.focus({ preventScroll: true });
   }
   window.ZooEscape = { open, close, getCompletions: () => profile.completed };

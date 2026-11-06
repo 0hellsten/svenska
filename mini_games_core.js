@@ -42,6 +42,15 @@
       steps: ['butter', 'sugar', 'egg', 'flour', 'bakingpowder', 'salt', 'chocolate'],
       decorations: [] }
   };
+  Object.assign(recipes, {
+    buns: { name: 'Kanelbullar', th: 'ขนมปังอบเชย', art: 'bun', steps: ['milk', 'yeast', 'butter', 'sugar', 'flour', 'salt', 'cinnamon'], decorations: [] },
+    lemoncake: { name: 'Citronkaka', th: 'เค้กเลมอน', art: 'slice', steps: ['butter', 'sugar', 'egg', 'flour', 'bakingpowder', 'milk', 'lemon'], decorations: [] },
+    banana: { name: 'Banankaka', th: 'เค้กกล้วย', art: 'slice', steps: ['banana', 'butter', 'sugar', 'egg', 'flour', 'bakingpowder', 'cinnamon'], decorations: [] },
+    carrotcake: { name: 'Morotskaka', th: 'เค้กแคร์รอต', art: 'slice', steps: ['carrot', 'sugar', 'egg', 'butter', 'flour', 'bakingpowder', 'cinnamon'], decorations: [] },
+    blueberry: { name: 'Blåbärspaj', th: 'พายบลูเบอร์รี', art: 'slice', steps: ['blueberry', 'butter', 'sugar', 'flour', 'vanilla', 'lemon'], decorations: [] },
+    apple: { name: 'Äppelpaj', th: 'พายแอปเปิล', art: 'slice', steps: ['apple', 'butter', 'sugar', 'flour', 'cinnamon', 'honey'], decorations: [] }
+  });
+  Object.entries(recipes).forEach(([id, recipe]) => { recipe.id = id; recipe.art ||= id === 'cake' ? 'cake' : 'cookies'; });
   const cafeItems = [
     { id: 'coffee', sv: 'en kopp kaffe', plural: 'koppar kaffe', th: 'กาแฟ', art: 'coffee' },
     { id: 'tea', sv: 'en kopp te', plural: 'koppar te', th: 'ชา', art: 'tea' },
@@ -58,6 +67,44 @@
     { id: 'coffee', sv: 'en kopp kaffe', th: 'กาแฟหนึ่งถ้วย' },
     { id: 'strawberry', sv: 'en jordgubbe', th: 'สตรอว์เบอร์รี' }
   ];
+  const memoryPacks = [
+    { id: 'home', th: 'รอบตัวเรา', items: memoryItems },
+    ...[['baking', 'เข้าครัวกัน', ['milk', 'egg', 'flour', 'sugar', 'butter', 'salt']],
+      ['fruit', 'ผลไม้หลากสี', ['strawberry', 'apple', 'banana', 'lemon', 'blueberry', 'raspberry']],
+      ['food', 'ตะกร้าอาหาร', ['carrot', 'onion', 'tomato', 'cheese', 'rice', 'fish']],
+      ['fika', 'พักฟีก้ากัน', ['coffee', 'tea', 'bun', 'cookie', 'cake', 'honey']],
+      ['pantry', 'ชั้นวัตถุดิบ', ['cocoa', 'cinnamon', 'vanilla', 'bakingpowder', 'yeast', 'chocolate']]
+    ].map(([id, th, ids]) => ({ id, th, items: ids.map(key => {
+      const item = byId[key] || cafeItems.find(i => i.id === key);
+      return { ...item, art: item.art || key };
+    }) })),
+    { id: 'forest', th: 'เพื่อนในป่าและริมน้ำ', zooIds: ['owl', 'lynx', 'fox', 'hedgehog', 'beaver', 'heron'] },
+    { id: 'tropical', th: 'ชีวิตในเรือนกระจก', zooIds: ['frog', 'otter', 'sloth', 'butterfly', 'snake', 'chameleon'] }
+  ];
+  function memoryWords(packId = 'home', stage = 0, zooAnimals = [], completedPacks) {
+    const index = Math.max(0, memoryPacks.findIndex(p => p.id === packId)), pack = memoryPacks[index];
+    const getItems = p => p.items || p.zooIds.map(id => ({ ...zooAnimals.find(a => a.id === id), id, zoo: true }));
+    const words = getItems(pack).map(i => ({ ...i, art: i.art || i.id }));
+    if (stage === 2) {
+      const prior = completedPacks ? memoryPacks.filter(p => p.id !== pack.id && completedPacks.includes(p.id)) : [memoryPacks[(index + memoryPacks.length - 1) % memoryPacks.length]];
+      const previous = prior.flatMap(getItems);
+      words.push(...previous.filter(i => !words.some(w => w.id === i.id)).slice(0, 2).map(i => ({ ...i, art: i.art || i.id })));
+    }
+    return words;
+  }
+  const cafeRounds = [
+    { th: 'วันแรก · ทักทายลูกค้า', goal: 'ฝึกชื่อเมนูและจำนวนหนึ่งถึงสอง', count: 5, kinds: 1, max: 2 },
+    { th: 'วันที่สอง · มาคู่กัน', goal: 'ฟังคำว่า och ที่เชื่อมของสองอย่าง', count: 6, kinds: 2, max: 2 },
+    { th: 'วันที่สาม · นับให้ครบ', goal: 'ฝึกจำนวนหนึ่งถึงสาม และรูปพหูพจน์', count: 6, kinds: 2, max: 3 },
+    { th: 'วันที่สี่ · โต๊ะใหญ่', goal: 'จำรายการสามอย่างในคำสั่งเดียว', count: 7, kinds: 3, max: 3 },
+    { th: 'วันที่ห้า · พูดได้หลายแบบ', goal: 'ฝึก Jag tar และ Kan jag få แทน Jag vill ha', count: 7, kinds: 3, max: 3 },
+    { th: 'วันสุดท้าย · ฟังในคาเฟ่', goal: 'ฟังอย่างเดียว ทบทวนเมนู จำนวน และคำสั่งหลายรูปแบบ', count: 8, kinds: 3, max: 4 }
+  ];
+  function createCafeRound(level = 0, random = Math.random) {
+    const round = cafeRounds[level]; if (!round) throw new Error('Unknown café round');
+    return Array.from({ length: round.count }, (_, index) => shuffle(cafeItems, random).slice(0, Math.min(round.kinds, index === 0 ? 1 : round.kinds))
+      .map((item, n) => ({ id: item.id, count: 1 + (index + n + Math.floor(random() * round.max)) % round.max })));
+  }
   function shuffle(items, random = Math.random) {
     const result = items.slice();
     for (let i = result.length - 1; i > 0; i--) {
@@ -100,12 +147,12 @@
     state.phase = recipes[state.recipeId].decorations.length ? 'decorate' : 'done';
     return true;
   }
-  const numbers = ['noll', 'en', 'två', 'tre'];
-  function orderText(order) {
-    return 'Jag vill ha ' + order.map(({ id, count }) => {
+  const numbers = ['noll', 'en', 'två', 'tre', 'fyra'];
+  function orderText(order, variant = 0) {
+    return ['Jag vill ha ', 'Jag tar ', 'Kan jag få '][variant % 3] + order.map(({ id, count }) => {
       const item = cafeItems.find(entry => entry.id === id);
       return count === 1 ? item.sv : numbers[count] + ' ' + item.plural;
-    }).join(' och ') + ', tack!';
+    }).join(' och ') + (variant % 3 === 2 ? ', tack?' : ', tack!');
   }
   function createOrders(random = Math.random) {
     return shuffle(cafeItems, random).slice(0, 5).map((item, index) => {
@@ -121,15 +168,15 @@
     const expected = Object.fromEntries(order.map(item => [item.id, item.count]));
     return cafeItems.every(item => (tray[item.id] || 0) === (expected[item.id] || 0));
   }
-  function createMemory(random = Math.random) {
-    return shuffle(memoryItems.flatMap(item => [
+  function createMemory(random = Math.random, words = memoryItems) {
+    return shuffle(words.flatMap(item => [
       { key: item.id + '-picture', id: item.id, type: 'picture' },
       { key: item.id + '-word', id: item.id, type: 'word' }
     ]), random);
   }
   function isPair(a, b) { return !!a && !!b && a.key !== b.key && a.id === b.id && a.type !== b.type; }
 
-  const api = { ingredients, byId, recipes, cafeItems, memoryItems, shuffle, createKitchen,
+  const api = { ingredients, byId, recipes, cafeItems, memoryItems, memoryPacks, memoryWords, cafeRounds, createCafeRound, shuffle, createKitchen,
     target, addIngredient, stir, bake, finishBaking, orderText, createOrders, checkOrder, createMemory, isPair };
   if (typeof module === 'object' && module.exports) module.exports = api;
   else root.MiniGameCore = api;

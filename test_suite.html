@@ -27,6 +27,7 @@
   </style>
   <script src="https://cdn.jsdelivr.net/npm/microsoft-cognitiveservices-speech-sdk@latest/distrib/browser/microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
   <script src="config.local.js" onerror="/* local config */"></script>
+  <script src="learning_progress.js"></script>
   <script src="app.js?v=test4"></script>
   <script src="visuals.js?v=test4"></script>
   <script src="speech_audio.js?v=test4"></script>
@@ -220,9 +221,12 @@
 
       // SM-2 SRS spaced repetition test
       const testItemId = 'test_item_srs_1';
+      const priorSRS = { ...window.GameEngine.SRSManager.getRecord(testItemId) };
       window.GameEngine.SRSManager.recordReview(testItemId, 5);
       const rec = window.GameEngine.SRSManager.getRecord(testItemId);
-      assert('SRS: Rätt svar ökar repetitionsantal och sätter framtida intervall', rec.repetitions === 1 && rec.nextReview > Date.now());
+      assert('SRS: Rätt svar ökar repetitionsantal och sätter framtida intervall', rec.repetitions === priorSRS.repetitions + 1 && rec.nextReview > Date.now());
+      window.GameEngine.StateManager.state.srsData[testItemId] = priorSRS;
+      window.GameEngine.StateManager.save();
 
       // Dagliga uppdrag
       const questKey = 'speak_5';
@@ -264,7 +268,7 @@
       // Krav: Inställningsmodal 100% på svenska utan synliga API-nycklar
       const modalDOM = window.SettingsUI ? window.SettingsUI.createModalDOM() : null;
       const hasThaiInSettings = modalDOM ? /[฀-๿]/.test(modalDOM.innerHTML) : true;
-      assert('Settings: Inga thailändska tecken i inställningar (100% svenska)', modalDOM && !hasThaiInSettings);
+      assert('Settings: Thai instructions are present in sound settings', modalDOM && hasThaiInSettings);
       const hasApiKeyInput = modalDOM ? !!modalDOM.querySelector('#azure-key-input, #groq-key-input') : true;
       assert('Settings: API-nycklar dolda från inställningsvyn', modalDOM && !hasApiKeyInput);
 
