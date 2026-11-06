@@ -22,6 +22,8 @@
   
     <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="animations.css">
+  <link rel="stylesheet" href="mini_games.css">
+  <link rel="stylesheet" href="zoo_escape.css">
 
 </head>
 <body>
@@ -104,6 +106,8 @@
           </div>
         </div>
 
+        <button type="button" class="mg-home-link" id="mg-home-shortcut" aria-label="Upptäck småspelen"></button>
+
         <!-- Välj träningsläge fritt (Ord, Meningar, Lyssna, Prata, Mix) -->
         <div class="mode-selector-section">
           <div class="section-header">
@@ -181,6 +185,10 @@
             <!-- Renderas dynamiskt av app.js -->
           </div>
         </div>
+      </section>
+
+      <section id="view-games" class="spa-view" aria-label="Småspel på svenska">
+        <div id="small-games-lobby"></div>
       </section>
 
       <!-- ================================================================
@@ -280,6 +288,13 @@
           <svg viewBox="0 0 32 32" fill="none"><path d="M5 14L16 4l11 10v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V14z" fill="#58CC02" stroke="#3F9102" stroke-width="2" stroke-linejoin="round"/><path d="M12 27V17h8v10" fill="#FFF"/></svg>
         </span>
         <span>Hem • หน้าแรก</span>
+      </button>
+
+      <button type="button" class="nav-tab" data-target="view-games">
+        <span class="nav-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none"><path d="M9 9h14q5 0 6 14 0 6-5 3l-5-5h-6l-5 5q-5 3-5-3Q4 9 9 9Z" fill="#AAC09A" stroke="#66805F" stroke-width="1.8"/><path d="M10 13v8m-4-4h8" stroke="#FFF9EC" stroke-width="2.4" stroke-linecap="round"/><circle cx="22" cy="14" r="2" fill="#F6DE9C"/><circle cx="25" cy="19" r="2" fill="#E1ABA0"/></svg>
+        </span>
+        <span>Småspel • เกม</span>
       </button>
 
       <button type="button" class="nav-tab" data-target="view-compete">
@@ -418,5 +433,11 @@
   <script src="speech_audio.js"></script>
   <script src="database.js"></script>
   <script src="gamification.js"></script>
+  <script src="mini_games_core.js"></script>
+  <script src="mini_games_art.js"></script>
+  <script src="zoo_core.js"></script>
+  <script src="zoo_art.js"></script>
+  <script src="zoo_escape.js"></script>
+  <script src="mini_games.js"></script>
 </body>
 </html>

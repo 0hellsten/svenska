@@ -1,0 +1,86 @@
+NATTNYCKELN — ART DIRECTION AND IMAGE PROMPTS
+
+Production assets: forest.webp, wetland.webp, greenhouse.webp, animals.webp.
+Created with the built-in image generation tool. Scene backgrounds are 1536 x
+1024; the final transparent animal atlas is 1448 x 1086, four columns by three
+rows. WebP copies preserve the generated compositions and alpha transparency.
+The portable app embeds all four files. There are no runtime image-generation
+requests or image-service dependencies.
+
+SHARED SCENE PROMPT
+
+Use case: illustration-story. Asset type: richly hand-painted background art
+for a sophisticated hidden-object point-and-click escape-room game for an adult
+learning Swedish, inspired by classic Japanese animated feature-film backgrounds
+and Nordic storybook illustration. Landscape 3:2 image, no frames, no UI, no
+lettering, no logos, no people and absolutely no animals. Intricate inspectable
+details, thin ink drawings under watercolor/gouache, deliberate shapes, natural
+perspective, cinematic composition, deep layered foreground, midground and
+background. Swedish midsummer late twilight, blue spruce and pine greens,
+indigo and petrol shadows, warm small amber lanterns, pale rose and lilac, moon
+glow. Enchanting, inviting mystery, never horror, flat vector or generic clipart.
+Provide convincing quiet shadowy nooks, dappled logs, rocks and vegetation for
+separately composited hidden animals. No enormous empty central area.
+
+FOREST / BJORKLUNDEN
+
+A Swedish zoo's birch-and-pine woodland enclosure after closing. Upper left:
+a gnarled birch branch with a dark hollow. Upper centre-right: mossy grey boulders
+with a shallow dark crevice. Lower left centre: a weathered wooden park bench
+beside a lantern and a small red-painted keeper hut, deep shadow beneath the
+bench. Lower right: dense rusty-red and ochre ferns behind a fallen birch log.
+A winding gravel path, worn wood fence, bluebells, fireweed, brass lantern,
+crescent moon through the canopy, distant red ochre Swedish timber building
+with a tiny warm window. A folded field-map, a blank wooden sign, a key hook.
+
+WETLAND / VASSVIKEN
+
+A Swedish zoo wetland habitat at blue hour. Mirror pond, reeds and yellow iris,
+an old wooden arched bridge, a dark red pump house with a warm window, brass
+sluice wheel, paper lantern. Upper left: weathered driftwood by the shore with
+a deep shadowed nook. Far right: dense tall green reeds with a narrow opening.
+Lower left centre: smooth mossy stepping stone and a dark gap. Lower centre
+right: quiet dark water partially concealed by reed stems. Round water-lily
+leaves, broad corner leaves, small moonlit ripples, delicate clouds, Swedish
+summer stillness. No animals.
+
+GREENHOUSE / VINTERTRADGARDEN
+
+Interior of an old Nordic zoo glasshouse at blue hour: weathered sea-green iron
+ribs, curved glass dome, faint starry northern sky outside. Amber glass lanterns,
+indigo shadows, ferns, philodendron leaves, mossy terracotta pots, a botanical
+notebook on a wooden stool, locked verdigris garden gate at the back. Upper
+left: hanging vines, a bare woody branch and a deep niche. Upper centre right:
+pale hanging orchids with nooks between petals. Lower left: terracotta pots
+and a folded leafy vine with shadows behind. Lower right: large arching fern
+and rough thick branch with shadow gaps. Violet and pink flowers, aged glass
+reflections, dense readable green layers, quiet wonder. No animals.
+
+ANIMAL ATLAS
+
+Twelve individual naturalistic painterly animals on a truly transparent
+background, strict four-column, three-row regular grid. Every animal centred
+in its own equal cell with transparent padding, no overlap or cropped anatomy.
+No scenery, labels, numbers, frames, ground or shadows outside the animals.
+Fine watercolor/gouache texture, delicate dark ink contours, coherent twilight
+lighting, restrained blue-green and grey shadow palette, tiny amber eyes.
+Not emoji or flat vector.
+
+Row 1: tawny owl; crouching Eurasian lynx with ear tufts; curled European
+hedgehog; reclining red fox with a white-tipped curled tail.
+Row 2: beaver with paddle tail; grey heron with long thin legs; moss-green frog;
+low-swimming otter showing head and curved back.
+Row 3: three-toed sloth hanging by both front claws, no branch; pale orchid-like
+butterfly with violet markings; coiled olive snake with slightly raised head;
+moss-green chameleon with tightly curled tail and gripping feet.
+
+FINAL ATLAS EDIT PROMPT
+
+Background removal only. Keep every animal, its position, size, packing and
+exact anatomy unchanged. Remove the entire grey/white/cream paper background,
+gradients, grain, ambient shadow patches and all shadows outside each animal.
+The space between animals and the padding at all canvas edges must be completely
+invisible transparent, zero opacity / alpha 0, not grey, translucent, white,
+checkerboard or black. Make twelve clean-edged painterly cutouts floating on
+fully transparent empty space. Do not redraw, move or resize the animals.
+No halos and no additional effects.
