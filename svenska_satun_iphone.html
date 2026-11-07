@@ -5082,6 +5082,40 @@ body.app-theme-sunset {
 }
 @media(prefers-reduced-motion:reduce) { .fb-groom-animal { transition:none; } }
 
+.fb-sling { text-align:left; }
+.fb-sling .fb-sling-story { font-size:13px;color:#5d6146;margin:4px 0 9px; }
+.fb-sling-instruction,.fb-sling-task { display:flex;align-items:center;justify-content:space-between;gap:7px; }
+.fb-sling-instruction .mg-replay { flex:none; }
+.fb-sling-instruction .fb-sling-line { margin:1px 0 0;font-size:clamp(14px,4vw,21px);color:#304b3d;font-weight:700;line-height:1.35; }
+.fb-sling-task { min-height:38px;margin:3px 0 6px; }
+.fb-sling-task [data-sling="hint"] { min-height:36px;font-size:11px;padding:5px 8px;flex:none; }
+.fb-sling-task .fb-sling-meaning { font-size:12px;margin:0 auto 0 0;line-height:1.35; }
+.fb-sling-count { margin-left:auto;flex:none;border-radius:18px;background:#e8ecd5;color:#3d5d43;padding:3px 8px;font-size:12px; }
+.fb-sling-board { width:min(100%,560px);margin-inline:auto;overflow:hidden;border-radius:14px;border:1px solid #b9b285;box-shadow:0 4px 10px #413f2a2b;background:#71895a var(--fb-yard-image) center 53% / cover; }
+.fb-sling-stage { display:block;width:100%;height:auto;aspect-ratio:500/426;touch-action:none;user-select:none;-webkit-user-select:none; }
+.fb-sling-stage [data-sling-grab] { cursor:grab; }
+.fb-sling-stage.is-drawing [data-sling-grab] { cursor:grabbing; }
+.fb-sling-stage.is-flying [data-sling-grab] { cursor:default; }
+.fb-sling-dots { fill:#fff5bd;filter:drop-shadow(0 0 2px #47462c);pointer-events:none; }
+.fb-sling-shape { filter:drop-shadow(0 3px 2px #3d35246e); }
+.fb-sling-shape svg { transform-origin:center;transform-box:fill-box; }
+.fb-sling-props .is-sling-hint .fb-sling-shape { filter:drop-shadow(0 0 4px #fff0ad) drop-shadow(0 0 6px #fff0ad); }
+.fb-sling-meter { display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:3px 10px;margin-top:8px;color:#4b5f45;font-size:11px; }
+.fb-sling-meter label { display:flex;align-items:center;gap:6px;font-weight:800; }
+.fb-sling-meter progress { width:92px;height:12px;accent-color:#a4643d; }
+.fb-sling-meter progress[data-power="good"] { accent-color:#4e7e53; }
+.fb-sling .fb-sling-feedback { margin:5px 0;font-weight:700;font-size:13px;min-height:21px;color:#5a6044; }
+.fb-sling .fb-sling-feedback[data-tone="good"] { color:#305c3c; }
+.fb-sling .fb-sling-feedback[data-tone="retry"] { color:#914927; }
+.fb-sling-access { border:1px solid #d9cba7;border-radius:8px;padding:4px 8px;color:#5b533b;font-size:12px; }
+.fb-sling-access summary { cursor:pointer;min-height:33px;padding:6px 1px; }
+.fb-sling-access > div { display:flex;gap:6px 11px;align-items:center;flex-wrap:wrap;padding:4px 0; }
+.fb-sling-access label { display:inline-flex;gap:5px;align-items:center; }
+.fb-sling-access input { width:87px;accent-color:#577b57; }
+.fb-sling-album > div { display:flex;flex-wrap:wrap;gap:5px;margin-top:5px; }
+.fb-sling-album .fb-button { text-align:left; }
+.fb-sling-album small { display:block;color:#61664a; }
+
 </style>
 
 </head>
@@ -5488,9 +5522,96 @@ body.app-theme-sunset {
   <!-- Frivillig lokal konfiguration för API-nycklar (skyddad av .gitignore) -->
   <script src="config.local.js" onerror="/* config.local.js finns ej, nycklar laddas från localStorage */"></script>
   <script>
+/* Vocabulary and the illustrated slingshot's virtual trajectory. */
+(function (root) {
+  'use strict';
+  const entries = [
+    ['can','en konservburk','konservburken','กระป๋องอาหาร','metal',38,53],
+    ['cup','en kopp','koppen','ถ้วยกาแฟ','ceramic',53,36],
+    ['ball','en boll','bollen','ลูกบอล','rubber',45,45],
+    ['block','en kloss','klossen','บล็อกไม้','wood',43,42],
+    ['glass','ett glas','glaset','แก้วน้ำ','glass',37,57],
+    ['spoon','en sked','skeden','ช้อน','metal',28,60],
+    ['pot','en blomkruka','blomkrukan','กระถางต้นไม้','ceramic',52,44],
+    ['box','en kartong','kartongen','กล่องกระดาษ','paper',55,42],
+    ['bottle','en flaska','flaskan','ขวด','glass',34,69],
+    ['mug','en mugg','muggen','แก้วมัค','ceramic',47,53],
+    ['bucket','en hink','hinken','ถัง','metal',53,52],
+    ['peg','en tvättklämma','tvättklämman','ไม้หนีบผ้า','wood',26,57],
+    ['plate','en tallrik','tallriken','จาน','ceramic',53,54],
+    ['jar','en glasburk','glasburken','โหลแก้ว','glass',41,51],
+    ['crate','en låda','lådan','ลังไม้','wood',64,42],
+    ['sponge','en svamp','svampen','ฟองน้ำ','soft',56,34],
+    ['watering','en vattenkanna','vattenkannan','บัวรดน้ำ','plastic',64,48],
+    ['pan','en kastrull','kastrullen','หม้อ','metal',63,39],
+    ['bowl','en skål','skålen','ชาม','ceramic',58,34],
+    ['stick','en pinne','pinnen','กิ่งไม้','wood',28,64],
+    ['carton','ett saftpaket','saftpaketet','กล่องน้ำผลไม้','paper',39,59],
+    ['eggs','en äggkartong','äggkartongen','แผงไข่กระดาษ','paper',63,31],
+    ['lid','ett lock','locket','ฝาปิด','plastic',53,48],
+    ['whisk','en visp','vispen','ตะกร้อมือ','metal',33,66],
+    ['brush','en borste','borsten','แปรง','wood',55,39],
+    ['boot','en stövel','stöveln','รองเท้าบูต','rubber',50,61],
+    ['colander','ett durkslag','durkslaget','กระชอน','metal',67,41]
+  ];
+  const items = entries.map(([id, sv, definite, th, material, width, height]) => ({ id, sv, definite, th, material, width, height }));
+  const rounds = [items.slice(0,4), items.slice(4,8), items.slice(8,12), items.slice(12,17), items.slice(17,22), items.slice(22)];
+  const world = { width:500, height:426, originX:250, originY:322, table:217, ground:299, pull:91, gravity:670 };
+  function round(index) { return rounds[(Math.max(0, Math.floor(index)) || 0) % rounds.length] || rounds[0]; }
+  function targets(index) {
+    const group = round(index);
+    return group.map((item, i) => ({ ...item, x:66 + 368 * ((group.length - i + index + 1) % group.length) / (group.length - 1), y:world.table - item.height / 2 }));
+  }
+  function draw(x, y) {
+    const dx = x - world.originX, dy = y - world.originY;
+    const length = Math.hypot(dx,dy);
+    const scale = length > world.pull ? world.pull / length : 1;
+    return { x:world.originX + dx * scale, y:world.originY + dy * scale, vx:-dx * scale * 8.4, vy:-dy * scale * 7.6, strength:Math.min(1,length / world.pull) };
+  }
+  function position(shot, time) {
+    return { x:shot.x + shot.vx * time, y:shot.y + shot.vy * time + world.gravity * time * time / 2 };
+  }
+  function intersect(from, to, target) {
+    let entry = 0, exit = 1;
+    for (const axis of ['x','y']) {
+      const radius = (axis === 'x' ? target.width : target.height) / 2 + 3;
+      const delta = to[axis] - from[axis];
+      const low = target[axis] - radius, high = target[axis] + radius;
+      if (!delta) { if (from[axis] < low || from[axis] > high) return null; continue; }
+      const a = (low - from[axis]) / delta, b = (high - from[axis]) / delta;
+      entry = Math.max(entry, Math.min(a,b)); exit = Math.min(exit, Math.max(a,b));
+      if (exit < entry) return null;
+    }
+    return entry;
+  }
+  function firstHit(from, to, board) {
+    let hit = null;
+    for (const target of board) {
+      const time = intersect(from, to, target);
+      if (time !== null && (!hit || time < hit.time)) hit = { target, time };
+    }
+    return hit;
+  }
+  function impact(shot, time, expected, hit) {
+    if (shot.strength < .43 || Math.hypot(shot.vx, shot.vy + world.gravity * time) < 118) return 'weak';
+    return hit.id === expected ? 'hit' : 'wrong';
+  }
+  function claimBonus(state, day) {
+    if (state.mischiefBonusDay === day) return 0;
+    state.mischiefBonusDay = day;
+    return 3;
+  }
+  const api = { items, round, targets, roundCount:rounds.length, world, draw, position, firstHit, impact, claimBonus };
+  if (typeof module === 'object' && module.exports) module.exports = api;
+  else root.FarmMischiefCore = api;
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+
+</script>
+  <script>
 /* Björkbacken. Save format, farm simulation and story orders. */
 (function (root) {
   'use strict';
+  const mischief = typeof module === 'object' && module.exports ? require('./farm_mischief_core.js') : root.FarmMischiefCore;
   const crops = {
     carrot: { sv:'en morot', plural:'morötter', th:'แครอต', seconds:14, chapter:0, yield:3 },
     potato: { sv:'en potatis', plural:'potatisar', th:'มันฝรั่ง', seconds:19, chapter:1, yield:3 },
@@ -5545,6 +5666,7 @@ body.app-theme-sunset {
     flag: { zone:'yard', th:'เชือกเสาธงขาด', sv:'Flagglinan har gått av.', steps:3 },
     fence: { zone:'pigs', th:'ประตูคอกหมูปิดไม่อยู่', sv:'Grinden behöver lagas.', steps:3 },
     eggs: { zone:'pond', th:'ไข่เป็ดซ่อนอยู่', sv:'Var ligger äggen?', steps:3 },
+    sling: { zone:'yard', th:'หนังสติ๊กหลังบ้าน', sv:'Prickskytte i trädgården.' },
     foal: { zone:'paddock', th:'ลูกม้าเกิดแล้ว!', sv:'Stoet har fått ett föl!', steps:3 }
   };
   const WAIT_AWAY = 2 * 60 * 1000;
@@ -5582,12 +5704,15 @@ body.app-theme-sunset {
     }
     const visits = int(source.visits, 3);
     const seen = Array.isArray(source.seen) ? [...new Set(source.seen.filter(id => known(events, id)))] : [];
-    const event = known(events, source.event?.id) ? { id:source.event.id, step:int(source.event.step, 2) } : null;
+    const mischiefRound = int(source.mischiefRound, Number.MAX_SAFE_INTEGER);
+    const event = known(events, source.event?.id) ? { id:source.event.id, step:int(source.event.step, eventSteps(source.event.id,mischiefRound) - 1) } : null;
+    const mischiefBonusDay = /^\d{4}-\d{2}-\d{2}$/.test(source.mischiefBonusDay) ? source.mischiefBonusDay : '';
     const foal = foalNames.includes(source.foal) ? source.foal : '';
     return { version:1, chapter, plots, stock, baskets:savedBaskets, orderChanged, animals:counters(source.animals, animals, Number.MAX_SAFE_INTEGER),
       coins:int(source.coins, 999, 0), day:Math.max(1, int(source.day, 999999, 1)), orderIndex,
       decor:Object.keys(decorations).filter(id => Array.isArray(source.decor) && source.decor.includes(id)),
-      activity:nowInt(source.activity), checkedActivity:nowInt(source.checkedActivity), leftAt:nowInt(source.leftAt), visits, seen, event, foal };
+      activity:nowInt(source.activity), checkedActivity:nowInt(source.checkedActivity), leftAt:nowInt(source.leftAt), visits, seen, event, foal,
+      mischiefRound, mischiefBonusDay };
   }
 
   function mark(state, now) { state.activity = Math.max(now, state.activity + 1); }
@@ -5743,11 +5868,13 @@ body.app-theme-sunset {
     state.visits = 0;
     return true;
   }
+  function eventSteps(id, index) { return id === 'sling' ? mischief.round(index).length : events[id].steps; }
   function progressEvent(state, id, step, name) {
     if (state.event?.id !== id || state.event.step !== step) return false;
     if (id === 'foal' && step === 2 && !foalNames.includes(name)) return false;
-    if (step < events[id].steps - 1) { state.event.step++; return 'next'; }
+    if (step < eventSteps(id,state.mischiefRound) - 1) { state.event.step++; return 'next'; }
     if (id === 'foal') state.foal = name;
+    if (id === 'sling') state.mischiefRound++;
     if (!state.seen.includes(id)) state.seen.push(id);
     state.event = null;
     state.coins = Math.min(999, state.coins + 3);
@@ -5757,7 +5884,7 @@ body.app-theme-sunset {
   const api = { crops, animals, goods, recipes, chapters, decorations, events, foalNames, WAIT_AWAY,
     restore, tend, plotStatus, animalStatus, tendAnimal, canRest, nextDay, sky, craft, hasStock,
     order, orderPlan, orderChange, baskets, basketCount, moveBasket, checkBasket, deliver, expand, decorate,
-    leave, returnVisit, progressEvent, zoneRequirements, trainingLevel, canVisit };
+    leave, returnVisit, progressEvent, eventSteps, zoneRequirements, trainingLevel, canVisit };
   if (typeof module === 'object' && module.exports) module.exports = api;
   else root.FarmCore = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);
@@ -33834,10 +33961,349 @@ body.app-theme-sunset {
 
 </script>
   <script>
+/* Garden table and original, readable silhouettes for each target word. */
+(function () {
+  'use strict';
+  const art = {
+    can:'<path d="M15 16h42v47q-21 12-42 0Z" fill="#a6b6a8"/><path d="M15 27q22 8 42 0v27q-20 7-42 0Z" fill="#b9533c"/><ellipse cx="36" cy="16" rx="21" ry="7" fill="#d7d9bf"/><ellipse cx="36" cy="16" rx="14" ry="3" fill="none"/><path d="M15 62q21 9 42 0M22 26v31" fill="none" stroke="#f1e1b5"/><circle cx="39" cy="42" r="8" fill="#edc078"/>',
+    cup:'<path d="M51 23h9q11 2 7 14-4 8-16 8" fill="none" stroke="#8b604a" stroke-width="6"/><path d="M8 20h48l-5 29q-6 15-19 15T13 48Z" fill="#f1d8ae"/><ellipse cx="32" cy="20" rx="24" ry="7" fill="#76513e"/><path d="M14 37q18 8 38 0m-36 6q16 7 34 0" fill="none" stroke="#a86353" stroke-width="3"/>',
+    ball:'<circle cx="36" cy="38" r="27" fill="#e6ad55"/><path d="M20 16q25-8 40 13-22-3-41 25l-9-14q3-13 10-24Zm9 47Q36 42 63 35q4 16-11 27Z" fill="#bf715c"/><ellipse cx="27" cy="24" rx="8" ry="4" fill="#ffe5aa" stroke="none"/>',
+    block:'<path d="m10 27 19-14 32 11-16 16Z" fill="#e0b27b"/><path d="M10 27v30l35 11V40Z" fill="#ad7951"/><path d="M45 40v28l16-15V24Z" fill="#915f3d"/><path d="m16 38 23 8m-22 0 16 6m-18 2 22 7m12-17 8-8" fill="none" stroke="#edc695"/>',
+    glass:'<path d="M14 12h44l-7 55q-15 7-30 0Z" fill="#b5d7cf"/><ellipse cx="36" cy="12" rx="22" ry="6" fill="#cde6dc"/><path d="M25 23l4 39m18-43-2 27" stroke="#f2f5db" stroke-width="3"/><path d="M24 63q11 3 24 0" fill="none"/>',
+    spoon:'<path d="M32 32h8l3 36q-7 9-13 0Z" fill="#b9c5b3"/><ellipse cx="36" cy="19" rx="18" ry="15" fill="#d6d8bf"/><path d="M24 17q3-6 11-7m1 30 1 24" stroke="#fff5cf" stroke-width="3"/>',
+    pot:'<path d="m10 24 8 42q18 8 36 0l8-42Z" fill="#bb7654"/><path d="M7 20h58v12H7Z" fill="#d69768"/><ellipse cx="36" cy="20" rx="29" ry="7" fill="#7b5544"/><path d="M19 44l4 17m30-24-4 24" stroke="#f0b981" stroke-width="3"/>',
+    box:'<path d="m8 25 21-13 35 9-18 13Z" fill="#d8bb88"/><path d="M8 25v34l38 10V34Z" fill="#c6a376"/><path d="M46 34v35l18-15V21Z" fill="#a58660"/><path d="m22 20 33 8v17l-6 5V33l-35-10" fill="#f3e1b5" stroke="none"/><rect x="13" y="43" width="16" height="9" fill="#f3e5bd"/>',
+    bottle:'<path d="M26 9h20v16q0 5 11 11v29q-5 8-21 8t-21-8V36q11-6 11-11Z" fill="#87b4a0"/><path d="M25 5h22v9H25Z" fill="#a05c4c"/><path d="M16 43q19 5 40 0v17q-19 7-40 0Z" fill="#e9dcad"/><path d="M23 37v24" stroke="#daf3d3" stroke-width="3"/>',
+    mug:'<path d="M52 24h10q11 0 8 15-4 9-17 9" fill="none" stroke="#694837" stroke-width="6"/><path d="M11 12h45v51q-4 8-22 8t-23-8Z" fill="#749ca0"/><ellipse cx="34" cy="12" rx="23" ry="7" fill="#bdcfc0"/><path d="M18 25v32m7-21q9 13 19 0" stroke="#e2e7c9" stroke-width="3" fill="none"/>',
+    bucket:'<path d="M11 22q0-19 25-19t25 19" fill="none" stroke="#776957" stroke-width="3"/><path d="m7 23 9 42q20 12 40 0l9-42Z" fill="#b5beb0"/><ellipse cx="36" cy="23" rx="29" ry="9" fill="#d6d8be"/><ellipse cx="36" cy="23" rx="22" ry="5" fill="#717c6f"/><path d="m19 32 5 27m28-25-4 25" stroke="#efedd0" stroke-width="3"/>',
+    peg:'<path d="M14 8h15l6 14-2 15-4 30H17l1-36Zm29 0h15l-4 23 1 36H43l-4-30-2-15Z" fill="#c69160"/><circle cx="36" cy="32" r="8" fill="#86958d"/><path d="M26 37q10 4 20 0" fill="none" stroke="#dbdcc1" stroke-width="3"/>',
+    plate:'<circle cx="36" cy="38" r="30" fill="#eee3c2"/><circle cx="36" cy="38" r="22" fill="#f8edcc" stroke="#608f8b" stroke-width="4"/><circle cx="36" cy="38" r="13" fill="none" stroke="#c6d6ba"/>',
+    jar:'<path d="M16 15h40l5 17v31q-6 8-25 8t-25-8V32Z" fill="#b4d4bf"/><path d="M15 9h42v14H15Z" fill="#b8634c"/><path d="M13 39h46v21H13Z" fill="#e7d19f"/><path d="M21 30v27" stroke="#f0efce" stroke-width="3"/><path d="M30 47q7-9 14 0l-7 8Z" fill="#bf735b"/>',
+    crate:'<path d="M5 23h62v44H5Z" fill="#b88358"/><path d="M5 24h62v11H5Zm0 19h62v8H5Zm0 17h62v8H5Z" fill="#d7ac77"/><path d="M9 21h6v49H9Zm48 0h6v49h-6Z" fill="#a4714b"/><path d="M29 25h14v5H29Z" fill="#654631"/>',
+    sponge:'<rect x="7" y="16" width="58" height="44" rx="10" fill="#d7b857"/><path d="M8 47h56v8q-3 8-11 8H18q-10 0-10-8Z" fill="#80966e"/><g fill="#b29340" stroke="none"><circle cx="19" cy="27" r="3"/><circle cx="43" cy="24" r="3"/><circle cx="50" cy="38" r="3"/><circle cx="30" cy="41" r="2.5"/></g>',
+    watering:'<path d="m47 31 17-17 6 8-17 25M18 26q-18-5-16 13 2 13 16 13" fill="none" stroke="#618777" stroke-width="6"/><path d="M17 23h34l4 12v26q-10 10-35 4l-4-9Z" fill="#80a58b"/><ellipse cx="34" cy="23" rx="17" ry="5" fill="#526e57"/><path d="M23 37q4 13 16 17" fill="none" stroke="#c6d0a9" stroke-width="3"/>',
+    pan:'<path d="M8 32H1m61 0h10M8 35H2m60 0h10" stroke="#8b5b47" stroke-width="5"/><path d="M8 27h55l-5 30q-7 9-22 9T14 57Z" fill="#99a8a3"/><path d="M5 27q31-23 61 0Z" fill="#c6cec0"/><path d="M30 17h12v-8H30Z" fill="#74513d"/><path d="M17 38l5 17" stroke="#eee6c1" stroke-width="3"/>',
+    bowl:'<path d="M5 20h62q-4 41-31 43T5 20Z" fill="#8aa69a"/><ellipse cx="36" cy="20" rx="31" ry="11" fill="#c7d6b9"/><ellipse cx="36" cy="21" rx="23" ry="6" fill="#718d7c"/><path d="M11 38q24 13 50 0" fill="none" stroke="#d9dec0" stroke-width="3"/>',
+    stick:'<path d="M23 67 46 8l8 2-25 62Zm8-22-9-14 4-3 10 9m4-13 15-8 2 5-15 12" fill="#9b7350"/><path d="m28 60 16-41" stroke="#cda677"/>',
+    carton:'<path d="m15 20 9-13h26l9 13-12 5Z" fill="#ebd9a9"/><path d="M15 20v45l32 7V25Z" fill="#dca159"/><path d="M47 25v47l12-7V20Z" fill="#a86d3c"/><path d="M30 8h15v6H30Z" fill="#f7e8bc"/><circle cx="31" cy="45" r="10" fill="#f7d36e"/><path d="M31 35q3-8 9-8" fill="none" stroke="#6b9566" stroke-width="4"/>',
+    eggs:'<path d="m7 36 10-13h39l9 13 3 15H4Z" fill="#bcaa82"/><path d="M4 46q31-6 64 0l-5 15H10Z" fill="#a28e69"/><path d="M12 43q5-11 12-1m0 0q6-13 13 0m1 0q6-13 13 0m0 0q6-10 11 0" fill="none" stroke="#e0c99a" stroke-width="4"/>',
+    lid:'<ellipse cx="36" cy="39" rx="31" ry="27" fill="#ad775e"/><ellipse cx="36" cy="37" rx="26" ry="22" fill="#d38f71"/><path d="M29 37h14v-9H29Z" fill="#885945"/><path d="M18 33q3-7 13-11" fill="none" stroke="#edd3a9" stroke-width="3"/>',
+    whisk:'<path d="M32 40h8v29q-5 8-8 0Z" fill="#aa704b"/><path d="M36 43Q7 8 35 6q30 1 1 37Zm0 0Q20 11 35 6q13 9 1 37Zm0 0L35 8" fill="none" stroke="#9ea899" stroke-width="3"/>',
+    brush:'<path d="M7 30h58v16H7Z" fill="#b67d4f"/><path d="M25 30V19q10-8 22 0v11" fill="#c8925b"/><path d="M10 46h51l-3 17H14Z" fill="#d7bb82"/><path d="M17 47v12m7-12v12m7-12v12m7-12v12m7-12v12m7-12v12" stroke="#8b7251"/>',
+    boot:'<path d="M28 7h31l-3 44q11 9 6 17-5 5-25 4H11q-12-2-6-10 4-7 19-11Z" fill="#769267"/><path d="M27 9h33v9H27Z" fill="#a5ae77"/><path d="M7 62q19 4 54 0l1 8H7Z" fill="#5f674c"/><path d="m36 24-2 21" stroke="#c2c994" stroke-width="3"/>',
+    colander:'<path d="M10 26H2v9h11m49-9h8v9H59" fill="none" stroke="#87745c" stroke-width="5"/><path d="M7 24h58q-3 37-29 38T7 24Z" fill="#a7b7a8"/><ellipse cx="36" cy="24" rx="29" ry="9" fill="#d3d8bf"/><g fill="#62786d" stroke="none"><circle cx="21" cy="39" r="2.5"/><circle cx="31" cy="43" r="2.5"/><circle cx="42" cy="43" r="2.5"/><circle cx="51" cy="39" r="2.5"/><circle cx="36" cy="52" r="2.5"/></g>'
+  };
+  function object(item) {
+    return `<svg x="${-item.width/2}" y="${-item.height/2}" width="${item.width}" height="${item.height}" viewBox="3 3 66 70" preserveAspectRatio="none" fill="none" stroke="#624b39" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">${art[item.id]}</svg>`;
+  }
+  const table = `<ellipse cx="250" cy="294" rx="214" ry="22" fill="#39462f5c"/><path d="M63 224h19v70l-19 4Zm353 0h19v74l-19-4ZM87 231h326v14H87Z" fill="#956442" stroke="#643f2b" stroke-width="3"/><path d="M29 219l28-22h386l28 22Z" fill="#cc9c67" stroke="#785035" stroke-width="3"/><path d="M29 219h442v16H29Z" fill="#a8754d" stroke="#785035" stroke-width="3"/><path d="M47 225h402M83 204h332m-293 8h83m64-6h134" fill="none" stroke="#e0b27e" stroke-width="2" stroke-linecap="round"/>`;
+  window.FarmMischiefArt = { object, table };
+})();
+
+</script>
+  <script>
+/* Mobile slingshot event. The same trajectory drives the aim dots and the shot. */
+(function () {
+  'use strict';
+  const C = window.FarmMischiefCore, A = window.FarmMischiefArt, W = C.world;
+  const floor = item => W.ground - item.height * .21;
+  const at = (x,y,angle = 0) => `translate(${x} ${y}) rotate(${angle})`;
+  const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const phrase = item => `Skjut ner ${item.definite}.`;
+  const listen = text => window.SpeechEngine?.speakSwedish?.(text, 1);
+  const materialSounds = {
+    metal:[['triangle',620,.14,0,510],['sine',1610,.23,.01,1390],['triangle',835,.18,.058,640]],
+    ceramic:[['triangle',480,.075,0,335],['sine',1250,.14,.012,1070]],
+    glass:[['sine',1810,.24,0,1700],['sine',2440,.18,.022,2290],['sine',1350,.12,.065,1120]],
+    wood:[['triangle',175,.10,0,85],['sine',315,.065,.015,148]],
+    paper:[['sawtooth',138,.06,0,70],['triangle',245,.05,.035,110]],
+    plastic:[['triangle',345,.09,0,235],['sine',600,.045,.022,432]],
+    rubber:[['sine',250,.13,0,84],['sine',193,.07,.09,100]],
+    soft:[['sine',108,.095,0,42]],
+    snap:[['triangle',420,.105,0,140],['sine',175,.08,.02,80]],
+    ground:[['triangle',139,.08,0,65]]
+  };
+  let active;
+  function sound(kind, volume = 1) {
+    try {
+      const ctx = window.SpeechEngine?.SoundFX?.getContext();
+      if (!ctx) return;
+      for (const [type, freq, duration, delay, end] of materialSounds[kind]) {
+        const t = ctx.currentTime + delay;
+        const oscillator = ctx.createOscillator(), gain = ctx.createGain();
+        oscillator.type = type;
+        oscillator.frequency.setValueAtTime(freq,t);
+        oscillator.frequency.exponentialRampToValueAtTime(end,t + duration);
+        gain.gain.setValueAtTime(.001,t);
+        gain.gain.exponentialRampToValueAtTime(.12 * volume,t + .009);
+        gain.gain.exponentialRampToValueAtTime(.001,t + duration);
+        oscillator.connect(gain).connect(ctx.destination);
+        oscillator.start(t); oscillator.stop(t + duration + .015);
+      }
+    } catch (_) { /* The animation still provides impact feedback without audio. */ }
+  }
+  function destroy() {
+    if (!active) return;
+    active.events.abort();
+    cancelAnimationFrame(active.frame);
+    active = null;
+    window.SpeechEngine?.stopAudio?.();
+  }
+  function boardHTML(targets, down) {
+    const props = targets.map(item => {
+      const landed = down.has(item.id);
+      return `<g data-sling-prop="${item.id}" transform="${landed ? at(item.x + 12,floor(item),88) : at(item.x,item.y)}"><g class="fb-sling-shape">${A.object(item)}</g></g>`;
+    }).join('');
+    return `<svg class="fb-sling-stage" viewBox="0 0 ${W.width} ${W.height}" role="img" aria-label="โต๊ะในสวนกับของเรียงเป็นแถว หนังสติ๊กอยู่ด้านล่าง">
+      <defs><linearGradient id="fb-sling-lawn" x2="0" y2="1"><stop stop-color="#4a704d" stop-opacity=".1"/><stop offset="1" stop-color="#355137" stop-opacity=".78"/></linearGradient></defs>
+      <path d="M0 174Q240 142 500 178v248H0Z" fill="url(#fb-sling-lawn)"/><path d="M37 297q17-15 40-6m335 3q18-12 41-2m-342 23q10-13 21-14m222 5q18-10 30-4" stroke="#bfce86" stroke-width="3" fill="none" stroke-linecap="round" opacity=".7"/>
+      ${A.table}<g class="fb-sling-props">${props}</g>
+      <g class="fb-sling-dots" aria-hidden="true">${Array.from({length:17},(_,i) => `<circle r="${Math.max(2.1,4-i*.12)}" opacity="0"/>`).join('')}</g>
+      <path class="fb-sling-trail" opacity="0" fill="none" stroke="#fff1c9" stroke-width="6" stroke-linecap="round" aria-hidden="true"/>
+      <g class="fb-sling-burst" opacity="0" aria-hidden="true"><circle r="19" fill="none" stroke="#fff0b5" stroke-width="3"/><path d="M-29 0h-10m68 0h10M0-28v-10M0 28v10m19-48 9-8m-48 9-8-8" fill="none" stroke="#fff0b5" stroke-width="4" stroke-linecap="round"/></g>
+      <ellipse cx="250" cy="383" rx="56" ry="10" fill="#28382355"/><path d="M250 384v-39q-1-10-16-19l-16-21m32 79v-39q1-10 16-19l16-21" fill="none" stroke="#563b2d" stroke-width="17" stroke-linecap="round"/>
+      <path d="M250 378v-33q-1-10-16-19l-16-21m32 73v-33q1-10 16-19l16-21" fill="none" stroke="#b38252" stroke-width="11" stroke-linecap="round"/>
+      <path d="M247 374v-28q-2-9-14-18m30-3 17-21" fill="none" stroke="#e1b579" stroke-width="3.5" stroke-linecap="round"/>
+      <path class="fb-sling-band" fill="none" stroke="#583e36" stroke-width="6" stroke-linecap="round"/>
+      <path class="fb-sling-band-light" fill="none" stroke="#d6a268" stroke-width="2" stroke-linecap="round"/>
+      <circle class="fb-sling-stone" r="9.5" fill="#d7d4ba" stroke="#5c5e4b" stroke-width="2"/>
+      <circle data-sling-grab cx="250" cy="322" r="48" fill="transparent"/>
+    </svg>`;
+  }
+  function mount(host, options) {
+    destroy();
+    const board = C.targets(options.round);
+    const s = { ...options, host, board, step:options.step, down:new Set(board.slice(0,options.step).map(item => item.id)), events:new AbortController(), attempts:0 };
+    active = s;
+    host.innerHTML = `<div class="fb-sling-instruction"><div><span class="fb-kicker">ฟังชื่อของ แล้วเล็งให้ตรง</span><p class="fb-sling-line" lang="sv"></p></div><button type="button" class="mg-replay" data-sling="replay">♪ ฟังอีกครั้ง <small>1×</small></button></div>
+      <div class="fb-sling-task"><button type="button" class="fb-button" data-sling="hint" aria-pressed="false">คำใบ้ภาษาไทย</button><p class="fb-sling-meaning" hidden></p><strong class="fb-sling-count"></strong></div>
+      <div class="fb-sling-board">${boardHTML(board,s.down)}</div>
+      <div class="fb-sling-meter"><label>แรงดึง <progress max="100" value="0" aria-label="แรงดึงหนังสติ๊ก"></progress></label><span>ดึงหินตรงกลางลงมา · เล็งจากจุด · ปล่อยเพื่อยิง</span></div>
+      <p class="fb-sling-feedback" role="status" aria-live="polite">พร้อมแล้ว ลองดึงหนังสติ๊กต๊ะ</p>
+      <details class="fb-sling-access"><summary>ใช้ปุ่มเล็งและยิง</summary><div><label>ทิศทาง <input type="range" min="-55" max="55" value="0" data-sling="aim"></label><label>แรง <input type="range" min="0" max="100" value="85" data-sling="force"></label><button type="button" class="fb-button" data-sling="shoot" data-primary>ปล่อยหิน →</button></div></details>
+      <div class="fb-sling-album" hidden></div>`;
+    s.stage = host.querySelector('.fb-sling-stage');
+    s.props = new Map(board.map(item => [item.id,s.stage.querySelector(`[data-sling-prop="${item.id}"]`)]));
+    s.dots = Array.from(s.stage.querySelectorAll('.fb-sling-dots circle'));
+    s.stone = s.stage.querySelector('.fb-sling-stone');
+    s.band = s.stage.querySelector('.fb-sling-band');
+    s.bandLight = s.stage.querySelector('.fb-sling-band-light');
+    s.trail = s.stage.querySelector('.fb-sling-trail');
+    s.burst = s.stage.querySelector('.fb-sling-burst');
+    const opts = { signal:s.events.signal };
+    s.stage.addEventListener('pointerdown', event => startPull(s,event),opts);
+    s.stage.addEventListener('pointermove', event => movePull(s,event),opts);
+    s.stage.addEventListener('pointerup', event => endPull(s,event,true),opts);
+    s.stage.addEventListener('pointercancel', event => endPull(s,event,false),opts);
+    s.stage.addEventListener('lostpointercapture', event => endPull(s,event,false),opts);
+    host.addEventListener('click', event => click(s,event),opts);
+    host.addEventListener('input', () => { if (!s.busy && !s.pointer && !s.done) paintPull(s, assistShot(s)); },opts);
+    host.querySelector('details').addEventListener('toggle', event => {
+      if (!s.busy && !s.pointer && !s.done) paintPull(s,event.target.open ? assistShot(s) : C.draw(W.originX,W.originY));
+    },opts);
+    paintPull(s,C.draw(W.originX,W.originY));
+    showTarget(s);
+  }
+  function showTarget(s) {
+    const item = s.board[s.step];
+    if (!item) return;
+    s.host.querySelector('.fb-sling-line').textContent = phrase(item);
+    s.host.querySelector('.fb-sling-count').textContent = `${s.step} / ${s.board.length}`;
+    s.host.querySelector('.fb-sling-meaning').textContent = `${item.sv} · ${item.th}`;
+    if (s.hint) highlight(s);
+    listen(phrase(item));
+  }
+  function highlight(s) {
+    s.host.querySelector('.fb-sling-meaning').hidden = !s.hint;
+    s.host.querySelector('[data-sling="hint"]').setAttribute('aria-pressed',String(!!s.hint));
+    for (const [id,node] of s.props) node.classList.toggle('is-sling-hint',s.hint && id === s.board[s.step]?.id);
+  }
+  function feedback(s,text,tone = '') {
+    const note = s.host.querySelector('.fb-sling-feedback');
+    note.textContent = text;
+    note.dataset.tone = tone;
+  }
+  function click(s,event) {
+    const button = event.target.closest('button[data-sling]');
+    if (!button || button.disabled) return;
+    const { sling, value } = button.dataset;
+    if (sling === 'word') listen(s.board.find(item => item.id === value).sv);
+    if (sling === 'hint') { s.hint = !s.hint; highlight(s); }
+    if (sling === 'replay' && s.board[s.step]) listen(phrase(s.board[s.step]));
+    if (sling === 'shoot' && !s.busy && !s.pointer && !s.done) launch(s,assistShot(s));
+  }
+  function assistShot(s) {
+    const angle = -Number(s.host.querySelector('[data-sling="aim"]').value) * Math.PI/180;
+    const force = Number(s.host.querySelector('[data-sling="force"]').value) / 100 * W.pull;
+    return C.draw(W.originX + Math.sin(angle)*force,W.originY + Math.cos(angle)*force);
+  }
+  function startPull(s,event) {
+    if (s.busy || s.done || s.pointer || event.button !== 0 || !event.target.closest('[data-sling-grab]')) return;
+    s.pointer = { id:event.pointerId, x:event.clientX, y:event.clientY, rect:s.stage.getBoundingClientRect() };
+    s.stage.setPointerCapture(event.pointerId);
+    s.stage.classList.add('is-drawing');
+    paintPull(s,C.draw(W.originX,W.originY));
+  }
+  function aim(s,event) {
+    const p = s.pointer;
+    return C.draw(W.originX + (event.clientX-p.x)*W.width/p.rect.width, W.originY + (event.clientY-p.y)*W.height/p.rect.height);
+  }
+  function movePull(s,event) { if (s.pointer?.id === event.pointerId) paintPull(s,aim(s,event)); }
+  function endPull(s,event,fire) {
+    if (s.pointer?.id !== event.pointerId) return;
+    const shot = fire ? aim(s,event) : null;
+    s.pointer = null;
+    s.stage.classList.remove('is-drawing');
+    if (shot && shot.strength >= .055) launch(s,shot);
+    else paintPull(s,C.draw(W.originX,W.originY));
+  }
+  function paintBand(s,x,y) {
+    const path = `M218 305L${x} ${y}L282 305`;
+    s.band.setAttribute('d',path); s.bandLight.setAttribute('d',path);
+  }
+  function paintStone(s,point) {
+    s.stone.setAttribute('cx',point.x);
+    s.stone.setAttribute('cy',point.y);
+  }
+  function paintPull(s,shot) {
+    paintBand(s,shot.x,shot.y); paintStone(s,shot);
+    const power = s.host.querySelector('progress');
+    power.value = Math.round(shot.strength*100);
+    power.dataset.power = shot.strength < .62 ? 'low' : 'good';
+    let previous = shot, ended = shot.strength < .12;
+    const board = s.board.filter(item => !s.down.has(item.id));
+    s.dots.forEach((dot,i) => {
+      if (ended) { dot.setAttribute('opacity','0'); return; }
+      const next = C.position(shot,(i+1)*.055);
+      const hit = C.firstHit(previous,next,board);
+      const point = hit ? { x:previous.x + (next.x-previous.x)*hit.time, y:previous.y + (next.y-previous.y)*hit.time } : next;
+      ended = !!hit || point.y > W.height || point.x < 0 || point.x > W.width;
+      dot.setAttribute('cx',point.x); dot.setAttribute('cy',point.y);
+      dot.setAttribute('opacity',ended && !hit ? '0' : `${.93-i*.028}`);
+      previous = point;
+    });
+  }
+  function launch(s,shot) {
+    s.busy = true;
+    s.stage.classList.add('is-flying');
+    window.SpeechEngine?.stopAudio?.();
+    sound('snap',.6);
+    s.dots.forEach(dot => dot.setAttribute('opacity','0'));
+    const start = performance.now();
+    const board = s.board.filter(item => !s.down.has(item.id));
+    let previous = shot;
+    const flight = now => {
+      const time = (now-start)/1000;
+      const next = C.position(shot,time);
+      const hit = C.firstHit(previous,next,board);
+      const recoil = Math.exp(-time*21) * Math.cos(time*64);
+      paintBand(s,W.originX + (shot.x-W.originX)*recoil,W.originY + (shot.y-W.originY)*recoil);
+      if (hit) {
+        const point = { x:previous.x + (next.x-previous.x)*hit.time, y:previous.y + (next.y-previous.y)*hit.time };
+        paintStone(s,point);
+        s.trail.setAttribute('opacity','0');
+        landHit(s,shot,time,hit.target,point);
+      } else if (next.y > W.height + 8 || next.x < -14 || next.x > W.width + 14 || time > 2.3) {
+        sound('ground',.55);
+        retry(s,shot.strength < .67 ? 'หินไปไม่ถึง ลองดึงให้ตึงขึ้นอีกนิด' : 'พลาดไปนิด ดูเส้นจุดแล้วขยับเล็งใหม่ได้จ้า');
+      } else {
+        if (!reduced()) {
+          const tail = C.position(shot,Math.max(0,time-.037));
+          s.trail.setAttribute('d',`M${tail.x} ${tail.y}L${next.x} ${next.y}`);
+          s.trail.setAttribute('opacity','.65');
+        }
+        paintStone(s,next); previous = next;
+        s.frame = requestAnimationFrame(flight);
+      }
+    };
+    s.frame = requestAnimationFrame(flight);
+  }
+  function rearm(s) {
+    s.busy = false;
+    s.stage.classList.remove('is-flying');
+    s.trail.setAttribute('opacity','0');
+    const settings = s.host.querySelector('details');
+    paintPull(s,settings.open && !s.done ? assistShot(s) : C.draw(W.originX,W.originY));
+  }
+  function retry(s,message) {
+    s.attempts++;
+    if (s.attempts >= 3) { s.hint = true; highlight(s); }
+    feedback(s,message,'retry');
+    rearm(s);
+  }
+  function landHit(s,shot,time,item,point) {
+    const result = C.impact(shot,time,s.board[s.step].id,item);
+    const prop = s.props.get(item.id);
+    sound(item.material,result === 'weak' ? .42 : .85);
+    if (result === 'weak') {
+      if (!reduced()) prop.querySelector('svg').animate?.([{ transform:'rotate(0)' },{ transform:'rotate(12deg)' },{ transform:'rotate(-7deg)' },{ transform:'rotate(0)' }],{ duration:270 });
+      retry(s,'โดนแล้วแต่ยังไม่หล่น ลองดึงแรงขึ้นแล้วเล็งที่เดิม');
+      return;
+    }
+    prop.parentElement.append(prop);
+    const correct = result === 'hit';
+    const correction = `โดน ${item.sv} (${item.th}) คนละชิ้นกับที่ขอ วางกลับแล้วลองใหม่ได้จ้า`;
+    let reward = 0;
+    if (correct) {
+      s.down.add(item.id);
+      reward = s.onHit();
+      s.step++;
+      s.host.querySelector('.fb-sling-count').textContent = `${s.step} / ${s.board.length}`;
+      feedback(s,`✓ ${item.sv} · ${item.th}`,'good');
+    } else feedback(s,correction,'retry');
+    s.stone.setAttribute('opacity','0');
+    const start = performance.now(), direction = shot.vx >= 0 ? 1 : -1;
+    const drift = direction * Math.min(50,18 + Math.abs(shot.vx)*.085);
+    const edge = Math.hypot(item.width,item.height) / 2 + 6;
+    const landingX = Math.max(edge,Math.min(W.width-edge,item.x+drift));
+    const landing = floor(item);
+    const duration = reduced() ? 340 : 655;
+    let bounced = false;
+    const fall = now => {
+      const fraction = Math.min(1,(now-start)/duration);
+      const t = Math.min(1,fraction/.76);
+      const x = item.x + (landingX-item.x) * t;
+      const y = t < 1 ? item.y + (landing-item.y)*t*t - 18*Math.sin(Math.PI*t) : landing - 8*Math.sin(Math.PI*(fraction-.76)/.24);
+      prop.setAttribute('transform',at(x,y,direction*(t*104 - Math.max(0,fraction-.76)*45)));
+      s.burst.setAttribute('transform',`translate(${point.x} ${point.y}) scale(${.45+fraction*2})`);
+      s.burst.setAttribute('opacity',reduced() ? '0' : String(Math.max(0,.9-fraction*3)));
+      if (t === 1 && !bounced) { bounced = true; sound(item.material,.3); }
+      if (fraction < 1 || (!correct && now-start < duration+210)) { s.frame = requestAnimationFrame(fall); return; }
+      s.stone.removeAttribute('opacity');
+      if (!correct) {
+        prop.setAttribute('transform',at(item.x,item.y));
+        if (!reduced()) prop.animate?.([{ opacity:.35 },{ opacity:1 }], { duration:175 });
+        retry(s,correction);
+      } else if (s.step === s.board.length) finish(s,reward);
+      else { s.attempts = 0; s.hint = false; highlight(s); rearm(s); showTarget(s); }
+    };
+    s.frame = requestAnimationFrame(fall);
+  }
+  function finish(s,reward) {
+    s.done = true;
+    rearm(s);
+    s.host.querySelector('.fb-sling-line').textContent = 'Alla saker på gräset!';
+    s.host.querySelector('[data-sling="replay"]').disabled = true;
+    s.host.querySelector('.fb-sling-task [data-sling="hint"]').hidden = true;
+    s.host.querySelector('.fb-sling-meaning').hidden = true;
+    s.host.querySelector('.fb-sling-access').hidden = true;
+    s.host.querySelector('.fb-sling-meter').hidden = true;
+    feedback(s,`ครบทุกชิ้นแล้ว · +3 เหรียญฟาร์ม${reward ? ` · +${reward} XP` : ''}`,'good');
+    const album = s.host.querySelector('.fb-sling-album');
+    album.hidden = false;
+    album.innerHTML = `<span class="fb-kicker">ทบทวนของที่ยิงตก · แตะเพื่อฟัง 1×</span><div>${s.board.map(item => `<button type="button" class="fb-button" data-sling="word" data-value="${item.id}"><strong lang="sv">${item.sv}</strong><small>${item.th}</small></button>`).join('')}</div>`;
+    listen('Alla saker på gräset!');
+  }
+  window.FarmMischief = { mount, destroy };
+})();
+
+</script>
+  <script>
 /* The walkable farm, market conversations and mobile workbench. */
 (function () {
   'use strict';
   const C = window.FarmCore, A = window.FarmArt, D = window.MiniGameDialogue, P = window.LearningProgress, G = window.FarmGestures;
+  const S = window.FarmMischief, SC = window.FarmMischiefCore;
   const zones = {
     fields:{ th:'แปลงผัก', sv:'odlingen', x:17,y:28, icon:'🌱', note:'เพาะเมล็ด รดน้ำ แล้วเก็บพืชที่โตเต็มที่' },
     yard:{ th:'ลานบ้าน', sv:'gårdsplanen', x:49,y:25, icon:'⚑', note:'หน้าบ้านมีเสาธง และมุมสำหรับแต่งสวน' },
@@ -33903,6 +34369,7 @@ body.app-theme-sunset {
     dialog = document.createElement('dialog');
     dialog.className = 'mg-dialog fb-dialog';
     dialog.style.setProperty('--fb-map-image', `url("${mapImage}")`);
+    dialog.style.setProperty('--fb-yard-image', `url("${fieldImage}")`);
     dialog.lang = 'th';
     dialog.setAttribute('aria-labelledby', 'fb-title');
     dialog.innerHTML = `<div class="mg-dialog-body"><header class="mg-game-header fb-header"><button type="button" class="mg-close" data-fb="close" aria-label="กลับไปเลือกเกม">←</button><div class="mg-header-title"><h2 id="fb-title">สวนเบิร์ช <span lang="sv">Björkbacken</span></h2><p>ฟาร์มเล็ก ๆ ของเรา</p></div>${action('map', '⌖ แผนที่')}</header><main class="mg-game-content fb-content"></main></div>`;
@@ -33914,7 +34381,7 @@ body.app-theme-sunset {
     for (const type of ['pointerup','pointercancel','lostpointercapture']) dialog.addEventListener(type, pointerEnd);
     G.install(dialog, { status, sound, moveGoods, advanceGate, isMoving:() => !!walking });
     dialog.addEventListener('close', () => {
-      clearInterval(tick); cancelSwipe(); G.cancel(); eventInput = null; walking = false;
+      clearInterval(tick); cancelSwipe(); G.cancel(); S.destroy(); eventInput = null; walking = false;
       D.destroy(); window.SpeechEngine?.stopAudio?.();
       C.leave(state, Date.now()); save();
       window.SmallGames?.renderLobby();
@@ -33966,6 +34433,7 @@ body.app-theme-sunset {
   }
   function render(reset = false) {
     if (dialogActive) return;
+    S.destroy();
     const scroll = host.scrollTop;
     host.className = 'mg-game-content fb-content';
     const contents = {
@@ -33977,6 +34445,9 @@ body.app-theme-sunset {
     host.innerHTML = `${header()}${contents[zone]()}<div class="fb-status" role="status" aria-live="polite" data-tone="${tone}">${esc(message)}</div>${navigation()}`;
     host.scrollTop = reset ? 0 : scroll;
     updateTime();
+    if (zone === 'event' && state.event?.id === 'sling') {
+      S.mount(host.querySelector('.fb-sling-mount'), { round:state.mischiefRound, step:state.event.step, onHit:finishSlingHit });
+    }
     if (reset) focus('.fb-place-title h3, .fb-event h3, .fb-letter h3');
   }
 
@@ -34263,6 +34734,7 @@ body.app-theme-sunset {
   function renderEvent() {
     const { id, step } = state.event;
     const event = C.events[id];
+    if (id === 'sling') return `<section class="fb-event fb-card fb-sling"><span class="fb-kicker">✦ เรื่องซน ๆ ที่สวนเบิร์ช · รอบที่ ${state.mischiefRound % SC.roundCount + 1}</span><h3 tabindex="-1">${event.th}</h3><p class="fb-sling-story">เด็กข้างบ้านเรียงของเก่าไว้บนโต๊ะในสวน ชวนเราฟังชื่อของแต่ละชิ้น แล้วลองยิงให้ตกลงบนหญ้าต๊ะ</p><div class="fb-sling-mount"></div>${action('leave-event','กลับลานบ้าน')}</section>`;
     const contents = { flag:flagEvent, fence:fenceEvent, eggs:eggEvent, foal:foalEvent };
     return `<section class="fb-event fb-card"><span class="fb-kicker">เหตุการณ์ในฟาร์ม · ${step + 1} / 3</span><h3 tabindex="-1">${event.th}</h3>${contents[id](step)}${action('leave-event','กลับไปที่เดิม')}</section>`;
   }
@@ -34314,6 +34786,16 @@ body.app-theme-sunset {
   function enterEvent() {
     if (!state.event) return;
     zone = 'event'; eventInput = { ring:0, up:0, hint:false }; status(''); render(true);
+  }
+  function finishSlingHit() {
+    const result = C.progressEvent(state,'sling',state.event?.step);
+    if (result !== 'finished') { save(); return 0; }
+    const manager = window.GameEngine.StateManager;
+    const day = P.today();
+    const bonus = SC.claimBonus(state,day);
+    const xp = bonus ? manager.addXP(bonus,{ source:'game', allowBooster:false, day }) : 0;
+    save();
+    return xp;
   }
   function eventAdvance(name) {
     const { id, step } = state.event;

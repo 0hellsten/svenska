@@ -199,3 +199,37 @@
   .fb-motion-instruction p { font-size:12px; }
 }
 @media(prefers-reduced-motion:reduce) { .fb-groom-animal { transition:none; } }
+
+.fb-sling { text-align:left; }
+.fb-sling .fb-sling-story { font-size:13px;color:#5d6146;margin:4px 0 9px; }
+.fb-sling-instruction,.fb-sling-task { display:flex;align-items:center;justify-content:space-between;gap:7px; }
+.fb-sling-instruction .mg-replay { flex:none; }
+.fb-sling-instruction .fb-sling-line { margin:1px 0 0;font-size:clamp(14px,4vw,21px);color:#304b3d;font-weight:700;line-height:1.35; }
+.fb-sling-task { min-height:38px;margin:3px 0 6px; }
+.fb-sling-task [data-sling="hint"] { min-height:36px;font-size:11px;padding:5px 8px;flex:none; }
+.fb-sling-task .fb-sling-meaning { font-size:12px;margin:0 auto 0 0;line-height:1.35; }
+.fb-sling-count { margin-left:auto;flex:none;border-radius:18px;background:#e8ecd5;color:#3d5d43;padding:3px 8px;font-size:12px; }
+.fb-sling-board { width:min(100%,560px);margin-inline:auto;overflow:hidden;border-radius:14px;border:1px solid #b9b285;box-shadow:0 4px 10px #413f2a2b;background:#71895a var(--fb-yard-image) center 53% / cover; }
+.fb-sling-stage { display:block;width:100%;height:auto;aspect-ratio:500/426;touch-action:none;user-select:none;-webkit-user-select:none; }
+.fb-sling-stage [data-sling-grab] { cursor:grab; }
+.fb-sling-stage.is-drawing [data-sling-grab] { cursor:grabbing; }
+.fb-sling-stage.is-flying [data-sling-grab] { cursor:default; }
+.fb-sling-dots { fill:#fff5bd;filter:drop-shadow(0 0 2px #47462c);pointer-events:none; }
+.fb-sling-shape { filter:drop-shadow(0 3px 2px #3d35246e); }
+.fb-sling-shape svg { transform-origin:center;transform-box:fill-box; }
+.fb-sling-props .is-sling-hint .fb-sling-shape { filter:drop-shadow(0 0 4px #fff0ad) drop-shadow(0 0 6px #fff0ad); }
+.fb-sling-meter { display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:3px 10px;margin-top:8px;color:#4b5f45;font-size:11px; }
+.fb-sling-meter label { display:flex;align-items:center;gap:6px;font-weight:800; }
+.fb-sling-meter progress { width:92px;height:12px;accent-color:#a4643d; }
+.fb-sling-meter progress[data-power="good"] { accent-color:#4e7e53; }
+.fb-sling .fb-sling-feedback { margin:5px 0;font-weight:700;font-size:13px;min-height:21px;color:#5a6044; }
+.fb-sling .fb-sling-feedback[data-tone="good"] { color:#305c3c; }
+.fb-sling .fb-sling-feedback[data-tone="retry"] { color:#914927; }
+.fb-sling-access { border:1px solid #d9cba7;border-radius:8px;padding:4px 8px;color:#5b533b;font-size:12px; }
+.fb-sling-access summary { cursor:pointer;min-height:33px;padding:6px 1px; }
+.fb-sling-access > div { display:flex;gap:6px 11px;align-items:center;flex-wrap:wrap;padding:4px 0; }
+.fb-sling-access label { display:inline-flex;gap:5px;align-items:center; }
+.fb-sling-access input { width:87px;accent-color:#577b57; }
+.fb-sling-album > div { display:flex;flex-wrap:wrap;gap:5px;margin-top:5px; }
+.fb-sling-album .fb-button { text-align:left; }
+.fb-sling-album small { display:block;color:#61664a; }

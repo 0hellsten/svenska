@@ -52,9 +52,10 @@ def bundle():
     with open(os.path.join(base_dir, "farm.css"), "r", encoding="utf-8") as f:
         farm_css = f.read()
     html = html.replace('<link rel="stylesheet" href="farm.css">', f"<style>\n/* BJÖRKBACKEN */\n{farm_css}\n</style>")
-    for filename in ("farm_core.js", "learning_progress.js", "mini_games_core.js", "mini_games_art.js", "zoo_core.js",
+    for filename in ("farm_mischief_core.js", "farm_core.js", "learning_progress.js", "mini_games_core.js", "mini_games_art.js", "zoo_core.js",
                      "zoo_art.js", "zoo_escape.js", "kitchen_measures_core.js", "kitchen_measures.js",
-                     "mini_games_dialogue.js", "mini_games_hands.js", "farm_art.js", "farm_gestures.js", "farm.js", "mini_games.js"):
+                     "mini_games_dialogue.js", "mini_games_hands.js", "farm_art.js", "farm_gestures.js", "farm_mischief_art.js",
+                     "farm_mischief.js", "farm.js", "mini_games.js"):
         with open(os.path.join(base_dir, filename), "r", encoding="utf-8") as f:
             script = f.read()
         html = html.replace(f'<script src="{filename}"></script>',

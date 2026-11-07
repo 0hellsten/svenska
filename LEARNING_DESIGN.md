@@ -20,6 +20,7 @@ Reglerna i `learning_progress.js` delas med huvudappens StateManager.
 - Första genomförandet: 8/10/12 XP för kök och ordalbum, 12–22 XP för café, 24–36 XP för zoo.
 - Måttskolan ger 8–12 XP per genomförd lektion, receptens mätsteg ger 12 XP. Frågor och enskilda hällningar ger inga egna belöningar. Samma tak och regler för repetition gäller även här.
 - Björkbackens åtta kapitel ger 10–20 XP inom de vanliga taken. Skörd fyller lagret. Återkommande ordrar och sidohändelser ger gårdsmynt som används till odlingsytor och dekorationer.
+- Slangbellehysset tränar 27 vardagsord över sex sparade omgångar. En avslutad omgång ger tre gårdsmynt och upp till tre XP en gång per kalenderdag inom appens vanliga tak.
 - Upprepad uppgift samma dag: 0 XP. Repetition en senare dag: 2 XP, högst tre olika uppgifter per dag.
 - Högst 60 XP från småspelen per lokal kalenderdag. Hela appen har ett tak på 180 XP och 20 intjänade juveler per dag. Befintliga saldon behålls.
 - Var tredje ny uppgift ger två juveler en gång. Obetalda milstolpsjuveler kan hämtas vid ett senare genomförande när dagsgränsen tillåter det.

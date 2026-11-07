@@ -2,6 +2,7 @@
 (function () {
   'use strict';
   const C = window.FarmCore, A = window.FarmArt, D = window.MiniGameDialogue, P = window.LearningProgress, G = window.FarmGestures;
+  const S = window.FarmMischief, SC = window.FarmMischiefCore;
   const zones = {
     fields:{ th:'แปลงผัก', sv:'odlingen', x:17,y:28, icon:'🌱', note:'เพาะเมล็ด รดน้ำ แล้วเก็บพืชที่โตเต็มที่' },
     yard:{ th:'ลานบ้าน', sv:'gårdsplanen', x:49,y:25, icon:'⚑', note:'หน้าบ้านมีเสาธง และมุมสำหรับแต่งสวน' },
@@ -67,6 +68,7 @@
     dialog = document.createElement('dialog');
     dialog.className = 'mg-dialog fb-dialog';
     dialog.style.setProperty('--fb-map-image', `url("${mapImage}")`);
+    dialog.style.setProperty('--fb-yard-image', `url("${fieldImage}")`);
     dialog.lang = 'th';
     dialog.setAttribute('aria-labelledby', 'fb-title');
     dialog.innerHTML = `<div class="mg-dialog-body"><header class="mg-game-header fb-header"><button type="button" class="mg-close" data-fb="close" aria-label="กลับไปเลือกเกม">←</button><div class="mg-header-title"><h2 id="fb-title">สวนเบิร์ช <span lang="sv">Björkbacken</span></h2><p>ฟาร์มเล็ก ๆ ของเรา</p></div>${action('map', '⌖ แผนที่')}</header><main class="mg-game-content fb-content"></main></div>`;
@@ -78,7 +80,7 @@
     for (const type of ['pointerup','pointercancel','lostpointercapture']) dialog.addEventListener(type, pointerEnd);
     G.install(dialog, { status, sound, moveGoods, advanceGate, isMoving:() => !!walking });
     dialog.addEventListener('close', () => {
-      clearInterval(tick); cancelSwipe(); G.cancel(); eventInput = null; walking = false;
+      clearInterval(tick); cancelSwipe(); G.cancel(); S.destroy(); eventInput = null; walking = false;
       D.destroy(); window.SpeechEngine?.stopAudio?.();
       C.leave(state, Date.now()); save();
       window.SmallGames?.renderLobby();
@@ -130,6 +132,7 @@
   }
   function render(reset = false) {
     if (dialogActive) return;
+    S.destroy();
     const scroll = host.scrollTop;
     host.className = 'mg-game-content fb-content';
     const contents = {
@@ -141,6 +144,9 @@
     host.innerHTML = `${header()}${contents[zone]()}<div class="fb-status" role="status" aria-live="polite" data-tone="${tone}">${esc(message)}</div>${navigation()}`;
     host.scrollTop = reset ? 0 : scroll;
     updateTime();
+    if (zone === 'event' && state.event?.id === 'sling') {
+      S.mount(host.querySelector('.fb-sling-mount'), { round:state.mischiefRound, step:state.event.step, onHit:finishSlingHit });
+    }
     if (reset) focus('.fb-place-title h3, .fb-event h3, .fb-letter h3');
   }
 
@@ -427,6 +433,7 @@
   function renderEvent() {
     const { id, step } = state.event;
     const event = C.events[id];
+    if (id === 'sling') return `<section class="fb-event fb-card fb-sling"><span class="fb-kicker">✦ เรื่องซน ๆ ที่สวนเบิร์ช · รอบที่ ${state.mischiefRound % SC.roundCount + 1}</span><h3 tabindex="-1">${event.th}</h3><p class="fb-sling-story">เด็กข้างบ้านเรียงของเก่าไว้บนโต๊ะในสวน ชวนเราฟังชื่อของแต่ละชิ้น แล้วลองยิงให้ตกลงบนหญ้าต๊ะ</p><div class="fb-sling-mount"></div>${action('leave-event','กลับลานบ้าน')}</section>`;
     const contents = { flag:flagEvent, fence:fenceEvent, eggs:eggEvent, foal:foalEvent };
     return `<section class="fb-event fb-card"><span class="fb-kicker">เหตุการณ์ในฟาร์ม · ${step + 1} / 3</span><h3 tabindex="-1">${event.th}</h3>${contents[id](step)}${action('leave-event','กลับไปที่เดิม')}</section>`;
   }
@@ -478,6 +485,16 @@
   function enterEvent() {
     if (!state.event) return;
     zone = 'event'; eventInput = { ring:0, up:0, hint:false }; status(''); render(true);
+  }
+  function finishSlingHit() {
+    const result = C.progressEvent(state,'sling',state.event?.step);
+    if (result !== 'finished') { save(); return 0; }
+    const manager = window.GameEngine.StateManager;
+    const day = P.today();
+    const bonus = SC.claimBonus(state,day);
+    const xp = bonus ? manager.addXP(bonus,{ source:'game', allowBooster:false, day }) : 0;
+    save();
+    return xp;
   }
   function eventAdvance(name) {
     const { id, step } = state.event;

@@ -1,6 +1,7 @@
 /* Björkbacken. Save format, farm simulation and story orders. */
 (function (root) {
   'use strict';
+  const mischief = typeof module === 'object' && module.exports ? require('./farm_mischief_core.js') : root.FarmMischiefCore;
   const crops = {
     carrot: { sv:'en morot', plural:'morötter', th:'แครอต', seconds:14, chapter:0, yield:3 },
     potato: { sv:'en potatis', plural:'potatisar', th:'มันฝรั่ง', seconds:19, chapter:1, yield:3 },
@@ -55,6 +56,7 @@
     flag: { zone:'yard', th:'เชือกเสาธงขาด', sv:'Flagglinan har gått av.', steps:3 },
     fence: { zone:'pigs', th:'ประตูคอกหมูปิดไม่อยู่', sv:'Grinden behöver lagas.', steps:3 },
     eggs: { zone:'pond', th:'ไข่เป็ดซ่อนอยู่', sv:'Var ligger äggen?', steps:3 },
+    sling: { zone:'yard', th:'หนังสติ๊กหลังบ้าน', sv:'Prickskytte i trädgården.' },
     foal: { zone:'paddock', th:'ลูกม้าเกิดแล้ว!', sv:'Stoet har fått ett föl!', steps:3 }
   };
   const WAIT_AWAY = 2 * 60 * 1000;
@@ -92,12 +94,15 @@
     }
     const visits = int(source.visits, 3);
     const seen = Array.isArray(source.seen) ? [...new Set(source.seen.filter(id => known(events, id)))] : [];
-    const event = known(events, source.event?.id) ? { id:source.event.id, step:int(source.event.step, 2) } : null;
+    const mischiefRound = int(source.mischiefRound, Number.MAX_SAFE_INTEGER);
+    const event = known(events, source.event?.id) ? { id:source.event.id, step:int(source.event.step, eventSteps(source.event.id,mischiefRound) - 1) } : null;
+    const mischiefBonusDay = /^\d{4}-\d{2}-\d{2}$/.test(source.mischiefBonusDay) ? source.mischiefBonusDay : '';
     const foal = foalNames.includes(source.foal) ? source.foal : '';
     return { version:1, chapter, plots, stock, baskets:savedBaskets, orderChanged, animals:counters(source.animals, animals, Number.MAX_SAFE_INTEGER),
       coins:int(source.coins, 999, 0), day:Math.max(1, int(source.day, 999999, 1)), orderIndex,
       decor:Object.keys(decorations).filter(id => Array.isArray(source.decor) && source.decor.includes(id)),
-      activity:nowInt(source.activity), checkedActivity:nowInt(source.checkedActivity), leftAt:nowInt(source.leftAt), visits, seen, event, foal };
+      activity:nowInt(source.activity), checkedActivity:nowInt(source.checkedActivity), leftAt:nowInt(source.leftAt), visits, seen, event, foal,
+      mischiefRound, mischiefBonusDay };
   }
 
   function mark(state, now) { state.activity = Math.max(now, state.activity + 1); }
@@ -253,11 +258,13 @@
     state.visits = 0;
     return true;
   }
+  function eventSteps(id, index) { return id === 'sling' ? mischief.round(index).length : events[id].steps; }
   function progressEvent(state, id, step, name) {
     if (state.event?.id !== id || state.event.step !== step) return false;
     if (id === 'foal' && step === 2 && !foalNames.includes(name)) return false;
-    if (step < events[id].steps - 1) { state.event.step++; return 'next'; }
+    if (step < eventSteps(id,state.mischiefRound) - 1) { state.event.step++; return 'next'; }
     if (id === 'foal') state.foal = name;
+    if (id === 'sling') state.mischiefRound++;
     if (!state.seen.includes(id)) state.seen.push(id);
     state.event = null;
     state.coins = Math.min(999, state.coins + 3);
@@ -267,7 +274,7 @@
   const api = { crops, animals, goods, recipes, chapters, decorations, events, foalNames, WAIT_AWAY,
     restore, tend, plotStatus, animalStatus, tendAnimal, canRest, nextDay, sky, craft, hasStock,
     order, orderPlan, orderChange, baskets, basketCount, moveBasket, checkBasket, deliver, expand, decorate,
-    leave, returnVisit, progressEvent, zoneRequirements, trainingLevel, canVisit };
+    leave, returnVisit, progressEvent, eventSteps, zoneRequirements, trainingLevel, canVisit };
   if (typeof module === 'object' && module.exports) module.exports = api;
   else root.FarmCore = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

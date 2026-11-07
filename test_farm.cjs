@@ -4,6 +4,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const F = require('./farm_core.js');
 const G = require('./farm_gestures.js');
+const S = require('./farm_mischief_core.js');
 const P = require('./learning_progress.js');
 
 test('Plot work keeps the seed and its time across sessions and supports early morning harvest', () => {
@@ -163,6 +164,58 @@ test('A pending repair survives reload, with no duplicate payout or forced daily
   assert.equal(F.progressEvent(F.restore(state), 'flag', 2), 'finished');
 });
 
+test('The slingshot covers 27 different Swedish words and every target is reachable in the full row', () => {
+  assert.equal(S.items.length,27);
+  assert.equal(new Set(S.items.map(item => item.sv)).size,27);
+  assert.equal(new Set(S.items.map(item => item.material)).size,8);
+  for (let index=0; index<S.roundCount; index++) {
+    const board = S.targets(index), reached = new Set();
+    for (let dx=-56; dx<=56 && reached.size<board.length; dx+=4) {
+      for (let dy=60; dy<=90; dy+=4) {
+        const shot = S.draw(S.world.originX+dx,S.world.originY+dy);
+        let previous = shot;
+        for (let time=.02; time<1.6; time+=.02) {
+          const next = S.position(shot,time), hit = S.firstHit(previous,next,board);
+          if (hit) {
+            if (S.impact(shot,time,hit.target.id,hit.target) === 'hit') reached.add(hit.target.id);
+            break;
+          }
+          previous = next;
+        }
+      }
+    }
+    assert.deepEqual([...reached].sort(),board.map(item => item.id).sort());
+  }
+});
+
+test('Power and language checks distinguish a short pull and a hit on the wrong item', () => {
+  const [can,cup] = S.targets(0);
+  assert.equal(S.impact(S.draw(250,336),.2,can.id,can),'weak');
+  const strong = S.draw(271,396);
+  assert.equal(S.impact(strong,.41,can.id,can),'hit');
+  assert.equal(S.impact(strong,.41,can.id,cup),'wrong');
+});
+
+test('Mischief can appear on return, resumes the same round, and claims its XP at most once per day', () => {
+  let state = F.restore({version:1,leftAt:1,activity:2});
+  assert.equal(F.returnVisit(state,F.WAIT_AWAY+10,() => .51,0),true);
+  assert.equal(state.event.id,'sling');
+  assert.equal(F.progressEvent(state,'sling',0),'next');
+  state = F.restore(state);
+  assert.equal(state.event.step,1);
+  assert.equal(F.progressEvent(state,'sling',1),'next');
+  assert.equal(F.progressEvent(state,'sling',2),'next');
+  assert.equal(F.progressEvent(state,'sling',3),'finished');
+  assert.equal(F.progressEvent(state,'sling',3),false);
+  assert.equal(state.mischiefRound,1);
+  assert.equal(state.coins,3);
+  assert.equal(S.claimBonus(state,'2026-11-07'),3);
+  assert.equal(S.claimBonus(F.restore(state),'2026-11-07'),0);
+  const later = F.restore({version:1,mischiefRound:3,event:{id:'sling',step:4}});
+  assert.equal(later.event.step,4);
+  assert.equal(F.progressEvent(later,'sling',4),'finished');
+});
+
 test('Portable and hosted pages include the painted farm and all its rules', () => {
   for (const name of ['index.html','svenska_satun_iphone.html']) {
     const html = fs.readFileSync(name, 'utf8');
@@ -170,6 +223,8 @@ test('Portable and hosted pages include the painted farm and all its rules', () 
     assert.ok(html.includes('window.FarmGame = { open, cover }'));
     assert.ok(html.includes("const mapImage = 'data:image/webp;base64,"));
     assert.ok(html.includes('root.FarmGestures = api'));
+    assert.ok(html.includes('window.FarmMischief = { mount, destroy }'));
+    assert.doesNotMatch(html, /<script src="farm_mischief/);
     assert.doesNotMatch(html, /<script src="farm(?:_core|_art|_gestures)?\.js">/);
   }
 });
