@@ -9,7 +9,7 @@ Gränssnitt, berättelser, instruktioner och återkoppling är på thai. Svenska
 - Café: sex pass med 5, 6, 6, 7, 7 och 8 kunder (39 beställningar). En till tre varor, antal upp till fyra, flera sätt att beställa och slutligen hörförståelse.
 - Ordalbum: åtta temapaket, tre steg per paket (24 uppgifter). Sex bild–ordpar blir hörövningar. Upp till två extra ord hämtas endast från ett annat paket som eleven redan genomfört. Utan tidigare paket behålls sex par.
 - Zoo: fyra nätter med tre kapitel per natt. Samma illustrerade miljö återbesöks med nytt språkfokus: namn, lägesord, meningar och lyssning. Totalt 48 djurfrågor och tolv lås. Det pågående äventyret sparas; nya nätter öppnas i ordning.
-- Björkbacken: åtta marknadsuppdrag knyter ihop odling, djurskötsel och förädling. Beställningar tränar hörförståelse och antal, följt av svarsalternativ, meningsbygge eller tal. Gården sparas i webbläsaren. Efter ett aktivt besök och minst två minuters frånvaro kan en sidohändelse dyka upp när spelaren återvänder.
+- Björkbacken: åtta marknadsuppdrag knyter ihop odling, djurskötsel och förädling. Beställningar tränar hörförståelse och antal genom att varorna packas och flyttas mellan två korgar. Efter leveransen följer svarsalternativ, meningsbygge eller tal. Gården sparas i webbläsaren. Varje avklarat språkuppdrag eller fem olika korrekt övade ord räknas som ett steg mot att öppna nya platser. Efter ett aktivt besök och minst två minuters frånvaro kan en sidohändelse dyka upp när spelaren återvänder.
 
 Hjälp, långsamt ljud och översättning är alltid tillåtna. Inga poäng dras av för hjälp i småspelen. Nästa steg öppnas när föregående uppgift är klar; den som behöver hjälp kan fortsätta öva.
 

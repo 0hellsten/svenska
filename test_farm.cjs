@@ -3,6 +3,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const F = require('./farm_core.js');
+const G = require('./farm_gestures.js');
 const P = require('./learning_progress.js');
 
 test('Plot work keeps the seed and its time across sessions and supports early morning harvest', () => {
@@ -33,12 +34,14 @@ test('All eight story chapters are attainable with available crops, animals and 
     }
     const animal = Object.keys(F.animals).find(key => F.animals[key].good === id);
     if (animal) {
+      assert.equal(F.canVisit(state, F.animals[animal].zone, F.trainingLevel(state, 0, 0)), true);
       assert.equal(F.tendAnimal(state, animal, now), 'feed');
       assert.equal(F.tendAnimal(state, animal, now + 1000), 'rest');
       assert.equal(F.tendAnimal(state, animal, now + 40000), 'collect');
       return;
     }
     assert.ok(F.recipes[id]);
+    assert.equal(F.canVisit(state, 'workshop', F.trainingLevel(state, 0, 0)), true);
     for (const [key, amount] of Object.entries(F.recipes[id].uses)) {
       while (state.stock[key] < amount) collect(key);
     }
@@ -54,9 +57,14 @@ test('All eight story chapters are attainable with available crops, animals and 
     }
     for (const [id, amount] of Object.entries(chapter.order)) {
       while (state.stock[id] < amount) collect(id);
-      for (let i=0; i<amount; i++) assert.equal(F.adjustBasket(state, id, 1), true);
     }
-    assert.deepEqual(F.checkBasket(state), { missing:[], extra:[], ok:true });
+    const change = F.orderChange(state);
+    if (change) assert.equal(F.moveBasket(state, change.id, 'stock', change.from), 'changed');
+    const plan = F.orderPlan(state);
+    for (const place of F.baskets) for (const [id, amount] of Object.entries(plan[place])) {
+      while (F.basketCount(state, place, id) < amount) assert.equal(F.moveBasket(state, id, 'stock', place), 'moved');
+    }
+    assert.deepEqual(F.checkBasket(state), { missing:[], extra:[], misplaced:[], ok:true });
     assert.equal(F.deliver(state, now).id, chapter.id);
     assert.equal(F.deliver(state, now), null);
     assert.equal(P.complete(sm, `farm:${chapter.id}`, chapter.id).first, true);
@@ -68,12 +76,62 @@ test('All eight story chapters are attainable with available crops, animals and 
 
 test('Basket mismatches preserve stock, while crafting reconciles packed ingredients', () => {
   const state = F.restore({ version:1, chapter:2, stock:{carrot:2,wheat:3}, basket:{carrot:2,wheat:3} });
-  assert.deepEqual(F.checkBasket(state), { missing:['bread'], extra:['carrot','wheat'], ok:false });
+  assert.deepEqual(F.checkBasket(state), { missing:['bread'], extra:['carrot','wheat'], misplaced:[], ok:false });
   assert.equal(F.deliver(state, 500), null);
   assert.equal(F.craft(state, 'flour', 500), true);
   assert.equal(state.stock.wheat, 1);
-  assert.equal(state.basket.wheat, 1);
+  assert.equal(state.baskets.large.wheat, 1);
   assert.equal(state.stock.flour, 1);
+});
+
+test('A change of mind persists and a misplaced item can be transferred without losing stock', () => {
+  const state = F.restore({ version:1, chapter:1, stock:{ potato:2, egg:1 } });
+  assert.deepEqual(F.orderPlan(state), { large:{ potato:2 }, small:{ egg:1 } });
+  assert.equal(F.moveBasket(state, 'potato', 'stock', 'large'), 'changed');
+  assert.equal(F.moveBasket(state, 'potato', 'stock', 'large'), 'moved');
+  assert.equal(F.moveBasket(state, 'egg', 'stock', 'small'), 'moved');
+  const resumed = F.restore(state);
+  assert.deepEqual(F.checkBasket(resumed), { missing:[], extra:[], misplaced:['potato'], ok:false });
+  assert.equal(F.moveBasket(resumed, 'potato', 'large', 'small'), 'moved');
+  assert.equal(F.moveBasket(resumed, 'potato', 'stock', 'small'), false);
+  assert.equal(F.moveBasket(resumed, 'egg', 'small', 'stock'), 'moved');
+  assert.equal(F.moveBasket(resumed, 'egg', 'stock', 'small'), 'moved');
+  assert.equal(F.deliver(resumed, 10).id, 'breakfast');
+  assert.equal(resumed.stock.potato, 0);
+  assert.equal(resumed.orderChanged, false);
+});
+
+test('Language progress opens each zone before its first required delivery, including for old saves', () => {
+  const state = F.restore();
+  assert.equal(F.canVisit(state, 'fields', F.trainingLevel(state, 0, 0)), true);
+  assert.equal(F.canVisit(state, 'barn', F.trainingLevel(state, 0, 4)), false);
+  assert.equal(F.canVisit(state, 'barn', F.trainingLevel(state, 0, 5)), true);
+  assert.equal(F.canVisit(state, 'paddock', F.trainingLevel(state, 2, 5)), true);
+  assert.equal(F.canVisit(state, 'pigs', F.trainingLevel(state, 2, 9)), false);
+  const saved = F.restore({ version:1, chapter:5, foal:'Sol' });
+  assert.equal(F.canVisit(saved, 'pigs', F.trainingLevel(saved, 0, 0)), true);
+  const pending = F.restore({ version:1, event:{ id:'fence', step:1 } });
+  assert.equal(F.canVisit(pending, 'pigs', 0), true);
+  const returning = F.restore({ version:1, leftAt:1, activity:2 });
+  assert.equal(F.returnVisit(returning, F.WAIT_AWAY + 10, () => .4, 0), true);
+  assert.equal(returning.event.id, 'flag');
+});
+
+test('Brushing distinguishes a quick swipe from a steady stroke and lets her recover', () => {
+  const stroke = { point:null, distance:0, direction:0 };
+  assert.equal(G.brushMotion(stroke, {x:.24,y:.44,t:0}), 'ready');
+  assert.equal(G.brushMotion(stroke, {x:.64,y:.44,t:25}), 'fast');
+  assert.equal(G.brushMotion(stroke, {x:.50,y:.44,t:180}), 'brushing');
+  assert.equal(G.brushMotion(stroke, {x:.37,y:.44,t:310}), 'stroke');
+});
+
+test('The gate recognizes the latch, quarter turn and pull while allowing overshoot recovery', () => {
+  assert.equal(G.gateReady('bolt', .55), false);
+  assert.equal(G.gateReady('bolt', .9), true);
+  assert.equal(G.gateReady('turn', 123), false);
+  assert.equal(G.gateReady('turn', 123 + G.angleDelta(123, 93)), true);
+  assert.equal(G.angleDelta(179, -176), 5);
+  assert.equal(G.gateReady('pull', .8), true);
 });
 
 test('Surprises wait for a worked visit and enough time away, and save the foal permanently', () => {
@@ -111,6 +169,7 @@ test('Portable and hosted pages include the painted farm and all its rules', () 
     assert.ok(html.includes('root.FarmCore = api'));
     assert.ok(html.includes('window.FarmGame = { open, cover }'));
     assert.ok(html.includes("const mapImage = 'data:image/webp;base64,"));
-    assert.doesNotMatch(html, /<script src="farm(?:_core|_art)?\.js">/);
+    assert.ok(html.includes('root.FarmGestures = api'));
+    assert.doesNotMatch(html, /<script src="farm(?:_core|_art|_gestures)?\.js">/);
   }
 });

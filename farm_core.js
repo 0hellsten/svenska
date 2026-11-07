@@ -53,12 +53,14 @@
   ];
   const events = {
     flag: { zone:'yard', th:'เชือกเสาธงขาด', sv:'Flagglinan har gått av.', steps:3 },
-    fence: { zone:'pigs', th:'รั้วคอกหมูหลุด', sv:'Staketet behöver lagas.', steps:3 },
+    fence: { zone:'pigs', th:'ประตูคอกหมูปิดไม่อยู่', sv:'Grinden behöver lagas.', steps:3 },
     eggs: { zone:'pond', th:'ไข่เป็ดซ่อนอยู่', sv:'Var ligger äggen?', steps:3 },
     foal: { zone:'paddock', th:'ลูกม้าเกิดแล้ว!', sv:'Stoet har fått ett föl!', steps:3 }
   };
   const WAIT_AWAY = 2 * 60 * 1000;
   const MAX_STOCK = 99;
+  const baskets = ['large','small'];
+  const zoneRequirements = { fields:0, yard:0, market:0, barn:1, workshop:2, paddock:3, pond:4, pigs:5 };
   const int = (value, limit, fallback = 0) => Number.isInteger(value) && value >= 0 ? Math.min(limit, value) : fallback;
   const nowInt = value => Number.isFinite(value) && value >= 0 ? value : 0;
   const known = (catalogue, key) => typeof key === 'string' && Object.hasOwn(catalogue, key);
@@ -66,21 +68,34 @@
 
   function restore(raw) {
     const source = raw?.version === 1 ? raw : {};
-    const chapter = int(source.chapter, chapters.length), plotCount = Math.min(chapter >= 5 ? 8 : chapter >= 2 ? 6 : 4, int(source.plotCount, 8, 4));
+    const chapter = int(source.chapter, chapters.length), plotCount = Math.min(chapter >= 5 ? 8 : chapter >= 2 ? 6 : 4, int(source.plots?.length, 8, 4));
     const available = Math.min(chapter, chapters.length - 1);
     const plots = Array.from({ length:Math.max(4, plotCount) }, (_, i) => {
       const plot = Array.isArray(source.plots) && source.plots[i];
       return known(crops, plot?.id) && crops[plot.id].chapter <= available ? { id:plot.id, planted:nowInt(plot.planted), ready:nowInt(plot.ready) } : null;
     });
     const stock = counters(source.stock, goods);
-    const basket = counters(source.basket, goods);
-    for (const id of Object.keys(basket)) basket[id] = Math.min(basket[id], stock[id]);
+    const orderIndex = int(source.orderIndex, Number.MAX_SAFE_INTEGER);
+    const savedBaskets = { large:counters(source.baskets?.large, goods, 9), small:counters(source.baskets?.small, goods, 9) };
+    const orderChanged = source.orderChanged === true;
+    if (!source.baskets) {
+      const plan = orderPlan({ chapter, orderIndex, orderChanged });
+      for (const id of Object.keys(goods)) {
+        const packed = Math.min(int(source.basket?.[id], 9), stock[id]);
+        savedBaskets.small[id] = Math.min(packed, plan.small[id] || 0);
+        savedBaskets.large[id] = packed - savedBaskets.small[id];
+      }
+    }
+    for (const id of Object.keys(goods)) {
+      savedBaskets.large[id] = Math.min(savedBaskets.large[id], stock[id]);
+      savedBaskets.small[id] = Math.min(savedBaskets.small[id], stock[id] - savedBaskets.large[id]);
+    }
     const visits = int(source.visits, 3);
     const seen = Array.isArray(source.seen) ? [...new Set(source.seen.filter(id => known(events, id)))] : [];
     const event = known(events, source.event?.id) ? { id:source.event.id, step:int(source.event.step, 2) } : null;
     const foal = foalNames.includes(source.foal) ? source.foal : '';
-    return { version:1, chapter, plots, stock, basket, animals:counters(source.animals, animals, Number.MAX_SAFE_INTEGER),
-      coins:int(source.coins, 999, 0), day:Math.max(1, int(source.day, 999999, 1)), orderIndex:int(source.orderIndex, Number.MAX_SAFE_INTEGER),
+    return { version:1, chapter, plots, stock, baskets:savedBaskets, orderChanged, animals:counters(source.animals, animals, Number.MAX_SAFE_INTEGER),
+      coins:int(source.coins, 999, 0), day:Math.max(1, int(source.day, 999999, 1)), orderIndex,
       decor:Object.keys(decorations).filter(id => Array.isArray(source.decor) && source.decor.includes(id)),
       activity:nowInt(source.activity), checkedActivity:nowInt(source.checkedActivity), leftAt:nowInt(source.leftAt), visits, seen, event, foal };
   }
@@ -142,31 +157,62 @@
     // Keep the basket backed by stock even if she crafts with something packed.
     for (const [material, qty] of Object.entries(recipe.uses)) {
       state.stock[material] -= qty;
-      state.basket[material] = Math.min(state.basket[material], state.stock[material]);
+      state.baskets.large[material] = Math.min(state.baskets.large[material], state.stock[material]);
+      state.baskets.small[material] = Math.min(state.baskets.small[material], state.stock[material] - state.baskets.large[material]);
     }
     addStock(state, id, 1);
     mark(state, now);
     return true;
   }
   function order(state) { return chapters[state.chapter] || repeatOrders[state.orderIndex % repeatOrders.length]; }
-  function adjustBasket(state, id, delta) {
-    if (!known(goods, id) || ![1,-1].includes(delta)) return false;
-    const count = state.basket[id] + delta;
-    if (count < 0 || count > Math.min(9, state.stock[id])) return false;
-    state.basket[id] = count;
-    return true;
+  function orderPlan(state, changed = state.orderChanged) {
+    const plan = { large:{}, small:{} };
+    Object.entries(order(state).order).forEach(([id, count], index) => { plan[baskets[index % 2]][id] = count; });
+    const change = orderChange(state);
+    if (changed && change) {
+      plan[change.from][change.id]--;
+      plan[change.to][change.id] = 1;
+    }
+    return plan;
+  }
+  function orderChange(state) {
+    const entries = Object.entries(order(state).order);
+    if (entries.length < 2) return null;
+    const index = entries.findIndex(([, count]) => count > 1);
+    return index < 0 ? null : { id:entries[index][0], from:baskets[index % 2], to:baskets[1 - index % 2] };
+  }
+  function basketCount(state, place, id) {
+    if (place === 'stock') return state.stock[id] - state.baskets.large[id] - state.baskets.small[id];
+    return state.baskets[place]?.[id] || 0;
+  }
+  function moveBasket(state, id, from, to) {
+    const places = ['stock', ...baskets];
+    if (!known(goods, id) || !places.includes(from) || !places.includes(to) || from === to || basketCount(state, from, id) <= 0) return false;
+    if (to !== 'stock' && basketCount(state, to, id) >= 9) return false;
+    if (from !== 'stock') state.baskets[from][id]--;
+    if (to !== 'stock') state.baskets[to][id]++;
+    const change = orderChange(state);
+    if (!state.orderChanged && change?.id === id && from === 'stock' && to === change.from) {
+      state.orderChanged = true;
+      return 'changed';
+    }
+    return 'moved';
   }
   function checkBasket(state) {
     const wants = order(state).order;
-    const missing = Object.keys(wants).filter(id => state.basket[id] < wants[id]);
-    const extra = Object.keys(goods).filter(id => state.basket[id] > (wants[id] || 0));
-    return { missing, extra, ok:!missing.length && !extra.length && hasStock(state, wants) };
+    const packed = id => state.baskets.large[id] + state.baskets.small[id];
+    const plan = orderPlan(state);
+    const missing = Object.keys(wants).filter(id => packed(id) < wants[id]);
+    const extra = Object.keys(goods).filter(id => packed(id) > (wants[id] || 0));
+    const misplaced = Object.keys(wants).filter(id => baskets.some(place => state.baskets[place][id] > (plan[place][id] || 0)) && !extra.includes(id));
+    return { missing, extra, misplaced, ok:!missing.length && !extra.length && !misplaced.length && hasStock(state, wants) };
   }
   function deliver(state, now) {
     if (!checkBasket(state).ok) return null;
     const request = order(state);
     for (const [id, qty] of Object.entries(request.order)) state.stock[id] -= qty;
-    state.basket = counters(null, goods);
+    state.baskets = { large:counters(null, goods), small:counters(null, goods) };
+    state.orderChanged = false;
     state.coins = Math.min(999, state.coins + request.coins);
     if (request.id) state.chapter++;
     else state.orderIndex++;
@@ -188,11 +234,18 @@
     return true;
   }
   function leave(state, now) { state.leftAt = now; }
-  function returnVisit(state, now, random = Math.random) {
+  function trainingLevel(state, missions, words) {
+    return Math.max(state.chapter, int(missions, 1000) + Math.floor(int(words, 10000) / 5));
+  }
+  function canVisit(state, zone, level) {
+    return Object.hasOwn(zoneRequirements, zone) && (level >= zoneRequirements[zone]
+      || events[state.event?.id]?.zone === zone || (zone === 'paddock' && !!state.foal));
+  }
+  function returnVisit(state, now, random = Math.random, level = Infinity) {
     if (state.event || !state.leftAt || state.activity <= state.checkedActivity || now - state.leftAt < WAIT_AWAY) return false;
     state.checkedActivity = state.activity;
     state.visits++;
-    const eligible = ['flag', 'eggs', 'fence', ...(!state.foal ? ['foal'] : [])];
+    const eligible = Object.keys(events).filter(id => (id !== 'foal' || !state.foal) && canVisit(state, events[id].zone, level));
     if (state.visits < 3 && random() >= .55) return false;
     const unseen = eligible.filter(id => !state.seen.includes(id));
     const options = unseen.length ? unseen : eligible;
@@ -213,7 +266,8 @@
 
   const api = { crops, animals, goods, recipes, chapters, decorations, events, foalNames, WAIT_AWAY,
     restore, tend, plotStatus, animalStatus, tendAnimal, canRest, nextDay, sky, craft, hasStock,
-    order, adjustBasket, checkBasket, deliver, expand, decorate, leave, returnVisit, progressEvent };
+    order, orderPlan, orderChange, baskets, basketCount, moveBasket, checkBasket, deliver, expand, decorate,
+    leave, returnVisit, progressEvent, zoneRequirements, trainingLevel, canVisit };
   if (typeof module === 'object' && module.exports) module.exports = api;
   else root.FarmCore = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

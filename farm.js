@@ -1,7 +1,7 @@
 /* The walkable farm, market conversations and mobile workbench. */
 (function () {
   'use strict';
-  const C = window.FarmCore, A = window.FarmArt, D = window.MiniGameDialogue, P = window.LearningProgress;
+  const C = window.FarmCore, A = window.FarmArt, D = window.MiniGameDialogue, P = window.LearningProgress, G = window.FarmGestures;
   const zones = {
     fields:{ th:'แปลงผัก', sv:'odlingen', x:17,y:28, icon:'🌱', note:'เพาะเมล็ด รดน้ำ แล้วเก็บพืชที่โตเต็มที่' },
     yard:{ th:'ลานบ้าน', sv:'gårdsplanen', x:49,y:25, icon:'⚑', note:'หน้าบ้านมีเสาธง และมุมสำหรับแต่งสวน' },
@@ -26,17 +26,24 @@
   const and = words => words.length > 1 ? `${words.slice(0,-1).join(', ')} och ${words.at(-1)}` : words[0];
   const zoneLabel = (id, event = false) => `${zones[id].icon} ${zones[id].th}${event ? ' <span class="fb-pin-alert">!</span>' : ''}`;
   const eventHere = zone => C.events[state.event?.id]?.zone === zone;
+  const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const basketNames = { large:{ th:'ตะกร้าใหญ่', sv:'den stora korgen' }, small:{ th:'ตะกร้าเล็ก', sv:'den lilla korgen' } };
   let dialog, host, state, opener, tick, zone, at, tool, seed, message, tone, shown, dialogActive, walking, swipe, eventInput;
+  let level, lockedZone, selectedGoods, marketMessage, basketFeedback, practiceGate;
 
   function save() { window.GameEngine.StateManager.save(); }
   function speak(line) { window.SpeechEngine?.speakSwedish?.(line, 1); }
   function sound(id) { window.SpeechEngine?.playSound?.(id); }
   function status(text, type = '') {
     message = text; tone = type;
-    const live = host.querySelector('.fb-status');
+    const live = host.querySelector('.fb-motion-feedback, .fb-status');
     if (live) { live.textContent = message; live.dataset.tone = tone; }
   }
   function focus(selector) { host.querySelector(selector)?.focus({ preventScroll:true }); }
+  function refreshLevel() {
+    const proof = P.levelInfo(P.state().totalXP || 0, P.state());
+    level = C.trainingLevel(state, proof.missions, proof.words);
+  }
 
   function open(card) {
     if (dialog?.open) return;
@@ -45,10 +52,12 @@
     const manager = window.GameEngine.StateManager;
     state = C.restore(manager.state.farm);
     manager.state.farm = state;
-    C.returnVisit(state, Date.now());
+    refreshLevel();
+    C.returnVisit(state, Date.now(), Math.random, level);
     save();
     zone = 'map'; at = 'yard'; tool = 'seed'; seed = 'carrot'; message = ''; tone = '';
     shown = false; dialogActive = false; walking = false; swipe = null; eventInput = null;
+    lockedZone = null; selectedGoods = null; marketMessage = ''; basketFeedback = null; practiceGate = null;
     dialog.showModal();
     render(true);
     tick = setInterval(updateTime, 500);
@@ -67,8 +76,9 @@
     dialog.addEventListener('pointerdown', pointerDown);
     dialog.addEventListener('pointermove', pointerMove);
     for (const type of ['pointerup','pointercancel','lostpointercapture']) dialog.addEventListener(type, pointerEnd);
+    G.install(dialog, { status, sound, moveGoods, advanceGate, isMoving:() => !!walking });
     dialog.addEventListener('close', () => {
-      clearInterval(tick); cancelSwipe(); eventInput = null; walking = false;
+      clearInterval(tick); cancelSwipe(); G.cancel(); eventInput = null; walking = false;
       D.destroy(); window.SpeechEngine?.stopAudio?.();
       C.leave(state, Date.now()); save();
       window.SmallGames?.renderLobby();
@@ -78,7 +88,7 @@
     document.addEventListener('visibilitychange', () => {
       if (!dialog.open) return;
       if (document.hidden) { C.leave(state, Date.now()); save(); }
-      else if (C.returnVisit(state, Date.now())) { save(); if (!dialogActive && !walking) render(); }
+      else if (C.returnVisit(state, Date.now(), Math.random, level)) { save(); if (zone === 'map' && !walking) render(); }
     });
     window.addEventListener('pagehide', () => { if (dialog.open) { C.leave(state, Date.now()); save(); } });
   }
@@ -88,7 +98,8 @@
   function pin(id) {
     const place = zones[id];
     const pending = eventHere(id);
-    return `<button type="button" class="fb-pin ${pending ? 'has-event' : ''}" style="--x:${place.x}%;--y:${place.y}%" data-fb="walk" data-value="${id}" aria-label="ไป${place.th}${pending ? ' · มีเหตุการณ์' : ''}">${zoneLabel(id, pending)}</button>`;
+    const locked = !C.canVisit(state, id, level);
+    return `<button type="button" class="fb-pin ${pending ? 'has-event' : ''} ${locked ? 'is-locked' : ''}" style="--x:${place.x}%;--y:${place.y}%" data-fb="walk" data-value="${id}" aria-label="${locked ? `${place.th} · ยังล็อกอยู่` : `ไป${place.th}${pending ? ' · มีเหตุการณ์' : ''}`}">${locked ? `<span aria-hidden="true">🔒</span> ${place.th}` : zoneLabel(id, pending)}</button>`;
   }
   function map() {
     const place = zones[at];
@@ -96,7 +107,13 @@
   }
   function header() {
     const sky = C.sky(state);
-    return `<div class="fb-stats"><span>${sky.icon} วันที่ ${state.day} · ${sky.th}</span><span>◈ ${state.coins} เหรียญฟาร์ม</span><span>✦ ${state.chapter} / ${C.chapters.length} บท</span></div>`;
+    const open = Object.keys(zones).filter(id => C.canVisit(state, id, level)).length;
+    return `<div class="fb-stats"><span>${sky.icon} วันที่ ${state.day} · ${sky.th}</span><span>◈ ${state.coins}</span><span>✦ ${state.chapter} / ${C.chapters.length} บท</span><span>⌖ ${open} / ${Object.keys(zones).length} จุด</span></div>`;
+  }
+  function lockNote() {
+    if (!lockedZone) return '';
+    const place = zones[lockedZone], goal = C.zoneRequirements[lockedZone];
+    return `<section class="fb-lock-note fb-notice" tabindex="-1"><span class="fb-kicker">ฝึกสวีเดนเพื่อเปิดทางใหม่</span><strong>${place.th} · ${Math.min(level, goal)} / ${goal}</strong><p>ทำภารกิจภาษาให้จบ 1 ภารกิจ หรือฝึกคำสวีเดนให้ถูกเพิ่ม 5 คำต่างกัน จะได้ความคืบหน้า 1 ขั้น ทำออร์เดอร์ที่ตลาดก็ช่วยเปิดทางได้ต๊ะ</p><progress max="${goal}" value="${level}" aria-label="ความคืบหน้าเพื่อเปิด${place.th}"></progress></section>`;
   }
   function notice() {
     if (!state.event) return '';
@@ -116,10 +133,10 @@
     const scroll = host.scrollTop;
     host.className = 'mg-game-content fb-content';
     const contents = {
-      map:() => `${state.event ? notice() : ''}${map()}${letter()}`,
+      map:() => `${state.event ? notice() : ''}${map()}${lockNote()}${letter()}`,
       fields, market, workshop, yard,
       barn:() => animalZone('barn'), pigs:() => animalZone('pigs'), pond:() => animalZone('pond'), paddock:() => animalZone('paddock'),
-      journal, event:renderEvent
+      journal, event:renderEvent, grooming, repair:renderPracticeGate
     };
     host.innerHTML = `${header()}${contents[zone]()}<div class="fb-status" role="status" aria-live="polite" data-tone="${tone}">${esc(message)}</div>${navigation()}`;
     host.scrollTop = reset ? 0 : scroll;
@@ -132,20 +149,41 @@
   }
   function walk(id) {
     if (!Object.hasOwn(zones, id) || walking || dialogActive) return;
+    refreshLevel();
+    if (!C.canVisit(state, id, level)) {
+      zone = 'map'; lockedZone = id; render();
+      const note = host.querySelector('.fb-lock-note');
+      note?.focus({ preventScroll:true });
+      note?.scrollIntoView({ block:'nearest', behavior:reducedMotion() ? 'instant' : 'smooth' });
+      return;
+    }
+    lockedZone = null; G.cancel();
     if (zone !== 'map') { zone = 'map'; render(true); }
     const marker = host.querySelector('.fb-walker');
+    const canvas = host.querySelector('.fb-map');
     const to = zones[id], from = zones[at];
     const trip = Symbol();
     const arrive = () => {
       if (!dialog.open || walking !== trip) return;
       at = zone = id; walking = false; shown = false; message = ''; tone = '';
+      selectedGoods = null; marketMessage = ''; basketFeedback = null;
       render(true);
+      revealPlace();
       if (id === 'market') speak(orderText(C.order(state)));
     };
     walking = trip;
-    const frames = [{ left:`${from.x}%`,top:`${from.y}%` },{ left:'49%',top:'46%' },{ left:`${to.x}%`,top:`${to.y}%` }];
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !marker?.animate) arrive();
-    else marker.animate(frames, { duration:430, easing:'ease-in-out', fill:'forwards' }).finished.then(arrive, arrive);
+    const frames = [{ left:`${from.x}%`,top:`${from.y}%` },{ left:'49%',top:'43%' },{ left:`${to.x}%`,top:`${to.y}%` }];
+    if (reducedMotion() || !marker?.animate || !canvas) { arrive(); return; }
+    canvas.querySelector(`[data-value="${id}"]`)?.classList.add('is-destination');
+    canvas.style.transformOrigin = `${to.x}% ${to.y}%`;
+    marker.animate(frames, { duration:360, easing:'ease-in-out', fill:'forwards' });
+    canvas.animate([{ transform:'scale(1)', opacity:1, offset:0 }, { transform:'scale(1)', opacity:1, offset:.52 },
+      { transform:'scale(1.48)', opacity:0 }], { duration:510, easing:'ease-in-out', fill:'forwards' }).finished.then(arrive, arrive);
+  }
+  function revealPlace() {
+    if (reducedMotion()) return;
+    host.querySelector('.fb-place-title')?.animate?.([{ opacity:0, transform:'translateY(8px)' },{ opacity:1, transform:'none' }], { duration:220, easing:'ease-out' });
+    host.querySelector('.fb-fields, .fb-scene-strip, .fb-yard-art')?.animate?.([{ opacity:.25, transform:'scale(1.045)' },{ opacity:1, transform:'scale(1)' }], { duration:270, easing:'ease-out' });
   }
 
   function plot(index, now) {
@@ -192,10 +230,27 @@
 
   function animalZone(id) {
     const residents = Object.entries(C.animals).filter(([, animal]) => animal.zone === id);
-    return `${locationTitle(id)}${eventHere(id) ? eventLink() : ''}<div class="fb-scene-strip fb-scene-${id}" aria-hidden="true"></div><div class="fb-animal-grid">${residents.map(([key, animal]) => {
+    const visits = id === 'pigs' && !eventHere(id) ? `<div class="fb-event-link">${action('practice-gate','ลองซ่อมประตูคอก →')}</div>` : '';
+    return `${locationTitle(id)}${eventHere(id) ? eventLink() : ''}${visits}<div class="fb-scene-strip fb-scene-${id}" aria-hidden="true"></div><div class="fb-animal-grid">${residents.map(([key, animal]) => {
       const available = state.chapter >= animal.chapter;
-      return `<article class="fb-card fb-animal ${available ? '' : 'is-locked'}">${A.animal(key)}<h4>${animal.th} <small lang="sv">${animal.sv}</small></h4>${replay(animal.sv, 'ฟังชื่อ')}${available ? action('animal', '', key, 'data-fb-animal') : `<p>มาถึงเมื่อเปิดบทที่ ${animal.chapter + 1}</p>`}</article>`;
-    }).join('')}${id === 'paddock' && state.foal ? `<article class="fb-card fb-animal">${A.animal('foal')}<h4 lang="sv">${state.foal}</h4><p>ลูกม้าประจำทุ่งเบิร์ช</p>${replay(`Det här är ${state.foal}. Ett föl.`)}</article>` : ''}</div>${action('dawn','☀ พักจนถึงเช้า','', 'data-fb-rest')}`;
+      return `<article class="fb-card fb-animal ${available ? '' : 'is-locked'}">${A.animal(key)}<h4>${animal.th} <small lang="sv">${animal.sv}</small></h4>${replay(animal.sv, 'ฟังชื่อ')}${available ? action('animal', '', key, 'data-fb-animal') : `<p>มาถึงเมื่อเปิดบทที่ ${animal.chapter + 1}</p>`}${key === 'horse' && !state.foal ? action('groom','แปรงขนม้า →') : ''}</article>`;
+    }).join('')}${id === 'paddock' && state.foal ? `<article class="fb-card fb-animal">${A.animal('foal')}<h4 lang="sv">${state.foal}</h4><p>ลูกม้าประจำทุ่งเบิร์ช</p>${replay(`Det här är ${state.foal}. Ett föl.`)}${action('groom','แปรงขนลูกม้า →','','data-primary')}</article>` : ''}</div>${action('dawn','☀ พักจนถึงเช้า','', 'data-fb-rest')}`;
+  }
+  function motionFeedback() { return `<p class="fb-motion-feedback" role="status" aria-live="polite" data-tone="${tone}">${esc(message)}</p>`; }
+  function grooming() {
+    const foal = !!state.foal;
+    const name = foal ? `<span lang="sv">${esc(state.foal)}</span>` : 'แม่ม้า';
+    return `<section class="fb-card fb-groom"><span class="fb-kicker">🐴 ทุ่งม้า · ใช้แปรงขนนุ่ม</span><h3 tabindex="-1">แปรงขนให้${name}</h3>
+      <div class="fb-motion-instruction"><p>ลากแปรงช้า ๆ ตามแนวขนบนหลัง จะลากกลับอีกทางก็ได้</p>${replay('Borsta försiktigt längs ryggen.')}</div>
+      <div class="fb-groom-stage" data-fb-motion data-fb-gesture="brush" data-strokes="0" data-mood="ready" aria-hidden="true">
+        <div class="fb-groom-animal">${A.animal(foal ? 'foal' : 'horse')}</div><span class="fb-brush-track"></span>
+        <span class="fb-brush-tool"><i></i><b></b></span><span class="fb-groom-sparkle">✧</span></div>
+      <div class="fb-groom-meter"><progress max="${G.BRUSH_GOAL}" value="0" aria-label="จำนวนครั้งที่แปรงได้ดี"></progress><span class="fb-groom-reading">0 / ${G.BRUSH_GOAL}</span></div>
+      ${motionFeedback()}<div class="fb-row">${action('brush-assist','แตะเพื่อแปรงหนึ่งครั้ง')}${action('brush-again','แปรงใหม่','','hidden')}${action('leave-groom','กลับไปทุ่งม้า')}</div></section>`;
+  }
+  function openGrooming() {
+    zone = 'grooming'; status(''); render(true); focus('.fb-groom h3');
+    speak('Borsta försiktigt längs ryggen.');
   }
   function updateTime() {
     if (!dialog.open || dialogActive) return;
@@ -226,20 +281,84 @@
   }
 
   function orderText(order) {
-    const items = and(Object.entries(order.order).map(([id, count]) => qty(id, count)));
-    return [ `Jag skulle vilja ha ${items}, tack.`, `Kan du ordna ${items} till mig?`, `Till marknaden behöver jag ${items}.` ][order.guest];
+    const plan = C.orderPlan(state);
+    const requests = C.baskets.filter(place => Object.keys(plan[place]).length).map(place => {
+      const items = and(Object.entries(plan[place]).map(([id, count]) => qty(id, count)));
+      return `${items} i ${basketNames[place].sv}`;
+    });
+    const lead = ['Jag skulle vilja ha', 'Kan du lägga', 'Jag behöver'][order.guest];
+    return `${lead} ${and(requests)}${order.guest === 1 ? '?' : ', tack.'}`;
+  }
+  function marketTranslation() {
+    const plan = C.orderPlan(state);
+    return C.baskets.filter(place => Object.keys(plan[place]).length).map(place => {
+      const goods = Object.entries(plan[place]).map(([id,n]) => `${C.goods[id].th} × ${n}`).join(' กับ ');
+      return `${basketNames[place].th} · ${goods}`;
+    }).join(' | ');
+  }
+  function packItem(id, from) {
+    const item = C.goods[id];
+    const n = C.basketCount(state, from, id);
+    const picked = selectedGoods?.id === id && selectedGoods.from === from;
+    const flagged = from !== 'stock' && (basketFeedback?.misplaced.includes(id) || basketFeedback?.extra.includes(id))
+      && n > (C.orderPlan(state)[from][id] || 0);
+    return `<button type="button" class="fb-pack-item ${flagged ? 'needs-move' : ''}" data-fb="pick-goods" data-fb-pack="${id}" data-from="${from}" data-value="${id}" aria-pressed="${picked}" aria-label="${item.th} ${n} · ${from === 'stock' ? 'ลัง' : basketNames[from].th}">
+      <span class="fb-pack-grip">${glyph(id)}<b>${n}</b></span><span lang="sv">${item.sv}</span></button>`;
+  }
+  function marketBasket(place) {
+    const items = Object.keys(C.goods).filter(id => C.basketCount(state, place, id) > 0);
+    const count = Object.values(state.baskets[place]).reduce((sum, qty) => sum + qty, 0);
+    return `<div class="fb-market-basket fb-basket-${place}" data-fb-drop="${place}"><button type="button" class="fb-basket-target" data-fb="drop-goods" data-value="${place}">
+      <span aria-hidden="true">🧺</span><strong>${basketNames[place].th}</strong><small lang="sv">${basketNames[place].sv}</small><b>${count}</b></button>
+      <div class="fb-basket-pieces">${items.map(id => packItem(id, place)).join('') || '<span class="fb-basket-empty">วางของตรงนี้</span>'}</div></div>`;
   }
   function market() {
     const order = C.order(state), guest = D.guests[order.guest];
     const line = orderText(order);
-    const translation = Object.entries(order.order).map(([id,n]) => `${C.goods[id].th} × ${n}`).join(' กับ ');
-    const stock = Object.keys(C.goods).filter(id => state.stock[id] || state.basket[id]);
+    const change = state.orderChanged && C.orderChange(state);
+    const stock = Object.keys(C.goods).filter(id => C.basketCount(state, 'stock', id) > 0);
     return `${locationTitle('market')}<div class="fb-scene-strip fb-scene-market" aria-hidden="true"></div><section class="fb-card fb-order">
-      <span class="fb-kicker">${order.id ? 'ตะกร้าตามจดหมาย' : 'ออร์เดอร์ใหม่'} · ${guest.thai}</span><h4>${order.title || 'ของสำหรับตลาดวันนี้'}</h4><p ${state.chapter < 3 || shown ? 'lang="sv"' : ''} class="fb-order-line">${state.chapter < 3 || shown ? esc(line) : 'ลองฟังว่าลูกค้าต้องการอะไร'}</p>
-      ${shown ? `<p>ขอ ${translation}</p>` : ''}<div class="fb-row">${replay(line, 'ฟังออร์เดอร์อีกครั้ง')}${action('meaning', shown ? 'ซ่อนคำแปล' : 'ดูข้อความกับคำแปล', '', `aria-pressed="${shown}"`)}</div></section>
-      <section class="fb-card fb-basket"><div class="fb-basket-head"><div><span class="fb-kicker">จากยุ้งฉางไปตะกร้า</span><h4>จัดของให้ครบ</h4></div><span aria-hidden="true">🧺</span></div>
-      ${stock.length ? `<ul>${stock.map(id => `<li><span class="fb-basket-name">${glyph(id)}<span><strong lang="sv">${C.goods[id].sv}</strong><small>${C.goods[id].th} · มี ${state.stock[id]}</small></span></span><span class="fb-stepper">${action('minus','−',id,`aria-label="เอา${C.goods[id].th}ออก" ${state.basket[id] ? '' : 'disabled'}`)}<b>${state.basket[id]}</b>${action('plus','+',id,`aria-label="เพิ่ม${C.goods[id].th}" ${state.basket[id] >= Math.min(9, state.stock[id]) ? 'disabled' : ''}`)}</span></li>`).join('')}</ul>` : '<p>ตะกร้ายังว่าง ไปเก็บผลผลิตก่อนแล้วกลับมาตลาดได้</p>'}
+      <span class="fb-kicker">${order.id ? 'ตะกร้าตามจดหมาย' : 'ออร์เดอร์ใหม่'} · ${guest.thai}</span><h4>${order.title || 'ของสำหรับตลาดวันนี้'}</h4>
+      ${change ? `<p class="fb-order-change">✦ ลูกค้าเปลี่ยนใจ · ออร์เดอร์นี้อัปเดตแล้ว</p>` : ''}
+      <p ${state.chapter < 3 || shown ? 'lang="sv"' : ''} class="fb-order-line">${state.chapter < 3 || shown ? esc(line) : 'ลองฟังว่าลูกค้าต้องการอะไร'}</p>
+      ${shown ? `<p>${marketTranslation()}</p>` : ''}<div class="fb-row">${replay(line, 'ฟังออร์เดอร์อีกครั้ง')}${action('meaning', shown ? 'ซ่อนคำแปล' : 'ดูข้อความกับคำแปล', '', `aria-pressed="${shown}"`)}</div></section>
+      <section class="fb-card fb-market-bench"><div class="fb-bench-head"><div><span class="fb-kicker">จากลังไปตะกร้า</span><h4>จัดของให้ครบ</h4></div>${replay(line,'ฟังออร์เดอร์')}</div>
+      <p class="fb-pack-help">จับตรงรูปแล้วลากใส่ตะกร้า ลากย้ายหรือคืนลังได้ หรือแตะของแล้วแตะจุดวาง</p>
+      <div class="fb-stock-crate" data-fb-drop="stock"><button type="button" class="fb-crate-label" data-fb="drop-goods" data-value="stock">↶ ลังของ · คืนของตรงนี้</button>
+      <div class="fb-stock-rail">${stock.map(id => packItem(id,'stock')).join('') || '<span class="fb-basket-empty">ไม่มีของเหลือในลัง</span>'}</div></div>
+      <div class="fb-market-baskets">${C.baskets.map(marketBasket).join('')}</div>
+      <p class="fb-market-status" role="status" aria-live="polite" data-tone="${basketFeedback ? 'retry' : ''}">${esc(marketMessage)}</p>
       <div class="fb-row">${action('deliver','ส่งตะกร้า →','','data-primary')}${action('walk','ไปแปลงผัก','fields')}</div></section>`;
+  }
+
+  function moveGoods(id, from, to) {
+    if (zone !== 'market') return false;
+    const result = C.moveBasket(state, id, from, to);
+    if (!result) return false;
+    selectedGoods = null; basketFeedback = null;
+    marketMessage = to === 'stock' ? `คืน${C.goods[id].th}เข้าลังแล้ว` : `วาง${C.goods[id].th}ใน${basketNames[to].th}แล้ว`;
+    if (result === 'changed') {
+      const change = C.orderChange(state);
+      marketMessage = `ลูกค้าเปลี่ยนใจ ลองฟังอีกครั้งแล้วจัดตะกร้าตามออร์เดอร์ใหม่`;
+      speak(`Jag ändrar mig. Lägg ${qty(change.id, 1)} i ${basketNames[change.to].sv} i stället.`);
+    }
+    save(); sound('tap');
+    const rail = host.querySelector('.fb-stock-rail')?.scrollLeft || 0;
+    render();
+    host.querySelector('.fb-stock-rail').scrollLeft = rail;
+    const drop = host.querySelector(`[data-fb-drop="${to}"]`);
+    if (!reducedMotion()) drop?.animate?.([{ transform:'scale(.98)' }, { transform:'scale(1.025)' }, { transform:'scale(1)' }], { duration:210 });
+    return true;
+  }
+
+  function pickGoods(button) {
+    const { value:id, from } = button.dataset;
+    selectedGoods = selectedGoods?.id === id && selectedGoods.from === from ? null : { id, from };
+    host.querySelectorAll('[data-fb-pack]').forEach(item => item.setAttribute('aria-pressed', String(item === button && !!selectedGoods)));
+    if (selectedGoods) {
+      speak(C.goods[id].sv);
+      host.querySelector('.fb-market-status').textContent = `เลือก${C.goods[id].th}แล้ว แตะตะกร้าหรือลังเพื่อวาง`;
+    }
   }
 
   function deliveryTurns(order) {
@@ -262,9 +381,12 @@
     const result = C.checkBasket(state);
     if (!result.ok) {
       const hints = [result.missing.length ? `ยังขาด ${result.missing.map(id => C.goods[id].th).join(' กับ ')}` : '',
-        result.extra.length ? `มีเกิน ${result.extra.map(id => C.goods[id].th).join(' กับ ')}` : ''].filter(Boolean);
-      status(hints.join(' · ') || 'ของในยุ้งฉางยังไม่พอ', 'retry');
-      speak(result.extra.length ? 'Det är lite för mycket i korgen.' : 'Det saknas något i korgen.');
+        result.extra.length ? `มีเกิน ${result.extra.map(id => C.goods[id].th).join(' กับ ')}` : '',
+        result.misplaced.length ? `ย้าย ${result.misplaced.map(id => C.goods[id].th).join(' กับ ')} ไปอีกตะกร้า` : ''].filter(Boolean);
+      basketFeedback = result;
+      marketMessage = hints.join(' · ') || 'ของในยุ้งฉางยังไม่พอ';
+      render(); focus('[data-fb="deliver"]');
+      speak(result.extra.length ? 'Det är lite för mycket i korgen.' : result.misplaced.length ? 'En del ligger i fel korg.' : 'Det saknas något i korgen.');
       sound('retry'); return;
     }
     const order = C.order(state), guest = D.guests[order.guest], turns = deliveryTurns(order);
@@ -281,10 +403,13 @@
         const delivered = C.deliver(state, Date.now());
         if (!delivered) { render(true); return; }
         const manager = window.GameEngine.StateManager;
+        const previousLevel = level;
         const reward = delivered.id ? P.complete(manager, `farm:${delivered.id}`, `farm:${delivered.id}`) : null;
+        refreshLevel();
         save();
         shown = false; zone = 'map';
-        status(`ส่งของให้${guest.thai}แล้ว · +${delivered.coins} เหรียญฟาร์ม${reward?.xp ? ` · +${reward.xp} XP` : ''}`, 'good');
+        const opened = Object.keys(zones).filter(id => C.zoneRequirements[id] > previousLevel && C.zoneRequirements[id] <= level);
+        status(`ส่งของให้${guest.thai}แล้ว · +${delivered.coins} เหรียญฟาร์ม${reward?.xp ? ` · +${reward.xp} XP` : ''}${opened.length ? ` · เปิดทางไป${opened.map(id => zones[id].th).join(' และ ')}` : ''}`, 'good');
         sound('correct'); render(true);
       }
     });
@@ -298,8 +423,6 @@
     { icon:'🪨', th:'ข้างก้อนหิน', sv:'bredvid stenen' }
   ];
   const eggOrder = [1,0,2];
-  const fenceOrder = [2,0,1];
-  const fencePieces = [{ th:'สั้น', sv:'kort' },{ th:'ยาวปานกลาง', sv:'mellanlång' },{ th:'ยาว', sv:'lång' }];
   function option(id, index, label, mark = '') { return action(id, `<span aria-hidden="true">${mark}</span>${label}`, index); }
   function renderEvent() {
     const { id, step } = state.event;
@@ -315,11 +438,31 @@
       ${step === 0 ? `<div class="fb-puzzle-options">${option('piece',0,'ค้อน','🔨')}${option('piece',1,'เชือก','🧵')}${option('piece',2,'แปรง','🖌️')}</div>` : step === 2 ? `<progress class="fb-hoist-progress" max="1" value="${eventInput.up}" aria-label="ความสูงของธง"></progress>${action('hoist','⚑ กดค้างเพื่อชักธง','','data-primary')}` : ''}`;
   }
   function fenceEvent(step) {
-    const label = fencePieces[fenceOrder[step]];
-    return `<div class="fb-puzzle-stage fb-fence-stage"><div class="fb-fence-art">${[0,1,2].map(i => `<i class="${i === step ? 'is-gap' : i < step ? 'is-fixed' : ''}" style="--span:${[84,49,67][i]}%"></i>`).join('')}</div>${A.animal('pig')}</div>
-      <p>เลือกไม้ที่พอดีกับช่องว่าง แล้วใส่กลับเข้ารั้ว</p>${replay(`Sätt dit den ${['korta','mellanlånga','långa'][fenceOrder[step]]} brädan.`)}
-      <div class="fb-puzzle-options">${fencePieces.map((piece,i) => option('piece',i,`<small lang="sv">${piece.sv}</small>`, `<i class="fb-plank" style="--span:${[32,51,68][i]}px"></i>`)).join('')}</div>
-      ${eventInput.hint ? `<p>คำใบ้ · ลองมองหาไม้แผ่น${label.th}</p>` : ''}`;
+    const kinds = ['bolt','turn','pull'];
+    const lines = ['Skjut regeln åt höger.', 'Vrid beslaget åt höger tills markeringarna möts.', 'Dra handtaget åt vänster och se om grinden håller.'];
+    const notes = ['ลากกลอนไปทางขวาให้สุดช่อง', 'จับปลายมือหมุนแล้วหมุนตามเข็มนาฬิกาให้ตรงขีดสีทอง', 'ดึงมือจับไปทางซ้ายเพื่อดูว่าประตูยังแน่นดีไหม'];
+    const controls = ['<i></i><span>→</span>','<i></i>','<i></i><span>←</span>'];
+    const assist = ['เลื่อนกลอนให้สุด','จัดมือหมุนให้ตรงขีด','ลองดึงมือจับ'];
+    return `<div class="fb-motion-instruction"><p>${notes[step]}</p>${replay(lines[step])}</div>
+      <div class="fb-gate-stage" data-fb-motion data-step="${step}" data-angle="${step > 1 ? 90 : 0}" style="--gate-angle:${step > 1 ? 90 : 0}deg;--gate-bolt:${step ? 100 : 0}%">
+        <div class="fb-gate-background" aria-hidden="true">${A.animal('pig')}</div><div class="fb-gate-door" aria-hidden="true"><b></b><b></b><b></b><b></b><i></i></div>
+        <div class="fb-gate-hardware" aria-hidden="true"><div class="fb-gate-track"><i></i></div><div class="fb-gate-dial"><i></i><b></b></div><div class="fb-gate-handle"></div></div>
+        <button type="button" class="fb-gate-control" data-fb="gate-assist" data-fb-gesture="${kinds[step]}" aria-label="${notes[step]}">${controls[step]}</button></div>
+      ${motionFeedback()}<div class="fb-row fb-gate-tools">${action('gate-assist',assist[step])}${step < 2 ? action('gate-test','ลองเขย่าประตู') : ''}</div>`;
+  }
+  function renderPracticeGate() {
+    return `<section class="fb-event fb-card"><span class="fb-kicker">ฝึกที่คอกหมู · ${Math.min(practiceGate, 2) + 1} / 3</span><h3 tabindex="-1">ลองซ่อมประตูคอก</h3>${practiceGate < 3 ? fenceEvent(practiceGate) : '<p>ประตูปิดแน่นแล้ว เก่งจังฮู้!</p>'}${action('leave-event','กลับไปที่เดิม')}</section>`;
+  }
+  function advanceGate() {
+    if (zone === 'repair' && practiceGate < 3) {
+      practiceGate++; status('เรียบร้อยแล้ว ไปต่อได้จ้า', 'good'); sound('correct'); render();
+    } else if (zone === 'event' && state.event?.id === 'fence') eventAdvance();
+  }
+  function testGate() {
+    const door = host.querySelector('.fb-gate-door');
+    if (!reducedMotion()) door?.animate?.([{ transform:'perspective(350px) rotateY(0)' }, { transform:'perspective(350px) rotateY(43deg)' }, { transform:'perspective(350px) rotateY(0)' }], { duration:490 });
+    status('ประตูยังแง้มอยู่ ลองจัดกลอนและมือหมุนให้เข้าที่ก่อน', 'retry');
+    sound('retry');
   }
   function eggEvent(step) {
     const target = eggPlaces[eggOrder[step]];
@@ -346,11 +489,12 @@
       zone = at;
       status(id === 'foal' ? `${name} อยู่กับเราแล้ว · +3 เหรียญฟาร์ม` : 'ช่วยฟาร์มสำเร็จแล้ว · +3 เหรียญฟาร์ม', 'good');
     } else status('เรียบร้อยแล้ว ไปต่อได้จ้า', 'good');
-    render(true);
+    render(id !== 'fence');
+    if (result === 'finished' && id === 'foal') openGrooming();
   }
   function choosePiece(index) {
     const { id, step } = state.event;
-    const target = { flag:[1], fence:fenceOrder, eggs:eggOrder, foal:[1,2] }[id][step];
+    const target = { flag:[1], eggs:eggOrder, foal:[1,2] }[id]?.[step];
     if (id === 'foal' && step === 2) return eventAdvance(C.foalNames[index]);
     if (index === target) return eventAdvance();
     eventInput.hint = true; sound('retry'); status('ยังไม่ตรงจ้า ลองฟังคำใบ้อีกครั้งแล้วเลือกใหม่', 'retry'); render();
@@ -407,7 +551,14 @@
     if (fb === 'close') { dialog.close(); return; }
     if (fb === 'map') {
       if (dialogActive) { dialogActive = false; D.destroy(); }
-      walking = false; cancelSwipe(); zone = 'map'; status(''); render(true); return;
+      const previous = zone;
+      walking = false; cancelSwipe(); G.cancel(); lockedZone = null; zone = 'map'; status(''); render(true);
+      if (previous !== 'map' && !reducedMotion()) {
+        const canvas = host.querySelector('.fb-map');
+        canvas.style.transformOrigin = `${zones[at].x}% ${zones[at].y}%`;
+        canvas.animate?.([{ transform:'scale(1.16)', opacity:.42 }, { transform:'scale(1)', opacity:1 }], { duration:260, easing:'ease-out' });
+      }
+      return;
     }
     if (walking || dialogActive) return;
     const now = Date.now();
@@ -433,8 +584,9 @@
         if (C.craft(state,value,now)) { save(); status(`ทำ${C.goods[value].th}เสร็จแล้ว`, 'good'); speak(C.recipes[value].sv); sound('correct'); render(); }
         break;
       case 'meaning': shown = !shown; render(); focus('[data-fb="meaning"]'); break;
-      case 'plus': case 'minus':
-        if (C.adjustBasket(state,value,fb === 'plus' ? 1 : -1)) { save(); sound('tap'); render(); focus(`[data-fb="${fb}"][data-value="${value}"]`); }
+      case 'pick-goods': pickGoods(button); break;
+      case 'drop-goods':
+        if (selectedGoods && moveGoods(selectedGoods.id, selectedGoods.from, value)) focus(`[data-fb="drop-goods"][data-value="${value}"]`);
         break;
       case 'deliver': startDelivery(); break;
       case 'expand':
@@ -444,7 +596,14 @@
         if (C.decorate(state,value)) { save(); status('วางของแต่งไว้หน้าบ้านแล้ว', 'good'); speak(C.decorations[value].sv); render(); } else status('เหรียญยังไม่พอ ลองส่งของที่ตลาด');
         break;
       case 'event': enterEvent(); break;
-      case 'leave-event': cancelSwipe(); zone = at; status(''); render(true); break;
+      case 'practice-gate': practiceGate = 0; zone = 'repair'; status(''); render(true); break;
+      case 'gate-assist': if (!button.dataset.fbGesture || !event.detail) advanceGate(); break;
+      case 'gate-test': testGate(); break;
+      case 'leave-event': cancelSwipe(); G.cancel(); zone = at; status(''); render(true); break;
+      case 'groom': openGrooming(); break;
+      case 'brush-assist': G.completeStroke(host.querySelector('.fb-groom-stage')); break;
+      case 'brush-again': G.cancel(); status(''); render(); break;
+      case 'leave-groom': G.cancel(); zone = at; status(''); render(true); break;
       case 'piece': choosePiece(Number(value)); break;
       case 'ring': if (!event.detail) useRing(Number(value)); break;
       case 'hoist': if (!event.detail) updateFlag(eventInput.up + .25); break;
