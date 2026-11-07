@@ -49,17 +49,20 @@ def bundle():
         zoo_css = f.read()
     html = html.replace('<link rel="stylesheet" href="zoo_escape.css">',
                         f"<style>\n/* NATTNYCKELN */\n{zoo_css}\n</style>")
-    for filename in ("learning_progress.js", "mini_games_core.js", "mini_games_art.js", "zoo_core.js",
+    with open(os.path.join(base_dir, "farm.css"), "r", encoding="utf-8") as f:
+        farm_css = f.read()
+    html = html.replace('<link rel="stylesheet" href="farm.css">', f"<style>\n/* BJÖRKBACKEN */\n{farm_css}\n</style>")
+    for filename in ("farm_core.js", "learning_progress.js", "mini_games_core.js", "mini_games_art.js", "zoo_core.js",
                      "zoo_art.js", "zoo_escape.js", "kitchen_measures_core.js", "kitchen_measures.js",
-                     "mini_games_dialogue.js", "mini_games_hands.js", "mini_games.js"):
+                     "mini_games_dialogue.js", "mini_games_hands.js", "farm_art.js", "farm.js", "mini_games.js"):
         with open(os.path.join(base_dir, filename), "r", encoding="utf-8") as f:
             script = f.read()
         html = html.replace(f'<script src="{filename}"></script>',
                             f"<script>\n{script}\n</script>")
 
-    # Keep the painted zoo self-contained in the transferable iPhone app too.
-    for name in ("forest", "wetland", "greenhouse", "animals"):
-        asset_path = f"assets/zoo/{name}.webp"
+    # Keep the painted game locations self-contained in both exports.
+    for asset_path in ("assets/zoo/forest.webp", "assets/zoo/wetland.webp", "assets/zoo/greenhouse.webp",
+                       "assets/zoo/animals.webp", "assets/farm/map.webp", "assets/farm/fields.webp"):
         with open(os.path.join(base_dir, asset_path), "rb") as f:
             encoded = base64.b64encode(f.read()).decode("ascii")
         html = html.replace(asset_path, f"data:image/webp;base64,{encoded}")

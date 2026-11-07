@@ -21,6 +21,9 @@
       prerequisite: stage.id ? `memory:${pack}:${stage.id - 1}` : null }));
   }
   for (let i = 0; i < 4; i++) catalogue.push({ id: `zoo:${i}`, game: 'zoo', xp: 24 + i * 4, prerequisite: i ? `zoo:${i - 1}` : null });
+  const farmChapters = (typeof module === 'object' && module.exports ? require('./farm_core.js') : root.FarmCore)?.chapters || [];
+  farmChapters.forEach((chapter, index) => catalogue.push({ id:`farm:${chapter.id}`, game:'farm', xp:chapter.xp,
+    prerequisite:index ? `farm:${farmChapters[index - 1].id}` : null }));
   const byId = Object.fromEntries(catalogue.map(m => [m.id, m]));
   const levels = [
     ['🌱', 'เริ่มก้าวแรก', 0, 0, 0, 0], ['🧭', 'นักสำรวจคำ', 120, 2, 10, 1],

@@ -130,7 +130,8 @@ test('Both transferable app files contain the complete game and embedded artwork
     assert.ok(html.includes('window.ZooArt ='));
     assert.ok(!/src="zoo_|href="zoo_escape.css"/.test(html));
     assert.ok(!html.includes('assets/zoo/'));
-    assert.equal((html.match(/data:image\/webp;base64,/g) || []).length, 4);
+    const zooArt = html.slice(html.lastIndexOf('<script>', html.indexOf('window.ZooArt =')), html.indexOf('window.ZooArt ='));
+    assert.equal((zooArt.match(/data:image\/webp;base64,/g) || []).length, 4);
     for (const match of html.matchAll(/<script(?: [^>]*)?>([\s\S]*?)<\/script>/g)) new vm.Script(match[1], { filename });
   }
 });

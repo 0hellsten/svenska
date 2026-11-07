@@ -14,6 +14,9 @@
     { id: 'zoo', title: 'กุญแจแห่งรัตติกาล', subtitle: 'ความลับในสวนสัตว์ยามค่ำ',
       description: 'สวนสัตว์ปิดแล้ว ตามหาสัตว์ที่ซ่อนอยู่ 12 ตัว อ่านบันทึกของซิกเน และไขปริศนา 3 ด่านเพื่อหาทางออก',
       tags: ['เกมหาทางออก', '4 คืน · 12 บท', 'ค้นหาและไขปริศนา'] },
+    { id: 'farm', title: 'สวนเบิร์ช', subtitle: 'ฟาร์มเล็ก ๆ ของเรา',
+      description: 'เดินตามแผนที่ไปดูหมู เป็ด และม้า ปลูกผัก ทำของขาย และฝึกคุยกับเพื่อนบ้าน กลับมาอีกทีอาจมีเรื่องใหม่รออยู่',
+      tags: ['ฟาร์มที่บันทึกไว้', '8 บท', 'ปลูก · ดูแล · ค้าขาย'] },
     { id: 'kitchen', title: 'ครัวเล็กของวิลาวัน', subtitle: 'ฝึกคำศัพท์ผ่านขนมอร่อย ๆ',
       description: 'ฟังชื่อวัตถุดิบภาษาสวีเดน แล้วลากของที่ถูกลงชาม เลือกจาก 29 อย่างเพื่ออบขนม 8 สูตร พร้อมเรียนชั่งน้ำหนัก ตวงปริมาตร และอ่านปริมาณเป็นสวีเดนกันต๊ะ',
       tags: ['อาหารและขนม', 'ลากแล้วเรียนรู้', '8 สูตร · โรงเรียนตวงวัด'] },
@@ -88,14 +91,15 @@
     const rank = P.levelInfo(P.state().totalXP || 0, P.state()), all = P.stats(P.state());
     lobby.innerHTML = `<div class="mg-lobby"><div class="mg-lobby-intro"><span class="mg-eyebrow">ค่อย ๆ ฝึก วันละนิด</span><h1>เล่นไป เรียนสวีเดนไป</h1><p class="mg-lobby-lead">ไขปริศนา ทำขนม หรือเปิดร้านกาแฟ<br>ฟังคำสวีเดนแล้วลงมือเล่น มีภาษาไทยคอยบอกวิธีทุกขั้นตอน</p><div class="mg-lobby-sub"><span>ไม่จับเวลา</span><span>ฟังเสียงสวีเดนได้</span><span>มีคำแปลไทย</span></div></div>${rankCard(rank, all)}${games.map(game => {
       const course = P.stats(P.state(), game.id);
-      return `<button type="button" class="mg-game-card" data-open-game="${game.id}">${A.cover(game.id)}<div class="mg-card-copy"><span class="mg-eyebrow">${game.subtitle}</span><div class="mg-card-heading"><h2>${game.title}</h2><span class="mg-card-arrow" aria-hidden="true">↗</span></div><p>${game.description}</p><div class="mg-card-meta">${game.tags.map(tag => `<span>${tag}</span>`).join('')}<span>✓ ${course.completed} / ${course.total} ภารกิจ</span></div></div></button>`;
+      const cover = game.id === 'farm' ? window.FarmGame.cover() : A.cover(game.id);
+      return `<button type="button" class="mg-game-card" data-open-game="${game.id}">${cover}<div class="mg-card-copy"><span class="mg-eyebrow">${game.subtitle}</span><div class="mg-card-heading"><h2>${game.title}</h2><span class="mg-card-arrow" aria-hidden="true">↗</span></div><p>${game.description}</p><div class="mg-card-meta">${game.tags.map(tag => `<span>${tag}</span>`).join('')}<span>✓ ${course.completed} / ${course.total} ภารกิจ</span></div></div></button>`;
     }).join('')}<p class="mg-hub-note">ลองผิดลองใหม่ได้ตามสบายต๊ะ<br>เล่นจบแต่ละรอบแล้ว มีคำศัพท์พร้อมเสียงให้ทบทวนอีกครั้ง</p></div>`;
   }
   function init() {
     try { P.migrate(P.state(), saved, JSON.parse(localStorage.getItem('wilawan_nattnyckeln_v1') || '{}')); window.GameEngine?.StateManager?.save(); } catch (_) {}
     renderLobby();
     const homeCard = $('#mg-home-shortcut');
-    if (homeCard) homeCard.innerHTML = '<span aria-hidden="true">✳</span><span><strong>มาเล่นเกมฝึกภาษากัน</strong><small>ไขปริศนาสวนสัตว์ ทำขนม และฝึกคำศัพท์สวีเดน</small></span><span aria-hidden="true">↗</span>';
+    if (homeCard) homeCard.innerHTML = '<span aria-hidden="true">✳</span><span><strong>มาเล่นเกมฝึกภาษากัน</strong><small>ดูแลฟาร์ม ไขปริศนาสวนสัตว์ และทำขนม</small></span><span aria-hidden="true">↗</span>';
     document.addEventListener('click', event => {
       const card = event.target.closest('[data-open-game]');
       if (card) open(card.dataset.openGame, card);
@@ -105,6 +109,7 @@
   function open(gameId, opener) {
     if (!games.some(game => game.id === gameId)) return;
     if (gameId === 'zoo') return window.ZooEscape?.open(opener);
+    if (gameId === 'farm') return window.FarmGame.open(opener);
     if (!dialog) {
       dialog = document.createElement('dialog');
       dialog.className = 'mg-dialog';
