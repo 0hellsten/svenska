@@ -50,7 +50,8 @@ def bundle():
     html = html.replace('<link rel="stylesheet" href="zoo_escape.css">',
                         f"<style>\n/* NATTNYCKELN */\n{zoo_css}\n</style>")
     for filename in ("learning_progress.js", "mini_games_core.js", "mini_games_art.js", "zoo_core.js",
-                     "zoo_art.js", "zoo_escape.js", "kitchen_measures_core.js", "kitchen_measures.js", "mini_games.js"):
+                     "zoo_art.js", "zoo_escape.js", "kitchen_measures_core.js", "kitchen_measures.js",
+                     "mini_games_dialogue.js", "mini_games_hands.js", "mini_games.js"):
         with open(os.path.join(base_dir, filename), "r", encoding="utf-8") as f:
             script = f.read()
         html = html.replace(f'<script src="{filename}"></script>',

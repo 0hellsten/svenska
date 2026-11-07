@@ -2,6 +2,30 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const C = require('./mini_games_core.js');
+const { speechOutcome } = require('./mini_games_dialogue.js');
+const { pourStatus, whiskDistance } = require('./mini_games_hands.js');
+
+test('A guest offers a single keyword after the fifth failed phrase attempt', () => {
+  for (let failures = 0; failures < 4; failures++) {
+    assert.equal(speechOutcome(failures, false, 'retry'), 'retry');
+  }
+  assert.equal(speechOutcome(4, false, 'retry'), 'word');
+  assert.equal(speechOutcome(4, false, 'pass'), 'continue');
+  assert.equal(speechOutcome(5, true, 'retry'), 'continue');
+});
+
+test('The measuring jug can recover from pouring past the target', () => {
+  assert.equal(pourStatus(1.8, 2), 'under');
+  assert.equal(pourStatus(2.2, 2), 'over');
+  assert.equal(pourStatus(2.1, 2), 'ready');
+  assert.equal(pourStatus(180, 180), 'ready');
+});
+
+test('Whisking counts turns in both directions across the angle boundary', () => {
+  assert.ok(Math.abs(whiskDistance(3.1, -3.1) - (2 * Math.PI - 6.2)) < .0001);
+  assert.ok(Math.abs(whiskDistance(-3.1, 3.1) - (2 * Math.PI - 6.2)) < .0001);
+  assert.equal(whiskDistance(0, Math.PI), 0);
+});
 
 test('The pantry contains 29 unique, illustrated words with Swedish and Thai support', () => {
   assert.equal(C.ingredients.length, 29);

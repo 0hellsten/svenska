@@ -409,3 +409,76 @@
   .mg-result h3 { font-size: 25px; }
   .mg-memory-intro { line-height: 1.9; }
 }
+.mg-replay { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 44px; padding: 8px 12px; border: 1px solid #9aaf94; border-radius: 12px; background: #e8efdf; color: #405c49; font-size: 13px; font-weight: 700; line-height: 1.45; }
+.mg-replay svg { width: 19px; height: 19px; flex: none; }
+.mg-replay small { padding: 1px 5px; border-radius: 5px; background: #d6e3ce; font-size: 10px; color: #3d5943; }
+.mg-replay:active { background: #d8e7ce; }
+.mg-replay:disabled { opacity: .6; }
+.mg-drag-handle { display: block; position: relative; touch-action: none; user-select: none; -webkit-touch-callout: none; cursor: grab; }
+.mg-drag-handle i { position: absolute; inset: 0 3px auto auto; font-size: 12px; color: #7d917a; font-style: normal; pointer-events: none; }
+.mg-sticky-worktop, .mg-cafe-game .mg-tray { position: sticky; top: 0; z-index: 4; }
+.mg-cafe-game .mg-tray { background: #f8edda; }
+.mg-cafe-game .mg-tray.mg-drop-hover { background: #e1edd8; outline: 2px dashed #6b9074; }
+.mg-cafe-queue { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 12px 18px; }
+.mg-cafe-ticket { font-size: 13px; font-weight: 700; color: #4d674b; }
+.mg-cafe-queue button { min-height: 44px; padding: 8px 12px; font-size: 12px; }
+.mg-order-bubble .mg-talk-buttons { margin-top: 10px; }
+.mg-ticket-pop { animation: mg-ticket-pop .24s ease-out; }
+@keyframes mg-ticket-pop { 45% { scale: 1.19; } }
+
+.mg-talk, .mg-hands { max-width: 690px; margin: 0 auto; padding: 24px 24px 34px; }
+.mg-talk h3, .mg-hands h3 { font: 500 26px/1.6 var(--font-th); color: #48644f; margin: 4px 0 6px; }
+.mg-talk-heading { display: flex; align-items: center; gap: 16px; }
+.mg-talk-title small { color: #6d785e; font-size: .55em; }
+.mg-talk-portrait { display: grid; place-items: center; width: 82px; height: 86px; background: #ebecda; border-radius: 48% 48% 15px 15px; overflow: hidden; }
+.mg-talk-portrait .mg-customer { display: block; width: 72px; height: 83px; margin: 6px 0 0; }
+.mg-customer-eyes { transform-box: fill-box; transform-origin: center; animation: mg-blink 5s infinite; }
+.is-speaking .mg-customer { transform-origin: 50% 100%; animation: mg-guest-speak 1.2s ease-in-out infinite alternate; }
+.is-speaking .mg-customer-mouth { transform-box: fill-box; transform-origin: center; animation: mg-mouth .32s ease-in-out infinite alternate; }
+@keyframes mg-blink { 0%, 91%, 100% { scale: 1 1; } 95% { scale: 1 .12; } }
+@keyframes mg-guest-speak { to { transform: translateY(-2px) rotate(2deg); } }
+@keyframes mg-mouth { to { scale: 1 .5; } }
+.mg-talk-bubble, .mg-talk-model { margin-top: 14px; border: 1px solid #dbd4bb; border-radius: 16px; padding: 15px; background: #fffdf3; }
+.mg-talk-bubble p, .mg-talk-model strong { font-size: 22px; line-height: 1.45; color: #465b48; margin: 0 0 12px; }
+.mg-talk-bubble .mg-talk-meaning, .mg-talk-model p { margin: 8px 0 12px; font-size: 14px; line-height: 1.8; color: #635d4a; }
+.mg-talk-model { margin: 0 0 14px; background: #f0f2e2; }
+.mg-talk-model span, .mg-talk-model strong { display: block; }
+.mg-talk-model .mg-replay span { display: inline; }
+.mg-talk-model > span, .mg-talk-instruction { color: #5a6c51; font-size: 14px; line-height: 1.8; }
+.mg-talk-buttons { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.mg-talk-buttons button { min-height: 44px; }
+.mg-talk-answers { margin-top: 16px; }
+.mg-talk-options { display: grid; gap: 8px; margin-bottom: 12px; }
+.mg-talk-options button, .mg-talk-built button { min-height: 48px; border: 1px solid #cdd9bc; border-radius: 11px; background: #f5f7e8; color: #465d46; font-size: 16px; text-align: left; padding: 10px 12px; }
+.mg-talk-options small { display: block; font-size: 12px; line-height: 1.8; }
+.mg-talk-options button:disabled { opacity: .42; }
+.mg-talk-built { min-height: 55px; padding: 8px; margin: 9px 0 12px; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; border: 1px dashed #a3af92; border-radius: 11px; color: #667a60; }
+.mg-talk-built button { min-height: 40px; padding: 5px 9px; }
+.mg-talk-status { color: #696d54; font-size: 13px; line-height: 1.9; margin: 11px 0 0; }
+.mg-talk-mic { width: 100%; }
+
+.mg-hands > p { margin: 6px 0 16px; font-size: 14px; color: #6f624d; line-height: 1.85; }
+.mg-hands-stage { overflow: hidden; border: 1px solid #ded6bd; border-radius: 20px; background: linear-gradient(#edf1dc 0 59%, #dfc6a2 60%); }
+.mg-hands-stage[data-hands-surface] { touch-action: none; user-select: none; cursor: crosshair; }
+.mg-hands-art { display: block; width: 100%; max-height: 280px; margin: auto; }
+.mg-hands-stage .mg-hands-art { width: min(100%, 470px); height: auto; }
+.mg-pour-pack { transform-origin: 104px 70px; transition: transform .2s ease; }
+.mg-pour-stream { opacity: 0; }
+.is-pouring .mg-pour-pack { transform: rotate(32deg); }
+.is-pouring .mg-pour-stream { opacity: .9; animation: mg-liquid-flow .36s ease-in-out infinite alternate; }
+@keyframes mg-liquid-flow { to { opacity: .58; stroke-width: 6px; } }
+.mg-hands-reading { margin: 12px 0; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 12px; color: #50684d; }
+.mg-hands-reading strong { font: 800 22px/1.4 var(--font-sv); }
+.mg-hands-reading span { font-size: 13px; }
+.mg-hands-controls { display: grid; grid-template-columns: 1fr 1.2fr; gap: 9px; margin-bottom: 9px; }
+.mg-hands-controls button { min-height: 52px; touch-action: none; user-select: none; -webkit-touch-callout: none; padding: 9px; }
+.mg-hands .mg-replay { margin-top: 12px; }
+.mg-hands-done { width: 100%; }
+.mg-result-art .mg-hands-art { max-height: 110px; }
+@media (max-width: 650px) {
+  .mg-talk, .mg-hands { padding: 16px 14px 30px; }
+  .mg-talk-bubble p, .mg-talk-model strong { font-size: 19px; }
+  .mg-sticky-worktop .mg-kitchen-art { height: clamp(125px, 24dvh, 190px); min-height: 0; object-fit: cover; }
+  .mg-cafe-game .mg-tray { max-height: 36dvh; overflow: auto; }
+  .mg-instruction-actions .mg-replay { padding: 7px; gap: 4px; font-size: 11px; }
+}

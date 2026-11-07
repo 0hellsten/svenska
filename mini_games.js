@@ -5,6 +5,7 @@
   const A = window.MiniGameArt;
   const P = window.LearningProgress;
   const MC = window.KitchenMeasureCore, M = window.KitchenMeasures;
+  const D = window.MiniGameDialogue, H = window.MiniGameHands;
   const STORAGE_KEY = 'wilawan_small_games_v1';
   const $ = (selector, parent = document) => parent.querySelector(selector);
   const escape = value => String(value).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
@@ -46,6 +47,8 @@
   }
   function clearPending() {
     M.destroy();
+    D.destroy();
+    H.destroy();
     for (const id of timers) clearTimeout(id);
     timers.clear();
     gestureController?.abort(); gestureController = null;
@@ -55,12 +58,12 @@
     window.SpeechEngine?.stopAudio?.();
   }
   function sound(name) { window.SpeechEngine?.playSound?.(name); }
-  function say(text, slow = false) {
+  function say(text) {
     if (!window.SpeechEngine?.speakSwedish) {
       feedback('เบราว์เซอร์นี้ยังเล่นเสียงไม่ได้ กด “ดูคำศัพท์” เพื่ออ่านคำแทนได้จ้า', 'retry');
       return;
     }
-    window.SpeechEngine.speakSwedish(text, slow ? 0.60 : 0.88);
+    window.SpeechEngine.speakSwedish(text, 1);
   }
   function feedback(text, tone = '') {
     const el = $('#mg-feedback', dialog);
@@ -144,8 +147,8 @@
     if(current.gameId === 'kitchen' && saved.kitchenArea === 'measures') return renderMeasureSetup();
     const game = games.find(entry => entry.id === current.gameId), course = P.stats(P.state(), game.id);
     const intros = {
-      kitchen: ['สมุดขนม 8 สูตร', 'แต่ละสูตรมี 4 ขั้น: รู้จักคำ นึกความหมาย ฟัง และตวงหรือชั่งปริมาณตามสูตร ถ้ายังไม่รู้หน่วย แวะโรงเรียนตวงวัดก่อนก็ได้จ้า', 'ชื่ออาหาร คำสั่ง ชื่อหน่วย และการเตรียมปริมาณตามสูตร'],
-      cafe: ['คาเฟ่ของเรา · 6 วัน', 'เริ่มจากออร์เดอร์ง่าย ๆ แล้วค่อยเพิ่มจำนวน รายการ และรูปประโยค ลูกค้าแต่ละคนสั่งไม่เหมือนกัน ถ้าหยิบเกินกดลบบนถาดได้เลย', 'ฟังประโยคสั่งอาหาร ชื่อเมนู จำนวน และรูปพหูพจน์'],
+      kitchen: ['สมุดขนม 8 สูตร', 'ลากของลงชาม กดค้างเพื่อเท แล้วลากนิ้ววนให้แป้งเนียน ระหว่างทำ เพื่อนจะชวนคุยและช่วยกันแก้ถ้าเทเกิน แต่ละสูตรมี 4 ขั้น ฝึกจากคำศัพท์ไปจนถึงการตวงชั่ง', 'ชื่อวัตถุดิบ คำสั่งในครัว ชื่อหน่วย และการบอกปริมาณเป็นภาษาสวีเดน'],
+      cafe: ['คาเฟ่ของเรา · 6 วัน', 'ฟังลูกค้าทีละคน แล้วลากของใส่ถาด จะสลับไปช่วยคนที่รีบก่อนก็ได้ ถาดของแต่ละคนจะเก็บไว้ ลูกค้าอาจถามเรื่องจ่ายเงินหรือให้เราตอบเป็นภาษาสวีเดน', 'ฟังออร์เดอร์ ชื่อเมนู จำนวน และบทสนทนาตอนเสิร์ฟ'],
       memory: ['อัลบั้มคำศัพท์ 8 ชุด', 'แต่ละชุดมี 3 ขั้น อ่านพร้อมภาพ นึกความหมายโดยซ่อนคำแปล แล้วฟังเสียง พร้อมคำเก่าจากชุดที่เคยฝึก ถ้ายังไม่มีชุดก่อนหน้า จะฝึก 6 คู่นี้ก่อน เปิดการ์ด 2 ใบเพื่อจับคู่ภาพกับคำ', 'เชื่อมภาพกับคำและเสียง แล้วทบทวนคำจากชุดก่อนหน้า']
     }, intro = intros[game.id];
     let choices = '';
@@ -154,7 +157,7 @@
     if (game.id === 'cafe') choices = `<div class="mg-course-options">${C.cafeRounds.map((round, i) => `<button type="button" data-action="cafe-level" data-level="${i}" aria-pressed="${saved.cafeLevel === i}" ${P.unlocked(P.state(), `cafe:${i}`) ? '' : 'disabled'}><strong>${P.done(P.state(), `cafe:${i}`) ? '✓ ' : ''}${round.th}</strong><small>${round.count} คน · ${round.goal}</small></button>`).join('')}</div>`;
     else choices += `<div class="mg-course-options">${(game.id === 'kitchen' ? P.kitchenStages : P.stages).map(stage => { const id = game.id === 'kitchen' ? `kitchen:${saved.recipe}:${stage.id}` : `memory:${saved.pack}:${stage.id}`; return `<button type="button" data-action="stage" data-stage="${stage.id}" aria-pressed="${saved.stage === stage.id}" ${P.unlocked(P.state(), id) ? '' : 'disabled'}><strong>${P.done(P.state(), id) ? '✓ ' : ''}${stage.id + 1}. ${stage.th}</strong><small>${stage.detail}</small></button>`; }).join('')}</div>`;
     const mission = missionId(), available = P.unlocked(P.state(), mission), finished = P.done(P.state(), mission);
-    content.innerHTML = `<div class="mg-setup">${A.garland()}${game.id === 'kitchen' ? kitchenAreas() : ''}<span class="mg-eyebrow">${course.completed} / ${course.total} ภารกิจ</span><h3>${intro[0]}</h3><p class="mg-setup-lead">${intro[1]}</p><p class="mg-learning-goal"><strong>เกมนี้ฝึกอะไร?</strong> ${intro[2]}</p>${choices}<p class="mg-mode-description">${available ? finished ? 'ทบทวนได้เสมอ การเล่นภารกิจเดิมซ้ำวันนี้ไม่เพิ่มแต้ม' : `ภารกิจใหม่ · รางวัลครั้งแรก ${P.byId[mission].xp} XP ภายใต้เพดานประจำวัน` : 'ทำขั้นก่อนหน้าให้จบก่อน แล้วขั้นนี้จะเปิดเองจ้า'}</p><button type="button" class="mg-primary" data-action="start" ${available ? '' : 'disabled'}>เริ่มภารกิจนี้ →</button><p class="mg-mode-description">ไม่จับเวลา ใช้คำแปลและฟังช้าซ้ำได้เสมอ</p></div>`;
+    content.innerHTML = `<div class="mg-setup">${A.garland()}${game.id === 'kitchen' ? kitchenAreas() : ''}<span class="mg-eyebrow">${course.completed} / ${course.total} ภารกิจ</span><h3>${intro[0]}</h3><p class="mg-setup-lead">${intro[1]}</p><p class="mg-learning-goal"><strong>เกมนี้ฝึกอะไร?</strong> ${intro[2]}</p>${choices}<p class="mg-mode-description">${available ? finished ? 'ทบทวนได้เสมอ การเล่นภารกิจเดิมซ้ำวันนี้ไม่เพิ่มแต้ม' : `ภารกิจใหม่ · รางวัลครั้งแรก ${P.byId[mission].xp} XP ภายใต้เพดานประจำวัน` : 'ทำขั้นก่อนหน้าให้จบก่อน แล้วขั้นนี้จะเปิดเองจ้า'}</p><button type="button" class="mg-primary" data-action="start" ${available ? '' : 'disabled'}>เริ่มภารกิจนี้ →</button><p class="mg-mode-description">ไม่จับเวลา เปิดคำแปลและฟังซ้ำที่ความเร็ว 1× ได้เสมอ</p></div>`;
   }
   function kitchenAreas() {
     return `<div class="km-area-tabs" role="group" aria-label="เลือกส่วนของครัว"><button type="button" data-action="kitchen-area" data-area="recipes" aria-pressed="${saved.kitchenArea !== 'measures'}">สมุดสูตรขนม · 8 สูตร</button><button type="button" data-action="kitchen-area" data-area="measures" aria-pressed="${saved.kitchenArea === 'measures'}">โรงเรียนตวงวัด · ${MC.lessons.length} บท</button></div>`;
@@ -182,7 +185,7 @@
   function handleAction(event) {
     const button = event.target.closest('button');
     if (!button || !dialog.contains(button)) return;
-    if (suppressClick && button.matches('[data-ingredient]')) { suppressClick = false; return; }
+    if (suppressClick && button.matches('[data-ingredient], [data-cafe-item], [data-action="bowl"]')) { suppressClick = false; return; }
     if (button.dataset.action === 'close') return close();
     if (current.screen === 'measures' && ['mode','thai'].includes(button.dataset.action)) return;
     if (button.dataset.action === 'thai') {
@@ -211,37 +214,30 @@
     if (action === 'start') return start();
     if (action === 'again') { clearPending(); current.finished = false; renderSetup(); content.scrollTop = 0; return; }
     if (action === 'speak') return speakPrompt();
-    if (action === 'slow') return speakPrompt(true);
     if (action === 'reveal') { current.revealed = !current.revealed; renderGame(); return; }
-    if (action === 'word') return say(button.dataset.word, true);
+    if (action === 'word') return say(button.dataset.word);
     if (current.screen !== 'game' || current.finished) return;
     if (current.gameId === 'kitchen') {
       if (button.dataset.ingredient) return selectIngredient(button.dataset.ingredient, event.detail === 0);
       if (action === 'place-selected' && selected) return placeIngredient(selected);
       if (action === 'bowl') {
-        if (current.kitchen.phase === 'stir') return stir();
         if (selected) return placeIngredient(selected);
         feedback('เลือกวัตถุดิบก่อนนะ ลากมาที่ชาม หรือแตะวัตถุดิบแล้วแตะชามก็ได้จ้า');
       }
-      if (action === 'stir') stir();
       if (action === 'bake') bake();
     }
     if (current.gameId === 'cafe') {
-      if (button.dataset.cafeItem && !current.served) {
-        const id = button.dataset.cafeItem;
-        if ((current.tray[id] || 0) < 4) current.tray[id] = (current.tray[id] || 0) + 1;
-        sound('tap'); updateTray();
-        feedback('ของบนถาด: ' + trayDescription() + '.');
-      }
+      if (button.dataset.cafeItem) addToTray(button.dataset.cafeItem);
+      if (action === 'switch-order' && !current.served) switchOrder();
       if (button.dataset.remove && !current.served) {
         const id = button.dataset.remove; current.tray[id] = Math.max(0, (current.tray[id] || 0) - 1); updateTray();
       }
-      if (action === 'clear-tray' && !current.served) { current.tray = {}; updateTray(); feedback('ถาดว่างแล้วจ้า ลองฟังลูกค้าสั่งอีกครั้งได้เลย'); }
+      if (action === 'clear-tray' && !current.served) { setCafeTray({}); updateTray(); feedback('ถาดว่างแล้วจ้า ลองฟังลูกค้าสั่งอีกครั้งได้เลย'); }
       if (action === 'serve') serve();
       if (action === 'next-order' && current.served) {
-        current.orderIndex++; current.tray = {}; current.served = false; current.revealed = false;
+        current.orderIndex++; current.served = false; current.revealed = false;
         if (current.orderIndex === current.orders.length) finish();
-        else { renderCafe(); speakPrompt(); content.scrollTop = 0; }
+        else { setCafeTray(); renderCafe(); speakPrompt(); content.scrollTop = 0; }
       }
     }
     if (current.gameId === 'memory' && button.dataset.memoryKey) flipCard(button.dataset.memoryKey);
@@ -258,15 +254,31 @@
     $('[data-action="mode"]', dialog).textContent = saved.mode === 'listen' ? 'ฝึกฟังอย่างเดียว' : 'อ่านพร้อมฟัง';
     $('[data-action="mode"]', dialog).setAttribute('aria-pressed', String(saved.mode === 'listen'));
     current.screen = 'game'; current.finished = false; current.revealed = false;
-    if (current.gameId === 'kitchen') current.kitchen = C.createKitchen(saved.recipe);
-    if (current.gameId === 'cafe') Object.assign(current, { orders: C.createCafeRound(saved.cafeLevel), orderIndex: 0, tray: {}, served: false, mistakes: 0 });
+    if (current.gameId === 'kitchen') {
+      const recipe = C.recipes[saved.recipe];
+      const pourId = recipe.steps.includes('milk') ? 'milk' : 'sugar';
+      current.kitchen = C.createKitchen(saved.recipe);
+      current.pourTask = MC.recipeTasks(recipe, C.byId).find(task => task.ingredient === pourId);
+      current.guest = D.guests[Math.floor(Math.random() * D.guests.length)];
+      current.recaps = [];
+      current.icing = [];
+      return talk([D.welcome[Math.floor(Math.random() * D.welcome.length)]], () => {
+        renderKitchen(); speakPrompt(); focusContent();
+      });
+    }
+    if (current.gameId === 'cafe') {
+      const orders = C.createCafeRound(saved.cafeLevel);
+      Object.assign(current, { orders, orderIndex: 0, trays: new Map(),
+        customers: new Map(orders.map((order, index) => [order, index])), served: false, mistakes: 0, cafeRecap: null });
+      setCafeTray();
+    }
     if (current.gameId === 'memory') { const words = C.memoryWords(saved.pack, saved.stage, window.ZooCore.animals, C.memoryPacks.filter(p => P.done(P.state(), `memory:${p.id}:0`)).map(p => p.id)); Object.assign(current, { words, cards: C.createMemory(Math.random, words), flipped: [], matched: [], turns: 0, locked: false }); }
     renderGame(); content.scrollTop = 0;
     if (current.gameId !== 'memory') speakPrompt();
     focusContent();
   }
   function focusContent() {
-    const heading = $('.mg-instruction strong, .mg-memory-intro, .mg-result h3', dialog);
+    const heading = $('.mg-instruction strong, .mg-order-bubble, .mg-memory-intro, .mg-result h3', dialog);
     if (heading) { heading.tabIndex = -1; heading.focus({ preventScroll: true }); }
   }
   function renderGame() {
@@ -274,11 +286,30 @@
     if (current.gameId === 'cafe') renderCafe();
     if (current.gameId === 'memory') renderMemory();
   }
+  function gameControls(visible) {
+    dialog.querySelectorAll('.mg-toggle').forEach(button => { button.hidden = !visible; });
+  }
+  function talk(turns, next, guest = current.guest) {
+    H.destroy();
+    current.screen = 'dialogue';
+    gameControls(false);
+    const run = current;
+    D.start(content, {
+      turns, guest, portrait: customer(guest.portrait),
+      label: current.gameId === 'kitchen' ? 'เพื่อนมาช่วยในครัว' : 'คุยกับลูกค้า',
+      onMistake: () => { if (run.kitchen && run.gameId === 'kitchen') run.kitchen.mistakes++; else run.mistakes++; },
+      onWordFallback: turn => {
+        if (run.gameId === 'kitchen' && !run.recaps.includes(turn)) run.recaps.push(turn);
+        if (run.gameId === 'cafe') run.cafeRecap = turn;
+      },
+      onDone: () => { if (current === run) { run.screen = 'game'; gameControls(true); next(); } }
+    });
+  }
   function isHidden() { return saved.mode === 'listen' && !current.revealed; }
   function instruction(text, subtitle, thai) {
     const listening = isHidden();
     const textLang = listening || /[ก-๿]/.test(text) ? 'th' : 'sv';
-    return `<div class="mg-instruction"><div class="mg-instruction-copy"><strong lang="${textLang}">${listening ? 'ฟังแล้วเลือกภาพที่ตรงกันนะ' : escape(text)}</strong><small>${subtitle}</small>${!listening && thai ? `<span class="mg-th" lang="th">${escape(thai)}</span>` : ''}</div><div class="mg-instruction-actions"><button type="button" class="mg-listen-btn" data-action="speak" aria-label="ฟังโจทย์ภาษาสวีเดน">${speaker} ฟังเสียง</button><button type="button" class="mg-hint-btn" data-action="slow" aria-label="ฟังภาษาสวีเดนช้า ๆ">ฟังช้า ๆ</button>${saved.mode === 'listen' ? `<button type="button" class="mg-hint-btn" data-action="reveal">${current.revealed ? 'ซ่อนคำศัพท์' : 'ดูคำศัพท์'}</button>` : ''}</div></div>`;
+    return `<div class="mg-instruction"><div class="mg-instruction-copy"><strong lang="${textLang}">${listening ? 'ฟังแล้วเลือกภาพที่ตรงกันนะ' : escape(text)}</strong><small>${subtitle}</small>${!listening && thai ? `<span class="mg-th" lang="th">${escape(thai)}</span>` : ''}</div><div class="mg-instruction-actions"><button type="button" class="mg-replay" data-action="speak">${speaker}<span>ฟังอีกครั้ง</span><small>1×</small></button>${saved.mode === 'listen' ? `<button type="button" class="mg-hint-btn" data-action="reveal">${current.revealed ? 'ซ่อนคำศัพท์' : 'ดูคำศัพท์'}</button>` : ''}</div></div>`;
   }
   function kitchenPromptTh() {
     const state = current.kitchen;
@@ -294,10 +325,10 @@
     if (state.phase === 'ready') return 'baka';
     return 'ugnen';
   }
-  function speakPrompt(slow = false) {
+  function speakPrompt() {
     if (!current) return;
-    if (current.gameId === 'kitchen') say(kitchenPrompt(), slow);
-    if (current.gameId === 'cafe') say(cafeText(), slow);
+    if (current.gameId === 'kitchen') say(kitchenPrompt());
+    if (current.gameId === 'cafe') cafeSay(cafeText());
   }
   function renderKitchen() {
     const state = current.kitchen;
@@ -305,9 +336,20 @@
     const collecting = ['collect', 'decorate'].includes(state.phase);
     const done = state.learned.length;
     const total = recipe.steps.length + recipe.decorations.length;
-    const target = collecting ? C.target(state) : null;
     content.className = 'mg-game-content mg-kitchen-game' + (isHidden() ? ' mg-listening' : '') + (state.phase === 'baking' ? ' mg-baking' : '');
-    content.innerHTML = `${progress(recipe.th, done, total)}${collecting ? instruction(kitchenPrompt(), state.phase === 'decorate' ? 'ถึงเวลาตกแต่ง เลือกของแล้ววางบนเค้กได้เลย' : 'ลากลงชาม หรือแตะเลือกแล้วกดใส่ชาม', kitchenPromptTh()) : ''}<div class="mg-scene">${A.kitchen()}<button type="button" class="mg-drop-zone" style="--mg-mix-fill:${Math.min(1, .15 + done * .12)}" data-action="bowl" aria-label="${state.phase === 'decorate' ? 'วางวัตถุดิบที่เลือกไว้บนเค้ก' : state.phase === 'stir' ? 'คนส่วนผสมในชาม' : 'ใส่วัตถุดิบที่เลือกลงในชาม'}" ${['baking', 'ready'].includes(state.phase) ? 'disabled' : ''}>${state.phase === 'decorate' ? A.cake(state.index > 0) : state.phase === 'baking' ? A.oven() : A.bowl()}</button><span class="mg-scene-tag">ฝึกสวีเดนทีละนิด อบขนมด้วยใจ</span></div>${collecting ? `<section class="mg-ingredients-section" aria-label="เลือกวัตถุดิบจาก 29 อย่าง"><div class="mg-shelf-heading"><h3>ชั้นวางวัตถุดิบ <span>· วัตถุดิบ 29 อย่าง</span></h3><p>เลือกจากรูปภาพ ลองใหม่ได้เรื่อย ๆ ไม่ต้องรีบนะ</p></div><div class="mg-ingredients-grid">${C.ingredients.map(item => `<button type="button" class="mg-ingredient ${state.learned.includes(item.id) ? 'mg-used' : ''}" data-ingredient="${item.id}" aria-label="เลือก ${item.sv}" aria-pressed="${selected === item.id}">${A.icon(item.id)}<span class="mg-ingredient-label" lang="sv">${item.sv}</span><span class="mg-th" lang="th">${item.th}</span></button>`).join('')}</div></section>` : renderKitchenPhase()}${feedbackHTML(collecting ? 'ฟังประโยค แล้วหาวัตถุดิบที่ตรงกับคำสวีเดน' : state.phase === 'stir' ? 'กดคนส่วนผสม 5 ครั้ง ค่อย ๆ ทำได้ตามสบายจ้า' : 'ทำได้ดีจังฮู้!')}${collecting ? `<div class="mg-selection-bar" hidden><span id="mg-selected-name"></span><button type="button" class="mg-primary" data-action="place-selected">${state.phase === 'decorate' ? 'วางบนเค้ก' : 'ใส่ลงชาม'} ↓</button></div>` : ''}`;
+    const destination = state.phase === 'decorate' ? 'วางบนเค้ก' : 'ใส่ลงชาม';
+    const art = state.phase === 'decorate' ? H.cake(current.icing) : ['baking','ready'].includes(state.phase) ? A.oven() : A.bowl();
+    content.innerHTML = `${progress(recipe.th, done, total)}
+      ${collecting ? instruction(kitchenPrompt(), `จับตรงรูปแล้วลาก${destination} หรือแตะเลือกได้`, kitchenPromptTh()) : ''}
+      <div class="mg-scene ${collecting ? 'mg-sticky-worktop' : ''}">${A.kitchen()}
+        <button type="button" class="mg-drop-zone" style="--mg-mix-fill:${Math.min(1, .15 + done * .12)}" data-action="bowl" aria-label="${destination}" ${collecting ? '' : 'disabled'}>${art}</button>
+        <span class="mg-scene-tag">${collecting ? '↓ ' + destination : 'อบขนมด้วยใจ'}</span>
+      </div>
+      ${collecting ? `<section class="mg-ingredients-section" aria-label="เลือกวัตถุดิบจาก 29 อย่าง"><div class="mg-shelf-heading"><h3>ชั้นวางวัตถุดิบ · 29 อย่าง</h3><p>ลากจากรูป เลื่อนหน้าจอได้จากช่องว่างหรือแถบชื่อ</p></div><div class="mg-ingredients-grid">
+        ${C.ingredients.map(item => `<button type="button" class="mg-ingredient ${state.learned.includes(item.id) ? 'mg-used' : ''}" data-ingredient="${item.id}" aria-label="เลือก ${item.sv}" aria-pressed="${selected === item.id}">${dragArt(item.id)}<span class="mg-ingredient-label" lang="sv">${item.sv}</span><span class="mg-th" lang="th">${item.th}</span></button>`).join('')}
+      </div></section>` : renderKitchenPhase()}
+      ${feedbackHTML(collecting ? 'ฟังประโยค แล้วหาวัตถุดิบที่ตรงกับคำสวีเดน' : 'ทำได้ดีจังฮู้!')}
+      ${collecting ? `<div class="mg-selection-bar" hidden><span id="mg-selected-name"></span><button type="button" class="mg-primary" data-action="place-selected">${destination} ↓</button></div>` : ''}`;
     if (collecting && selected) {
       $('.mg-selection-bar', dialog).hidden = false;
       $('#mg-selected-name', dialog).textContent = C.byId[selected].sv;
@@ -316,7 +358,6 @@
   }
   function renderKitchenPhase() {
     const state = current.kitchen;
-    if (state.phase === 'stir') return `<div class="mg-phase-panel"><h3>มาคนส่วนผสมกันจ้า</h3><p><span lang="sv" class="mg-sv-phrase">röra om</span> แปลว่า “คนให้เข้ากัน”<br>กดปุ่มหรือแตะชามให้ครบ 5 ครั้งนะ</p><div class="mg-stir-dots" aria-label="คนแล้ว ${state.stirs} จาก 5 ครั้ง">${Array.from({ length: 5 }, (_, i) => `<span class="${i < state.stirs ? 'filled' : ''}"></span>`).join('')}</div><button type="button" class="mg-primary" data-action="stir">คนส่วนผสม · ${state.stirs} / 5</button></div>`;
     if (state.phase === 'ready') return '<div class="mg-phase-panel"><h3>ส่วนผสมพร้อมแล้ว!</h3><p>คำว่า <span lang="sv" class="mg-sv-phrase">baka</span> แปลว่า “อบขนม”<br>เอาเข้าเตาอบกันเลยต๊ะ</p><button type="button" class="mg-primary" data-action="bake">นำเข้าเตาอบ →</button></div>';
     return '<div class="mg-phase-panel"><span class="mg-eyebrow">กลิ่นขนมหอมแล้วจ้า</span><h3>รอในเตาอบสักครู่…</h3><div class="mg-baking-progress" role="status" aria-label="กำลังอบขนม"></div><p><span lang="sv" class="mg-sv-phrase">ugnen</span> = เตาอบ</p></div>';
   }
@@ -331,11 +372,20 @@
       if (keyboard) $('[data-action="place-selected"]', dialog)?.focus({ preventScroll: true }); }
     else feedback('ยกเลิกที่เลือกแล้ว เลือกวัตถุดิบใหม่ได้เลย');
   }
-  function placeIngredient(id) {
+  function placeIngredient(id, worked = false) {
     const state = current.kitchen;
     const target = C.target(state);
-    const result = C.addIngredient(state, id);
     selected = null;
+    if (!worked && target?.id === id) {
+      if (state.phase === 'collect' && id === current.pourTask.ingredient) return startPour();
+      if (state.phase === 'decorate' && id === 'cream') {
+        return hands({ kind: 'icing', strokes: current.icing, length: 0 }, 'Spritsa grädden på tårtan.', action => {
+          current.icing = action.strokes;
+          placeIngredient(id, true);
+        });
+      }
+    }
+    const result = C.addIngredient(state, id);
     if (result === 'inactive') return;
     if (result === 'retry') {
       dialog.querySelectorAll('[data-ingredient]').forEach(el => el.setAttribute('aria-pressed', 'false'));
@@ -348,7 +398,8 @@
     }
     sound('correct');
     current.revealed = false;
-    if (state.phase === 'done') return finish();
+    if (state.phase === 'done') return finishKitchen();
+    if (state.phase === 'stir') return startWhisk();
     renderKitchen();
     animate($('.mg-drop-zone', dialog), 'mg-land');
     const drop = document.createElement('span'); drop.className = 'mg-ingredient-drop'; drop.innerHTML = A.icon(id);
@@ -357,33 +408,72 @@
     speakPrompt();
     focusContent();
   }
-  function stir() {
-    if (!C.stir(current.kitchen)) return;
-    sound('tap'); renderKitchen();
-    animate($('.mg-drop-zone', dialog), 'mg-stirring');
-    if (current.kitchen.phase === 'ready') say('baka');
-    else feedback('คนส่วนผสมแล้ว ' + current.kitchen.stirs + ' จาก 5 ครั้ง', 'correct');
+  function hands(action, line, next, play = true) {
+    current.screen = 'hands';
+    gameControls(false);
+    H.mount(content, action, {
+      recipeTh: C.recipes[current.kitchen.recipeId].th, line,
+      onDone: () => { H.destroy(); current.screen = 'game'; gameControls(true); next(action); },
+      onSpill: () => {
+        current.kitchen.mistakes++;
+        talk([D.spill], () => hands(action, line, next, false));
+      }
+    });
+    if (play) say(line);
+  }
+  function startPour() {
+    const task = current.pourTask;
+    const item = C.byId[task.ingredient];
+    const quantity = MC.speakQuantity(task.value, task.unit);
+    const turn = {
+      line: 'Hur mycket ska vi hälla i?', meaning: 'เราต้องเทลงไปเท่าไร?',
+      say: `Vi behöver ${quantity} ${item.sv}.`, sayTh: `เราต้องใช้${item.th} ${task.value} ${task.unit}`,
+      word: item.sv, wordTh: item.th,
+      reaction: 'Då mäter vi upp det.', reactionTh: 'งั้นมาตวงให้ได้เท่านั้นกัน'
+    };
+    talk([turn], () => hands({ kind: 'pour', id: item.id, amount: 0, target: task.value, unit: task.unit },
+      `Häll i ${quantity} ${item.sv}.`, () => placeIngredient(item.id, true)));
+  }
+  function startWhisk() {
+    hands({ kind: 'whisk', work: 0 }, 'Vispa smeten tills den är slät.', () => {
+      for (let i = 0; i < 5; i++) C.stir(current.kitchen);
+      talk([D.oven], renderKitchen);
+    });
+  }
+  function finishKitchen() {
+    const turns = current.recaps.map(turn => ({
+      line: 'Jag skriver ner receptet. Vad sa vi om mängden?',
+      meaning: 'ฉันจะจดสูตรไว้ เมื่อกี้เราบอกว่าต้องใช้เท่าไรนะ?',
+      replies: [D.reply('Vi behöver mer än så.', 'เราต้องใช้มากกว่านั้น', 'Tänk på mängden vid strecket.', 'นึกถึงปริมาณตรงขีดตวงนะ'),
+        D.reply(turn.say, turn.sayTh, 'Tack! Nu står det i receptet.', 'ขอบใจจ้า จดไว้ในสูตรแล้ว')], wrong: 0
+    }));
+    talk([...turns, D.tasting], finish);
   }
   function bake() {
     if (!C.bake(current.kitchen)) return;
     renderKitchen(); sound('tap');
     later(() => {
       C.finishBaking(current.kitchen);
-      if (current.kitchen.phase === 'done') finish();
+      if (current.kitchen.phase === 'done') finishKitchen();
       else { renderKitchen(); say(kitchenPrompt()); }
     }, 2400);
   }
 
-  /* Pointer dragging for mouse and pen. Touch uses the same accessible two-tap
-     path as keyboard, so all 29 objects remain easy to scroll on a phone. */
+  function dragArt(id) {
+    return `<span class="mg-drag-handle" aria-hidden="true">${A.icon(id)}<i>⠿</i></span>`;
+  }
+
+  /* Drag starts on the picture on touch screens. Labels and gaps still scroll. */
   function pointerDown(event) {
-    const item = event.target.closest('[data-ingredient]');
-    if (!item || event.pointerType === 'touch' || event.button !== 0 || current?.screen !== 'game') return;
-    if (!['collect', 'decorate'].includes(current.kitchen?.phase)) return;
+    const item = event.target.closest('[data-ingredient], [data-cafe-item]');
+    if (!item || item.disabled || event.button !== 0 || current?.screen !== 'game') return;
+    if (event.pointerType === 'touch' && !event.target.closest('.mg-drag-handle')) return;
+    const cafe = !!item.dataset.cafeItem;
+    if (cafe ? current.served : !['collect', 'decorate'].includes(current.kitchen?.phase)) return;
     gestureController?.abort();
     gestureController = new AbortController();
     const options = { signal: gestureController.signal };
-    dragging = { id: item.dataset.ingredient, x: event.clientX, y: event.clientY, active: false, ghost: null, pointerId: event.pointerId };
+    dragging = { id: item.dataset.ingredient || item.dataset.cafeItem, item, cafe, x: event.clientX, y: event.clientY, active: false, ghost: null, pointerId: event.pointerId };
     document.addEventListener('pointermove', pointerMove, options);
     document.addEventListener('pointerup', pointerUp, options);
     document.addEventListener('pointercancel', cancelGesture, options);
@@ -397,33 +487,35 @@
       dragging.active = true;
       dragging.ghost = document.createElement('div');
       dragging.ghost.className = 'mg-drag-ghost';
-      dragging.ghost.innerHTML = A.icon(dragging.id);
+      dragging.ghost.innerHTML = A.icon(dragging.cafe ? C.cafeItems.find(item => item.id === dragging.id).art : dragging.id);
       // Native modal dialogs are in the top layer; the ghost must be inside.
       dialog.appendChild(dragging.ghost);
-      $('.mg-drop-zone', dialog)?.classList.add('mg-drop-ready');
+      dropTarget()?.classList.add('mg-drop-ready');
     }
     dragging.ghost.style.left = event.clientX + 'px';
     dragging.ghost.style.top = event.clientY + 'px';
-    $('.mg-drop-zone', dialog)?.classList.toggle('mg-drop-hover', overBowl(event.clientX, event.clientY));
+    dropTarget()?.classList.toggle('mg-drop-hover', overDrop(event.clientX, event.clientY));
   }
-  function overBowl(x, y) {
-    const rect = $('.mg-drop-zone', dialog)?.getBoundingClientRect();
+  function dropTarget() { return $(dragging?.cafe ? '.mg-tray' : '.mg-drop-zone', dialog); }
+  function overDrop(x, y) {
+    const rect = dropTarget()?.getBoundingClientRect();
     return !!rect && x >= rect.left - 15 && x <= rect.right + 15 && y >= rect.top - 10 && y <= rect.bottom + 10;
   }
   function pointerUp(event) {
     if (!dragging || event.pointerId !== dragging.pointerId) return;
-    const { id, active } = dragging;
-    const dropped = active && overBowl(event.clientX, event.clientY);
+    const { id, active, cafe, item } = dragging;
+    const dropped = active && overDrop(event.clientX, event.clientY);
     cleanupDrag(); gestureController?.abort(); gestureController = null;
     if (active) {
       suppressClick = true;
       later(() => { suppressClick = false; }, 100);
-      if (dropped) placeIngredient(id);
-      else animate($(`[data-ingredient="${id}"]`, dialog), 'mg-reject');
+      if (dropped) { if (cafe) addToTray(id); else placeIngredient(id); }
+      else animate(item, 'mg-reject');
     }
   }
   function cancelGesture() { cleanupDrag(); gestureController?.abort(); gestureController = null; }
   function cleanupDrag() {
+    if (dragging) dropTarget()?.classList.remove('mg-drop-ready', 'mg-drop-hover');
     dragging?.ghost?.remove(); dragging = null;
     dialog?.querySelector('.mg-drop-zone')?.classList.remove('mg-drop-ready', 'mg-drop-hover');
   }
@@ -431,14 +523,55 @@
   function customer(index) {
     const shirts = ['#b6bf9c', '#ceaa9d', '#a1b9be', '#d8bd81', '#b7a8bd'];
     index %= 5;
-    return `<svg class="mg-customer" viewBox="0 0 100 120" fill="none" stroke="#826b53" stroke-width="1.5" aria-hidden="true"><path d="M10 118q2-39 40-38 37 1 40 38" fill="${shirts[index]}"/><path d="M41 74v13q9 8 18 0V74" fill="#e4bd9a"/><ellipse cx="50" cy="48" rx="28" ry="34" fill="#e8c6a2"/><path d="M22 49Q6 10 46 7q41-2 33 41l-7-21q-25 17-43 0z" fill="${index % 2 ? '#a18163' : '#66594b'}"/><path d="M38 49h1m22 0h1" stroke-width="3"/><path d="M42 64q8 7 16 0" fill="none"/><path d="m26 95 12 16m36-16-12 16" stroke="#fff6df"/></svg>`;
+    return `<svg class="mg-customer" viewBox="0 0 100 120" fill="none" stroke="#826b53" stroke-width="1.5" aria-hidden="true"><path d="M10 118q2-39 40-38 37 1 40 38" fill="${shirts[index]}"/><path d="M41 74v13q9 8 18 0V74" fill="#e4bd9a"/><ellipse cx="50" cy="48" rx="28" ry="34" fill="#e8c6a2"/><path d="M22 49Q6 10 46 7q41-2 33 41l-7-21q-25 17-43 0z" fill="${index % 2 ? '#a18163' : '#66594b'}"/><path class="mg-customer-eyes" d="M38 49h1m22 0h1" stroke-width="3"/><path class="mg-customer-mouth" d="M42 64q8 7 16 0" fill="none"/><path d="m26 95 12 16m36-16-12 16" stroke="#fff6df"/></svg>`;
   }
-  function cafeText() { return C.orderText(current.orders[current.orderIndex], saved.cafeLevel >= 4 ? current.orderIndex % 3 : 0); }
+  function cafeGuest(order) { return D.guests[current.customers.get(order) % D.guests.length]; }
+  function cafeUrgent(order) { return current.customers.get(order) % 3 === 1; }
+  function cafeText() {
+    const order = current.orders[current.orderIndex];
+    const variant = saved.cafeLevel >= 4 ? current.customers.get(order) % 3 : 0;
+    return (cafeUrgent(order) ? 'Jag har bråttom. ' : '') + C.orderText(order, variant);
+  }
+  function setCafeTray(tray) {
+    const order = current.orders[current.orderIndex];
+    current.tray = tray || current.trays.get(order) || {};
+    current.trays.set(order, current.tray);
+  }
+  function switchOrder() {
+    const i = current.orderIndex;
+    if (!current.orders[i + 1]) return;
+    [current.orders[i], current.orders[i + 1]] = [current.orders[i + 1], current.orders[i]];
+    setCafeTray(); current.revealed = false;
+    renderCafe(); content.scrollTop = 0;
+    $('[data-action="speak"]', dialog)?.focus({ preventScroll: true });
+    speakPrompt();
+  }
+  function addToTray(id) {
+    if (current.served || (current.tray[id] || 0) >= 4) return;
+    current.tray[id] = (current.tray[id] || 0) + 1;
+    sound('tap'); updateTray();
+    animate($(`[data-count="${id}"]`, dialog), 'mg-ticket-pop');
+    feedback('ของบนถาด: ' + trayDescription() + '.');
+  }
   function renderCafe() {
     const order = current.orders[current.orderIndex];
-    const thai = 'ขอ ' + order.map(({ id, count }) => C.cafeItems.find(item => item.id === id).th + ' ' + count + (['coffee','tea','water'].includes(id) ? ' แก้ว' : ' ชิ้น')).join(' กับ ') + ' ค่ะ ขอบคุณค่ะ';
+    const thai = (cafeUrgent(order) ? 'ฉันรีบนิดหน่อย ' : '') + 'ขอ ' + order.map(({ id, count }) => {
+      const name = id === 'cake' ? 'เค้ก' : C.cafeItems.find(item => item.id === id).th;
+      const unit = ['coffee','tea','water'].includes(id) ? 'แก้ว' : 'ชิ้น';
+      return `${name} ${count} ${unit}`;
+    }).join(' กับ ') + ' ขอบคุณจ้า';
+    const next = current.orders[current.orderIndex + 1];
+    const guest = cafeGuest(order);
     content.className = 'mg-game-content mg-cafe-game';
-    content.innerHTML = `${progress(C.cafeRounds[saved.cafeLevel].th, current.orderIndex, current.orders.length)}${instruction('ลูกค้าสั่งอะไรบ้าง?', 'แตะของในเมนูให้ครบจำนวน แล้วกด “เสิร์ฟ”', 'เลือกให้ครบจำนวน แล้วกดเสิร์ฟ')}<div class="mg-cafe-stage"><div class="mg-cafe-awning"></div><div class="mg-customer-row">${customer(current.orderIndex)}<div class="mg-order-bubble" lang="${isHidden() ? 'th' : 'sv'}">${isHidden() ? '“ลองฟังว่าลูกค้าสั่งอะไรนะ…”' : '”' + escape(cafeText()) + '”'}${!isHidden() ? `<span class="mg-th" lang="th">${thai}</span>` : ''}</div></div></div><div class="mg-cafe-menu" aria-label="เมนูขนมและเครื่องดื่ม">${C.cafeItems.map(item => `<button type="button" class="mg-menu-item" data-cafe-item="${item.id}" aria-label="เพิ่ม ${item.sv}" ${current.served ? 'disabled' : ''}>${A.icon(item.art)}<span lang="${isHidden() ? 'th' : 'sv'}">${isHidden() ? 'เลือกภาพนี้' : item.sv}</span>${!isHidden() ? `<span class="mg-th" lang="th">${item.th}</span>` : ''}<span class="mg-menu-count" data-count="${item.id}" hidden>0</span></button>`).join('')}</div><div class="mg-tray"><span class="mg-tray-label">ถาดของเรา</span><div class="mg-tray-items" id="mg-tray-items"></div></div><div class="mg-cafe-actions"><button type="button" class="mg-secondary" data-action="clear-tray" ${current.served ? 'disabled' : ''}>เอาของออกทั้งหมด</button><button type="button" class="mg-primary" data-action="serve" ${current.served ? 'disabled' : ''}>เสิร์ฟ →</button></div>${feedbackHTML(current.served ? 'ลูกค้าบอกว่า “Tack så mycket!” แปลว่า “ขอบคุณมากค่ะ!” จัดของได้ถูกต้องแล้ว' : 'ถ้าหยิบเกิน กดปุ่มลบบนถาดเพื่อเอาออกทีละชิ้นได้จ้า')}${current.served ? `<div class="mg-order-next"><button type="button" class="mg-primary" data-action="next-order">${current.orderIndex === current.orders.length - 1 ? 'ปิดร้านแล้วทบทวนคำศัพท์' : 'รับลูกค้าคนต่อไป →'}</button></div>` : ''}`;
+    content.innerHTML = `${progress(C.cafeRounds[saved.cafeLevel].th, current.orderIndex, current.orders.length)}
+      <div class="mg-cafe-queue"><span class="mg-cafe-ticket">กำลังทำ · ${guest.thai}${cafeUrgent(order) ? ' · ลูกค้ารีบ' : ''}</span>${next && !current.served ? `<button type="button" class="mg-secondary" data-action="switch-order">สลับคิว · ${cafeGuest(next).thai}${cafeUrgent(next) ? ' · ลูกค้ารีบ' : ''}</button>` : ''}</div>
+      <div class="mg-cafe-stage"><div class="mg-cafe-awning"></div><div class="mg-customer-row">${customer(guest.portrait)}<div class="mg-order-bubble" lang="${isHidden() ? 'th' : 'sv'}">${isHidden() ? 'ฟังว่าลูกค้าสั่งอะไร' : '”' + escape(cafeText()) + '”'}${!isHidden() ? `<span class="mg-th" lang="th">${thai}</span>` : ''}
+      <div class="mg-talk-buttons"><button type="button" class="mg-replay" data-action="speak" lang="th">${speaker}<span>ฟังออร์เดอร์อีกครั้ง</span><small>1×</small></button>${saved.mode === 'listen' ? `<button type="button" class="mg-hint-btn" data-action="reveal" lang="th">${current.revealed ? 'ซ่อนข้อความ' : 'ดูข้อความ'}</button>` : ''}</div></div></div></div>
+      <div class="mg-tray"><span class="mg-tray-label">ถาดของ${guest.thai} · ลากของมาวางที่นี่</span><div class="mg-tray-items" id="mg-tray-items"></div></div>
+      <div class="mg-cafe-menu" aria-label="เมนูขนมและเครื่องดื่ม">${C.cafeItems.map(item => `<button type="button" class="mg-menu-item" data-cafe-item="${item.id}" aria-label="เพิ่ม ${item.sv}" ${current.served ? 'disabled' : ''}>${dragArt(item.art)}<span lang="${isHidden() ? 'th' : 'sv'}">${isHidden() ? 'เลือกภาพนี้' : item.sv}</span>${!isHidden() ? `<span class="mg-th" lang="th">${item.th}</span>` : ''}<span class="mg-menu-count" data-count="${item.id}" hidden>0</span></button>`).join('')}</div>
+      <div class="mg-cafe-actions"><button type="button" class="mg-secondary" data-action="clear-tray" ${current.served ? 'disabled' : ''}>เอาของออกทั้งหมด</button><button type="button" class="mg-primary" data-action="serve" ${current.served ? 'disabled' : ''}>เสิร์ฟ →</button></div>
+      ${feedbackHTML(current.served ? 'ลูกค้าบอกว่า “Tack så mycket!” แปลว่า “ขอบคุณมาก!”' : 'ลากของลงถาดหรือแตะที่รูป ถ้าหยิบเกินเอาออกทีละชิ้นได้จ้า')}
+      ${current.served ? `<div class="mg-order-next"><button type="button" class="mg-primary" data-action="next-order">${current.orderIndex === current.orders.length - 1 ? 'ปิดร้านแล้วทบทวนคำศัพท์' : 'รับลูกค้าคนต่อไป →'}</button></div>` : ''}`;
     updateTray();
   }
   function trayDescription() {
@@ -457,11 +590,49 @@
     if (current.served) return;
     if (!C.checkOrder(current.orders[current.orderIndex], current.tray)) {
       current.mistakes++; sound('retry'); animate($('.mg-tray', dialog), 'mg-reject');
-      feedback('เกือบถูกแล้วจ้า ลองเช็กทั้งชนิดและจำนวน กดลบของที่เกิน หรือฟังอีกครั้งได้นะ', 'retry'); return;
+      const order = current.orders[current.orderIndex];
+      const missing = order.some(item => (current.tray[item.id] || 0) < item.count);
+      const line = missing ? 'Ursäkta, det saknas något.' : 'Oj, det blev för mycket.';
+      cafeSay(line);
+      feedback(missing ? 'ลูกค้าบอกว่ายังขาดของ ลองฟังออร์เดอร์อีกครั้งแล้วเติมให้ครบ' : 'ลูกค้าบอกว่าได้ของเกิน ลองเอาของส่วนเกินออกจากถาด', 'retry');
+      return;
     }
-    current.served = true; sound('correct'); renderCafe();
-    feedback('ลูกค้าบอกว่า “Tack så mycket!” แปลว่า “ขอบคุณมากค่ะ!” จัดของได้ถูกต้องแล้ว', 'correct'); say('Tack så mycket!');
-    $('[data-action="next-order"]', dialog)?.focus({ preventScroll: true });
+    current.served = true;
+    sound('correct');
+    const guest = cafeGuest(current.orders[current.orderIndex]);
+    const last = current.orderIndex === current.orders.length - 1;
+    const turns = [];
+    if (current.orderIndex === 0) turns.push({
+      line: 'Tack! Kan jag betala med kort?', meaning: 'ขอบคุณ! จ่ายด้วยบัตรได้ไหม?',
+      replies: [D.reply('Ja, det går bra.', 'ได้เลย', 'Tack, då gör jag det.', 'ขอบคุณ งั้นฉันจ่ายด้วยบัตรนะ'),
+        D.reply('Jag vill ha en kopp kaffe.', 'ฉันขอกาแฟหนึ่งถ้วย', 'Jag menar: går det bra med kort?', 'ฉันหมายถึง จ่ายด้วยบัตรได้ไหม?')], wrong: 1
+    });
+    if (current.orderIndex === 1) turns.push({
+      line: 'Ursäkta, är det här min beställning?', meaning: 'ขอโทษนะ นี่คือออร์เดอร์ของฉันหรือเปล่า?',
+      say: 'Ja, här är din beställning.', sayTh: 'ใช่ นี่คือของที่คุณสั่ง', word: 'beställning', wordTh: 'รายการที่สั่ง',
+      reaction: 'Tack så mycket!', reactionTh: 'ขอบคุณมาก!'
+    });
+    if (last) turns.push({
+      line: current.cafeRecap ? 'Är det här min beställning?' : 'Vad säger du när du lämnar över brickan?',
+      meaning: current.cafeRecap ? 'นี่คือของที่ฉันสั่งใช่ไหม?' : 'ตอนส่งถาดให้ลูกค้า เราพูดว่าอะไรได้บ้าง?',
+      build: [D.reply('din beställning.', 'ของที่คุณสั่ง'), D.reply('min kopp.', 'ถ้วยของฉัน'),
+        D.reply('här är', 'นี่คือ'), D.reply('Ja,', 'ใช่')],
+      order: [3, 2, 0], reaction: 'Tack! Vi ses nästa gång.', reactionTh: 'ขอบคุณ! เจอกันคราวหน้านะ'
+    });
+    const served = () => {
+      renderCafe();
+      $('[data-action="next-order"]', dialog)?.focus();
+      if (!turns.length) cafeSay('Tack så mycket!');
+    };
+    if (turns.length) talk(turns, served, guest);
+    else served();
+  }
+
+  function cafeSay(line) {
+    const portrait = $('.mg-customer-row', dialog);
+    portrait?.classList.add('is-speaking');
+    later(() => portrait?.classList.remove('is-speaking'), Math.max(1500, line.length * 80));
+    say(line);
   }
 
   function renderMemory() {
@@ -518,7 +689,7 @@
     updateMemoryCards();
     if (C.isPair(first, second)) {
       current.matched.push(card.id); current.flipped = [];
-      sound('match'); say(word.sv, true); updateMemoryCards();
+      sound('match'); say(word.sv); updateMemoryCards();
       feedback('เจอคู่แล้ว เก่งจังฮู้! ' + word.sv + ' · ' + word.th, 'correct');
       later(() => {
         current.locked = false;
@@ -554,8 +725,11 @@
     const reward = P.complete(window.GameEngine.StateManager, current.mission, current.runId, attempts / (attempts + mistakes)), course = P.stats(P.state(), gameId);
     const title = gameId === 'kitchen' ? C.recipes[current.kitchen.recipeId].th + 'เสร็จแล้วจ้า!' : gameId === 'cafe' ? `ดูแลลูกค้าครบ ${current.orders.length} คนแล้ว เก่งจังฮู้!` : 'จับคู่ครบทุกคำแล้วจ้า!';
     const next = P.catalogue.some(m => m.game === gameId && !P.done(P.state(), m.id) && P.unlocked(P.state(), m.id));
+    const art = gameId === 'kitchen'
+      ? current.icing.length ? H.cake(current.icing, true) : recipeArt(C.recipes[current.kitchen.recipeId])
+      : A.icon(gameId === 'cafe' ? 'coffee' : 'flower');
     content.className = 'mg-game-content';
-    content.innerHTML = `<div class="mg-result"><span class="mg-result-stamp">สำเร็จ ${course.completed} / ${course.total} ภารกิจ ✓</span><div class="mg-result-art">${gameId === 'kitchen' ? recipeArt(C.recipes[current.kitchen.recipeId]) : A.icon(gameId === 'cafe' ? 'coffee' : 'flower')}</div><h3>${title}</h3><p>แตะฟังคำที่ได้ฝึก แล้วลองพูดตาม รอบถัดไปจะให้เรานึกคำและฟังด้วยตัวเองมากขึ้น ใช้ตัวช่วยได้เสมอต๊ะ</p><div class="mg-result-reward">+${reward.xp} XP${reward.gems ? ` · +${reward.gems} เพชร` : ''}<br><small>${reward.message}</small></div><span class="mg-eyebrow">คำที่เราได้ฝึก · แตะเพื่อฟังเสียง</span><div class="mg-word-album">${words.map(word => `<button type="button" class="mg-album-word" data-action="word" data-word="${escape(word.sv)}" aria-label="ฟังคำว่า ${escape(word.sv)}">${wordArt(word)}<span lang="sv">${word.sv}</span><span lang="th">${word.th}</span></button>`).join('')}</div><div class="mg-result-actions">${next ? '<button type="button" class="mg-primary" data-action="next-mission">ไปภารกิจถัดไป →</button>' : ''}<button type="button" class="mg-secondary" data-action="again">เลือกภารกิจ / ทบทวน</button><button type="button" class="mg-secondary" data-action="close">กลับไปเลือกเกม</button></div></div>`;
+    content.innerHTML = `<div class="mg-result"><span class="mg-result-stamp">สำเร็จ ${course.completed} / ${course.total} ภารกิจ ✓</span><div class="mg-result-art">${art}</div><h3>${title}</h3><p>แตะฟังคำที่ได้ฝึก แล้วลองพูดตาม รอบถัดไปจะให้เรานึกคำและฟังด้วยตัวเองมากขึ้น ใช้ตัวช่วยได้เสมอต๊ะ</p><div class="mg-result-reward">+${reward.xp} XP${reward.gems ? ` · +${reward.gems} เพชร` : ''}<br><small>${reward.message}</small></div><span class="mg-eyebrow">คำที่เราได้ฝึก · แตะเพื่อฟังเสียง</span><div class="mg-word-album">${words.map(word => `<button type="button" class="mg-album-word" data-action="word" data-word="${escape(word.sv)}" aria-label="ฟังคำว่า ${escape(word.sv)}">${wordArt(word)}<span lang="sv">${word.sv}</span><span lang="th">${word.th}</span></button>`).join('')}</div><div class="mg-result-actions">${next ? '<button type="button" class="mg-primary" data-action="next-mission">ไปภารกิจถัดไป →</button>' : ''}<button type="button" class="mg-secondary" data-action="again">เลือกภารกิจ / ทบทวน</button><button type="button" class="mg-secondary" data-action="close">กลับไปเลือกเกม</button></div></div>`;
     sound('fanfare'); content.scrollTop = 0; focusContent(); confetti(); renderLobby();
   }
   function confetti() {

@@ -23,7 +23,7 @@
   }
   function sound(id) { window.SpeechEngine?.playSound?.(id); }
   function tracks() { return state.trackOrder[C.rooms[state.room].id]; }
-  function say(text, slow = false) { window.SpeechEngine?.speakSwedish?.(text, slow ? .6 : .88); }
+  function say(text) { window.SpeechEngine?.speakSwedish?.(text, 1); }
   function narrate(text) { window.SpeechEngine?.speakThai?.(text); }
   function stop() {
     clearTimeout(pulseTimer); pulseTimer = null; pulseId = null;
@@ -142,7 +142,7 @@
   function renderDiscovery(animal) {
     const found = state.found.includes(animal.id), challenge = C.challenge(state, animal.id);
     const choices = C.shuffle(challenge.choices, () => .47 + (animalsIndex(animal.id) % 3) * .13);
-    return `<div class="ze-panel-head"><span class="ze-kicker">${found ? 'เก็บร่องรอยได้แล้ว เก่งจังฮู้!' : 'มีบางอย่างอยู่ในเงา'}</span><h3 lang="${found ? 'sv' : 'th'}">${found ? animal.sv : 'เราพบตัวอะไรนะ?'}</h3></div><div class="ze-discovery-art">${A.animal(animal.id)}</div>${found ? `<div class="ze-discovery-note"><p lang="sv">${animal.sentence}</p><p class="ze-th" lang="th">${animal.sentenceTh}</p><button type="button" class="ze-text-button" data-ze="listen-animal">${A.icon('sound')} ฟังประโยคสวีเดนช้า ๆ</button><div class="ze-field-note"><span>${state.room === 0 ? 'หมายเลขบนป้ายทองเหลือง' : 'จากสมุดของซิกเน'}</span>${state.room === 0 ? `<strong class="ze-mark-digit">${state.marks[animal.id]}</strong>` : ''}<p>${animal.noteTh}</p></div></div><button type="button" class="ze-primary" data-ze="search">${C.foundInRoom(state).length === 4 ? 'พบครบ 4 ตัวแล้ว · ไปไขล็อก →' : 'ตามหาตัวต่อไป →'}</button>` : `<p class="ze-discovery-question">${challenge.question}</p>${state.episode === 3 ? `<button type="button" class="ze-secondary" data-ze="listen-challenge">${A.icon('sound')} ฟังประโยคสวีเดนช้า ๆ</button>` : ''}<div class="ze-answer-choices">${choices.map(choice => `<button type="button" lang="${challenge.lang}" data-ze="identify" data-answer="${esc(choice)}">${choice}</button>`).join('')}</div>${state.episode === 0 ? `<p class="ze-th ze-identify-translation" lang="th">คำใบ้ความหมาย: ${animal.th}</p>` : ''}<button type="button" class="ze-text-button" data-ze="search">กลับไปค้นหาในภาพ</button>`}`;
+    return `<div class="ze-panel-head"><span class="ze-kicker">${found ? 'เก็บร่องรอยได้แล้ว เก่งจังฮู้!' : 'มีบางอย่างอยู่ในเงา'}</span><h3 lang="${found ? 'sv' : 'th'}">${found ? animal.sv : 'เราพบตัวอะไรนะ?'}</h3></div><div class="ze-discovery-art">${A.animal(animal.id)}</div>${found ? `<div class="ze-discovery-note"><p lang="sv">${animal.sentence}</p><p class="ze-th" lang="th">${animal.sentenceTh}</p><button type="button" class="ze-text-button" data-ze="listen-animal">${A.icon('sound')} ฟังประโยคอีกครั้ง · 1×</button><div class="ze-field-note"><span>${state.room === 0 ? 'หมายเลขบนป้ายทองเหลือง' : 'จากสมุดของซิกเน'}</span>${state.room === 0 ? `<strong class="ze-mark-digit">${state.marks[animal.id]}</strong>` : ''}<p>${animal.noteTh}</p></div></div><button type="button" class="ze-primary" data-ze="search">${C.foundInRoom(state).length === 4 ? 'พบครบ 4 ตัวแล้ว · ไปไขล็อก →' : 'ตามหาตัวต่อไป →'}</button>` : `<p class="ze-discovery-question">${challenge.question}</p>${state.episode === 3 ? `<button type="button" class="ze-secondary" data-ze="listen-challenge">${A.icon('sound')} ฟังประโยคอีกครั้ง · 1×</button>` : ''}<div class="ze-answer-choices">${choices.map(choice => `<button type="button" lang="${challenge.lang}" data-ze="identify" data-answer="${esc(choice)}">${choice}</button>`).join('')}</div>${state.episode === 0 ? `<p class="ze-th ze-identify-translation" lang="th">คำใบ้ความหมาย: ${animal.th}</p>` : ''}<button type="button" class="ze-text-button" data-ze="search">กลับไปค้นหาในภาพ</button>`}`;
   }
   function renderJournal() {
     return `<div class="ze-panel-head"><span class="ze-kicker">สมุดบันทึกของซิกเน</span><h3>สิ่งที่พบในคืนนี้</h3><p>แตะบันทึกเพื่อฟังประโยคสวีเดน อ่านคำอธิบายไทยและเก็บเบาะแสไว้ไขปริศนา</p></div><div class="ze-journal-list">${C.rooms.map(room => `<section><h4>${room.titleTh} <span>${C.foundInRoom(state, C.rooms.indexOf(room)).length}/4</span></h4>${state.found.filter(id => C.byId[id].room === room.id).map(id => {
@@ -240,7 +240,7 @@
     if (action === 'identify') {
       const result = C.identify(state, inspected, button.dataset.answer);
       save();
-      if (result === 'retry') { button.classList.add('ze-wrong-answer'); button.setAttribute('aria-invalid', 'true'); notify('ลองดูอีกครั้งนะ ดูภาพและตำแหน่ง ฟังช้า ๆ แล้วลองเลือกคำตอบใหม่ได้จ้า', 'retry'); sound('retry'); return; }
+      if (result === 'retry') { button.classList.add('ze-wrong-answer'); button.setAttribute('aria-invalid', 'true'); notify('ลองดูอีกครั้งนะ ดูภาพและตำแหน่ง ฟังอีกครั้ง แล้วลองเลือกคำตอบใหม่ได้จ้า', 'retry'); sound('retry'); return; }
       if (result === 'found' || result === 'already') {
         sound('correct'); message = C.byId[inspected].sentenceTh + ' บันทึกร่องรอยใหม่ลงสมุดแล้วจ้า'; tone = 'correct';
         showPanel('found'); say(C.byId[inspected].sentence, true);

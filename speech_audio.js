@@ -1321,6 +1321,7 @@
           // Single-shot Pronunciation Assessment
           recognizer.recognizeOnceAsync(
             (result) => {
+              if (callbacks.signal?.aborted) { resolve(); return; }
               if (this._audioLevelTimer) clearInterval(this._audioLevelTimer);
               if (this._safetyTimeout) clearTimeout(this._safetyTimeout);
               if (earlyFinishTimer) clearTimeout(earlyFinishTimer);
@@ -1442,7 +1443,7 @@
               this.isAnalyzing = false;
 
               // Applicera visuell dopamin och ljud
-              this._applyDopamineFeedback(evaluation, referenceItem);
+              if (!callbacks.quiet) this._applyDopamineFeedback(evaluation, referenceItem);
 
               if (onStateChange) onStateChange('idle');
               const finalPayload = { transcript: result.text || refText, evaluation, azureResult: evaluation };
@@ -1450,6 +1451,7 @@
               finalize(resolve, evaluation);
             },
             (err) => {
+              if (callbacks.signal?.aborted) { resolve(); return; }
               if (this._audioLevelTimer) clearInterval(this._audioLevelTimer);
               if (this._safetyTimeout) clearTimeout(this._safetyTimeout);
               if (earlyFinishTimer) clearTimeout(earlyFinishTimer);
@@ -1822,7 +1824,7 @@
         }
         await new Promise((r) => setTimeout(r, 200));
 
-        if (!this.isStarting) return;
+        if (!this.isStarting || callbacks.signal?.aborted) return;
 
         const pref = this.getEnginePreference();
 
@@ -1840,7 +1842,7 @@
           return await this._startWebkitFallback(targetItem, callbacks);
         }
       } finally {
-        this.isStarting = false;
+        if (this._callbacks === callbacks) this.isStarting = false;
       }
     }
 
@@ -1858,6 +1860,10 @@
             autoGainControl: true
           }
         });
+        if (callbacks.signal?.aborted) {
+          stream.getTracks().forEach(track => track.stop());
+          return;
+        }
         this._audioStream = stream;
 
         // Dedikerad och isolerad AudioContext enbart för mikrofonnivåmätning!
@@ -1935,6 +1941,7 @@
         };
 
         recorder.onstop = async () => {
+          if (callbacks.signal?.aborted) return;
           if (this._animFrameId) cancelAnimationFrame(this._animFrameId);
           this._cleanupTracks();
 
@@ -1945,15 +1952,17 @@
 
           try {
             const transcript = await this._transcribeWithGroq(audioBlob, mimeType);
+            if (callbacks.signal?.aborted) return;
             const targetSv = typeof targetItem === 'object' ? targetItem.sv : String(targetItem || '');
             const evaluation = evaluatePronunciation(transcript, targetSv);
 
-            this._applyDopamineFeedback(evaluation, targetItem);
+            if (!callbacks.quiet) this._applyDopamineFeedback(evaluation, targetItem);
 
             this.isAnalyzing = false;
             if (onStateChange) onStateChange('idle');
             if (onResult) onResult({ transcript, evaluation });
           } catch (err) {
+            if (callbacks.signal?.aborted) return;
             this.isAnalyzing = false;
             if (onStateChange) onStateChange('idle');
             // Om Groq misslyckas, ge tydligt felmeddelande eller prova lokal diktering
@@ -1972,6 +1981,7 @@
           if (this.isRecording) this.stopRecordingAndJudge();
         }, 4800);
       } catch (err) {
+        if (callbacks.signal?.aborted) return;
         this.isRecording = false;
         this.isAnalyzing = false;
         if (onStateChange) onStateChange('idle');
@@ -2263,7 +2273,7 @@
         let hasResolved = false;
 
         const finalize = (alternatives) => {
-          if (hasResolved) return;
+          if (hasResolved || callbacks.signal?.aborted) return;
           hasResolved = true;
           this.isRecording = false;
           this.isAnalyzing = false;
@@ -2274,11 +2284,12 @@
           const targetSv = typeof targetItem === 'object' ? targetItem.sv : String(targetItem || '');
           const evaluation = evaluatePronunciation(bestText, targetSv);
 
-          this._applyDopamineFeedback(evaluation, targetItem);
+          if (!callbacks.quiet) this._applyDopamineFeedback(evaluation, targetItem);
           if (onResult) onResult({ transcript: bestText, evaluation, allAlternatives: alternatives });
         };
 
         rec.onstart = () => {
+          if (callbacks.signal?.aborted) { rec.abort(); return; }
           this.isRecording = true;
           if (onStateChange) onStateChange('recording');
           window.VisualEngine?.Mascot?.setState('listening');
@@ -2300,7 +2311,8 @@
 
         // iOS Fix c: Hantera onend och onerror utan att appen låser sig
         rec.onerror = (err) => {
-          if (hasResolved) return;
+          if (hasResolved || callbacks.signal?.aborted) return;
+          if (err?.error === 'no-speech') { finalize([]); return; }
           hasResolved = true;
           this.isRecording = false;
           this.isAnalyzing = false;
@@ -2311,7 +2323,7 @@
           if (err?.error === 'not-allowed') {
             if (onError) onError(new Error('Mikrofonåtkomst nekad. Tillåt mikrofon i Safari-inställningar.'));
           } else {
-            finalize([]);
+            if (onError) onError(new Error(err?.error || 'Taligenkänningen avbröts.'));
           }
         };
 
@@ -3281,6 +3293,8 @@
 
     listenAndEvaluate: (targetItem, callbacks = {}) => {
       return speechJudgeInstance.start(targetItem, {
+        signal: callbacks.signal,
+        quiet: callbacks.quiet,
         onStateChange: callbacks.onStateChange,
         onAudioLevel: callbacks.onAudioLevel,
         onHearing: callbacks.onHearing,
