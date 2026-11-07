@@ -2,9 +2,10 @@
 
 Gränssnitt, berättelser, instruktioner och återkoppling är på thai. Svenska används för det som tränas. Thai är huvudspråk med några lättbegripliga sydthailändska uttryck; detta är ingen fullständig dialektöversättning.
 
-## Kursplan: 58 uppgifter
+## Kursplan: 76 uppgifter
 
-- Kök: åtta recept med tre steg vardera (24 uppgifter). Läsning med översättning, återkallning utan synlig översättning, sedan lyssning med bilder. Recepten delar ord så att tidigare kunskap används i nya sammanhang. Receptillustrationer är ursprunglig SVG. Recepten är språkövningar, utan köksmått.
+- Kök: åtta recept med fyra steg vardera (32 uppgifter). Läsning med översättning, återkallning, lyssning och praktisk mätning. Det fjärde steget innehåller totalt 56 mätmoment där rätt mängd ska förberedas i ett mått, på en tarerad våg eller genom att räkna stycken. Recepten är språkövningar; mängderna gör dem inte till provbakade matrecept.
+- Måttskolan i köket: tio fristående lektioner med åtta frågor vardera (80 frågor, tio uppgifter). Svenska namn och förkortningar för ml, cl, dl, l, krm, tsk, msk, mg, g, hg, kg och st. Därefter enhetsbyten, halv- och kvartsmått, svensk decimalkomma, strukna mått, skillnaden mellan volym och vikt, skalning av ingredienser och hörförståelse. En avslutande lektion tränar receptens °C, min, h/tim, cm och mm. Måttskolan går att börja med direkt. Pågående frågor, fylld mängd och tarerad våg sparas vid stängning och omladdning.
 - Café: sex pass med 5, 6, 6, 7, 7 och 8 kunder (39 beställningar). En till tre varor, antal upp till fyra, flera sätt att beställa och slutligen hörförståelse.
 - Ordalbum: åtta temapaket, tre steg per paket (24 uppgifter). Sex bild–ordpar blir hörövningar. Upp till två extra ord hämtas endast från ett annat paket som eleven redan genomfört. Utan tidigare paket behålls sex par.
 - Zoo: fyra nätter med tre kapitel per natt. Samma illustrerade miljö återbesöks med nytt språkfokus: namn, lägesord, meningar och lyssning. Totalt 48 djurfrågor och tolv lås. Det pågående äventyret sparas; nya nätter öppnas i ordning.
@@ -16,6 +17,7 @@ Hjälp, långsamt ljud och översättning är alltid tillåtna. Inga poäng dras
 Reglerna i `learning_progress.js` delas med huvudappens StateManager.
 
 - Första genomförandet: 8/10/12 XP för kök och ordalbum, 12–22 XP för café, 24–36 XP för zoo.
+- Måttskolan ger 8–12 XP per genomförd lektion, receptens mätsteg ger 12 XP. Frågor och enskilda hällningar ger inga egna belöningar. Samma tak och regler för repetition gäller även här.
 - Upprepad uppgift samma dag: 0 XP. Repetition en senare dag: 2 XP, högst tre olika uppgifter per dag.
 - Högst 60 XP från småspelen per lokal kalenderdag. Hela appen har ett tak på 180 XP och 20 intjänade juveler per dag. Befintliga saldon behålls.
 - Var tredje ny uppgift ger två juveler en gång. Obetalda milstolpsjuveler kan hämtas vid ett senare genomförande när dagsgränsen tillåter det.
@@ -33,6 +35,8 @@ All progression sparas lokalt i webbläsaren. Samma ursprung delar uppgifter och
 
 ## Kontroll
 
-`node --test test_learning_progress.cjs test_mini_games.cjs test_zoo.cjs`
+`node --test test_kitchen_measures.cjs test_learning_progress.cjs test_mini_games.cjs test_zoo.cjs`
 
 Bygg de fristående HTML-filerna med `bundle.py`. Browserkontrollen omfattar mobilstorlekar, kompletta spelomgångar, fortsatt progression och den äldre appens `test_suite.html`.
+
+Måttrelationerna kontrollerades mot [Arlas måttomvandlare](https://www.arla.se/recept/mattomvandlare/) och [ICA:s omvandlingstabell](https://www.ica.se/artikel/omvandlingstabell/). Ingen allmän omvandling mellan volym och vikt tillåts; ett sådant samband kräver ingrediensspecifik information. Kopp och glas lärs ut som behållare med varierande storlek, inte som universella måttenheter. Milligram introduceras för enhetsförståelse och etiketter, med förklaring att en vanlig köksvåg inte har sådan upplösning.

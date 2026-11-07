@@ -4250,6 +4250,83 @@ body.app-theme-sunset {
   .mg-result h3 { font-size: 30px; }
   .mg-album-word { font-size: 10px; }
 }
+
+/* The measuring school shares the kitchen's paper, sage and brass palette. */
+.mg-toggle[hidden] { display: none; }
+.km-area-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0 26px; }
+.km-area-tabs button { min-height: 52px; padding: 12px 9px; border: 1px solid #d5d8bf; border-radius: 13px; background: #fffaf0; color: #617251; font: 600 13px/1.8 var(--font-body-th); }
+.km-area-tabs button[aria-pressed=true] { background: #e6ecd9; border-color: #8caa7b; box-shadow: 0 3px 0 #d0d9bf; }
+.km-lesson { max-width: 680px; margin: auto; padding: 24px 28px 35px; font-size: 14px; line-height: 1.9; }
+.km-chapter-note { border-bottom: 1px solid #dfdac5; padding-bottom: 18px; margin-bottom: 24px; }
+.km-chapter-note h3 { font: 500 26px/1.6 var(--font-th); color: #52674e; margin: 6px 0 12px; }
+.km-chapter-note p { margin: 10px 0; color: #766e5a; }
+.km-facts { display: flex; flex-direction: column; gap: 6px; background: #edf0de; border: 1px solid #d5ddc2; padding: 12px 16px; border-radius: 12px; color: #536b50; font-size: 14px; }
+.km-prompt { margin: 0 0 12px; font-size: 16px; line-height: 1.85; font-weight: 600; color: #5b644c; }
+.km-target { display: block; padding: 16px; font-size: 29px; line-height: 1.5; color: #546c50; border-radius: 14px; background: #f1eddc; text-align: center; overflow-wrap: anywhere; }
+.km-target[lang=th] { font-size: 23px; font-family: var(--font-th); }
+.km-audio { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin: 14px 0 22px; }
+.km-audio button { font-size: 12px; min-height: 44px; }
+.km-choices { display: grid; gap: 11px; }
+.km-choices button { padding: 17px 20px; min-height: 56px; background: #fffdf4; border: 2px solid #dedac3; border-radius: 13px; color: #5d6651; text-align: left; line-height: 1.8; font: 600 16px/1.8 var(--font-body-th); transition: background .2s,border-color .2s; }
+.km-choices button[lang=sv] { font-family: var(--font-sv); font-size: 20px; }
+.km-choices button:hover:not(:disabled) { border-color: #94a582; background: #f0f3e5; }
+.km-choices button.km-correct { border-color: #83a17a; background: #e4edd8; opacity: 1; }
+.km-choices button.km-wrong { border-color: #cda286; background: #f5e8d9; }
+.km-choices button:disabled:not(.km-correct) { opacity: .55; }
+.km-workbench { background: linear-gradient(#eef0e3,#faf5e7); border: 1px solid #d9ddc8; border-radius: 22px; padding: 18px; }
+.km-instrument { display: block; width: min(100%,290px); height: auto; margin: auto; }
+.km-live-reading { display: flex; flex-direction: column; text-align: center; gap: 6px; margin: -2px 0 15px; color: #5e7256; }
+.km-live-reading strong { font-size: 27px; font-weight: 900; }
+.km-live-reading span { font-size: 12px; line-height: 1.9; }
+.km-tare { display: block; width: 100%; padding: 11px; min-height: 45px; border: 1px solid #9eae90; border-radius: 10px; background: #e2e9d4; color: #59724d; font-size: 13px; margin: 13px 0 18px; }
+.km-pour-controls { display: grid; grid-template-columns: minmax(0,.8fr) minmax(0,1.2fr); gap: 10px; }
+.km-pour-controls label { font-size: 12px; font-weight: 700; color: #6b6e58; min-width: 0; }
+.km-pour-controls input, .km-pour-controls select { display: block; width: 100%; min-width: 0; height: 49px; border: 1px solid #bbc8a7; background: #fffdf4; border-radius: 10px; padding: 10px; color: #586a4d; font: 700 17px var(--font-sv); margin-top: 4px; }
+.km-fractions { display: grid; grid-template-columns: repeat(8,minmax(0,1fr)); gap: 6px; margin: 13px 0; }
+.km-fractions button { height: 42px; border: 1px solid #d1d9bf; background: #f9faef; color: #657758; font: 700 15px var(--font-sv); border-radius: 8px; }
+.km-bench-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+.km-bench-actions button { padding: 12px 8px; font-size: 12px; }
+.km-check { display: block; width: 100%; margin-top: 15px; }
+.km-feedback { background: #f0eddf; border-radius: 13px; padding: 16px; margin: 20px 0; font-size: 13px; line-height: 1.95; color: #6e745b; overflow-wrap: anywhere; }
+.km-feedback[data-tone=correct] { background: #e4edd8; color: #4b7048; }
+.km-feedback[data-tone=retry] { background: #f4e9d9; color: #8b6648; }
+.km-feedback p { margin: 5px 0 0; }
+.km-next { display: block; width: 100%; margin: 15px 0 22px; }
+.km-reference { margin: 24px 0; border: 1px solid #d3d9bf; border-radius: 14px; background: #f3f4e6; text-align: left; }
+.km-reference summary { padding: 16px; cursor: pointer; font-weight: 700; font-size: 13px; color: #617451; min-height: 50px; }
+.km-reference-body { padding: 0 17px 18px; color: #6e755b; font-size: 13px; line-height: 1.95; }
+.km-reference-body h4 { margin: 12px 0; font-size: 15px; }
+.km-ladder { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 13px; border-radius: 11px; background: #e4ead3; color: #59744a; }
+.km-ladder strong { font-size: 21px; }
+.km-unit-glossary { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 17px 0; }
+.km-unit-glossary button { display: flex; flex-direction: column; gap: 4px; align-items: flex-start; text-align: left; padding: 12px; border: 1px solid #d7dcc5; border-radius: 11px; background: #fffcf2; color: #607253; line-height: 1.8; }
+.km-unit-glossary strong { font-size: 14px; }
+.km-unit-glossary span { font-size: 12px; }
+.km-sources { font-size: 11px; }
+.km-sources a { color: #526c4d; text-decoration: underline; }
+.km-back { display: block; margin: 22px auto 0; padding: 10px; border: 0; background: transparent; color: #78856a; text-decoration: underline; line-height: 1.8; font-size: 12px; }
+.km-count-art { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; min-height: 115px; align-items: center; }
+.km-count-art > span { width: 45px; height: 55px; }
+.km-count-art > .km-empty-count { width: auto; height: auto; font-size: 13px; color: #929b7f; }
+.km-ingredient-thumb { width: 65px; height: 65px; margin: 12px auto; }
+.km-result-seal { width: 180px; height: 145px; margin: auto; }
+.km-result .km-unit-glossary { width: 100%; max-width: 500px; }
+.km-course button:focus-visible, .km-area-tabs button:focus-visible { outline: 3px solid #9fae71; outline-offset: 3px; }
+@media(max-width:600px) {
+  .km-lesson { padding: 21px 16px 30px; }
+  .km-chapter-note h3 { font-size: 23px; }
+  .km-prompt { font-size: 15px; }
+  .km-target { font-size: 26px; }
+  .km-workbench { padding: 14px; }
+  .km-fractions { grid-template-columns: repeat(4,minmax(0,1fr)); }
+  .km-area-tabs button { font-size: 12px; }
+}
+@media(max-width:350px) {
+  .km-unit-glossary { grid-template-columns: 1fr; }
+  .km-bench-actions { grid-template-columns: 1fr; }
+  .km-area-tabs { grid-template-columns: 1fr; }
+  .km-pour-controls { grid-template-columns: minmax(0,.8fr) minmax(0,1.2fr); }
+}
 @media (max-width: 360px) { .mg-header-title h2 { font-size: 18px; } .mg-memory-grid { gap: 25px 8px; padding-left: 14px; padding-right: 14px; } .mg-memory-front strong { font-size: 12px; } }
 @media (prefers-reduced-motion: reduce) {
   .mg-dialog *, .mg-game-card { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
@@ -5143,10 +5220,13 @@ body.app-theme-sunset {
     { id: 2, th: 'ฟังแล้วเข้าใจ', detail: 'ฟังเสียงสวีเดนแล้วเลือกภาพ เปิดคำช่วยได้เสมอ', xp: 12 }
   ];
   const catalogue = [];
+  const kitchenStages = [...stages, { id: 3, th: 'ตวงและชั่งตามสูตร', detail: 'อ่านหรือฟังปริมาณ แล้วใช้ถ้วยตวง ช้อน หรือเครื่องชั่ง', xp: 12 }];
+  const measureLessons = ['volume-names','weight-names','volume','spoons','weight','fractions','precision','scaling','listening','recipe-signs'];
   for (const recipe of ['cake', 'cookies', 'buns', 'lemoncake', 'banana', 'carrotcake', 'blueberry', 'apple']) {
-    stages.forEach(stage => catalogue.push({ id: `kitchen:${recipe}:${stage.id}`, game: 'kitchen', xp: stage.xp,
+    kitchenStages.forEach(stage => catalogue.push({ id: `kitchen:${recipe}:${stage.id}`, game: 'kitchen', xp: stage.xp,
       prerequisite: stage.id ? `kitchen:${recipe}:${stage.id - 1}` : null }));
   }
+  measureLessons.forEach((id,i)=>catalogue.push({id:`kitchen:measure:${id}`,game:'kitchen',xp:i<2?8:i<7?10:12,prerequisite:i?`kitchen:measure:${measureLessons[i-1]}`:null}));
   for (let i = 0; i < 6; i++) catalogue.push({ id: `cafe:${i}`, game: 'cafe', xp: 12 + i * 2, prerequisite: i ? `cafe:${i - 1}` : null });
   for (const pack of ['home', 'baking', 'fruit', 'food', 'fika', 'pantry', 'forest', 'tropical']) {
     stages.forEach(stage => catalogue.push({ id: `memory:${pack}:${stage.id}`, game: 'memory', xp: stage.xp,
@@ -5241,7 +5321,7 @@ body.app-theme-sunset {
   }
   function state() { return root.GameEngine?.StateManager?.state || fallback; }
   const fallback = {};
-  const api = { CAPS, stages, catalogue, byId, levels, today, ledger, daily, awardXP, awardGems, complete, done, unlocked, stats, levelInfo, migrate, state };
+  const api = { CAPS, stages, kitchenStages, measureLessons, catalogue, byId, levels, today, ledger, daily, awardXP, awardGems, complete, done, unlocked, stats, levelInfo, migrate, state };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.LearningProgress = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);
 
@@ -32189,12 +32269,288 @@ body.app-theme-sunset {
 
 </script>
   <script>
+/* Swedish kitchen measures: dimension-safe conversions and a Thai-first curriculum. */
+(function (root) {
+  'use strict';
+  const units = [
+    ['ml', 'milliliter', 'มิลลิลิตร', 'volume', 1], ['cl', 'centiliter', 'เซนติลิตร', 'volume', 10],
+    ['dl', 'deciliter', 'เดซิลิตร', 'volume', 100], ['l', 'liter', 'ลิตร', 'volume', 1000],
+    ['krm', 'kryddmått', 'ช้อนตวงเครื่องเทศสวีเดน', 'volume', 1],
+    ['tsk', 'tesked', 'ช้อนชาแบบตวง', 'volume', 5], ['msk', 'matsked', 'ช้อนโต๊ะแบบตวง', 'volume', 15],
+    ['mg', 'milligram', 'มิลลิกรัม', 'mass', .001], ['g', 'gram', 'กรัม', 'mass', 1],
+    ['hg', 'hektogram', 'เฮกโตกรัม', 'mass', 100], ['kg', 'kilogram', 'กิโลกรัม', 'mass', 1000],
+    ['st', 'styck', 'ชิ้น / ฟอง / ลูก ตามสิ่งที่นับ', 'count', 1]
+  ].map(([id, sv, th, dimension, factor]) => ({ id, sv, th, dimension, factor }));
+  const byId = Object.fromEntries(units.map(u => [u.id, u]));
+  const recipeTerms = [
+    { id:'°C',sv:'grader Celsius',th:'องศาเซลเซียส · อุณหภูมิ' },{id:'min',sv:'minuter',th:'นาที'},
+    { id:'h / tim',sv:'timme',th:'ชั่วโมง' },{id:'cm',sv:'centimeter',th:'เซนติเมตร · ขนาดพิมพ์'},
+    { id:'mm',sv:'millimeter',th:'มิลลิเมตร'}
+  ];
+  function unit(id) { if (!Object.hasOwn(byId, id)) throw new Error('Unknown unit'); return byId[id]; }
+  function convert(value, from, to) {
+    const a = unit(from), b = unit(to);
+    if (!Number.isFinite(value) || value < 0 || a.dimension !== b.dimension) throw new Error('Incompatible quantity');
+    return Math.round(value * a.factor / b.factor * 1e9) / 1e9;
+  }
+  function format(value) { return String(Math.round(value * 1e9) / 1e9).replace('.', ','); }
+  function quantity(value, id) { return `${format(value)} ${id}`; }
+  function speakQuantity(value, id) {
+    const u = unit(id), names = { tsk: ['tesked','teskedar'], msk: ['matsked','matskedar'], krm: ['kryddmått','kryddmått'], st: ['styck','stycken'] };
+    const neuter = u.dimension === 'mass' || id === 'krm' || id === 'st';
+    const numbers = { .25: neuter ? 'noll komma tjugofem' : 'en fjärdedels', .5: neuter ? 'ett halvt' : 'en halv', .75: 'tre fjärdedels', 1: neuter ? 'ett' : 'en', 1.5: neuter ? 'ett och ett halvt' : 'en och en halv', 2: 'två', 2.5: neuter ? 'två och ett halvt' : 'två och en halv', 3: 'tre', 4: 'fyra', 5: 'fem', 10: 'tio', 15: 'femton', 25: 'tjugofem', 50: 'femtio', 75: 'sjuttiofem', 100: 'hundra', 125: 'hundratjugofem', 150: 'hundrafemtio', 200: 'tvåhundra', 250: 'tvåhundrafemtio', 500: 'femhundra', 750: 'sjuhundrafemtio', 1000: 'tusen' };
+    const count = numbers[value] || format(value);
+    return `${count} ${names[id] ? names[id][value > 1 && Number.isInteger(value) ? 1 : 0] : u.sv}`;
+  }
+  function option(id, label, lang = 'sv') { return { id, label, lang }; }
+  function choice(id, prompt, target, labels, correct, explanation, speech = target) {
+    return { id, type: 'choice', prompt, target, speech, choices: labels.map((label,i) => option(String(i),label[0] || label,label[1] || 'sv')), answer: String(correct), explanation };
+  }
+  const sv = text => [text, 'sv'], th = text => [text, 'th'];
+  function amount(id, prompt, value, unitId, explanation, options = {}) {
+    return { id, type: 'amount', prompt, target: quantity(value,unitId), speech: speakQuantity(value,unitId), value, unit: unitId, explanation, ...options };
+  }
+  function equation(id, lhs, rhs, wrong, explanation, speech) { return choice(id,'จำนวนไหนเท่ากับที่เห็นทางซ้าย?', lhs + ' = ?', [sv(rhs), ...wrong.map(sv)], 0, explanation, speech || lhs.replace(/\b(kg|hg|dl|ml|cl|msk|tsk|krm|g|l)\b/g, m=>byId[m].sv)); }
+  const lessons = [
+    { id:'volume-names', th:'1. รู้จักชื่อหน่วยตวง', goal:'อ่านชื่อสวีเดน ตัวย่อ และเลือกใช้หน่วยปริมาตร', xp:8,
+      intro:'ปริมาตรคือพื้นที่ที่วัตถุดิบกินในภาชนะ ใช้ตวงได้ทั้งน้ำและของแห้ง ชื่อหน่วยสวีเดนกับตัวย่อเหล่านี้จะเจอบ่อยในสูตรขนม', facts:['1 l = 10 dl = 100 cl = 1 000 ml','1 msk = 15 ml · 1 tsk = 5 ml · 1 krm = 1 ml'], tasks:[
+        ...['ml','cl','dl','l','krm','tsk','msk'].map((id,i)=>{ const u=byId[id], others=units.filter(v=>v.dimension==='volume'&&v.id!==id); return choice('name-'+id, `เลือกชื่อสวีเดนของหน่วย ${u.th}`, id, [sv(u.sv),sv(others[i%others.length].sv),sv(others[(i+2)%others.length].sv)],0,`${id} ย่อจาก ${u.sv} หมายถึง ${u.th}`,u.sv); }),
+        choice('volume-tool','ถ้าต้องตวงนม 2 dl ควรใช้เครื่องมืออะไร?', '2 dl mjölk',[th('เหยือกหรือถ้วยตวงที่มีขีด dl'),th('นาฬิกาจับเวลา'),th('ช้อนกินข้าวที่ไม่ระบุขนาด')],0,'ใช้ภาชนะที่มีขีดบอกปริมาตร จะตวงได้ตรงกับสูตร','två deciliter mjölk') ] },
+    { id:'weight-names', th:'2. ชื่อหน่วยชั่งและการนับ', goal:'แยก gram, hektogram, kilogram, milligram และ styck', xp:8,
+      intro:'น้ำหนักใช้เครื่องชั่ง หน่วยหลักในสูตรคือ g และ kg ในสวีเดนยังใช้ hg ด้วย ส่วน mg เป็นหน่วยเล็กมากที่อาจเห็นบนฉลาก ไม่ใช่หน่วยที่เครื่องชั่งครัวทั่วไปวัดได้ละเอียดพอ', facts:['1 kg = 10 hg = 1 000 g','1 g = 1 000 mg · st ใช้นับ ไม่ใช่น้ำหนัก'], tasks:[
+        ...['g','hg','kg','mg'].map((id,i)=>choice('name-'+id,`เลือกชื่อสวีเดนของ ${byId[id].th}`,id,[sv(byId[id].sv),sv(byId[['kg','g','mg','hg'][i]].sv),sv('deciliter')],0,`${id} = ${byId[id].sv} · ${byId[id].th}`,byId[id].sv)),
+        choice('weigh','คำไหนแปลว่า “ชั่งน้ำหนัก”?','ชั่งน้ำหนัก',[sv('väga'),sv('hälla'),sv('röra om')],0,'väga คือชั่งน้ำหนัก ส่วน hälla คือเท และ röra om คือคนให้เข้ากัน','väga'),
+        choice('count','สูตรเขียน 3 st ägg หมายถึงอะไร?', '3 st ägg',[th('ไข่ 3 ฟอง'),th('ไข่หนัก 3 กรัม'),th('ไข่ปริมาตร 3 เดซิลิตร')],0,'st เป็นตัวย่อของ styck / stycken ใช้นับจำนวนชิ้น ในกรณีไข่ใช้ลักษณนาม “ฟอง”','tre ägg'),
+        choice('tara','กดปุ่มไหนเพื่อตัดน้ำหนักชามออก?', 'köksvåg',[sv('tara / nollställ'),sv('baka'),sv('dubbla')],0,'วางชามเปล่าบนเครื่องชั่งก่อน แล้วกด tara / nollställ ให้เป็น 0 g จากนั้นจึงใส่วัตถุดิบ','tara. nollställ'),
+        choice('tool','ถ้าสูตรเขียน 150 g smör ควรใช้เครื่องมืออะไร?', '150 g smör',[th('เครื่องชั่งครัว'),th('ถ้วยตวง 150 ml แทนเสมอ'),th('ช้อนกินข้าวตามขนาดที่บ้านมี')],0,'g บอกน้ำหนัก จึงใช้เครื่องชั่ง ไม่แทนด้วย ml โดยอัตโนมัติ','hundrafemtio gram smör') ] },
+    { id:'volume', th:'3. ลิตรเชื่อมกับหน่วยเล็กอย่างไร', goal:'เปลี่ยน l, dl, cl และ ml แล้วลองตวงจริงในเกม', xp:10,
+      intro:'หน่วยเหล่านี้วัดสิ่งเดียวกัน แต่แบ่งเป็นขนาดต่างกัน 1 ลิตรแบ่งได้ 10 เดซิลิตร แต่ละเดซิลิตรแบ่งได้ 10 เซนติลิตร และแต่ละเซนติลิตรแบ่งได้ 10 มิลลิลิตร', facts:['l → ×10 → dl → ×10 → cl → ×10 → ml'], tasks:[
+        equation('l-dl','1 l','10 dl',['100 dl','1 dl'],'1 ลิตร = 10 เดซิลิตร'), equation('dl-ml','1 dl','100 ml',['10 ml','1 000 ml'],'1 เดซิลิตร = 100 มิลลิลิตร'),
+        equation('cl-ml','1 cl','10 ml',['100 ml','1 ml'],'1 เซนติลิตร = 10 มิลลิลิตร'),equation('half-l','0,5 l','5 dl',['50 dl','0,5 dl'],'ครึ่งลิตร = 5 เดซิลิตร'),
+        amount('fill-200','ตวงให้ได้ตามป้าย ใช้หน่วยอื่นที่เท่ากันได้จ้า',2,'dl','2 dl = 200 ml = 20 cl',{allowed:['ml','cl','dl'],capacity:500}),
+        amount('fill-250','เติมให้ได้สองเดซิลิตรครึ่ง',2.5,'dl','2,5 dl = 250 ml คอมม่าในสูตรสวีเดนเป็นจุดทศนิยม',{allowed:['ml','cl','dl'],capacity:500}),
+        amount('fill-half','เติมให้ได้ครึ่งลิตร',.5,'l','0,5 l = 5 dl = 500 ml',{allowed:['ml','dl','l'],capacity:1000}),
+        equation('750','750 ml','0,75 l',['7,5 l','75 l'],'750 ml เป็นสามในสี่ของหนึ่งลิตร') ] },
+    { id:'spoons', th:'4. ช้อนตวงแบบสวีเดน', goal:'ใช้ krm, tsk และ msk พร้อมรู้ความสัมพันธ์', xp:10,
+      intro:'ในสูตรให้ใช้ช้อนตวงมาตรฐาน ช้อนกินข้าวหรือช้อนชงชาที่บ้านอาจมีขนาดต่างกัน ตวงของแห้งให้ปาดเสมอขอบเมื่อสูตรไม่ได้บอกให้พูน', facts:['1 msk = 3 tsk = 15 krm = 15 ml','1 tsk = 5 krm = 5 ml'], tasks:[
+        equation('msk-ml','1 msk','15 ml',['5 ml','10 ml'],'ช้อนโต๊ะแบบตวงสวีเดนจุ 15 ml'),equation('tsk-ml','1 tsk','5 ml',['15 ml','1 ml'],'ช้อนชาตวงจุ 5 ml'),
+        equation('krm','1 krm','1 ml',['5 ml','10 ml'],'kryddmått เป็นช้อนตวงเครื่องเทศขนาด 1 ml'),equation('3-tsk','3 tsk','1 msk',['3 msk','0,5 msk'],'3 × 5 ml = 15 ml จึงเท่ากับ 1 msk'),
+        amount('spoon-30','ใช้ช้อนตวงเติมให้ได้ตามป้าย',2,'msk','2 msk = 6 tsk = 30 ml',{allowed:['krm','tsk','msk'],capacity:50}),
+        amount('spoon-half','ตวงครึ่งช้อนชา เลือก ½ ในช่องจำนวนได้เลย',.5,'tsk','½ tsk = 2,5 ml ไม่ใช่ครึ่งช้อนโต๊ะ',{allowed:['tsk','msk','ml'],capacity:15}),
+        amount('spoon-10','ตวงสองช้อนชาโดยใช้ช้อนหรือ ml ที่เท่ากัน',2,'tsk','2 tsk = 10 ml',{allowed:['krm','tsk','msk','ml'],capacity:30}),
+        choice('house-spoon','ช้อนกินข้าวทุกคันเท่ากับ 1 msk หรือไม่?', '1 msk',[th('ไม่เสมอ ใช้ช้อนตวง 15 ml'),th('เท่ากันทุกคัน'),th('ทุกคันเท่ากับ 100 ml')],0,'คำว่า matsked ในสูตรหมายถึงช้อนตวง 15 ml ไม่ใช่ขนาดของช้อนกินข้าวทุกคัน') ] },
+    { id:'weight', th:'5. ชั่งกรัม เฮกโตกรัม กิโลกรัม', goal:'เปลี่ยนหน่วยน้ำหนัก และหักน้ำหนักชามก่อนชั่ง', xp:10,
+      intro:'1 เฮกโตกรัมเท่ากับ 100 กรัม และ 1 กิโลกรัมเท่ากับ 10 เฮกโตกรัม วางชามแล้วกดศูนย์ก่อนชั่งวัตถุดิบ เครื่องชั่งในเกมจำลองน้ำหนักชามแยกจากของที่ใส่', facts:['1 kg = 10 hg = 1 000 g · 1 hg = 100 g','1 g = 1 000 mg'], tasks:[
+        equation('kg-g','1 kg','1 000 g',['100 g','10 000 g'],'1 กิโลกรัม = 1 000 กรัม'),equation('hg-g','1 hg','100 g',['10 g','1 000 g'],'1 เฮกโตกรัม = 100 กรัม'),
+        equation('kg-hg','1 kg','10 hg',['100 hg','1 hg'],'10 × 100 กรัม = 1 000 กรัม'),equation('half-kg','0,5 kg','500 g',['50 g','5 000 g'],'ครึ่งกิโลกรัม = 500 กรัม'),
+        equation('g-mg','1 g','1 000 mg',['100 mg','10 mg'],'มิลลิกรัมเป็นหนึ่งในพันของกรัม ปกติใช้ดูฉลากมากกว่าชั่งขนมที่บ้าน'),
+        amount('weigh-150','วางชาม กดศูนย์ แล้วชั่งให้ได้ตามป้าย',150,'g','150 g = 1,5 hg น้ำหนักชามไม่รวมเป็นน้ำหนักวัตถุดิบ',{allowed:['g','hg','kg'],capacity:500,tare:true}),
+        amount('weigh-250','หักน้ำหนักชามแล้วชั่งหนึ่งในสี่กิโลกรัม',.25,'kg','0,25 kg = 250 g',{allowed:['g','hg','kg'],capacity:1000,tare:true}),
+        amount('weigh-hg','ชั่งสองเฮกโตกรัมครึ่ง',2.5,'hg','2,5 hg = 250 g',{allowed:['g','hg','kg'],capacity:500,tare:true}) ] },
+    { id:'fractions', th:'6. ครึ่ง หนึ่งในสี่ และทศนิยม', goal:'อ่าน ½, ¼, ¾ และคอมม่าในสูตรสวีเดน', xp:10,
+      intro:'สูตรสวีเดนใช้คอมม่าเขียนทศนิยม เช่น 2,5 dl คือ 2 เดซิลิตรครึ่ง จำนวนครึ่งและหนึ่งในสี่ช่วยให้ปรับสูตรเล็กลงได้ ไม่ต้องปัดเป็นจำนวนเต็มเสมอ', facts:['½ = 0,5 · ¼ = 0,25 · ¾ = 0,75','2,5 dl = 250 ml'], tasks:[
+        choice('half-sv','คำไหนแปลว่า “ครึ่งเดซิลิตร”?','½ dl',[sv('en halv deciliter'),sv('två deciliter'),sv('en liter')],0,'en halv deciliter = ½ dl = 50 ml','en halv deciliter'),
+        choice('quarter-sv','คำไหนแปลว่า “หนึ่งในสี่ลิตร”?','¼ l',[sv('en fjärdedels liter'),sv('en halv liter'),sv('fyra liter')],0,'en fjärdedels liter = ¼ l = 250 ml','en fjärdedels liter'),
+        equation('half-dl','½ dl','50 ml',['5 ml','500 ml'],'ครึ่งหนึ่งของ 100 ml คือ 50 ml'),equation('quarter-dl','¼ dl','25 ml',['250 ml','4 ml'],'หนึ่งในสี่ของ 100 ml คือ 25 ml'),
+        equation('three-quarter','¾ l','750 ml',['75 ml','250 ml'],'สามส่วนของ 250 ml รวมเป็น 750 ml'),equation('comma','2,5 dl','250 ml',['25 ml','2 500 ml'],'เครื่องหมาย , ในสูตรสวีเดนแยกส่วนทศนิยม'),
+        amount('half-spoon','ตวงครึ่งช้อนโต๊ะ เลือกจำนวน ½ ได้จ้า',.5,'msk','½ msk = 7,5 ml = 1,5 tsk',{allowed:['msk','tsk','ml'],capacity:30}),
+        amount('quarter-kilo','ชั่งหนึ่งในสี่กิโลกรัมโดยใช้หน่วยที่ถนัด',.25,'kg','¼ kg = 0,25 kg = 250 g',{allowed:['kg','hg','g'],capacity:500,tare:true}) ] },
+    { id:'precision', th:'7. ตวงกับชั่งต่างกันอย่างไร', goal:'ไม่สลับ ml กับ g และไม่ใช้ขนาดถ้วยตามใจ', xp:10,
+      intro:'ปริมาตรกับน้ำหนักเป็นคนละอย่าง แป้ง 1 dl และน้ำ 1 dl กินที่เท่ากัน แต่น้ำหนักต่างกัน จะแปลงจาก dl เป็น g ต้องรู้ว่าเป็นวัตถุดิบอะไร และค่าก็อาจเปลี่ยนตามวิธีตวง', facts:['ปริมาตร: l · dl · cl · ml · msk · tsk · krm','น้ำหนัก: kg · hg · g · mg'], tasks:[
+        choice('same-volume','แป้ง 1 dl กับน้ำ 1 dl อะไรเท่ากันแน่?', '1 dl mjöl · 1 dl vatten',[th('ปริมาตรเท่ากัน แต่น้ำหนักอาจต่างกัน'),th('หนัก 100 g เท่ากันเสมอ'),th('แป้ง 1 dl เท่ากับ 1 kg เสมอ')],0,'dl เป็นปริมาตร ไม่ได้บอกน้ำหนักที่เท่ากันของวัตถุดิบทุกชนิด'),
+        choice('no-density','สูตรให้ชั่งน้ำตาล 100 g ใช้ 100 ml แทนได้ทันทีไหม?', '100 g socker',[th('ไม่ได้ ต้องชั่งหรือรู้ค่าของน้ำตาลชนิดนั้นก่อน'),th('ได้ เพราะ g และ ml เป็นหน่วยเดียวกัน'),th('ได้กับวัตถุดิบทุกชนิด')],0,'ห้ามใช้สูตร 1 ml = 1 g กับวัตถุดิบทุกอย่าง น้ำหนักขึ้นกับชนิดและความหนาแน่น'),
+        choice('level','struket mått หมายถึงแบบไหน?', 'struket mått',[th('ปาดวัตถุดิบเสมอขอบช้อนหรือถ้วยตวง'),th('ตักให้เป็นกองพูนเสมอ'),th('กดแป้งให้แน่นที่สุดทุกครั้ง')],0,'struket คือปาดเสมอขอบ ส่วน rågat คือพูน หลีกเลี่ยงการอัดแป้งแน่นถ้าสูตรไม่ได้ระบุ','struket mått'),
+        choice('heaped','rågat mått ต่างจาก struket อย่างไร?', 'rågat mått',[th('เป็นกองพูนเหนือขอบ ปริมาณขึ้นกับความพูน'),th('เท่ากับ 15 ml เสมอ'),th('หมายถึงตัดน้ำหนักชามออก')],0,'mått แบบพูนไม่มีปริมาณตายตัวเท่าการปาดเสมอขอบ อ่านคำสั่งในสูตรให้ดี','rågat mått'),
+        choice('cup','ถ้วยกาแฟที่บ้านใช้แทน 1 dl ได้เลยหรือไม่?', 'en kopp',[th('ไม่ได้ ถ้วยแต่ละใบจุต่างกัน ต้องดูขีดตวง'),th('ได้ ถ้วยทุกใบเท่ากับ 1 dl'),th('ได้ ถ้วยทุกใบเท่ากับ 1 kg')],0,'kopp และ glas เป็นภาชนะ ไม่ใช่ขนาดตวงตายตัว ถ้าสูตรต่างประเทศใช้ cup ต้องดูมาตรฐานของสูตรนั้น'),
+        choice('water','กฎ “น้ำ 1 dl หนักประมาณ 100 g” ใช้กับแป้งทุกชนิดได้ไหม?', '1 dl vatten ≈ 100 g',[th('ไม่ได้ เป็นค่าประมาณของน้ำ ไม่ใช่ทุกวัตถุดิบ'),th('ได้กับวัตถุดิบทุกชนิด'),th('ได้ เพราะ dl แปลว่ากรัม')],0,'น้ำประมาณ 100 g ต่อ 1 dl แต่แป้ง น้ำตาล น้ำผึ้ง และน้ำมันมีน้ำหนักต่อปริมาตรต่างกัน'),
+        choice('small-scale','เครื่องชั่งครัวที่อ่านทีละ 1 g เหมาะสำหรับชั่ง 1 mg ไหม?', '1 mg = 0,001 g',[th('ไม่เหมาะ ความละเอียดของเครื่องชั่งไม่พอ'),th('เหมาะ เพราะ 1 mg = 1 g'),th('เหมาะ เพราะ mg เป็นลิตร')],0,'รู้ความสัมพันธ์ของหน่วยยังไม่พอ ต้องเลือกเครื่องมือที่ละเอียดพอด้วย'),
+        amount('tare-practice','ฝึกหักน้ำหนักชามก่อนชั่งแป้ง 100 g',100,'g','เครื่องชั่งต้องแสดง 0 g เมื่อมีแต่ชาม ก่อนเติมแป้ง 100 g',{allowed:['g','hg'],capacity:300,tare:true}) ] },
+    { id:'scaling', th:'8. ทำครึ่งสูตรและสองเท่า', goal:'ปรับจำนวนวัตถุดิบอย่างมีเหตุผล', xp:12,
+      intro:'halvera คือใช้ครึ่งหนึ่ง dubbla คือใช้สองเท่า ปรับปริมาณวัตถุดิบทุกอย่างด้วยตัวคูณเดียวกัน อุณหภูมิเตาและเวลาอบไม่เพิ่มเป็นสองเท่าตามสูตรโดยอัตโนมัติ', facts:['halvera = ÷2 · dubbla = ×2','ปรับจำนวนวัตถุดิบ ไม่คูณอุณหภูมิเตาอัตโนมัติ'], tasks:[
+        choice('double-word','คำไหนหมายถึงทำปริมาณเป็นสองเท่า?', 'สองเท่า',[sv('dubbla'),sv('halvera'),sv('väga')],0,'dubbla คือเพิ่มเป็นสองเท่า ส่วน halvera คือใช้ครึ่งหนึ่ง','dubbla'),
+        choice('half-word','คำไหนหมายถึงทำครึ่งสูตร?', 'ครึ่งสูตร',[sv('halvera'),sv('hälla'),sv('dubbla')],0,'halvera คือหารด้วยสอง','halvera'),
+        amount('double-milk','สูตรเดิมใช้นม 1,5 dl ถ้าทำสองเท่าให้ตวงเท่าไร?',3,'dl','1,5 dl × 2 = 3 dl',{allowed:['dl','ml'],capacity:500,clue:'1,5 dl × 2 = ?',speech:'Receptet har en och en halv deciliter mjölk. Dubbla receptet. Hur mycket mjölk behövs?'}),
+        amount('half-butter','สูตรเดิมใช้เนย 150 g ถ้าทำครึ่งสูตรให้ชั่งเท่าไร?',75,'g','150 g ÷ 2 = 75 g',{allowed:['g','hg'],capacity:250,tare:true,clue:'150 g ÷ 2 = ?',speech:'Receptet har hundrafemtio gram smör. Halvera receptet. Hur mycket smör behövs?'}),
+        amount('double-vanilla','สูตรเดิมใช้วานิลลา ½ tsk ถ้าทำสองเท่าต้องใช้เท่าไร?',1,'tsk','½ tsk × 2 = 1 tsk',{allowed:['tsk','msk','ml'],capacity:15,clue:'½ tsk × 2 = ?',speech:'Receptet har en halv tesked vaniljsocker. Dubbla mängden.'}),
+        amount('triple-flour','สูตรสำหรับ 2 ที่ใช้แป้ง 100 g ถ้าจะทำ 6 ที่ต้องชั่งเท่าไร?',300,'g','6 ÷ 2 = 3 จึงใช้ 100 g × 3 = 300 g',{allowed:['g','hg','kg'],capacity:500,tare:true,clue:'2 → 6 · 100 g × ?',speech:'Två portioner behöver hundra gram mjöl. Hur mycket behövs till sex portioner?'}),
+        amount('half-egg','สูตรเดิมใช้ไข่ 4 ฟอง ครึ่งสูตรใช้กี่ฟอง?',2,'st','4 ÷ 2 = 2 ฟอง st ใช้นับชิ้น ไม่ใช่กรัม',{allowed:['st'],capacity:6,clue:'4 st ÷ 2 = ?',speech:'Receptet har fyra ägg. Halvera mängden.'}),
+        choice('oven','ทำสองเท่าต้องปรับเตาจาก 175 °C เป็น 350 °C อัตโนมัติไหม?', 'dubbla receptet',[th('ไม่ใช่ ปรับวัตถุดิบแล้วดูวิธีอบตามสูตร'),th('ต้องเพิ่มอุณหภูมิเป็นสองเท่าเสมอ'),th('ต้องคูณเวลาทุกขั้นด้วยสองเสมอ')],0,'ปริมาณวัตถุดิบสัมพันธ์กับจำนวนที่ แต่เวลาอบและอุณหภูมิขึ้นกับวิธีทำและขนาดพิมพ์ด้วย') ] },
+    { id:'listening', th:'9. ฟังคำสั่งแล้วตวงเอง', goal:'ฟังจำนวนและชื่อหน่วยสวีเดน แล้วลงมือโดยไม่มีป้ายเฉลย', xp:12,
+      intro:'ฟังคำสั่งสวีเดนแล้วตวงหรือชั่งตามที่ได้ยิน กดฟังช้าได้เสมอ ถ้ายังไม่มั่นใจ เปิดข้อความช่วยก่อนก็ได้ ไม่มีการหักแต้ม', facts:['ฟังให้ครบทั้งจำนวนและหน่วย · เปิดคำช่วยได้เสมอ'], tasks:[
+        ...[[2,'dl'],[.5,'l'],[1,'msk'],[.5,'tsk'],[150,'g'],[2.5,'hg'],[.25,'kg'],[3,'st']].map(([v,u],i)=>amount('listen-'+i,'ฟังจำนวนและหน่วย แล้วตวง ชั่ง หรือนับให้ตรง',v,u,`${quantity(v,u)} · ${speakQuantity(v,u)}`,{listen:true,allowed:byId[u].dimension==='volume'?['ml','dl','tsk','msk']:u==='st'?['st']:['g','hg','kg'],capacity:byId[u].dimension==='volume'?500:u==='st'?6:500,tare:byId[u].dimension==='mass'})) ] }
+  ];
+  const recipeAmounts = {
+    cake:[[150,'g'],[2,'dl'],[3,'st'],[3,'dl'],[2,'tsk'],[2,'tsk'],[1,'dl'],[2,'dl'],[12,'st']],
+    cookies:[[100,'g'],[1,'dl'],[1,'st'],[3,'dl'],[1,'tsk'],[1,'krm'],[100,'g']],
+    buns:[[2.5,'dl'],[25,'g'],[75,'g'],[.5,'dl'],[7,'dl'],[1,'krm'],[1,'msk']],
+    lemoncake:[[100,'g'],[2,'dl'],[2,'st'],[3,'dl'],[2,'tsk'],[1,'dl'],[1,'st']],
+    banana:[[2,'st'],[75,'g'],[1,'dl'],[2,'st'],[3,'dl'],[2,'tsk'],[1,'tsk']],
+    carrotcake:[[3,'dl'],[2,'dl'],[3,'st'],[150,'g'],[3,'dl'],[2,'tsk'],[2,'tsk']],
+    blueberry:[[3,'dl'],[100,'g'],[1,'dl'],[3,'dl'],[1,'tsk'],[.5,'st']],
+    apple:[[3,'st'],[100,'g'],[1,'dl'],[3,'dl'],[2,'tsk'],[1,'msk']]
+  };
+  lessons.push({id:'recipe-signs',th:'10. เวลา เตาอบ และขนาดพิมพ์',goal:'อ่าน °C, min, h, cm และ mm ในสูตรขนม',xp:12,
+    intro:'นอกจากชั่งและตวง สูตรยังบอกอุณหภูมิเตา เวลาอบ และขนาดพิมพ์ หน่วยเหล่านี้ใช้คนละเรื่องกับกรัมและลิตร ต้องอ่านให้ครบก่อนเริ่มทำ',
+    facts:['1 h = 60 min · 1 cm = 10 mm','°C = grader Celsius · อุณหภูมิของเตาอบ'],tasks:[
+      choice('celsius','°C ในป้ายอุณหภูมิเตาอ่านว่าอย่างไรเป็นสวีเดน?','175 °C',[sv('grader Celsius'),sv('gram'),sv('liter')],0,'175 °C คืออุณหภูมิ 175 องศาเซลเซียส ไม่ใช่น้ำหนักหรือปริมาตร','hundrasjuttiofem grader Celsius'),
+      choice('oven-setting','ป้าย 175 °C หมายถึงให้ตั้งอะไร?', '175 °C',[th('อุณหภูมิเตาอบ'),th('น้ำหนักแป้ง'),th('ปริมาตรนม')],0,'grader Celsius ใช้บอกอุณหภูมิ เช่น ตั้งเตาอบที่ 175 °C','hundrasjuttiofem grader Celsius'),
+      choice('minutes','min ในสูตรย่อจากคำสวีเดนใด?', '20 min',[sv('minuter'),sv('milliliter'),sv('matskedar')],0,'20 min คือ 20 นาที · min เป็นเวลา ส่วน ml เป็นปริมาตร','tjugo minuter'),
+      choice('hours','h หรือ tim ในสูตรหมายถึงอะไร?', '1 h / 1 tim',[sv('en timme'),sv('ett hektogram'),sv('en tesked')],0,'h และ tim ใช้บอกชั่วโมง · timme เป็นชื่อสวีเดนของหนึ่งชั่วโมง','en timme'),
+      equation('hour-min','1 h','60 min',['100 min','10 min'],'หนึ่งชั่วโมงมี 60 นาที หน่วยเวลาไม่ได้เปลี่ยนทีละสิบเหมือน l → dl','en timme'),
+      equation('hour-half','1,5 h','90 min',['150 min','65 min'],'1 ชั่วโมงครึ่ง = 60 + 30 = 90 นาที','en och en halv timme'),
+      choice('pan-size','ขนาดพิมพ์ 20 cm อ่านหน่วยนี้เป็นสวีเดนว่าอะไร?', '20 cm',[sv('centimeter'),sv('centiliter'),sv('kilogram')],0,'cm เป็นความยาวหรือขนาดพิมพ์ ส่วน cl เป็นปริมาตร คนละชนิดกัน','tjugo centimeter'),
+      equation('cm-mm','1 cm','10 mm',['100 mm','1 mm'],'1 เซนติเมตร = 10 มิลลิเมตร · สวีเดนใช้คำว่า centimeter และ millimeter','en centimeter') ]});
+  function recipeTasks(recipe, ingredients) {
+    if (!Object.hasOwn(recipeAmounts,recipe.id)) throw new Error('Unknown recipe');
+    return [...recipe.steps,...recipe.decorations].map((id,i)=>{
+      const [value,u]=recipeAmounts[recipe.id][i], ingredient=ingredients[id], dimension=unit(u).dimension;
+      const ingredientSv = ingredient.sv.replace(/^(en|ett) /,'');
+      const counted = value > 1 ? ({ banana:'bananer',apple:'äpplen',lemon:'citroner',strawberry:'jordgubbar' }[id] || ingredientSv) : ingredientSv;
+      const countPhrase = value===1?ingredient.sv:`${value===.5?'en halv':speakQuantity(value,'st').replace(/ stycken?$/,'')} ${counted}`;
+      return amount('recipe-'+id,`เตรียม${ingredient.th}ให้ได้ตามป้ายสูตร`,value,u,`${quantity(value,u)} ${ingredientSv} · ${ingredient.th}`,{
+        ingredient:id, target:`${quantity(value,u)} ${counted}`,speech:dimension==='count'?`Ta ${countPhrase}.`:`${dimension==='mass'?'Väg upp':'Mät upp'} ${speakQuantity(value,u)} ${counted}.`,
+        allowed:dimension==='volume'?['ml','dl','krm','tsk','msk']:dimension==='mass'?['g','hg','kg']:['st'],capacity:dimension==='count'?Math.max(6,value):Math.max(dimension==='volume'?50:250,value*unit(u).factor*1.5),tare:dimension==='mass'
+      });
+    });
+  }
+  function create(id, tasks) {
+    if (!tasks?.length) throw new Error('Empty lesson');
+    return { version:1,id,index:0,mistakes:0,firstTry:0,solved:false,amount:0,tared:false,runId:Date.now()+':'+Math.random().toString(36).slice(2),assisted:false };
+  }
+  function add(state, task, value, unitId) {
+    if (state.solved || task.type!=='amount' || !task.allowed.includes(unitId) || !Number.isFinite(value) || value<=0 || value>1000) return false;
+    if(task.tare&&!state.tared)return false;
+    state.amount=Math.round((state.amount+convert(value,unitId,unit(task.unit).dimension==='volume'?'ml':unit(task.unit).dimension==='mass'?'g':'st'))*1e9)/1e9;
+    return true;
+  }
+  function tare(state){if(state.solved||state.amount!==0)return false;state.tared=true;return true;}
+  function check(state,task,answer) {
+    if (state.solved) return 'already';
+    if(task.type==='amount'&&task.tare&&!state.tared) return 'tare';
+    const correct=task.type==='choice'?answer===task.answer:Math.abs(state.amount-convert(task.value,task.unit,unit(task.unit).dimension==='volume'?'ml':unit(task.unit).dimension==='mass'?'g':'st'))<1e-7;
+    if(!correct){state.mistakes++;return 'retry';} state.solved=true;return 'correct';
+  }
+  function next(state,tasks) {
+    if(!state.solved)return false;
+    state.index++;state.solved=false;state.amount=0;state.tared=false;
+    return state.index<tasks.length;
+  }
+  function restore(raw,id,tasks) {
+    try { const s=typeof raw==='string'?JSON.parse(raw):raw;
+      if(!s||s.version!==1||s.id!==id||!Number.isInteger(s.index)||s.index<0||s.index>=tasks.length||typeof s.runId!=='string')return null;
+      return { ...create(id,tasks), index:s.index, runId:s.runId.slice(0,100),mistakes:Number.isSafeInteger(s.mistakes)&&s.mistakes>=0?s.mistakes:0,amount:Number.isFinite(s.amount)&&s.amount>=0?Math.min(s.amount,1e6):0,tared:s.tared===true,solved:s.solved===true,assisted:s.assisted===true };
+    }catch(_){return null;}
+  }
+  const api={units,byId,recipeTerms,lessons,recipeAmounts,convert,format,quantity,speakQuantity,recipeTasks,create,add,tare,check,next,restore};
+  if(typeof module==='object'&&module.exports)module.exports=api;else root.KitchenMeasureCore=api;
+})(typeof globalThis!=='undefined'?globalThis:this);
+
+</script>
+  <script>
+/* Measuring school and recipe workbench, hosted inside the existing kitchen dialog. */
+(function () {
+  'use strict';
+  const C=window.KitchenMeasureCore, P=window.LearningProgress, A=window.MiniGameArt;
+  const KEY='wilawan_kitchen_measures_v1';
+  const esc=value=>String(value).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  let host,config,state,tasks,lesson,abort,revealed=false,bookOpen=false,note='',tone='',wrongAnswer=null;
+  const $=selector=>host?.querySelector(selector);
+  function readRuns(){try{const parsed=JSON.parse(localStorage.getItem(KEY));return parsed&&typeof parsed==='object'&&!Array.isArray(parsed)?parsed:{};}catch(_){return{};}}
+  function save(){if(!state||!config)return;const runs=readRuns();runs[config.mission]=state;try{localStorage.setItem(KEY,JSON.stringify(runs));}catch(_){} }
+  function discard(){const runs=readRuns();delete runs[config.mission];try{localStorage.setItem(KEY,JSON.stringify(runs));}catch(_){} }
+  function destroy(){save();abort?.abort();abort=null;host=null;config=null;state=null;}
+  function sound(id){window.SpeechEngine?.playSound?.(id);}
+  function speak(text){window.SpeechEngine?.speakSwedish?.(text,.65);}
+  function referenceHTML(){return `<details class="km-reference" ${bookOpen?'open':''}><summary>สมุดตวงวัด · เปิดดูได้ทุกเมื่อ</summary><div class="km-reference-body"><h4>ปริมาตร · <span lang="sv">volym</span></h4><div class="km-ladder" lang="sv"><strong>1 l</strong><span>= 10 dl</span><span>= 100 cl</span><span>= 1 000 ml</span></div><p lang="sv">1 msk = 3 tsk = 15 ml<br>1 tsk = 5 krm = 5 ml · 1 krm = 1 ml</p><h4>น้ำหนัก · <span lang="sv">vikt</span></h4><div class="km-ladder" lang="sv"><strong>1 kg</strong><span>= 10 hg</span><span>= 1 000 g</span></div><p lang="sv">1 g = 1 000 mg</p><div class="km-unit-glossary">${[...C.units,...C.recipeTerms].map(u=>`<button type="button" data-action="word" data-word="${u.sv}" aria-label="ฟังคำว่า ${u.sv}"><strong lang="sv">${u.id} · ${u.sv}</strong><span>${u.th}</span></button>`).join('')}</div><p><strong>จำให้แม่นจ้า:</strong> ml กับ g เป็นคนละชนิดของหน่วย ห้ามแปลงแทนกันอัตโนมัติ แป้งกับน้ำปริมาตรเท่ากันอาจหนักต่างกัน ใช้ช้อนตวงมาตรฐานและปาดเสมอขอบเมื่อสูตรไม่ได้ระบุให้พูน</p><p>½ = 0,5 · ¼ = 0,25 · ¾ = 0,75<br><span lang="sv">halvera</span> = ครึ่งหนึ่ง · <span lang="sv">dubbla</span> = สองเท่า</p><p lang="sv">1 h = 60 min · 1 cm = 10 mm</p><p>เวลา อุณหภูมิ และขนาดพิมพ์เป็นคนละเรื่องกับน้ำหนักและปริมาตร</p><p class="km-sources">ตารางอ้างอิงหน่วยสวีเดน: <a href="https://www.arla.se/recept/mattomvandlare/" target="_blank" rel="noopener noreferrer">Arla</a> · <a href="https://www.ica.se/artikel/omvandlingstabell/" target="_blank" rel="noopener noreferrer">ICA</a></p></div></details>`;}
+  function resumable(mission,items){return !!C.restore(readRuns()[mission],mission,items);}
+  function mount(options){
+    destroy();config=options;host=options.host;tasks=options.tasks;lesson=options.lesson;
+    state=C.restore(readRuns()[options.mission],options.mission,tasks)||C.create(options.mission,tasks);
+    revealed=false;bookOpen=false;note='';tone='';wrongAnswer=null;
+    abort=new AbortController();host.addEventListener('click',click,{signal:abort.signal});
+    host.addEventListener('toggle',event=>{if(event.target.matches('.km-reference'))bookOpen=event.target.open;},{signal:abort.signal,capture:true});
+    render();host.scrollTop=0;save(); if(tasks[state.index].listen&&!state.solved)speak(tasks[state.index].speech);
+  }
+  function jar(value,capacity){
+    const level=Math.min(1,value/capacity), top=166-level*118;
+    return `<svg class="km-instrument" viewBox="0 0 260 200" fill="none" stroke="#8d8a72" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><defs><clipPath id="km-jar-clip"><path d="M47 31h148l-9 126q-2 20-18 20H76q-18 0-20-20z"/></clipPath></defs><ellipse cx="128" cy="183" rx="98" ry="8" fill="#dedfcd" stroke="none"/><path d="M179 37h27q22 6 16 40-5 26-31 25" stroke="#a6b5a8" stroke-width="9"/><path d="M47 31h148l-9 126q-2 20-18 20H76q-18 0-20-20z" fill="#f2f5e9"/><g clip-path="url(#km-jar-clip)">${value>0?`<path d="M45 ${top}q80-9 160 0v140H45z" fill="#b5d2c0" stroke="#91b9a2"/>`:''}</g><path d="M47 31h148l-9 126q-2 20-18 20H76q-18 0-20-20z"/><path d="M48 31l-13-8m160 8 7-7"/><g stroke="#879982">${[0,1,2,3,4].map(i=>`<path d="M72 ${166-i*27}h20"/>`).join('')}</g><text x="104" y="102" fill="#536b56" stroke="none" font-size="20" font-family="sans-serif">${C.format(value)} ml</text><text x="104" y="126" fill="#68836c" stroke="none" font-size="12" font-family="sans-serif">${C.format(value/100)} dl</text></svg>`;
+  }
+  function scale(value,tared){const display=value+(tared?0:180);return `<svg class="km-instrument" viewBox="0 0 260 200" fill="none" stroke="#8c8671" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="130" cy="185" rx="99" ry="7" fill="#dedfcd" stroke="none"/><path d="M45 96h170l16 70q1 13-13 13H43q-14 0-13-13z" fill="#b8cbb8"/><path d="M54 96h152" stroke-width="5"/><path d="M65 38h130q-3 51-33 55H98Q69 89 65 38z" fill="#f5edda"/><ellipse cx="130" cy="38" rx="65" ry="13" fill="#eee4cd"/><rect x="67" y="120" width="128" height="38" rx="7" fill="#f5f5dc"/><text x="130" y="146" text-anchor="middle" stroke="none" fill="#4f6953" font-size="23" font-family="monospace">${C.format(display)} g</text><circle cx="47" cy="145" r="6" fill="${tared?'#739473':'#d4ad75'}"/></svg>`;}
+  function countArt(value){return `<div class="km-count-art" aria-label="จำนวนที่ใส่แล้ว ${C.format(value)} ชิ้น">${Array.from({length:Math.min(12,Math.ceil(value))},(_,i)=>`<span style="opacity:${i<Math.floor(value)?1:.5}">${A.icon(tasks[state.index].ingredient||'egg')}</span>`).join('')||'<span class="km-empty-count">ยังไม่มีของ</span>'}</div>`;}
+  function workbench(task){
+    const dim=C.byId[task.unit].dimension, base=dim==='volume'?'ml':dim==='mass'?'g':'st';
+    const display=state.amount+(task.tare&&!state.tared?180:0);
+    return `<div class="km-workbench"><div class="km-instrument-art">${dim==='volume'?jar(state.amount,task.capacity):dim==='mass'?scale(state.amount,!task.tare||state.tared):countArt(state.amount)}</div><div class="km-live-reading" role="status" aria-live="polite"><strong lang="sv">${C.quantity(display,base)}</strong><span>${dim==='mass'&&task.tare&&!state.tared?'ตอนนี้รวมน้ำหนักชามเปล่า 180 g · กดศูนย์ก่อนนะ':dim==='volume'?`${C.quantity(state.amount/100,'dl')} · ${C.quantity(state.amount/1000,'l')}`:'จำนวนวัตถุดิบที่เตรียมไว้'}</span></div>${task.tare?`<button type="button" class="km-tare" data-km="tare" ${state.solved?'disabled':''}><span lang="sv">tara / nollställ</span> · ${state.tared?'ตั้งศูนย์แล้ว ✓':'กดศูนย์เมื่อชามยังว่าง'}</button>`:''}<div class="km-pour-controls"><label>จำนวนต่อครั้ง<input id="km-amount" type="text" inputmode="decimal" value="1" autocomplete="off" aria-label="จำนวนที่ต้องการเพิ่มต่อครั้ง"></label><label>หน่วย<select id="km-unit" aria-label="หน่วยที่ใช้ตวงหรือชั่ง">${task.allowed.map(id=>`<option value="${id}">${id} · ${C.byId[id].sv}</option>`).join('')}</select></label></div><div class="km-fractions" aria-label="เลือกจำนวนที่ใช้บ่อย">${[.25,.5,1,2,5,25,50,100].map(v=>`<button type="button" data-km="quick" data-value="${v}" ${state.solved?'disabled':''}>${v===.25?'¼':v===.5?'½':v}</button>`).join('')}</div><div class="km-bench-actions"><button type="button" class="mg-secondary" data-km="reset" ${state.solved?'disabled':''}>เทออก / เอาออกใหม่</button><button type="button" class="mg-primary" data-km="add" ${state.solved?'disabled':''}>${dim==='mass'?'ใส่บนเครื่องชั่ง':dim==='count'?'เพิ่มจำนวน':'เทลงถ้วย'} +</button></div><button type="button" class="mg-primary km-check" data-km="check" ${state.solved?'disabled':''}>ตรวจปริมาณ →</button></div>`;
+  }
+  function choices(task){
+    // Stable per question, so retrying never moves the answers under a finger.
+    let seed=[...state.runId+task.id].reduce((n,ch)=>(Math.imul(n,31)+ch.charCodeAt(0))>>>0,7);
+    const ordered=task.choices.slice();for(let i=ordered.length-1;i>0;i--){seed=(Math.imul(seed,1664525)+1013904223)>>>0;const j=seed%(i+1);[ordered[i],ordered[j]]=[ordered[j],ordered[i]];}
+    return `<div class="km-choices">${ordered.map(c=>`<button type="button" data-km="answer" data-answer="${c.id}" lang="${c.lang}" class="${state.solved&&c.id===task.answer?'km-correct':''} ${!state.solved&&c.id===wrongAnswer?'km-wrong':''}" ${state.solved?'disabled':''}>${esc(c.label)}</button>`).join('')}</div>`;
+  }
+  function render(){
+    const task=tasks[state.index];if(!task)return;
+    const hidden=task.listen&&!revealed&&!state.solved;
+    host.className='mg-game-content km-course';
+    host.innerHTML=`<div class="mg-game-progress"><span>${lesson.th}</span><div class="mg-progress-track" role="progressbar" aria-label="ความคืบหน้าบทตวงวัด" aria-valuemin="0" aria-valuemax="${tasks.length}" aria-valuenow="${state.index+(state.solved?1:0)}"><div class="mg-progress-fill" style="width:${100*(state.index+(state.solved?1:0))/tasks.length}%"></div></div><span>${state.index+1} / ${tasks.length}</span></div><div class="km-lesson"><div class="km-chapter-note"><span class="mg-eyebrow">${config.recipe?'ตวงก่อนผสม · สูตรฝึกภาษา':'โรงเรียนตวงวัดของวิลาวัน'}</span><h3>${lesson.th}</h3>${state.index===0?`<p>${lesson.intro}</p><div class="km-facts">${lesson.facts.map(f=>`<span>${esc(f)}</span>`).join('')}</div>`:''}</div><div class="km-task"><p class="km-prompt">${task.prompt}</p>${task.ingredient?`<div class="km-ingredient-thumb">${A.icon(task.ingredient)}</div>`:''}<strong class="km-target" lang="${hidden||/[ก-๿]/.test(task.clue||task.target)?'th':'sv'}">${hidden?'ฟังคำสั่งจากปุ่มเสียง':esc(task.clue||task.target)}</strong><div class="km-audio"><button type="button" class="mg-secondary" data-km="speak">ฟังภาษาสวีเดนช้า ๆ ♪</button>${task.listen?`<button type="button" class="mg-secondary" data-km="reveal">${revealed?'ซ่อนข้อความช่วย':'ดูข้อความช่วย'}</button>`:''}</div>${task.type==='choice'?choices(task):workbench(task)}</div><div id="km-feedback" class="km-feedback" data-tone="${tone}" role="status" aria-live="polite">${state.solved?`<strong>ถูกต้องแล้ว เก่งจังฮู้! ✓</strong><p>${esc(task.explanation)}</p>${task.listen?`<p lang="sv">${esc(task.target)} · ${esc(task.speech)}</p>`:''}`:esc(note||'ค่อย ๆ ลองได้จ้า เปิดสมุดช่วย หรือฟังซ้ำได้เสมอ')}</div>${state.solved?`<button type="button" class="mg-primary km-next" data-km="next">${state.index===tasks.length-1?'จบบทแล้วเก็บคำศัพท์':'ข้อต่อไป'} →</button>`:''}${referenceHTML()}<button type="button" class="km-back" data-km="back">บันทึกไว้ แล้วกลับไปเลือกบท</button></div>`;
+  }
+  function feedback(message,type='retry'){note=message;tone=type;const el=$('#km-feedback');if(el){el.textContent=message;el.dataset.tone=type;}}
+  function click(event){
+    const button=event.target.closest('[data-km]');if(!button||button.disabled)return;
+    const action=button.dataset.km,task=tasks[state.index];
+    if(action==='back'){save();config.onBack();return;}
+    if(action==='speak'){speak(task.speech);return;}
+    if(action==='reveal'){revealed=!revealed;state.assisted=true;save();render();return;}
+    if(action==='quick'){const input=$('#km-amount');if(input)input.value=C.format(+button.dataset.value);return;}
+    if(action==='add'){
+      if(task.tare&&!state.tared){feedback('วางชามเปล่าแล้วกด tara / nollställ ให้เป็น 0 g ก่อนเติมนะ');return;}
+      const raw=$('#km-amount').value.trim(), value=/^\d+(?:[.,]\d+)?$/.test(raw)?Number(raw.replace(',','.')):NaN, id=$('#km-unit').value;
+      if(!Number.isFinite(value)||value<=0||value>1000){feedback('ใส่จำนวนมากกว่า 0 ถึง 1 000 เช่น 0,5 หรือ 25 ใช้คอมม่าหรือจุดทศนิยมก็ได้');return;}
+      const dim=C.byId[task.unit].dimension,base=dim==='volume'?'ml':dim==='mass'?'g':'st';
+      if(state.amount+C.convert(value,id,base)>Math.max(task.capacity*2,task.value*C.byId[task.unit].factor*2)){feedback('เกินความจุของอุปกรณ์ในเกม ลองเทออกแล้วใช้หน่วยหรือจำนวนน้อยลงนะ');return;}
+      C.add(state,task,value,id);note='เพิ่มแล้วจ้า ดูขีดตวงหรือจอเครื่องชั่ง แล้วตรวจเมื่อพร้อม';tone='';save();render();$('#km-amount').value=raw;$('#km-unit').value=id;return;
+    }
+    if(action==='reset'){state.amount=0;note='เอาวัตถุดิบออกแล้ว ตั้งปริมาณใหม่ได้เลยจ้า';tone='';save();render();return;}
+    if(action==='tare'){
+      if(state.amount>0){feedback('ก่อนตั้งศูนย์ ชามต้องยังไม่มีวัตถุดิบ กด “เทออก / เอาออกใหม่” ก่อนนะ');return;}
+      C.tare(state);note='เครื่องชั่งเป็น 0 g แล้ว น้ำหนักที่เพิ่มต่อจากนี้เป็นวัตถุดิบอย่างเดียว';tone='correct';save();render();return;
+    }
+    if(action==='check'||action==='answer'){
+      const result=C.check(state,task,button.dataset.answer);save();
+      if(result==='tare'){feedback('ยังไม่ได้หักน้ำหนักชาม กด tara / nollställ ตอนชามว่างก่อนนะ');return;}
+      if(result==='retry'){
+        sound('retry');wrongAnswer=button.dataset.answer;note=task.type==='choice'?'ยังไม่ใช่จ้า ลองอ่านความหมายของหน่วย หรือเปิดสมุดตวงวัดก่อนเลือกใหม่':`ปริมาณยังไม่ตรงจ้า เช็กทั้งจำนวนและหน่วย ${task.clue?'ลองใช้ครึ่งหนึ่งหรือสองเท่าตามโจทย์':'เปิดสมุดดูการเปลี่ยนหน่วยได้เสมอ'}`;tone='retry';
+        if(task.type==='choice')render();else feedback(note);return;
+      }
+      if(result==='correct'){sound('correct');wrongAnswer=null;note='';tone='correct';render();$('.km-next')?.focus({preventScroll:true});}
+      return;
+    }
+    if(action==='next'){
+      if(!state.solved)return;
+      const more=C.next(state,tasks);revealed=false;note='';tone='';wrongAnswer=null;
+      if(!more){finish();return;}
+      save();render();host.scrollTop=0;$('.km-target')?.setAttribute('tabindex','-1');$('.km-target')?.focus({preventScroll:true});if(tasks[state.index].listen)speak(tasks[state.index].speech);
+    }
+  }
+  function finish(){
+    const reward=P.complete(window.GameEngine.StateManager,config.mission,state.runId,tasks.length/(tasks.length+state.mistakes));discard();
+    const vocabulary=lesson.id==='recipe-signs'?C.recipeTerms:config.recipe?[...new Set(tasks.map(t=>t.unit))].map(id=>C.byId[id]):C.units.filter(u=>lesson.tasks.some(t=>(t.target||'').includes(u.id)||t.unit===u.id));
+    host.innerHTML=`<div class="mg-result km-result"><span class="mg-result-stamp">ฝึกตวงวัดครบ ${tasks.length} ข้อแล้ว ✓</span><div class="km-result-seal">${config.recipe?A.recipe(config.recipe.id):scale(0,true)}</div><h3>${config.recipe?'เตรียมวัตถุดิบครบแล้วจ้า!':'ตวงเป็น ชั่งเป็น เข้าใจคำสวีเดนเพิ่มแล้ว!'}</h3><p>${config.recipe?'เราเตรียมปริมาณตามสูตรฝึกภาษาครบแล้ว ลองพูดจำนวนกับชื่อหน่วยซ้ำอีกครั้งนะ':'กลับมาใช้ความรู้ในขั้นที่ 4 ของแต่ละสูตรได้เลย จะได้ฝึกทั้งภาษาและการใช้ปริมาณจริงในเกม'}</p><div class="mg-result-reward">+${reward.xp} XP${reward.gems?` · +${reward.gems} เพชร`:''}<small>${reward.message}</small></div><div class="km-unit-glossary">${vocabulary.map(u=>`<button type="button" data-action="word" data-word="${u.sv}"><strong lang="sv">${u.id} · ${u.sv}</strong><span>${u.th}</span></button>`).join('')}</div><div class="mg-result-actions"><button type="button" class="mg-primary" data-km-result="next">${lesson.id===C.lessons.at(-1).id?'ไปใช้ในสูตรขนม →':'เลือกภารกิจถัดไป →'}</button><button type="button" class="mg-secondary" data-km-result="back">กลับไปเลือกบท</button></div></div>`;
+    const onNext=config.onNext,onBack=config.onBack;abort.abort();host.addEventListener('click',e=>{const button=e.target.closest('[data-km-result]');if(button){state=null;if(button.dataset.kmResult==='next')onNext();else onBack();}},{signal:(abort=new AbortController()).signal});
+    state=null;sound('fanfare');host.scrollTop=0;config.onComplete();$('.mg-result h3')?.setAttribute('tabindex','-1');$('.mg-result h3')?.focus({preventScroll:true});
+  }
+  window.KitchenMeasures={mount,destroy,referenceHTML,resumable};
+})();
+
+</script>
+  <script>
 /* Small, complete Swedish-learning games, integrated with the existing app. */
 (function () {
   'use strict';
   const C = window.MiniGameCore;
   const A = window.MiniGameArt;
   const P = window.LearningProgress;
+  const MC = window.KitchenMeasureCore, M = window.KitchenMeasures;
   const STORAGE_KEY = 'wilawan_small_games_v1';
   const $ = (selector, parent = document) => parent.querySelector(selector);
   const escape = value => String(value).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
@@ -32204,8 +32560,8 @@ body.app-theme-sunset {
       description: 'สวนสัตว์ปิดแล้ว ตามหาสัตว์ที่ซ่อนอยู่ 12 ตัว อ่านบันทึกของซิกเน และไขปริศนา 3 ด่านเพื่อหาทางออก',
       tags: ['เกมหาทางออก', '4 คืน · 12 บท', 'ค้นหาและไขปริศนา'] },
     { id: 'kitchen', title: 'ครัวเล็กของวิลาวัน', subtitle: 'ฝึกคำศัพท์ผ่านขนมอร่อย ๆ',
-      description: 'ฟังชื่อวัตถุดิบภาษาสวีเดน แล้วลากของที่ถูกลงชาม เลือกจาก 29 อย่างเพื่ออบขนม 8 สูตร ฝึกอ่าน นึกคำ และฟังเสียงกันต๊ะ',
-      tags: ['อาหารและขนม', 'ลากแล้วเรียนรู้', '8 สูตร · 24 ภารกิจ'] },
+      description: 'ฟังชื่อวัตถุดิบภาษาสวีเดน แล้วลากของที่ถูกลงชาม เลือกจาก 29 อย่างเพื่ออบขนม 8 สูตร พร้อมเรียนชั่งน้ำหนัก ตวงปริมาตร และอ่านปริมาณเป็นสวีเดนกันต๊ะ',
+      tags: ['อาหารและขนม', 'ลากแล้วเรียนรู้', '8 สูตร · โรงเรียนตวงวัด'] },
     { id: 'cafe', title: 'รับอะไรดีคะ?', subtitle: 'ฝึกสั่งอาหารเป็นภาษาสวีเดน',
       description: 'มาเป็นเจ้าของคาเฟ่กัน ฟังลูกค้าสั่งเป็นภาษาสวีเดน แล้วจัดขนมและเครื่องดื่มให้ถูกชนิดและจำนวน',
       tags: ['ประโยคใช้จริง', 'ฝึกฟังและนับจำนวน', '6 วัน · ลูกค้า 39 คน'] },
@@ -32226,8 +32582,8 @@ body.app-theme-sunset {
         if ((key === 'cafe' || key === 'memory' || (key.startsWith('kitchen-') && Object.hasOwn(C.recipes, key.slice(8)))) && Number.isSafeInteger(value) && value >= 0) completed[key] = value;
       }
       return { uiLocale: 'th-v1', thai: parsed.uiLocale === 'th-v1' ? parsed.thai !== false : true, mode: parsed.mode === 'listen' ? 'listen' : 'read',
-        recipe: Object.hasOwn(C.recipes, parsed.recipe) ? parsed.recipe : 'cake', stage: [0,1,2].includes(parsed.stage) ? parsed.stage : 0, pack: C.memoryPacks.some(p => p.id === parsed.pack) ? parsed.pack : 'home', cafeLevel: Number.isInteger(parsed.cafeLevel) && parsed.cafeLevel >= 0 && parsed.cafeLevel < 6 ? parsed.cafeLevel : 0, completed };
-    } catch (_) { return { uiLocale: 'th-v1', thai: true, mode: 'read', recipe: 'cake', stage: 0, pack: 'home', cafeLevel: 0, completed: {} }; }
+        recipe: Object.hasOwn(C.recipes, parsed.recipe) ? parsed.recipe : 'cake', stage: [0,1,2,3].includes(parsed.stage) ? parsed.stage : 0, pack: C.memoryPacks.some(p => p.id === parsed.pack) ? parsed.pack : 'home', cafeLevel: Number.isInteger(parsed.cafeLevel) && parsed.cafeLevel >= 0 && parsed.cafeLevel < 6 ? parsed.cafeLevel : 0, kitchenArea: parsed.kitchenArea === 'measures' ? 'measures' : 'recipes', measureLesson: MC.lessons.some(l => l.id === parsed.measureLesson) ? parsed.measureLesson : MC.lessons[0].id, completed };
+    } catch (_) { return { uiLocale: 'th-v1', thai: true, mode: 'read', recipe: 'cake', stage: 0, pack: 'home', cafeLevel: 0, kitchenArea: 'recipes', measureLesson: MC.lessons[0].id, completed: {} }; }
   }
   function persist() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(saved)); } catch (_) {} }
   function later(callback, delay) {
@@ -32235,6 +32591,7 @@ body.app-theme-sunset {
     timers.add(id); return id;
   }
   function clearPending() {
+    M.destroy();
     for (const id of timers) clearTimeout(id);
     timers.clear();
     gestureController?.abort(); gestureController = null;
@@ -32305,7 +32662,7 @@ body.app-theme-sunset {
     clearPending();
     returnFocus = opener || document.activeElement;
     current = { gameId, revealed: false, finished: false };
-    if (!P.unlocked(P.state(), missionId())) { saved.stage = 0; saved.cafeLevel = 0; persist(); }
+    if (!P.unlocked(P.state(), missionId())) { saved.stage = 0; saved.cafeLevel = 0; saved.measureLesson = MC.lessons.find(l=>P.unlocked(P.state(),`kitchen:measure:${l.id}`)&&!P.done(P.state(),`kitchen:measure:${l.id}`))?.id || MC.lessons[0].id; persist(); }
     const game = games.find(entry => entry.id === gameId);
     dialog.innerHTML = `<div class="mg-dialog-body"><header class="mg-game-header"><button type="button" class="mg-close" data-action="close" aria-label="กลับไปเลือกเกม" title="ย้อนกลับ">←</button><div class="mg-header-title"><h2 id="mg-dialog-title">${game.title}</h2><p>${game.subtitle}</p></div><button type="button" class="mg-toggle" data-action="thai" aria-pressed="${saved.thai}" aria-label="แสดงคำแปลไทยของคำที่กำลังฝึก">คำแปล</button><button type="button" class="mg-toggle" data-action="mode" aria-pressed="${saved.mode === 'listen'}" aria-label="โหมดฝึกฟัง">${saved.mode === 'listen' ? 'ฝึกฟังอย่างเดียว' : 'อ่านพร้อมฟัง'}</button></header><div class="mg-game-content"></div></div>`;
     content = $('.mg-game-content', dialog);
@@ -32319,6 +32676,7 @@ body.app-theme-sunset {
     renderLobby();
   }
   function missionId() {
+    if (current.gameId === 'kitchen' && saved.kitchenArea === 'measures') return `kitchen:measure:${saved.measureLesson}`;
     return current.gameId === 'kitchen' ? `kitchen:${saved.recipe}:${saved.stage}` : current.gameId === 'memory' ? `memory:${saved.pack}:${saved.stage}` : `cafe:${saved.cafeLevel}`;
   }
   function rankCard(rank, all) {
@@ -32326,20 +32684,42 @@ body.app-theme-sunset {
   }
   function recipeArt(recipe) { return A.recipe(recipe.id); }
   function renderSetup() {
+    M.destroy();
+    dialog.querySelectorAll('.mg-toggle').forEach(button=>button.hidden=false);
     current.screen = 'setup'; content.className = 'mg-game-content';
+    if(current.gameId === 'kitchen' && saved.kitchenArea === 'measures') return renderMeasureSetup();
     const game = games.find(entry => entry.id === current.gameId), course = P.stats(P.state(), game.id);
     const intros = {
-      kitchen: ['สมุดขนม 8 สูตร', 'เลือกสูตรแล้วฝึก 3 ขั้น: รู้จักคำ นึกความหมาย และฟังอย่างเดียว ลากวัตถุดิบลงชาม หรือแตะแล้วกดใส่ชามได้จ้า', 'ชื่ออาหาร คำสั่ง และการจำคำเดิมในสูตรใหม่'],
+      kitchen: ['สมุดขนม 8 สูตร', 'แต่ละสูตรมี 4 ขั้น: รู้จักคำ นึกความหมาย ฟัง และตวงหรือชั่งปริมาณตามสูตร ถ้ายังไม่รู้หน่วย แวะโรงเรียนตวงวัดก่อนก็ได้จ้า', 'ชื่ออาหาร คำสั่ง ชื่อหน่วย และการเตรียมปริมาณตามสูตร'],
       cafe: ['คาเฟ่ของเรา · 6 วัน', 'เริ่มจากออร์เดอร์ง่าย ๆ แล้วค่อยเพิ่มจำนวน รายการ และรูปประโยค ลูกค้าแต่ละคนสั่งไม่เหมือนกัน ถ้าหยิบเกินกดลบบนถาดได้เลย', 'ฟังประโยคสั่งอาหาร ชื่อเมนู จำนวน และรูปพหูพจน์'],
       memory: ['อัลบั้มคำศัพท์ 8 ชุด', 'แต่ละชุดมี 3 ขั้น อ่านพร้อมภาพ นึกความหมายโดยซ่อนคำแปล แล้วฟังเสียง พร้อมคำเก่าจากชุดที่เคยฝึก ถ้ายังไม่มีชุดก่อนหน้า จะฝึก 6 คู่นี้ก่อน เปิดการ์ด 2 ใบเพื่อจับคู่ภาพกับคำ', 'เชื่อมภาพกับคำและเสียง แล้วทบทวนคำจากชุดก่อนหน้า']
     }, intro = intros[game.id];
     let choices = '';
-    if (game.id === 'kitchen') choices = `<div class="mg-recipe-options">${Object.values(C.recipes).map(r => `<button type="button" class="mg-recipe-choice" data-action="recipe" data-recipe="${r.id}" aria-pressed="${saved.recipe === r.id}">${recipeArt(r)}<strong>${r.th}</strong><small>${P.stats(P.state()).total && [0,1,2].filter(i => P.done(P.state(), `kitchen:${r.id}:${i}`)).length} / 3 ขั้น</small></button>`).join('')}</div>`;
+    if (game.id === 'kitchen') choices = `<div class="mg-recipe-options">${Object.values(C.recipes).map(r => `<button type="button" class="mg-recipe-choice" data-action="recipe" data-recipe="${r.id}" aria-pressed="${saved.recipe === r.id}">${recipeArt(r)}<strong>${r.th}</strong><small>${P.stats(P.state()).total && [0,1,2,3].filter(i => P.done(P.state(), `kitchen:${r.id}:${i}`)).length} / 4 ขั้น</small></button>`).join('')}</div>`;
     if (game.id === 'memory') choices = `<div class="mg-pack-options">${C.memoryPacks.map(pack => `<button type="button" data-action="pack" data-pack="${pack.id}" aria-pressed="${saved.pack === pack.id}"><strong>${pack.th}</strong><small>${[0,1,2].filter(i => P.done(P.state(), `memory:${pack.id}:${i}`)).length} / 3 ขั้น</small></button>`).join('')}</div>`;
     if (game.id === 'cafe') choices = `<div class="mg-course-options">${C.cafeRounds.map((round, i) => `<button type="button" data-action="cafe-level" data-level="${i}" aria-pressed="${saved.cafeLevel === i}" ${P.unlocked(P.state(), `cafe:${i}`) ? '' : 'disabled'}><strong>${P.done(P.state(), `cafe:${i}`) ? '✓ ' : ''}${round.th}</strong><small>${round.count} คน · ${round.goal}</small></button>`).join('')}</div>`;
-    else choices += `<div class="mg-course-options">${P.stages.map(stage => { const id = game.id === 'kitchen' ? `kitchen:${saved.recipe}:${stage.id}` : `memory:${saved.pack}:${stage.id}`; return `<button type="button" data-action="stage" data-stage="${stage.id}" aria-pressed="${saved.stage === stage.id}" ${P.unlocked(P.state(), id) ? '' : 'disabled'}><strong>${P.done(P.state(), id) ? '✓ ' : ''}${stage.id + 1}. ${stage.th}</strong><small>${stage.detail}</small></button>`; }).join('')}</div>`;
+    else choices += `<div class="mg-course-options">${(game.id === 'kitchen' ? P.kitchenStages : P.stages).map(stage => { const id = game.id === 'kitchen' ? `kitchen:${saved.recipe}:${stage.id}` : `memory:${saved.pack}:${stage.id}`; return `<button type="button" data-action="stage" data-stage="${stage.id}" aria-pressed="${saved.stage === stage.id}" ${P.unlocked(P.state(), id) ? '' : 'disabled'}><strong>${P.done(P.state(), id) ? '✓ ' : ''}${stage.id + 1}. ${stage.th}</strong><small>${stage.detail}</small></button>`; }).join('')}</div>`;
     const mission = missionId(), available = P.unlocked(P.state(), mission), finished = P.done(P.state(), mission);
-    content.innerHTML = `<div class="mg-setup">${A.garland()}<span class="mg-eyebrow">${course.completed} / ${course.total} ภารกิจ</span><h3>${intro[0]}</h3><p class="mg-setup-lead">${intro[1]}</p><p class="mg-learning-goal"><strong>เกมนี้ฝึกอะไร?</strong> ${intro[2]}</p>${choices}<p class="mg-mode-description">${available ? finished ? 'ทบทวนได้เสมอ การเล่นภารกิจเดิมซ้ำวันนี้ไม่เพิ่มแต้ม' : `ภารกิจใหม่ · รางวัลครั้งแรก ${P.byId[mission].xp} XP ภายใต้เพดานประจำวัน` : 'ทำขั้นก่อนหน้าให้จบก่อน แล้วขั้นนี้จะเปิดเองจ้า'}</p><button type="button" class="mg-primary" data-action="start" ${available ? '' : 'disabled'}>เริ่มภารกิจนี้ →</button><p class="mg-mode-description">ไม่จับเวลา ใช้คำแปลและฟังช้าซ้ำได้เสมอ</p></div>`;
+    content.innerHTML = `<div class="mg-setup">${A.garland()}${game.id === 'kitchen' ? kitchenAreas() : ''}<span class="mg-eyebrow">${course.completed} / ${course.total} ภารกิจ</span><h3>${intro[0]}</h3><p class="mg-setup-lead">${intro[1]}</p><p class="mg-learning-goal"><strong>เกมนี้ฝึกอะไร?</strong> ${intro[2]}</p>${choices}<p class="mg-mode-description">${available ? finished ? 'ทบทวนได้เสมอ การเล่นภารกิจเดิมซ้ำวันนี้ไม่เพิ่มแต้ม' : `ภารกิจใหม่ · รางวัลครั้งแรก ${P.byId[mission].xp} XP ภายใต้เพดานประจำวัน` : 'ทำขั้นก่อนหน้าให้จบก่อน แล้วขั้นนี้จะเปิดเองจ้า'}</p><button type="button" class="mg-primary" data-action="start" ${available ? '' : 'disabled'}>เริ่มภารกิจนี้ →</button><p class="mg-mode-description">ไม่จับเวลา ใช้คำแปลและฟังช้าซ้ำได้เสมอ</p></div>`;
+  }
+  function kitchenAreas() {
+    return `<div class="km-area-tabs" role="group" aria-label="เลือกส่วนของครัว"><button type="button" data-action="kitchen-area" data-area="recipes" aria-pressed="${saved.kitchenArea !== 'measures'}">สมุดสูตรขนม · 8 สูตร</button><button type="button" data-action="kitchen-area" data-area="measures" aria-pressed="${saved.kitchenArea === 'measures'}">โรงเรียนตวงวัด · ${MC.lessons.length} บท</button></div>`;
+  }
+  function measureTasks() {
+    return saved.kitchenArea === 'measures' ? MC.lessons.find(l=>l.id === saved.measureLesson).tasks : MC.recipeTasks(C.recipes[saved.recipe],C.byId);
+  }
+  function renderMeasureSetup() {
+    dialog.querySelectorAll('.mg-toggle').forEach(button=>button.hidden=true);
+    const lesson=MC.lessons.find(l=>l.id===saved.measureLesson),mission=missionId(),available=P.unlocked(P.state(),mission),resume=M.resumable(mission,lesson.tasks);
+    content.innerHTML=`<div class="mg-setup km-school-setup">${A.garland()}${kitchenAreas()}<span class="mg-eyebrow">เรียนแล้ว ${MC.lessons.filter(l=>P.done(P.state(),`kitchen:measure:${l.id}`)).length} / ${MC.lessons.length} บท</span><h3>ตวงเป็น ชั่งเป็น<br>อ่านสูตรสวีเดนได้</h3><p class="mg-setup-lead">เริ่มจากชื่อหน่วย แล้วค่อยเปลี่ยนหน่วย ใช้ช้อนตวง ตั้งศูนย์เครื่องชั่ง อ่านเศษส่วน และปรับสูตร มี 8 ข้อต่อบท ใช้สมุดช่วยได้เสมอต๊ะ</p><div class="mg-course-options">${MC.lessons.map(l=>`<button type="button" data-action="measure-lesson" data-lesson="${l.id}" aria-pressed="${l.id===saved.measureLesson}" ${P.unlocked(P.state(),`kitchen:measure:${l.id}`)?'':'disabled'}><strong>${P.done(P.state(),`kitchen:measure:${l.id}`)?'✓ ':''}${l.th}</strong><small>${l.goal} · ${l.tasks.length} ข้อ</small></button>`).join('')}</div><p class="mg-learning-goal">${lesson.intro}</p><button type="button" class="mg-primary" data-action="start" ${available?'':'disabled'}>${resume?'เล่นต่อจากที่บันทึกไว้':'เริ่มบทนี้'} →</button><p class="mg-mode-description">${P.done(P.state(),mission)?'ทบทวนได้เสมอ เล่นซ้ำวันนี้ไม่เพิ่มแต้ม':`รางวัลครั้งแรก ${P.byId[mission].xp} XP ตามเพดานรายวัน`} · ปิดครัวแล้วกลับมาเรียนต่อได้</p>${M.referenceHTML()}</div>`;
+  }
+  function startMeasureGame() {
+    const recipe=saved.kitchenArea === 'recipes'?C.recipes[saved.recipe]:null;
+    current.screen='measures';current.finished=false;
+    dialog.querySelectorAll('.mg-toggle').forEach(button=>button.hidden=true);
+    const lesson=recipe?{th:recipe.th+' · ตวงก่อนผสม',intro:'ตวง ชั่ง หรือนับวัตถุดิบแต่ละอย่างตามป้ายสูตรฝึกภาษา ใช้ปริมาณเท่ากันในหน่วยอื่นได้ ตัวเลขในเกมใช้ฝึกภาษา ไม่ใช่สูตรอบที่ทดสอบสำหรับทำอาหารจริง',facts:['ใช้ช้อนตวงมาตรฐาน · ชั่งโดยไม่รวมน้ำหนักชาม']}:MC.lessons.find(l=>l.id===saved.measureLesson);
+    M.mount({host:content,mission:missionId(),tasks:measureTasks(),lesson,recipe,
+      onBack:()=>{renderSetup();content.scrollTop=0;},onNext:()=>{ if(saved.kitchenArea==='measures' && MC.lessons.every(l=>P.done(P.state(),`kitchen:measure:${l.id}`))){ saved.kitchenArea='recipes'; const ready=Object.values(C.recipes).find(r=>P.done(P.state(),`kitchen:${r.id}:2`)&&!P.done(P.state(),`kitchen:${r.id}:3`)); saved.recipe=ready?.id || saved.recipe; saved.stage=ready?3:0; persist(); } else selectNextMission(); renderSetup();content.scrollTop=0; },onComplete:renderLobby});
   }
   function modeDescription() {
     if (current.gameId === 'memory') return saved.mode === 'listen' ? 'ซ่อนข้อความสวีเดนบนการ์ด ฟังเสียงแล้วหาภาพ ถ้าอยากอ่าน กด “ดูคำศัพท์” ได้เสมอ' : 'อ่านคำสวีเดน ฟังเสียง และจับคู่กับรูปภาพ มีคำแปลไทยช่วยจำ';
@@ -32350,6 +32730,7 @@ body.app-theme-sunset {
     if (!button || !dialog.contains(button)) return;
     if (suppressClick && button.matches('[data-ingredient]')) { suppressClick = false; return; }
     if (button.dataset.action === 'close') return close();
+    if (current.screen === 'measures' && ['mode','thai'].includes(button.dataset.action)) return;
     if (button.dataset.action === 'thai') {
       saved.thai = !saved.thai; persist();
       dialog.classList.toggle('mg-show-th', saved.thai);
@@ -32366,6 +32747,8 @@ body.app-theme-sunset {
       return;
     }
     const action = button.dataset.action;
+    if (action === 'kitchen-area') { saved.kitchenArea = button.dataset.area === 'measures' ? 'measures' : 'recipes'; persist(); renderSetup(); return; }
+    if (action === 'measure-lesson') { saved.measureLesson = button.dataset.lesson; persist(); renderSetup(); return; }
     if (action === 'recipe') { saved.recipe = button.dataset.recipe; saved.stage = 0; persist(); renderSetup(); return; }
     if (action === 'pack') { saved.pack = button.dataset.pack; saved.stage = 0; persist(); renderSetup(); return; }
     if (action === 'stage') { saved.stage = Number(button.dataset.stage); persist(); renderSetup(); return; }
@@ -32413,6 +32796,7 @@ body.app-theme-sunset {
     if (!P.unlocked(P.state(), missionId())) return;
     clearPending();
     current.mission = missionId(); current.runId = Date.now() + ':' + Math.random().toString(36).slice(2);
+    if(current.gameId === 'kitchen' && (saved.kitchenArea === 'measures' || saved.stage === 3)) return startMeasureGame();
     const stage = current.gameId === 'cafe' ? (saved.cafeLevel === 5 ? 2 : saved.cafeLevel >= 2 ? 1 : 0) : saved.stage;
     saved.mode = stage === 2 ? 'listen' : 'read'; saved.thai = stage === 0; persist();
     dialog.classList.toggle('mg-show-th', saved.thai);
@@ -32695,10 +33079,10 @@ body.app-theme-sunset {
 
   function wordArt(word) { return word.zoo ? window.ZooArt.animal(word.id) : A.icon(word.art || word.id); }
   function selectNextMission() {
-    const list = P.catalogue.filter(m => m.game === current.gameId), next = list.find(m => !P.done(P.state(), m.id) && P.unlocked(P.state(), m.id));
+    const list = P.catalogue.filter(m => m.game === current.gameId && (current.gameId !== 'kitchen' || (m.id.startsWith('kitchen:measure:') === (saved.kitchenArea === 'measures')))), next = list.find(m => !P.done(P.state(), m.id) && P.unlocked(P.state(), m.id));
     if (!next) return;
     const parts = next.id.split(':');
-    if (current.gameId === 'kitchen') { saved.recipe = parts[1]; saved.stage = +parts[2]; }
+    if (current.gameId === 'kitchen') { if(parts[1] === 'measure') saved.measureLesson=parts[2]; else { saved.recipe = parts[1]; saved.stage = +parts[2]; } }
     if (current.gameId === 'memory') { saved.pack = parts[1]; saved.stage = +parts[2]; }
     if (current.gameId === 'cafe') saved.cafeLevel = +parts[1];
     persist(); current.finished = false;

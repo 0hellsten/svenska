@@ -2,8 +2,8 @@
 const test = require('node:test'), assert = require('node:assert/strict');
 const P = require('./learning_progress.js'), C = require('./mini_games_core.js'), Z = require('./zoo_core.js');
 function manager() { return { state: { totalXP: 0, dailyXP: 0, gems: 0 }, save() {}, addXP(n, opts) { const got = P.awardXP(this.state, n, opts, opts.day); this.state.totalXP += got; return got; } }; }
-test('58 distinct missions form valid prerequisite paths', () => {
-  assert.equal(P.catalogue.length, 58); assert.equal(new Set(P.catalogue.map(m => m.id)).size, 58);
+test('76 distinct missions form valid prerequisite paths', () => {
+  assert.equal(P.catalogue.length, 76); assert.equal(new Set(P.catalogue.map(m => m.id)).size, 76);
   for (const m of P.catalogue) { assert.ok(m.xp >= 8 && m.xp <= 36); if (m.prerequisite) assert.ok(P.byId[m.prerequisite]); }
   const sm = manager(); assert.equal(P.unlocked(sm.state, 'kitchen:cake:1'), false);
   assert.equal(P.complete(sm, 'kitchen:cake:1', 'locked').xp, 0); assert.equal(P.unlocked(sm.state, '__proto__'), false);

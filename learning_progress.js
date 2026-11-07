@@ -8,10 +8,13 @@
     { id: 2, th: 'ฟังแล้วเข้าใจ', detail: 'ฟังเสียงสวีเดนแล้วเลือกภาพ เปิดคำช่วยได้เสมอ', xp: 12 }
   ];
   const catalogue = [];
+  const kitchenStages = [...stages, { id: 3, th: 'ตวงและชั่งตามสูตร', detail: 'อ่านหรือฟังปริมาณ แล้วใช้ถ้วยตวง ช้อน หรือเครื่องชั่ง', xp: 12 }];
+  const measureLessons = ['volume-names','weight-names','volume','spoons','weight','fractions','precision','scaling','listening','recipe-signs'];
   for (const recipe of ['cake', 'cookies', 'buns', 'lemoncake', 'banana', 'carrotcake', 'blueberry', 'apple']) {
-    stages.forEach(stage => catalogue.push({ id: `kitchen:${recipe}:${stage.id}`, game: 'kitchen', xp: stage.xp,
+    kitchenStages.forEach(stage => catalogue.push({ id: `kitchen:${recipe}:${stage.id}`, game: 'kitchen', xp: stage.xp,
       prerequisite: stage.id ? `kitchen:${recipe}:${stage.id - 1}` : null }));
   }
+  measureLessons.forEach((id,i)=>catalogue.push({id:`kitchen:measure:${id}`,game:'kitchen',xp:i<2?8:i<7?10:12,prerequisite:i?`kitchen:measure:${measureLessons[i-1]}`:null}));
   for (let i = 0; i < 6; i++) catalogue.push({ id: `cafe:${i}`, game: 'cafe', xp: 12 + i * 2, prerequisite: i ? `cafe:${i - 1}` : null });
   for (const pack of ['home', 'baking', 'fruit', 'food', 'fika', 'pantry', 'forest', 'tropical']) {
     stages.forEach(stage => catalogue.push({ id: `memory:${pack}:${stage.id}`, game: 'memory', xp: stage.xp,
@@ -106,6 +109,6 @@
   }
   function state() { return root.GameEngine?.StateManager?.state || fallback; }
   const fallback = {};
-  const api = { CAPS, stages, catalogue, byId, levels, today, ledger, daily, awardXP, awardGems, complete, done, unlocked, stats, levelInfo, migrate, state };
+  const api = { CAPS, stages, kitchenStages, measureLessons, catalogue, byId, levels, today, ledger, daily, awardXP, awardGems, complete, done, unlocked, stats, levelInfo, migrate, state };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.LearningProgress = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

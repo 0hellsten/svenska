@@ -261,6 +261,83 @@
   .mg-result h3 { font-size: 30px; }
   .mg-album-word { font-size: 10px; }
 }
+
+/* The measuring school shares the kitchen's paper, sage and brass palette. */
+.mg-toggle[hidden] { display: none; }
+.km-area-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0 26px; }
+.km-area-tabs button { min-height: 52px; padding: 12px 9px; border: 1px solid #d5d8bf; border-radius: 13px; background: #fffaf0; color: #617251; font: 600 13px/1.8 var(--font-body-th); }
+.km-area-tabs button[aria-pressed=true] { background: #e6ecd9; border-color: #8caa7b; box-shadow: 0 3px 0 #d0d9bf; }
+.km-lesson { max-width: 680px; margin: auto; padding: 24px 28px 35px; font-size: 14px; line-height: 1.9; }
+.km-chapter-note { border-bottom: 1px solid #dfdac5; padding-bottom: 18px; margin-bottom: 24px; }
+.km-chapter-note h3 { font: 500 26px/1.6 var(--font-th); color: #52674e; margin: 6px 0 12px; }
+.km-chapter-note p { margin: 10px 0; color: #766e5a; }
+.km-facts { display: flex; flex-direction: column; gap: 6px; background: #edf0de; border: 1px solid #d5ddc2; padding: 12px 16px; border-radius: 12px; color: #536b50; font-size: 14px; }
+.km-prompt { margin: 0 0 12px; font-size: 16px; line-height: 1.85; font-weight: 600; color: #5b644c; }
+.km-target { display: block; padding: 16px; font-size: 29px; line-height: 1.5; color: #546c50; border-radius: 14px; background: #f1eddc; text-align: center; overflow-wrap: anywhere; }
+.km-target[lang=th] { font-size: 23px; font-family: var(--font-th); }
+.km-audio { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin: 14px 0 22px; }
+.km-audio button { font-size: 12px; min-height: 44px; }
+.km-choices { display: grid; gap: 11px; }
+.km-choices button { padding: 17px 20px; min-height: 56px; background: #fffdf4; border: 2px solid #dedac3; border-radius: 13px; color: #5d6651; text-align: left; line-height: 1.8; font: 600 16px/1.8 var(--font-body-th); transition: background .2s,border-color .2s; }
+.km-choices button[lang=sv] { font-family: var(--font-sv); font-size: 20px; }
+.km-choices button:hover:not(:disabled) { border-color: #94a582; background: #f0f3e5; }
+.km-choices button.km-correct { border-color: #83a17a; background: #e4edd8; opacity: 1; }
+.km-choices button.km-wrong { border-color: #cda286; background: #f5e8d9; }
+.km-choices button:disabled:not(.km-correct) { opacity: .55; }
+.km-workbench { background: linear-gradient(#eef0e3,#faf5e7); border: 1px solid #d9ddc8; border-radius: 22px; padding: 18px; }
+.km-instrument { display: block; width: min(100%,290px); height: auto; margin: auto; }
+.km-live-reading { display: flex; flex-direction: column; text-align: center; gap: 6px; margin: -2px 0 15px; color: #5e7256; }
+.km-live-reading strong { font-size: 27px; font-weight: 900; }
+.km-live-reading span { font-size: 12px; line-height: 1.9; }
+.km-tare { display: block; width: 100%; padding: 11px; min-height: 45px; border: 1px solid #9eae90; border-radius: 10px; background: #e2e9d4; color: #59724d; font-size: 13px; margin: 13px 0 18px; }
+.km-pour-controls { display: grid; grid-template-columns: minmax(0,.8fr) minmax(0,1.2fr); gap: 10px; }
+.km-pour-controls label { font-size: 12px; font-weight: 700; color: #6b6e58; min-width: 0; }
+.km-pour-controls input, .km-pour-controls select { display: block; width: 100%; min-width: 0; height: 49px; border: 1px solid #bbc8a7; background: #fffdf4; border-radius: 10px; padding: 10px; color: #586a4d; font: 700 17px var(--font-sv); margin-top: 4px; }
+.km-fractions { display: grid; grid-template-columns: repeat(8,minmax(0,1fr)); gap: 6px; margin: 13px 0; }
+.km-fractions button { height: 42px; border: 1px solid #d1d9bf; background: #f9faef; color: #657758; font: 700 15px var(--font-sv); border-radius: 8px; }
+.km-bench-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+.km-bench-actions button { padding: 12px 8px; font-size: 12px; }
+.km-check { display: block; width: 100%; margin-top: 15px; }
+.km-feedback { background: #f0eddf; border-radius: 13px; padding: 16px; margin: 20px 0; font-size: 13px; line-height: 1.95; color: #6e745b; overflow-wrap: anywhere; }
+.km-feedback[data-tone=correct] { background: #e4edd8; color: #4b7048; }
+.km-feedback[data-tone=retry] { background: #f4e9d9; color: #8b6648; }
+.km-feedback p { margin: 5px 0 0; }
+.km-next { display: block; width: 100%; margin: 15px 0 22px; }
+.km-reference { margin: 24px 0; border: 1px solid #d3d9bf; border-radius: 14px; background: #f3f4e6; text-align: left; }
+.km-reference summary { padding: 16px; cursor: pointer; font-weight: 700; font-size: 13px; color: #617451; min-height: 50px; }
+.km-reference-body { padding: 0 17px 18px; color: #6e755b; font-size: 13px; line-height: 1.95; }
+.km-reference-body h4 { margin: 12px 0; font-size: 15px; }
+.km-ladder { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 13px; border-radius: 11px; background: #e4ead3; color: #59744a; }
+.km-ladder strong { font-size: 21px; }
+.km-unit-glossary { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 17px 0; }
+.km-unit-glossary button { display: flex; flex-direction: column; gap: 4px; align-items: flex-start; text-align: left; padding: 12px; border: 1px solid #d7dcc5; border-radius: 11px; background: #fffcf2; color: #607253; line-height: 1.8; }
+.km-unit-glossary strong { font-size: 14px; }
+.km-unit-glossary span { font-size: 12px; }
+.km-sources { font-size: 11px; }
+.km-sources a { color: #526c4d; text-decoration: underline; }
+.km-back { display: block; margin: 22px auto 0; padding: 10px; border: 0; background: transparent; color: #78856a; text-decoration: underline; line-height: 1.8; font-size: 12px; }
+.km-count-art { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; min-height: 115px; align-items: center; }
+.km-count-art > span { width: 45px; height: 55px; }
+.km-count-art > .km-empty-count { width: auto; height: auto; font-size: 13px; color: #929b7f; }
+.km-ingredient-thumb { width: 65px; height: 65px; margin: 12px auto; }
+.km-result-seal { width: 180px; height: 145px; margin: auto; }
+.km-result .km-unit-glossary { width: 100%; max-width: 500px; }
+.km-course button:focus-visible, .km-area-tabs button:focus-visible { outline: 3px solid #9fae71; outline-offset: 3px; }
+@media(max-width:600px) {
+  .km-lesson { padding: 21px 16px 30px; }
+  .km-chapter-note h3 { font-size: 23px; }
+  .km-prompt { font-size: 15px; }
+  .km-target { font-size: 26px; }
+  .km-workbench { padding: 14px; }
+  .km-fractions { grid-template-columns: repeat(4,minmax(0,1fr)); }
+  .km-area-tabs button { font-size: 12px; }
+}
+@media(max-width:350px) {
+  .km-unit-glossary { grid-template-columns: 1fr; }
+  .km-bench-actions { grid-template-columns: 1fr; }
+  .km-area-tabs { grid-template-columns: 1fr; }
+  .km-pour-controls { grid-template-columns: minmax(0,.8fr) minmax(0,1.2fr); }
+}
 @media (max-width: 360px) { .mg-header-title h2 { font-size: 18px; } .mg-memory-grid { gap: 25px 8px; padding-left: 14px; padding-right: 14px; } .mg-memory-front strong { font-size: 12px; } }
 @media (prefers-reduced-motion: reduce) {
   .mg-dialog *, .mg-game-card { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
