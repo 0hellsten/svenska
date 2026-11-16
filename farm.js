@@ -3,6 +3,7 @@
   'use strict';
   const C = window.FarmCore, A = window.FarmArt, D = window.MiniGameDialogue, P = window.LearningProgress, G = window.FarmGestures;
   const S = window.FarmMischief, SC = window.FarmMischiefCore;
+  const F = window.FarmFishing;
   const zones = {
     fields:{ th:'แปลงผัก', sv:'odlingen', x:17,y:28, icon:'🌱', note:'เพาะเมล็ด รดน้ำ แล้วเก็บพืชที่โตเต็มที่' },
     yard:{ th:'ลานบ้าน', sv:'gårdsplanen', x:49,y:25, icon:'⚑', note:'หน้าบ้านมีเสาธง และมุมสำหรับแต่งสวน' },
@@ -11,7 +12,8 @@
     pond:{ th:'สระเป็ด', sv:'ankdammen', x:81,y:53, icon:'🦆', note:'เป็ดว่ายน้ำในสระ แวะให้อาหารแล้วมองหาไข่' },
     paddock:{ th:'ทุ่งม้า', sv:'hästhagen', x:49,y:51, icon:'🐴', note:'แวะมาหาม้าที่ทุ่งกลางฟาร์ม' },
     workshop:{ th:'โรงช่าง', sv:'verkstaden', x:20,y:77, icon:'✦', note:'แปลงผลผลิตให้เป็นของขาย โม่แป้ง อบขนมปัง และกวนแยม' },
-    market:{ th:'ตลาด', sv:'marknaden', x:79,y:77, icon:'🧺', note:'ฟังคนในหมู่บ้านแล้วจัดตะกร้าตามที่เขาขอ' }
+    market:{ th:'ตลาด', sv:'marknaden', x:79,y:77, icon:'🧺', note:'ฟังคนในหมู่บ้านแล้วจัดตะกร้าตามที่เขาขอ' },
+    pier:{ th:'ท่าตกปลา', sv:'bryggan', x:67,y:10, icon:'🎣', note:'Gong Heng · กุ้งแห้ง · ฟังชื่อปลาแล้วนั่งตกปลาที่ท่าน้ำกันต๊ะ' }
   };
   const tools = {
     seed:{ th:'เพาะเมล็ด', sv:'Så frön.' }, water:{ th:'รดน้ำ', sv:'Vattna plantan.' }, harvest:{ th:'เก็บเกี่ยว', sv:'Skörda det som är moget.' }
@@ -80,7 +82,7 @@
     for (const type of ['pointerup','pointercancel','lostpointercapture']) dialog.addEventListener(type, pointerEnd);
     G.install(dialog, { status, sound, moveGoods, advanceGate, isMoving:() => !!walking });
     dialog.addEventListener('close', () => {
-      clearInterval(tick); cancelSwipe(); G.cancel(); S.destroy(); eventInput = null; walking = false;
+      clearInterval(tick); cancelSwipe(); G.cancel(); S.destroy(); F.destroy(); eventInput = null; walking = false;
       D.destroy(); window.SpeechEngine?.stopAudio?.();
       C.leave(state, Date.now()); save();
       window.SmallGames?.renderLobby();
@@ -105,7 +107,7 @@
   }
   function map() {
     const place = zones[at];
-    return `<section class="fb-map-section"><div class="fb-map" aria-label="แผนที่สวนเบิร์ช"><img src="${mapImage}" alt="ฟาร์มมองจากด้านบน มีทางเดินเชื่อมแปลงผัก โรงนา คอกหมู ทุ่งม้า สระเป็ด โรงช่าง และตลาด">${Object.keys(zones).map(pin).join('')}<span class="fb-walker" aria-hidden="true" style="--x:${place.x}%;--y:${place.y}%">✦</span></div><p class="fb-map-caption">แตะชื่อสถานที่เพื่อเดินไปตามทางในฟาร์ม</p></section>`;
+    return `<section class="fb-map-section"><div class="fb-map" aria-label="แผนที่สวนเบิร์ช"><img src="${mapImage}" alt="ฟาร์มมองจากด้านบน มีทางเดินเชื่อมแปลงผัก โรงนา คอกหมู ทุ่งม้า สระเป็ด โรงช่าง ตลาด และท่าตกปลาริมทะเลสาบ"><svg class="gf-map-jetty" viewBox="0 0 90 100" aria-hidden="true"><path d="M44 99V25" stroke="#c9b276" stroke-width="13"/><path d="m21 13 39-6 4 51-38 6Z" fill="#ba8b59" stroke="#725037" stroke-width="3"/><path d="m24 24 38-6m-36 18 38-6m-36 18 38-6m-35 18 36-6" fill="none" stroke="#dfbd89" stroke-width="3"/><path d="M19 13v10m39-17v10m-33 47v10m39-17v10" stroke="#644c38" stroke-width="4"/></svg>${Object.keys(zones).map(pin).join('')}<span class="fb-walker" aria-hidden="true" style="--x:${place.x}%;--y:${place.y}%">✦</span></div><p class="fb-map-caption">แตะชื่อสถานที่เพื่อเดินไปตามทางในฟาร์ม</p></section>`;
   }
   function header() {
     const sky = C.sky(state);
@@ -133,13 +135,15 @@
   function render(reset = false) {
     if (dialogActive) return;
     S.destroy();
+    F.destroy();
     const scroll = host.scrollTop;
     host.className = 'mg-game-content fb-content';
     const contents = {
       map:() => `${state.event ? notice() : ''}${map()}${lockNote()}${letter()}`,
       fields, market, workshop, yard,
       barn:() => animalZone('barn'), pigs:() => animalZone('pigs'), pond:() => animalZone('pond'), paddock:() => animalZone('paddock'),
-      journal, event:renderEvent, grooming, repair:renderPracticeGate
+      journal, event:renderEvent, grooming, repair:renderPracticeGate,
+      pier:() => '<section class="gf-game" aria-label="Gong Heng · กุ้งแห้ง"></section>'
     };
     host.innerHTML = `${header()}${contents[zone]()}<div class="fb-status" role="status" aria-live="polite" data-tone="${tone}">${esc(message)}</div>${navigation()}`;
     host.scrollTop = reset ? 0 : scroll;
@@ -147,6 +151,7 @@
     if (zone === 'event' && state.event?.id === 'sling') {
       S.mount(host.querySelector('.fb-sling-mount'), { round:state.mischiefRound, step:state.event.step, onHit:finishSlingHit });
     }
+    if (zone === 'pier') F.mount(host.querySelector('.gf-game'), { state:state.fishing, save, onPractice:() => { C.mark(state,Date.now()); save(); } });
     if (reset) focus('.fb-place-title h3, .fb-event h3, .fb-letter h3');
   }
 

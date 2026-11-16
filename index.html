@@ -5117,6 +5117,169 @@ body.app-theme-sunset {
 .fb-sling-album small { display:block;color:#61664a; }
 
 </style>
+  <style>
+/* GONG HENG */
+/* Gong Heng. Warm lake light, continuous water and direct mobile controls. */
+.gf-game { --gf-paper:#fff9e9;--gf-ink:#334c43;--gf-green:#426b5a;--gf-sand:#d5bd8c;--gf-water:#78a59e;max-width:760px;margin:0 auto;color:var(--gf-ink); }
+.gf-title { margin:0;color:#36594c;line-height:1.25;font-family:var(--font-th); }
+.gf-title span { font:italic 25px/1.2 Georgia,serif;display:block;letter-spacing:.025em; }
+.gf-subtitle { margin:5px 0;font-size:12px;line-height:1.5;color:#67715a; }
+.gf-heading,.gf-hud,.gf-baits,.gf-row,.gf-catch-heading,.gf-dialogue-buttons { display:flex;align-items:center;gap:8px; }
+.gf-heading,.gf-hud,.gf-catch-heading { justify-content:space-between; }
+.gf-heading { margin:3px 0 10px; }
+.gf-heading h3 { margin:2px 0;color:#385a4b;font:italic 27px/1.1 Georgia,serif; }
+.gf-heading h3 small { display:block;font:400 13px/1.55 var(--font-th);letter-spacing:.025em;margin-top:2px; }
+.gf-hud { flex-wrap:wrap;margin:7px 0;font-size:12px;font-weight:700; }
+.gf-hud > span { background:#e7ead4;padding:4px 9px;border-radius:20px; }
+.gf-hud > label { display:grid;grid-template-columns:auto minmax(65px,1fr);align-items:center;gap:7px;flex:1;min-width:140px;white-space:nowrap; }
+.gf-scene { position:relative;border:1px solid #c7ba92;overflow:hidden;isolation:isolate;background:#a6bcb0;border-radius:18px;box-shadow:0 5px 15px #4b4d3529; }
+.gf-landscape { width:100%;height:auto;aspect-ratio:600/480;display:block;user-select:none;-webkit-user-select:none;touch-action:none; }
+.gf-scene .gf-landscape { cursor:crosshair; }
+.gf-scene-caption { position:absolute;inset:auto 9px 9px;padding:5px 9px;border:1px solid #e9deb582;border-radius:8px;background:#334d3dd9;color:#fff5d9;text-align:center;font-size:12px;line-height:1.4;pointer-events:none; }
+.gf-weather-note { position:absolute;right:10px;top:9px;font-size:10px;padding:4px 7px;background:#fff5d4b8;color:#6b7154;border-radius:14px;pointer-events:none; }
+.gf-scene[data-phase="fight"] .gf-scene-caption,.gf-scene[data-phase="bite"] .gf-scene-caption { background:#7e603cdd;border-color:#eacf96; }
+.gf-scene[data-phase="fight"] .gf-fish-shadow { opacity:1; }
+.gf-scene[data-mood="surge"] { border-color:#bd8251;box-shadow:0 0 0 2px #e6bc8177; }
+.gf-clouds { animation:gf-cloud-drift 37s linear infinite alternate; }
+.gf-birds { animation:gf-bird-drift 23s ease-in-out infinite alternate; }
+.gf-water-lines { animation:gf-water-flow 8s ease-in-out infinite alternate; }
+.gf-water-lines-two { animation-duration:10s;animation-direction:alternate-reverse; }
+.gf-water-shimmer { animation:gf-shimmer 4.8s ease-in-out infinite alternate; }
+.gf-lake-ripple { transform-box:fill-box;transform-origin:center;animation:gf-ripple 5s ease-out infinite; }
+.gf-ripple-two { animation-delay:-2.6s;animation-duration:6s; }
+.gf-float-body { animation:gf-bob 3s ease-in-out infinite; }
+.gf-reeds { transform-box:fill-box;transform-origin:center bottom;animation:gf-reed-sway 5s ease-in-out infinite alternate; }
+.gf-reeds-left { animation-duration:6.4s;animation-delay:-2s; }
+.gf-swimming-fish { transform-box:fill-box;transform-origin:center;animation:gf-fish-swim 17s ease-in-out infinite alternate; }
+.gf-swimming-two { animation-duration:22s;animation-direction:alternate-reverse; }
+.gf-dragonfly { animation:gf-dragonfly-hover 7s ease-in-out infinite; }
+.gf-scene.is-biting .gf-float-body,.gf-scene[data-phase="bite"] .gf-float-body { animation:gf-float-bite .55s ease-in-out infinite; }
+.gf-scene.is-splash .gf-splash { animation:gf-splash .65s ease-out; }
+.gf-landscape.is-splash .gf-splash { animation:gf-splash .65s ease-out; }
+.gf-cast-ring,.gf-splash { transform-box:fill-box;transform-origin:center; }
+.gf-scene.is-splash .gf-cast-ring { animation:gf-ripple 1s ease-out;opacity:.8; }
+.gf-scene.is-casting .gf-rod { animation:gf-rod-cast .5s ease-in-out;transform-origin:112px 448px; }
+.gf-baits { padding:8px 0;flex-wrap:wrap; }
+.gf-bait { flex:1;min-width:90px;display:grid;grid-template-columns:34px 1fr;align-items:center;gap:4px 7px;min-height:57px;padding:6px 8px;border:1px solid #d6c49d;border-radius:11px;background:#fff9e9;color:#4c573f;text-align:left;font:inherit;cursor:pointer; }
+.gf-bait-art { width:36px;height:36px;grid-row:1 / 3;filter:drop-shadow(0 1px 1px #755f4122); }
+.gf-bait strong,.gf-bait span { display:block;font-size:12px;line-height:1.3; }
+.gf-bait small { font-size:10px;line-height:1.3;color:#74745a; }
+.gf-bait[aria-pressed="true"] { border-color:#54765a;background:#e4ecd6;box-shadow:inset 0 0 0 1px #688267; }
+.gf-button,.gf-replay { font-family:inherit;min-height:44px;border:1px solid #cbb78e;border-radius:10px;padding:8px 12px;background:#fff8e7;color:#415b47;font-weight:700;line-height:1.35;font-size:13px;cursor:pointer; }
+.gf-button[data-primary],.gf-button.is-primary { background:#426b5a;border-color:#426b5a;color:#fff6d9; }
+.gf-button:disabled,.gf-bait:disabled { opacity:.5;cursor:default; }
+.gf-button:focus-visible,.gf-replay:focus-visible,.gf-bait:focus-visible,.gf-crank:focus-visible { outline:3px solid #bc884d;outline-offset:3px; }
+.gf-button:not(:disabled):active { transform:translateY(1px); }
+.gf-replay { flex:none;display:inline-flex;align-items:center;gap:5px;min-height:42px;padding:7px 9px;background:#e5ecd8;border-color:#b9c7a6;color:#3e624b;font-size:12px; }
+.gf-replay small { background:#d3dfc3;padding:1px 4px;border-radius:4px;font-size:10px; }
+.gf-status { margin:7px 0;min-height:23px;font-size:13px;line-height:1.6;color:#53694d; }
+.gf-status[data-tone="retry"],.gf-status.is-warning { color:#995936; }
+.gf-field-note { margin:8px 0 12px;border:1px solid #d7c7a1;background:#f9f1da;padding:10px 12px;border-radius:10px;line-height:1.6;font-size:12px;color:#6b654d; }
+.gf-controls { display:grid;grid-template-columns:136px 1fr;gap:12px;align-items:center;margin:10px 0 23px; }
+.gf-control-buttons { display:flex;flex-wrap:wrap;gap:7px; }
+.gf-control-buttons .gf-button { max-width:100%; }
+.gf-meter { display:flex;align-items:center;gap:7px;color:#52664e;line-height:1.4;font-size:12px; }
+.gf-meter + .gf-meter { margin-top:10px; }
+.gf-meter > span { min-width:54px; }
+.gf-tension,.gf-distance { width:100%;min-width:70px;height:12px;accent-color:#7a9d72; }
+.gf-tension[data-risk="high"],.gf-tension.is-high { accent-color:#ba7657; }
+.gf-tension[data-risk="medium"] { accent-color:#c7a35c; }
+.gf-hud[data-mood="surge"] { color:#9a5b36; }
+.gf-hud[data-mood="warning"] { color:#97743e; }
+.gf-crank { position:relative;width:128px;height:128px;border:2px solid #9a865e;border-radius:50%;background:radial-gradient(circle at 37% 29%,#e9dfb8,#b3bd98 59%,#7a947a);box-shadow:inset 0 0 0 7px #eee4bc,inset 0 0 0 10px #98a588,0 4px 0 #70836a;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab; }
+.gf-crank.is-held { cursor:grabbing;box-shadow:inset 0 0 0 7px #eee4bc,inset 0 0 0 10px #98a588,0 2px 0 #70836a; }
+.gf-crank::before { content:'';position:absolute;inset:28px;border:2px solid #65816b;border-radius:50%;background:repeating-radial-gradient(circle,#9aa98c 0 3px,#7e957c 3px 5px); }
+.gf-crank::after { content:'';position:absolute;inset:49px;border:2px solid #7a7959;border-radius:50%;background:#e2d3a5;box-shadow:0 1px 4px #52694755; }
+.gf-spool { position:absolute;inset:0;transform:rotate(var(--gf-reel-angle,0deg));pointer-events:none; }
+.gf-spool::before { content:'';position:absolute;left:58px;top:15px;width:8px;height:52px;border-radius:6px;background:#5b7864;box-shadow:1px 0 #d7d9b7;transform-origin:center bottom; }
+.gf-spool::after { content:'';position:absolute;left:49px;top:10px;width:28px;height:20px;border-radius:8px;background:linear-gradient(#bb8b5a,#8c6445);border:2px solid #73543d;box-shadow:0 2px 3px #43584244; }
+.gf-crank-label { text-align:center;margin:5px 0 0;font-size:11px;line-height:1.4;color:#6d7152; }
+.gf-crank-caption { position:absolute;top:calc(100% + 7px);left:50%;width:145px;transform:translateX(-50%);font-size:11px;font-weight:700;line-height:1.2;white-space:nowrap;color:#556c50; }
+.gf-pull-warning { color:#8c573a;background:#f4dfb2;padding:4px 8px;border-radius:7px;min-height:28px;font-size:12px;font-weight:700; }
+.gf-dialogue { border:1px solid #cfbf97;background:#fff9e9;border-radius:14px;padding:13px;margin:9px 0;box-shadow:0 3px 0 #d7c8a240; }
+.gf-dialogue .gf-swedish,.gf-dialogue [lang="sv"] { color:#365c4c;font-size:16px;font-weight:700;line-height:1.5; }
+.gf-dialogue p { margin:4px 0;font-size:13px;line-height:1.6; }
+.gf-dialogue-buttons { margin-top:8px;flex-wrap:wrap; }
+.gf-dialogue .gf-answers { display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:9px; }
+.gf-catch { border:1px solid #c6bf92;background:linear-gradient(135deg,#fdf6dd,#e9eed6);border-radius:15px;padding:14px;margin-top:10px; }
+.gf-catch .gf-fish-art { display:block;max-width:260px;width:75%;margin:0 auto;filter:drop-shadow(0 3px 3px #64764a22); }
+.gf-catch h3 { margin:3px 0;color:#3f5f47;font-family:var(--font-th); }
+.gf-catch p { font-size:13px;line-height:1.6; }
+.gf-catch h4 { margin:4px 0 8px;color:#3c6049;font-size:16px; }
+.gf-answer-options { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:9px 0; }
+.gf-answer-options .gf-button { padding-inline:6px; }
+.gf-catch-feedback { color:#64774d;font-weight:700; }
+.gf-catch-art .gf-fish-art { max-width:230px; }
+.gf-album { margin:12px 0; }
+.gf-album h4 { margin:7px 0;color:#416349;font-size:16px; }
+.gf-album > div { display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px; }
+.gf-album article { display:flex;flex-direction:column;align-items:center;justify-content:space-between;min-width:0;border:1px solid #d8cbaa;border-radius:11px;background:#fff9e9;color:#4c624a;padding:6px;font-size:11px;text-align:center;line-height:1.35; }
+.gf-album article .gf-fish-art { width:100%;height:auto; }
+.gf-album article.is-undiscovered { background:#eeecd9;color:#8a8e73; }
+.gf-album article.is-undiscovered .gf-fish-art { opacity:.29;filter:grayscale(.8); }
+.gf-album article strong,.gf-album article small { display:block;font-size:11px; }
+.gf-album article .gf-replay { min-height:35px;padding:4px 6px;font-size:10px;margin-top:5px; }
+.gf-talk-mount { margin:10px 0;border:1px solid #c9c8a2;border-radius:14px;overflow:hidden;background:#fffaeb; }
+.gf-talk-mount .mg-talk { padding:15px; }
+.gf-maya { font-size:56px;display:grid;place-items:center;width:100%;height:100%; }
+.gf-map-jetty { position:absolute;top:2%;left:58%;width:10%;height:13%;pointer-events:none;transform:rotate(-7deg);border:1px solid #805a39;box-shadow:1px 2px 3px #40472c55;background:repeating-linear-gradient(0deg,#c39b66 0 4px,#976d49 4px 5px);border-radius:2px; }
+.gf-map-jetty::before,.gf-map-jetty::after { content:'';position:absolute;top:1px;bottom:0;width:3px;background:#785837;border:1px solid #e3bd83; }
+.gf-map-jetty::before { left:2px; }.gf-map-jetty::after { right:2px; }
+.gf-album-card { display:flex;flex-direction:column;justify-content:space-between;align-items:center;min-width:0;background:#fdf7e6;border:1px solid #d8cbaa;border-radius:11px;padding:6px;color:#4c624a;text-align:center;font-size:11px;line-height:1.35; }
+.gf-album-card .gf-fish-art { width:100%;height:auto;max-width:136px; }
+.gf-album-card strong { display:block;font-size:12px; }
+.gf-album-card.is-locked .gf-fish-art { opacity:.29;filter:grayscale(.8); }
+.gf-album-card.is-locked { color:#8a8e73;background:#eeecd9; }
+.gf-album-card .gf-button,.gf-album-card .gf-replay { min-height:35px;padding:4px 7px;font-size:10px;margin-top:4px; }
+.gf-bite-prompt { position:absolute;left:50%;top:24%;transform:translateX(-50%);display:grid;place-items:center;padding:7px 12px;border:1px solid #f1d291;border-radius:14px;background:#fff3d9ef;color:#765b34;box-shadow:0 3px 15px #54706c44;font-size:14px;font-weight:800;white-space:nowrap;pointer-events:none; }
+@keyframes gf-cloud-drift { to { transform:translateX(16px); } }
+@keyframes gf-bird-drift { to { transform:translate(60px,-8px);opacity:.45; } }
+@keyframes gf-water-flow { to { transform:translateX(12px);opacity:.24; } }
+@keyframes gf-shimmer { to { opacity:.28;transform:translateY(3px); } }
+@keyframes gf-ripple { 0% { transform:scale(.6);opacity:.08; } 20% { opacity:.5; } 100% { transform:scale(1.7);opacity:0; } }
+@keyframes gf-bob { 0%,100% { transform:translateY(0) rotate(-3deg); } 50% { transform:translateY(3px) rotate(4deg); } }
+@keyframes gf-float-bite { 0%,100% { transform:translateY(1px); } 38% { transform:translateY(12px) rotate(12deg); } 75% { transform:translateY(5px) rotate(-6deg); } }
+@keyframes gf-reed-sway { to { transform:rotate(3deg); } }
+@keyframes gf-fish-swim { to { translate:40px 8px;opacity:.08; } }
+@keyframes gf-dragonfly-hover { 0%,100% { translate:0 0; } 30% { translate:9px -6px; } 70% { translate:-5px 3px; } }
+@keyframes gf-splash { 0% { opacity:0;scale:.5; } 20% { opacity:1; } 100% { opacity:0;scale:1.4; } }
+@keyframes gf-rod-cast { 0% { rotate:0deg; } 35% { rotate:-10deg; } 70% { rotate:5deg; } 100% { rotate:0deg; } }
+@media(max-width:560px) {
+  .gf-heading { margin-bottom:6px; }
+  .gf-title span { font-size:22px; }
+  .gf-title { font-size:17px; }
+  .gf-hud { gap:5px; }
+  .gf-baits { gap:5px;padding:6px 0; }
+  .gf-bait { min-width:0;padding:5px;grid-template-columns:27px 1fr;gap:2px 4px; }
+  .gf-bait-art { width:29px;height:29px; }
+  .gf-bait strong,.gf-bait span { font-size:11px; }
+  .gf-bait small { font-size:9px; }
+  .gf-controls { grid-template-columns:118px 1fr;gap:10px; }
+  .gf-crank { width:114px;height:114px; }
+  .gf-crank::before { inset:25px; }
+  .gf-crank::after { inset:43px; }
+  .gf-spool::before { left:51px;top:13px;height:47px; }
+  .gf-spool::after { left:42px;top:7px; }
+  .gf-album > div { grid-template-columns:repeat(4,minmax(0,1fr));gap:5px; }
+  .gf-album article { padding:4px; }.gf-album article strong,.gf-album article small { font-size:10px; }
+  .gf-album-card { padding:4px;font-size:10px; }
+  .gf-album-card strong { font-size:10px; }
+  .gf-scene { border-radius:13px; }
+  .gf-dialogue { padding:11px; }
+}
+@media(max-width:350px) {
+  .gf-bait { display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:1px; }
+  .gf-bait-art { width:28px;height:28px; }
+  .gf-controls { grid-template-columns:106px 1fr;gap:5px; }
+  .gf-crank { width:102px;height:102px; }
+  .gf-crank::before { inset:22px; }.gf-crank::after { inset:37px; }
+  .gf-spool::before { left:45px;top:11px;height:41px; }.gf-spool::after { left:36px;top:6px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .gf-clouds,.gf-birds,.gf-water-lines,.gf-water-shimmer,.gf-lake-ripple,.gf-float-body,.gf-reeds,.gf-swimming-fish,.gf-dragonfly,.gf-scene.is-biting .gf-float-body,.gf-scene[data-phase="bite"] .gf-float-body,.gf-scene.is-splash .gf-splash,.gf-scene.is-splash .gf-cast-ring,.gf-scene.is-casting .gf-rod { animation:none; }
+}
+
+</style>
 
 </head>
 <body>
@@ -5608,10 +5771,138 @@ body.app-theme-sunset {
 
 </script>
   <script>
+/* Gong Heng. Saved vocabulary album and deterministic fishing interactions. */
+(function (root) {
+  'use strict';
+  const fish = [
+    { id:'abborre', name:'abborre', sv:'en abborre', definite:'abborren', plural:'abborrar', th:'ปลาเพิร์ชยุโรป · ลายขวางเข้ม', sentence:'Abborren har ränder.', sentenceTh:'ปลาเพิร์ชมีลายขวาง', color:'#9da85e', accent:'#d68c4d', shape:'oval', pattern:'stripes', length:25, strength:.96 },
+    { id:'gadda', name:'gädda', sv:'en gädda', definite:'gäddan', plural:'gäddor', th:'ปลาไพค์ · ปากยาว ลำตัวเรียว', sentence:'Gäddan är lång.', sentenceTh:'ปลาไพค์มีลำตัวยาว', color:'#8d9b60', accent:'#bba45c', shape:'long', pattern:'spots', length:58, strength:1.12 },
+    { id:'mort', name:'mört', sv:'en mört', definite:'mörten', plural:'mörtar', th:'ปลาโรช · เกล็ดเงิน ตาสีแดง', sentence:'Mörten är silverfärgad.', sentenceTh:'ปลาโรชมีสีเงิน', color:'#b5c4b3', accent:'#c67d5f', shape:'oval', pattern:'scales', length:20, strength:.92 },
+    { id:'braxen', name:'braxen', sv:'en braxen', definite:'braxen', plural:'braxnar', th:'ปลาบรีม · ลำตัวสูงและแบน', sentence:'Braxen har en hög kropp.', sentenceTh:'ปลาบรีมมีลำตัวสูง', color:'#b9ad7d', accent:'#8b8e73', shape:'round', pattern:'scales', length:38, strength:1.02 },
+    { id:'sutare', name:'sutare', sv:'en sutare', definite:'sutaren', plural:'sutare', th:'ปลาเทนช์ · สีเขียวมะกอก', sentence:'Sutaren är grön.', sentenceTh:'ปลาเทนช์มีสีเขียว', color:'#7e9260', accent:'#b99a61', shape:'oval', pattern:'plain', length:32, strength:1 },
+    { id:'sarv', name:'sarv', sv:'en sarv', definite:'sarven', plural:'sarvar', th:'ปลารัดด์ · ครีบแดง เกล็ดทอง', sentence:'Sarven har röda fenor.', sentenceTh:'ปลารัดด์มีครีบสีแดง', color:'#c9b87e', accent:'#c9744f', shape:'oval', pattern:'scales', length:23, strength:.94 },
+    { id:'gos', name:'gös', sv:'en gös', definite:'gösen', plural:'gösar', th:'ปลาแซนเดอร์ · ครีบหลังตั้ง', sentence:'Gösen har en stor fena.', sentenceTh:'ปลาแซนเดอร์มีครีบขนาดใหญ่', color:'#a6ae83', accent:'#a3a783', shape:'long', pattern:'stripes', length:44, strength:1.08 },
+    { id:'oring', name:'öring', sv:'en öring', definite:'öringen', plural:'öringar', th:'ปลาเทราต์สีน้ำตาล · ลายจุด', sentence:'Öringen har prickar.', sentenceTh:'ปลาเทราต์มีลายจุด', color:'#b3a77a', accent:'#b76d52', shape:'long', pattern:'spots', length:34, strength:1.04 }
+  ];
+  const byId = Object.fromEntries(fish.map(item => [item.id,item]));
+  const baits = [
+    { id:'shrimp', sv:'en torkad räka', name:'torkad räka', th:'กุ้งแห้ง', line:'Jag väljer en torkad räka.', meaning:'ฉันเลือกกุ้งแห้งหนึ่งตัว', icon:'🦐' },
+    { id:'worm', sv:'en mask', name:'mask', th:'ไส้เดือน', line:'Jag väljer en mask.', meaning:'ฉันเลือกไส้เดือนหนึ่งตัว', icon:'〰' },
+    { id:'bread', sv:'en bit bröd', name:'bröd', th:'ขนมปังชิ้นเล็ก', line:'Jag väljer en bit bröd.', meaning:'ฉันเลือกขนมปังชิ้นเล็ก', icon:'🍞' }
+  ];
+  const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+  const nonnegative = value => Number.isInteger(value) && value >= 0 ? Math.min(value,999999) : 0;
+  const knownFish = id => typeof id === 'string' && Object.hasOwn(byId,id);
+  const date = value => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value) ? value : '';
+
+  function restore(raw) {
+    const source = raw?.version === 1 ? raw : {};
+    const album = {};
+    for (const item of fish) {
+      const count = nonnegative(source.album?.[item.id]);
+      if (count) album[item.id] = count;
+    }
+    return { version:1, album, totalCatch:Math.max(nonnegative(source.totalCatch),Object.values(album).reduce((sum,count) => sum+count,0)),
+      bait:baits.some(item => item.id === source.bait) ? source.bait : 'shrimp', pending:knownFish(source.pending) ? source.pending : null,
+      pendingSpeech:knownFish(source.pendingSpeech) ? source.pendingSpeech : null,
+      catchDay:date(source.catchDay), dayCount:Math.min(3,nonnegative(source.dayCount)), bonusDay:date(source.bonusDay) };
+  }
+
+  // Finger points are normalized to the casting surface. A clear upward sweep casts.
+  function cast(start, end) {
+    if (![start?.x,start?.y,end?.x,end?.y].every(Number.isFinite)) return { valid:false, power:0, x:.5, y:.55, distance:0 };
+    const rise = start.y-end.y;
+    const power = clamp(rise/.55,0,1);
+    return { valid:rise >= .075, power, x:clamp(.5+(end.x-start.x)*1.35,.12,.88), y:.55-power*.33, distance:power };
+  }
+
+  function angleDelta(before, after) {
+    if (![before,after].every(Number.isFinite)) return 0;
+    return Math.atan2(Math.sin(after-before),Math.cos(after-before));
+  }
+
+  // The first unseen fish in a rotating set appears frequently, making the full album attainable.
+  // Baits change the game's rotation. These are game choices, not a real bait guide.
+  function chooseFish(state, baitId, landing, random = Math.random) {
+    const offset = Math.max(0,baits.findIndex(item => item.id === baitId));
+    const distance = Number.isFinite(landing?.distance) ? clamp(landing.distance,0,1) : .5;
+    const value = clamp(Number(random()) || 0,0,.999999);
+    const rotation = (nonnegative(state.totalCatch) + offset*2 + Math.floor(distance*3)) % fish.length;
+    const ordered = [...fish.slice(rotation),...fish.slice(0,rotation)];
+    const unseen = ordered.filter(item => !state.album[item.id]);
+    return (unseen.length && value < .72 ? unseen[Math.floor(value/.72*unseen.length)] : ordered[Math.floor(value*ordered.length)]).id;
+  }
+
+  function createFight(fishId, distance = .5) {
+    const id = knownFish(fishId) ? fishId : fish[0].id;
+    return { fishId:id, phase:'fight', progress:0, tension:.22, time:0, warning:false, surge:false, stress:0,
+      distance:clamp(Number(distance) || .5,0,1) };
+  }
+
+  function tickFight(fight, turns, dt) {
+    if (fight.phase !== 'fight') return fight.phase;
+    const elapsed = Number.isFinite(dt) ? clamp(dt,0,.08) : 0;
+    if (!elapsed) return fight.phase;
+    fight.time += elapsed;
+    const cycle = fight.time % 5.8;
+    fight.warning = cycle >= 2.45 && cycle < 3.15;
+    fight.surge = cycle >= 3.15 && cycle < 4.45;
+    const item = byId[fight.fishId] || fish[0];
+    const movement = Number.isFinite(turns) ? clamp(Math.abs(turns),0,elapsed*2.2) : 0;
+    const speed = movement/elapsed;
+    const pulling = speed > .025;
+    const rise = fight.surge ? .63 : .21;
+    const release = fight.surge ? .42 : .38;
+    fight.tension = clamp(fight.tension + (speed*rise*item.strength - (pulling ? .065 : release))*elapsed,.08,1);
+    if (fight.tension > .94) fight.stress += elapsed;
+    else fight.stress = Math.max(0,fight.stress-elapsed*1.8);
+    if (fight.stress >= .68) { fight.phase = 'broken'; return fight.phase; }
+    const retrieve = (fight.surge ? .015 : .13) * movement / (.82+fight.distance*.27);
+    fight.progress = clamp(fight.progress + retrieve - (fight.surge && !pulling ? .005*elapsed : 0),0,1);
+    if (fight.progress >= 1) fight.phase = 'caught';
+    return fight.phase;
+  }
+
+  function startCatch(state, fishId) {
+    if (state.pending || state.pendingSpeech || !knownFish(fishId)) return false;
+    state.pending = fishId;
+    return true;
+  }
+
+  function answerCatch(state, chosenId, day) {
+    const item = knownFish(state.pending) ? byId[state.pending] : null;
+    if (!item || chosenId !== item.id) return { correct:false, newFish:false, xp:0, fish:item };
+    const newFish = !state.album[item.id];
+    state.album[item.id] = nonnegative(state.album[item.id])+1;
+    state.totalCatch = nonnegative(state.totalCatch)+1;
+    state.pending = null;
+    if (state.totalCatch % 3 === 0) state.pendingSpeech = item.id;
+    const today = date(day);
+    if (state.catchDay !== today) { state.catchDay = today; state.dayCount = 0; }
+    state.dayCount = Math.min(3,state.dayCount+1);
+    let xp = 0;
+    if (today && state.dayCount === 3 && state.bonusDay !== today) { state.bonusDay = today; xp = 3; }
+    return { correct:true, newFish, xp, fish:item };
+  }
+
+  function finishSpeech(state) {
+    if (!state.pendingSpeech) return false;
+    state.pendingSpeech = null;
+    return true;
+  }
+
+  const api = { fish, byId, baits, restore, cast, angleDelta, chooseFish, createFight, tickFight, startCatch, answerCatch, finishSpeech };
+  if (typeof module === 'object' && module.exports) module.exports = api;
+  else root.FarmFishingCore = api;
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+
+</script>
+  <script>
 /* Björkbacken. Save format, farm simulation and story orders. */
 (function (root) {
   'use strict';
   const mischief = typeof module === 'object' && module.exports ? require('./farm_mischief_core.js') : root.FarmMischiefCore;
+  const fishing = typeof module === 'object' && module.exports ? require('./farm_fishing_core.js') : root.FarmFishingCore;
   const crops = {
     carrot: { sv:'en morot', plural:'morötter', th:'แครอต', seconds:14, chapter:0, yield:3 },
     potato: { sv:'en potatis', plural:'potatisar', th:'มันฝรั่ง', seconds:19, chapter:1, yield:3 },
@@ -5672,7 +5963,7 @@ body.app-theme-sunset {
   const WAIT_AWAY = 2 * 60 * 1000;
   const MAX_STOCK = 99;
   const baskets = ['large','small'];
-  const zoneRequirements = { fields:0, yard:0, market:0, barn:1, workshop:2, paddock:3, pond:4, pigs:5 };
+  const zoneRequirements = { fields:0, yard:0, market:0, barn:1, workshop:2, paddock:3, pond:4, pigs:5, pier:1 };
   const int = (value, limit, fallback = 0) => Number.isInteger(value) && value >= 0 ? Math.min(limit, value) : fallback;
   const nowInt = value => Number.isFinite(value) && value >= 0 ? value : 0;
   const known = (catalogue, key) => typeof key === 'string' && Object.hasOwn(catalogue, key);
@@ -5712,7 +6003,7 @@ body.app-theme-sunset {
       coins:int(source.coins, 999, 0), day:Math.max(1, int(source.day, 999999, 1)), orderIndex,
       decor:Object.keys(decorations).filter(id => Array.isArray(source.decor) && source.decor.includes(id)),
       activity:nowInt(source.activity), checkedActivity:nowInt(source.checkedActivity), leftAt:nowInt(source.leftAt), visits, seen, event, foal,
-      mischiefRound, mischiefBonusDay };
+      mischiefRound, mischiefBonusDay, fishing:fishing.restore(source.fishing) };
   }
 
   function mark(state, now) { state.activity = Math.max(now, state.activity + 1); }
@@ -5884,7 +6175,7 @@ body.app-theme-sunset {
   const api = { crops, animals, goods, recipes, chapters, decorations, events, foalNames, WAIT_AWAY,
     restore, tend, plotStatus, animalStatus, tendAnimal, canRest, nextDay, sky, craft, hasStock,
     order, orderPlan, orderChange, baskets, basketCount, moveBasket, checkBasket, deliver, expand, decorate,
-    leave, returnVisit, progressEvent, eventSteps, zoneRequirements, trainingLevel, canVisit };
+    leave, returnVisit, progressEvent, eventSteps, zoneRequirements, trainingLevel, canVisit, mark };
   if (typeof module === 'object' && module.exports) module.exports = api;
   else root.FarmCore = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);
@@ -34299,11 +34590,474 @@ body.app-theme-sunset {
 
 </script>
   <script>
+/* Gong Heng. Original animated lakeside and recognizable Swedish fish silhouettes. */
+(function () {
+  'use strict';
+  const tree = (x, y, size, color) => `<path d="m${x} ${y} ${-size*.38} ${size*.8}h${size*.18}l${-size*.24} ${size*.36}h${size}l${-size*.24} ${-size*.36}h${size*.18}Z" fill="${color}"/>`;
+  function scene() {
+    const farTrees = Array.from({length:31}, (_,i) => tree(i*22-25,113-Math.sin(i*.64)*15,34+(i%5)*7,['#718d85','#7f998c','#68877e'][i%3])).join('');
+    const nearTrees = Array.from({length:12}, (_,i) => tree(i*56-19,141-Math.cos(i*.7)*10,25+(i%3)*9,['#507667','#5f806b','#769071'][i%3])).join('');
+    return `<svg class="gf-landscape" viewBox="0 0 600 480" fill="none" role="img" aria-label="ท่าไม้ริมทะเลสาบในสวนเบิร์ช มีแสงอุ่นบนผิวน้ำและป่าอยู่ไกล ๆ">
+      <defs>
+        <linearGradient id="gf-sky" x2="0" y2="1"><stop stop-color="#f0c9b3"/><stop offset=".55" stop-color="#f6e2b9"/><stop offset="1" stop-color="#d7dfca"/></linearGradient>
+        <linearGradient id="gf-water" x2=".25" y2="1"><stop stop-color="#b3c8b7"/><stop offset=".46" stop-color="#81aca5"/><stop offset="1" stop-color="#416f73"/></linearGradient>
+        <linearGradient id="gf-sun-trail" x2="0" y2="1"><stop stop-color="#fff2c2" stop-opacity=".8"/><stop offset="1" stop-color="#f6e5ae" stop-opacity="0"/></linearGradient>
+        <linearGradient id="gf-planks" x2="1" y2=".4"><stop stop-color="#b58454"/><stop offset=".55" stop-color="#d1a56f"/><stop offset="1" stop-color="#a1744d"/></linearGradient>
+        <linearGradient id="gf-shore" x2="0" y2="1"><stop stop-color="#a5ad75"/><stop offset="1" stop-color="#596e46"/></linearGradient>
+        <radialGradient id="gf-sun-glow"><stop stop-color="#fff5cb" stop-opacity=".8"/><stop offset="1" stop-color="#ffe4b0" stop-opacity="0"/></radialGradient>
+        <clipPath id="gf-lake-clip"><path d="M0 158H600V480H0Z"/></clipPath>
+      </defs>
+      <path fill="url(#gf-sky)" d="M0 0h600v480H0Z"/>
+      <circle cx="418" cy="75" r="85" fill="url(#gf-sun-glow)"/><circle cx="418" cy="75" r="24" fill="#fff2c3"/>
+      <g class="gf-clouds" fill="#fff4d9" opacity=".65"><path d="M47 46q12-17 31-7 6-16 24-6 16-7 25 10 19-2 23 6H47Z"/><path d="M267 30q14-12 23-2 14-16 30-1 20-1 25 9h-91Z"/></g>
+      <path d="M0 118q56-35 106-12t99-5q66-26 121-9t124 7q65-30 150 4v71H0Z" fill="#9aafa0"/>
+      ${farTrees}
+      <path d="M0 155q75-17 128-4 66-12 124 0 61-12 121 1 117-20 227-2v32H0Z" fill="#678872"/>
+      ${nearTrees}
+      <path d="M0 171q139 9 294 1t306-1v309H0Z" fill="url(#gf-water)"/>
+      <g clip-path="url(#gf-lake-clip)">
+        <path d="m402 173-46 267h159l-79-267Z" fill="url(#gf-sun-trail)" opacity=".65"/>
+        <g class="gf-water-shimmer" stroke="#f5e8b8" stroke-linecap="round" opacity=".68"><path d="M394 182h38m-42 8h48m-58 13h67m-80 12h82m-78 19h100m-122 21h124m-120 23h136m-152 27h165m-179 30h182" stroke-width="2"/><path d="M386 196h14m-30 29h26m31 19h31m-67 22h24m36 27h22m-73 24h21" stroke-width="4"/></g>
+        <g class="gf-water-lines" stroke="#d6e5cc" stroke-width="1.6" stroke-linecap="round" opacity=".44"><path d="M6 189q20-4 42 0m84 4h28m32-10q27 3 44 0m278 1h39M37 216q33-5 65 0m71 7h36m57-13h49m186 10q30-5 66 0M4 249q24 4 49 0m61-6q26-4 46 0m70 14h49m244-8q26 4 62 0M52 287q25-5 57 0m74 10h36m57-12q30 4 57 0m178 2h40M14 329q25 4 52 0m61 4h32m45-5h35m235 5q41-4 74 0M65 358h40m54 7q31 4 63 0m259-12h44"/></g>
+        <g class="gf-water-lines gf-water-lines-two" stroke="#3e7879" stroke-width="2" stroke-linecap="round" opacity=".3"><path d="M27 204h23m211 28h28m-85 38h25m290-26h35M75 310h32m218 31h38m164-27h25m-269 60h56m142 11h38"/></g>
+        <g class="gf-swimming-fish gf-swimming-one" transform="translate(289 290)" fill="#3c6f6b" opacity=".27"><path d="M-18 0q15-12 33 0-18 13-33 0l-12-7v14Z"/><path d="m-4-4 4-8 6 8"/></g>
+        <g class="gf-swimming-fish gf-swimming-two" transform="translate(495 319)" fill="#376a69" opacity=".23"><path d="M-13 0q14-9 27 0-15 10-27 0l-10-6v12Z"/></g>
+        <g class="gf-fish-shadow" transform="translate(390 280)" opacity="0"><ellipse rx="25" ry="8" fill="#244f4f" opacity=".4"/><path d="m-20 0-12-8v16Z" fill="#244f4f" opacity=".4"/></g>
+        <ellipse class="gf-lake-ripple gf-ripple-one" cx="177" cy="267" rx="21" ry="5" stroke="#e9eed4" stroke-width="1.4" opacity=".4"/>
+        <ellipse class="gf-lake-ripple gf-ripple-two" cx="462" cy="224" rx="18" ry="4" stroke="#e9eed4" stroke-width="1.4" opacity=".4"/>
+        <ellipse class="gf-cast-ring" cx="390" cy="255" rx="23" ry="6" stroke="#f8efcb" stroke-width="2" opacity="0"/>
+        <g class="gf-splash" transform="translate(390 255)" opacity="0"><ellipse rx="24" ry="6" stroke="#fff3cf" stroke-width="3"/><path d="M-9-5q-7-17-10-9m20 8 2-23m8 24q6-18 13-18" stroke="#ebf5dd" stroke-width="3" stroke-linecap="round"/><circle cx="-24" cy="-14" r="2.5" fill="#edf3dc"/><circle cx="27" cy="-12" r="2" fill="#edf3dc"/></g>
+      </g>
+      <g class="gf-birds" stroke="#6b7b6e" stroke-width="2" stroke-linecap="round"><path d="M220 64q6-7 12 0 6-7 12 0m16-13q4-4 8 0 4-4 8 0"/></g>
+      <path d="M0 329q33-2 66 36 22 6 42 33l44 82H0Z" fill="url(#gf-shore)"/>
+      <path d="M600 299q-27 0-38 30-31-6-56 36l-40 115h134Z" fill="url(#gf-shore)"/>
+      <g class="gf-reeds gf-reeds-right" stroke="#486a4e" stroke-width="3" stroke-linecap="round"><path d="M570 357q-15-62-1-95m1 95q7-58 21-65m-36 67q-16-43-8-73m30 67q16-37 20-39m-37 47q-25-36-33-36"/><path d="m570 266 1-15m-24 37-2-16m44 22 6-16" stroke="#906c46" stroke-width="7"/></g>
+      <g class="gf-reeds gf-reeds-left" stroke="#53734f" stroke-width="3" stroke-linecap="round"><path d="M44 379q-5-48-18-63m18 62q13-57 4-82m-11 82q-16-34-30-36m38 40q22-36 27-40"/><path d="m49 298-2-15m-20 35-6-13" stroke="#a18350" stroke-width="6"/></g>
+      <g stroke="#704d36" stroke-linejoin="round"><path d="M65 372h27v95H65Zm278 17h26v91h-26Z" fill="#77573b" stroke-width="3"/><path d="m93 350 231 5 110 125H29Z" fill="#5e5940" opacity=".25" stroke="none"/>
+        <path d="m103 344 216 6 93 130H26Z" fill="url(#gf-planks)" stroke-width="3"/><path d="m91 363 245 5m-260 18 274 5m-288 20 306 5m-323 24 342 5m-357 24 377 5" fill="none" stroke-width="3"/>
+        <path d="m159 346-19 134m97-132 34 132m-97-115-3 21m28 6 1 18m90 13 6 22m-181-13-4 19m155 5 8 18" fill="none" stroke="#9b7148" stroke-width="2"/>
+        <path d="m109 355 28 1m92 3 36 1m-167 16 36 2m131 21 35 1m-213 27 39 1m167 20 33 2" stroke="#e6c18a" stroke-width="2" stroke-linecap="round"/>
+        <path d="M74 342q9-7 20 0v35q-10 7-20 0Zm260 9q9-7 20 0v40q-9 6-20 0Z" fill="#b58a5c" stroke-width="2.5"/><ellipse cx="84" cy="342" rx="10" ry="4" fill="#dcc092"/><ellipse cx="344" cy="351" rx="10" ry="4" fill="#dcc092"/>
+      </g>
+      <g transform="translate(270 429) rotate(7)" stroke="#70573b" stroke-width="2"><path d="M-27-20h54l-6 43h-42Z" fill="#b2955f"/><ellipse cy="-20" rx="27" ry="9" fill="#cbb07e"/><path d="M-22-11q23 6 44 0m-41 11q20 6 39 0m-36 11q17 6 32 0m-25-24 3 32m8-31v31m8-32-3 32" stroke="#8b764e"/><path d="M-25-18q-3-40 25-39 27 1 25 39" fill="none" stroke="#b49967" stroke-width="5"/></g>
+      <g class="gf-rod" stroke-linecap="round"><path d="M112 448Q158 353 172 262" stroke="#463b31" stroke-width="7"/><path d="M112 448Q158 353 172 262" stroke="#b9814e" stroke-width="4"/><path d="m114 447 16-35" stroke="#7b5740" stroke-width="10"/><path d="m115 445 14-31" stroke="#bc9766" stroke-width="6"/><circle cx="137" cy="414" r="12" fill="#9ba38a" stroke="#40564a" stroke-width="3"/><circle cx="137" cy="414" r="6" fill="#c9c8a3" stroke="#546252" stroke-width="2"/><path d="m143 420 10 5" stroke="#40564a" stroke-width="4"/><g class="gf-rod-tip" transform="translate(172 262)"><circle r="3" fill="#d4bd8b" stroke="#495d4c" stroke-width="1.8"/></g></g>
+      <path class="gf-line" d="M172 262Q280 225 390 255" stroke="#fff4c8" stroke-width="1.7" fill="none" opacity=".92"/>
+      <g class="gf-float" transform="translate(390 255)"><g class="gf-float-body"><ellipse cy="8" rx="10" ry="2.5" fill="#3d7673" opacity=".35"/><path d="M0-19V10" stroke="#615b40" stroke-width="1.8"/><path d="M-4-8q4-8 8 0v9q-4 5-8 0Z" fill="#f2e6b3" stroke="#6b694b" stroke-width="1.2"/><path d="M-4-8q4-8 8 0v4h-8Z" fill="#d78563" stroke="#9b6046" stroke-width="1"/><path d="M0-19v5" stroke="#c06449" stroke-width="2.5"/></g></g>
+      <g class="gf-dragonfly" transform="translate(514 288)"><path d="M-1-5v13" stroke="#4c6d6a" stroke-width="2"/><path d="M-1-3q-16-11-15-3 2 8 15 6m1-3q16-11 15-3-2 8-15 6" fill="#dfead4" opacity=".8"/><circle cy="-7" r="2" fill="#3d5f5d"/></g>
+      <g fill="#e8e3bc"><ellipse cx="558" cy="414" rx="2" ry="3"/><ellipse cx="35" cy="391" rx="2" ry="3"/></g>
+    </svg>`;
+  }
+  const profiles = {
+    abborre:{ body:'#92a270', belly:'#e0d49c', fin:'#ce8250', back:'#64764e', shape:'perch', markings:'stripes' },
+    gadda:{ body:'#8a9b69', belly:'#ddd49b', fin:'#a28e57', back:'#5c734c', shape:'pike', markings:'spots' },
+    mort:{ body:'#b6c7bc', belly:'#eee5c4', fin:'#bd7461', back:'#809b8c', shape:'roach', markings:'silver', eye:'#b7654e' },
+    braxen:{ body:'#bca56c', belly:'#e9d5a3', fin:'#8c8e74', back:'#8e8d59', shape:'bream', markings:'scales' },
+    sutare:{ body:'#8b9860', belly:'#c5bf7c', fin:'#6b7952', back:'#626f46', shape:'tench', markings:'scales', eye:'#bb7e4e' },
+    sarv:{ body:'#c2b878', belly:'#f0e2ab', fin:'#be6a4e', back:'#8a9b67', shape:'roach', markings:'scales', eye:'#d4ad52' },
+    gos:{ body:'#a8ad76', belly:'#e5ddaf', fin:'#9c9e6e', back:'#73875a', shape:'zander', markings:'stripes' },
+    oring:{ body:'#b2a273', belly:'#ead5a5', fin:'#b49a6b', back:'#7e8b62', shape:'trout', markings:'trout' }
+  };
+  const aliases = { perch:'abborre',pike:'gadda',roach:'mort',bream:'braxen',tench:'sutare',rudd:'sarv',zander:'gos',trout:'oring',gädda:'gadda',mört:'mort',gös:'gos',öring:'oring' };
+  function fish(id) {
+    const item = profiles[aliases[id] || id] || profiles.abborre;
+    const long = ['pike','zander'].includes(item.shape), high = item.shape === 'bream';
+    const body = high ? 'M32 53q11-34 57-35 35 0 62 30l9 5-9 7q-29 28-63 26-43-2-56-33Z' : long ? 'M29 53q23-20 73-18 28 1 49 11l16 7-16 7q-34 17-70 12-31-3-52-19Z' : 'M29 53q16-27 61-28 43 0 67 27-23 28-66 28-44 0-62-27Z';
+    const eyeX = long ? 146 : 144, eyeY = high ? 46 : 48;
+    let markings = '';
+    if (item.markings === 'stripes') markings = [53,68,83,98,113].map((x,i)=>`<path d="M${x} ${long ? 39 : 32+(i%2)*2}q-6 18 1 ${long ? 22 : 34}" stroke="${item.back}" stroke-width="5.5" opacity=".72" fill="none"/>`).join('');
+    if (item.markings === 'spots') markings = [[53,46],[72,42],[90,46],[112,43],[66,56],[91,58],[116,56]].map(([x,y])=>`<ellipse cx="${x}" cy="${y}" rx="3.5" ry="1.9" fill="#dbd6a0"/>`).join('');
+    if (item.markings === 'trout') markings = [[48,40],[62,35],[80,39],[101,37],[122,40],[56,52],[77,49],[97,51],[117,51]].map(([x,y],i)=>`<circle cx="${x}" cy="${y}" r="${i%3===0?2.7:2}" fill="${i%3===0?'#b76750':'#686e4e'}" stroke="#e0d5a9" stroke-width=".6"/>`).join('');
+    if (['scales','silver'].includes(item.markings)) markings = `<path d="m51 42 8 6-8 6m18-14 8 7-8 7m18-16 8 8-8 8m18-18 8 8-8 8" fill="none" stroke="${item.belly}" stroke-width="1.4" opacity=".65"/>`;
+    const upperFin = item.shape === 'pike' ? `<path d="m58 38-12-17 30 16"/>` : item.shape === 'zander' ? '<path d="m48 40 2-18 8 6 4-10 8 10 6-8 5 11 5-6 6 11m9-1 7-17 8 6 5-4 6 18"/>' : high ? '<path d="m65 25 9-20 15 15 9-3 8 9"/>' : '<path d="m55 35 3-17 8 5 4-10 8 10 8-6 9 13 10-5 6 10"/>';
+    return `<svg class="gf-fish-art" viewBox="0 0 180 100" fill="none" stroke="#53624a" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><ellipse cx="89" cy="90" rx="62" ry="5" fill="#617a4b" opacity=".10"/><g fill="${item.fin}"><path d="m38 52-28-21 6 22-6 23 29-21Z"/>${upperFin}<path d="m67 ${high?77:72}-5 15 20-12m28-2 14 9 8-15"/></g><path d="${body}" fill="${item.body}"/><path d="${high?'M39 62q43 30 111-6-30 33-62 30-36-2-49-24Z':long?'M36 58q54 19 115-1-33 21-70 15-28-3-45-14Z':'M35 61q53 23 116-3-21 23-60 22-37 0-56-19Z'}" fill="${item.belly}" stroke="none"/>${markings}<path d="M130 37q-9 17 0 30" fill="none" stroke="${item.back}" stroke-width="2"/><path d="m94 58 24-2-17 15Z" fill="${item.fin}"/><circle cx="${eyeX}" cy="${eyeY}" r="5.1" fill="${item.eye || '#d3c78d'}"/><circle cx="${eyeX+1}" cy="${eyeY}" r="2.3" fill="#333e30" stroke="none"/><path d="m${long?159:153} 56h7" stroke="#4b5a42" stroke-linecap="round"/>${item.shape==='tench'?'<path d="m158 57 4 7" fill="none" stroke="#7a8055"/>':''}<path d="M39 45q30-18 74-8" stroke="#f0e4b8" stroke-width="2" stroke-linecap="round" opacity=".55"/></svg>`;
+  }
+  function bait(id) {
+    const shrimp = '<path d="M34 14q-17-3-23 12-8 23 17 31 23 5 28-13 5-20-14-24-12-2-14 10-2 8 8 10l7-1q-3 13-16 5-12-7-7-19 5-10 14-11Z" fill="#d99168"/><path d="m39 19-1-9 7 6 9-6-4 12m-23-3 5 6m-14 0 7 5m-9 4 8 3m-4 8 7-3m1 13 1-7m10 9-3-8m10 5-5-7" stroke="#a36448"/><path d="M34 16q5-14 22-12M33 17Q28 2 17 4" fill="none"/><circle cx="33" cy="15" r="1.7" fill="#4a4234" stroke="none"/>';
+    const worm = '<path d="M14 46q-2-23 12-22 15-1 9 18-4 14 8 12 14-3 7-20-6-17-1-22" stroke="#b87763" stroke-width="11" fill="none"/><path d="m12 42 8 1m-8-9 8 3m-4-13 7 5m3-7 3 7m3 6 8 2m-7 7 8 3m1 8 1-7m7 1 5-4m-6-2 8-3m-10-8 8-2m-10-6 8-2m-10-6 8 1" stroke="#925c50" stroke-width="1.4"/>';
+    const bread = '<path d="M12 27Q3 13 19 9q13-8 25 0 20 2 12 20v28H12Z" fill="#b98550"/><path d="M17 29q-10-13 4-15 10-6 20 0 15 2 10 14v24H17Z" fill="#efdbab"/><path d="m21 29 5-2m15 3 4-2m-14 9 3 1m-13 8 4-2m15 2 3 1" stroke="#d6bb85" stroke-width="2"/>';
+    return `<svg class="gf-bait-art" viewBox="0 0 64 64" fill="none" stroke="#8f6247" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${id==='worm'?worm:id==='bread'?bread:shrimp}</svg>`;
+  }
+  window.FarmFishingArt = { scene, fish, bait };
+})();
+
+</script>
+  <script>
+/* Gong Heng. Finger casts, a responsive reel and Swedish words by the lake. */
+(function () {
+  'use strict';
+  const C = window.FarmFishingCore, A = window.FarmFishingArt, D = window.MiniGameDialogue;
+  const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const button = (action,label,extra = '') => `<button type="button" class="gf-button" data-gf="${action}" ${extra}>${label}</button>`;
+  const replay = line => `<button type="button" class="mg-replay gf-replay" data-gf="listen" data-line="${esc(line)}">♪ ฟังอีกครั้ง <small>1×</small></button>`;
+  const lessons = [
+    { sv:'Här är en krok. Hemma har jag en tavelkrok.', th:'นี่คือตะขอเบ็ด ที่บ้านฉันมีตะขอแขวนรูป · krok คือส่วนที่งอไว้เกี่ยวของ', prompt:'Vad hänger du på en tavelkrok?', meaning:'แขวนอะไรไว้บนตะขอแขวนรูป?', yes:'En tavla.', yesTh:'รูปภาพ', no:'En fisk.', noTh:'ปลา', reaction:'Ja, en tavla på väggen.', reactionTh:'ใช่ รูปภาพบนผนัง' },
+    { sv:'Linan är tunn. Som en tråd när du syr.', th:'สายเบ็ดเส้นเล็ก คล้ายด้ายตอนเย็บผ้า · en lina คือสาย en tråd คือด้าย', prompt:'Vad använder du när du syr?', meaning:'ตอนเย็บผ้าเราใช้อะไร?', yes:'En tråd.', yesTh:'ด้าย', no:'En tallrik.', noTh:'จาน', reaction:'Ja. Nålen och tråden.', reactionTh:'ใช่ เข็มกับด้าย' },
+    { sv:'Vi har torkad räka. Hemma kan vi ha den i maten.', th:'เรามีกุ้งแห้ง ที่บ้านเอาไปทำอาหารได้ · torkad räka คือกุ้งแห้ง', prompt:'Vilket bete vill du prova?', meaning:'อยากลองเหยื่ออะไร?', yes:'Torkad räka, tack.', yesTh:'ขอลองกุ้งแห้ง', no:'En tavelkrok, tack.', noTh:'ขอตะขอแขวนรูป', reaction:'Här får du lite torkad räka.', reactionTh:'นี่จ้า กุ้งแห้งนิดหน่อย' },
+    { sv:'Vi sitter på en brygga. Vid huset finns en bänk.', th:'เรานั่งอยู่ที่ท่าน้ำ ที่บ้านมีม้านั่ง · en brygga คือท่าน้ำ en bänk คือม้านั่ง', prompt:'Vad sitter du på i trädgården?', meaning:'ในสวนเรานั่งบนอะไร?', yes:'En bänk.', yesTh:'ม้านั่ง', no:'En krok.', noTh:'ตะขอ', reaction:'Ja, på bänken. Ta en paus.', reactionTh:'ใช่ บนม้านั่ง พักสักหน่อยนะ' }
+  ];
+  let active;
+  function speak(line) { window.SpeechEngine?.speakSwedish?.(line,1); }
+  function sound(kind) {
+    try {
+      const ctx = window.SpeechEngine?.SoundFX?.getContext();
+      if (!ctx) return;
+      const settings = { splash:[130,54,.23], reel:[420,250,.033], bite:[710,1050,.15], catch:[520,810,.28], break:[230,83,.18] }[kind];
+      if (!settings) return;
+      const [start,end,duration] = settings;
+      const osc = ctx.createOscillator(), gain = ctx.createGain(), time = ctx.currentTime;
+      osc.type = kind === 'splash' ? 'triangle' : 'sine';
+      osc.frequency.setValueAtTime(start,time); osc.frequency.exponentialRampToValueAtTime(end,time+duration);
+      gain.gain.setValueAtTime(.001,time); gain.gain.exponentialRampToValueAtTime(kind === 'reel' ? .018 : .075,time+.008);
+      gain.gain.exponentialRampToValueAtTime(.001,time+duration);
+      osc.connect(gain).connect(ctx.destination); osc.start(); osc.stop(time+duration+.01);
+    } catch (_) { /* Water and line animations also carry the feedback. */ }
+  }
+  function destroy() {
+    if (!active) return;
+    active.events.abort(); cancelAnimationFrame(active.frame);
+    D.destroy();
+    active = null;
+    window.SpeechEngine?.stopAudio?.();
+  }
+  function mount(host,options) {
+    destroy();
+    const s = { ...options,host,phase:'idle',events:new AbortController(),turns:0,angle:0,clock:0,lastTick:performance.now(),lastReelSound:0,lesson:0 };
+    active = s;
+    render(s);
+    const events = { signal:s.events.signal };
+    host.addEventListener('click', event => click(s,event),events);
+    host.addEventListener('pointerdown', event => down(s,event),events);
+    host.addEventListener('pointermove', event => move(s,event),events);
+    for (const kind of ['pointerup','pointercancel','lostpointercapture']) host.addEventListener(kind,event => up(s,event),events);
+    host.addEventListener('keydown',event => {
+      if (s.phase!=='fight' || !event.target.matches('[data-gf-hold]') || ![' ','Enter'].includes(event.key)) return;
+      event.preventDefault();
+      s.keyReeling=true;
+    },events);
+    host.addEventListener('keyup',event => {
+      if ([' ','Enter'].includes(event.key)) s.keyReeling=false;
+    },events);
+    window.addEventListener('blur',() => releaseInput(s),events);
+    document.addEventListener('visibilitychange',() => { releaseInput(s); s.lastTick = performance.now(); },events);
+    if (s.state.pending) showCatch(s);
+    else if (s.state.pendingSpeech) {
+      s.lastFish=C.byId[s.state.pendingSpeech];
+      setPhase(s,'identified');
+      talk(s,true);
+    }
+    s.frame = requestAnimationFrame(now => tick(s,now));
+  }
+  function render(s) {
+    const selected = s.state.bait || 'shrimp';
+    s.host.innerHTML = `<header class="gf-heading"><div><span class="fb-kicker">ท่าตกปลาสวนเบิร์ช</span><h3 tabindex="-1">Gong Heng <small lang="th">กุ้งแห้ง</small></h3></div>${button('album','▤ สมุดปลา')}</header>
+      <div class="gf-scene" data-phase="idle">${A.scene()}<div class="gf-scene-caption">ลากนิ้วจากคันเบ็ดขึ้นไปทางน้ำ แล้วปล่อย</div><span class="gf-weather-note">แสงอุ่น ๆ ริมทะเลสาบ</span></div>
+      <div class="gf-hud" hidden><label>สายตึง <progress class="gf-tension" max="1" value=".22" aria-label="ความตึงของสายเบ็ด"></progress></label><label>ใกล้ถึงท่า <progress class="gf-distance" max="1" value="0" aria-label="ความคืบหน้าการดึงปลา"></progress></label></div>
+      <div class="gf-status" role="status" aria-live="polite">เลือกเหยื่อ แล้วตวัดนิ้วขึ้นเพื่อเหวี่ยงเบ็ดต๊ะ</div>
+      <div class="gf-baits" role="group" aria-label="เลือกเหยื่อ">${C.baits.map(bait => `<button type="button" class="gf-bait" data-gf="bait" data-id="${bait.id}" aria-pressed="${bait.id===selected}">${A.bait(bait.id)}<span>${esc(bait.th)}</span><small lang="sv">${esc(bait.sv)}</small></button>`).join('')}</div>
+      <div class="gf-controls"><button type="button" class="gf-crank" data-gf-crank aria-label="หมุนรอกเป็นวงกลมเพื่อเก็บสาย"><span class="gf-spool" aria-hidden="true"><i></i><b></b></span><span class="gf-crank-caption">หมุนเป็นวง</span></button>
+        <div class="gf-control-buttons">${button('cast','เหวี่ยงเบ็ดให้หน่อย →')}${button('hook','ปลากินเหยื่อ · เกี่ยวเลย!','hidden data-primary')}
+        <button type="button" class="gf-button" data-gf-hold hidden>กดค้างเพื่อช่วยหมุน</button>${button('reset','ผูกสายใหม่ แล้วลองอีกครั้ง','hidden')}</div></div>
+      <div class="gf-catch" hidden></div><div class="gf-album" hidden></div>
+      <section class="gf-dialogue"><span class="fb-kicker">มายานั่งอยู่ข้าง ๆ</span><p class="gf-dialogue-line" lang="sv"></p><p class="gf-dialogue-th"></p><div class="fb-row"><span class="gf-dialogue-replay"></span>${button('talk','คุยกับมายา')}${button('lesson','เรื่องเล่าถัดไป ↻')}</div></section><div class="gf-talk-mount" hidden><div data-gf-talk-content></div></div>`;
+    s.scene = s.host.querySelector('.gf-scene');
+    s.svg = s.scene.querySelector('svg');
+    s.float = s.svg.querySelector('.gf-float');
+    s.line = s.svg.querySelector('.gf-line');
+    s.ring = s.svg.querySelector('.gf-cast-ring');
+    s.shadow = s.svg.querySelector('.gf-fish-shadow');
+    s.rod = s.svg.querySelector('.gf-rod');
+    s.splash = s.svg.querySelector('.gf-splash');
+    s.caption = s.host.querySelector('.gf-scene-caption');
+    s.note = s.host.querySelector('.gf-status');
+    s.tension = s.host.querySelector('.gf-tension'); s.distance = s.host.querySelector('.gf-distance');
+    s.crank = s.host.querySelector('[data-gf-crank]'); s.spool = s.host.querySelector('.gf-spool');
+    s.land = {x:390,y:255}; paintFloat(s,390,255);
+    setLesson(s);
+    setPhase(s,'idle');
+  }
+  function setLesson(s) {
+    const lesson = lessons[s.lesson % lessons.length];
+    s.host.querySelector('.gf-dialogue-line').textContent = lesson.sv;
+    s.host.querySelector('.gf-dialogue-th').textContent = lesson.th;
+    s.host.querySelector('.gf-dialogue-replay').innerHTML = replay(lesson.sv);
+  }
+  function status(s,message,tone = '') {
+    if (s.note.textContent !== message) s.note.textContent = message;
+    s.note.dataset.tone = tone;
+  }
+  function setPhase(s,phase) {
+    s.phase = phase; s.scene.dataset.phase = phase; s.phaseTime = 0;
+    s.host.querySelector('.gf-baits').hidden = !['idle','retry'].includes(phase);
+    s.host.querySelector('.gf-hud').hidden = phase !== 'fight';
+    s.host.querySelector('[data-gf="cast"]').hidden = phase !== 'idle';
+    s.host.querySelector('[data-gf="hook"]').hidden = phase !== 'bite';
+    s.host.querySelector('[data-gf="reset"]').hidden = phase !== 'retry';
+    s.host.querySelector('[data-gf-hold]').hidden = phase !== 'fight';
+    s.crank.disabled = phase !== 'fight';
+    s.crank.setAttribute('aria-disabled',String(phase !== 'fight'));
+    s.host.querySelector('.gf-controls').hidden = ['catch','identified'].includes(phase);
+    s.host.querySelectorAll('[data-gf="talk"],[data-gf="lesson"]').forEach(b => { b.disabled = !['idle','identified'].includes(phase); });
+    const captions = { idle:'ตวัดนิ้วขึ้นจากคันเบ็ดเพื่อเหวี่ยงสาย', aiming:'ปล่อยนิ้วเพื่อเหวี่ยงเบ็ด', casting:'เหวี่ยงสายไปบนผิวน้ำ', wait:'ดูทุ่นกระดุกกระดิก แล้วเกี่ยวปลา', bite:'ทุ่นจมแล้ว! แตะเกี่ยวปลา หรือยกคันเบ็ดขึ้น', fight:'หมุนรอกตอนปลาสงบ · หยุดเมื่อปลาดึงแรง', retry:'สายขาด แต่ลองใหม่ที่เดิมได้เลย', catch:'ได้ปลามาแล้ว มาดูชื่อกัน', identified:'อีกหนึ่งคำในสมุดปลาของเรา' };
+    s.caption.textContent = captions[phase] || '';
+  }
+  function normalize(s,event) {
+    const rect = s.svg.getBoundingClientRect();
+    return {x:(event.clientX-rect.left)/rect.width,y:(event.clientY-rect.top)/rect.height};
+  }
+  function down(s,event) {
+    if (s.pointer || event.button !== 0 || s.talking) return;
+    const crank = event.target.closest('[data-gf-crank]'), hold = event.target.closest('[data-gf-hold]');
+    if (s.phase === 'fight' && (crank || hold)) {
+      const target = crank || hold;
+      s.pointer = {id:event.pointerId,kind:hold ? 'hold' : 'reel',target,angle:null,rect:target.getBoundingClientRect()};
+      target.setPointerCapture(event.pointerId); target.classList.add('is-held');
+      if (crank) reel(s,event);
+      return;
+    }
+    if (!event.target.closest('.gf-scene') || !['idle','bite'].includes(s.phase)) return;
+    s.pointer = {id:event.pointerId,kind:s.phase==='bite'?'hook':'cast',start:normalize(s,event),target:s.svg};
+    s.svg.setPointerCapture(event.pointerId);
+  }
+  function move(s,event) {
+    const pointer = s.pointer;
+    if (pointer?.id !== event.pointerId) return;
+    if (pointer.kind === 'reel') { reel(s,event); return; }
+    if (pointer.kind !== 'cast') return;
+    const cast = C.cast(pointer.start,normalize(s,event));
+    if (!cast.valid) return;
+    setPhase(s,'aiming');
+    const land = lakePoint(cast);
+    s.ring.setAttribute('cx',land.x); s.ring.setAttribute('cy',land.y); s.ring.setAttribute('opacity','.9');
+    s.caption.textContent = `ปล่อยเพื่อเหวี่ยง · แรง ${Math.round(cast.power*100)}%`;
+    s.rod?.setAttribute('transform',`rotate(${-cast.power*5} 112 448)`);
+  }
+  function reel(s,event) {
+    const p = s.pointer, r = p.rect;
+    const dx = event.clientX-r.left-r.width/2, dy = event.clientY-r.top-r.height/2;
+    if (Math.hypot(dx,dy) < r.width*.12) { p.angle=null; return; }
+    const angle = Math.atan2(dy,dx);
+    if (p.angle !== null) {
+      const delta = C.angleDelta(p.angle,angle);
+      if (Math.abs(delta) <= Math.PI/2) s.turns += Math.abs(delta)/(2*Math.PI);
+      s.angle += delta*180/Math.PI;
+      s.spool.style.transform = `rotate(${s.angle}deg)`;
+    }
+    p.angle=angle;
+  }
+  function up(s,event) {
+    const p=s.pointer;
+    if (p?.id !== event.pointerId) return;
+    const completed=event.type==='pointerup';
+    releaseInput(s);
+    if (p.kind==='cast') {
+      const cast=completed?C.cast(p.start,normalize(s,event)):null;
+      if (cast?.valid) castLine(s,cast);
+      else { setPhase(s,'idle'); status(s,'ลองลากจากตัวเราไปทางน้ำให้ยาวขึ้นนิด แล้วปล่อย'); }
+    }
+    if (p.kind==='hook' && completed && p.start.y-normalize(s,event).y>.025) hook(s);
+  }
+  function releaseInput(s) {
+    s.pointer?.target?.classList.remove('is-held');
+    s.pointer=null; s.turns=0;
+    s.keyReeling=false;
+    if (s.phase==='aiming') {
+      setPhase(s,'idle');
+      s.rod?.removeAttribute('transform');
+      s.ring.setAttribute('opacity','0');
+    }
+  }
+  function lakePoint(cast) { return {x:Math.max(85,Math.min(550,cast.x*600)),y:180+(1-cast.distance)*116}; }
+  function castLine(s,cast) {
+    s.cast=cast; s.land=lakePoint(cast); s.fishId=C.chooseFish(s.state,s.state.bait||'shrimp',cast);
+    setPhase(s,'casting'); s.ring.setAttribute('opacity','0');
+    s.rod?.removeAttribute('transform');
+    s.splash.setAttribute('transform',`translate(${s.land.x} ${s.land.y})`);
+    s.scene.classList.remove('is-splash');
+    status(s,'เหยื่อตกน้ำแล้วนั่งรอสักนิด ดูทุ่นจ้า');
+    window.SpeechEngine?.stopAudio?.();
+    sound('reel');
+  }
+  function hook(s) {
+    if (s.phase!=='bite') return;
+    s.fight=C.createFight(s.fishId,s.cast.distance); s.turns=0; s.surgeState='';
+    setPhase(s,'fight'); sound('splash');
+    status(s,'ปลาติดเบ็ดแล้ว! หมุนนิ้วเป็นวงที่รอก พักเมื่อแถบสายเริ่มแดง','good');
+    speak('Veva lugnt.');
+  }
+  function paintFloat(s,x,y) {
+    s.float.setAttribute('transform',`translate(${x} ${y})`);
+    s.line.setAttribute('d',`M172 262Q${(172+x)/2} ${Math.min(y,262)-12} ${x} ${y}`);
+    s.ring.setAttribute('cx',x); s.ring.setAttribute('cy',y+3);
+  }
+  function tick(s,now) {
+    if (active!==s) return;
+    const dt=Math.min(.06,Math.max(0,(now-s.lastTick)/1000));
+    s.lastTick=now;
+    if (!document.hidden && !s.talking) {
+      s.clock+=dt; s.phaseTime+=dt;
+      if (s.phase==='casting') {
+        const t=Math.min(1,s.phaseTime/.72);
+        paintFloat(s,172+(s.land.x-172)*t,262+(s.land.y-262)*t-105*Math.sin(Math.PI*t));
+        s.rod?.setAttribute('transform',`rotate(${Math.sin(t*Math.PI)*5} 112 448)`);
+        if (t===1) { setPhase(s,'wait'); s.scene.classList.add('is-splash'); sound('splash'); }
+      } else if (s.phase==='wait') {
+        paintFloat(s,s.land.x+Math.sin(s.clock*1.1)*2,s.land.y+Math.sin(s.clock*2.5)*1.5);
+        if (s.phaseTime>2.6) { setPhase(s,'bite'); sound('bite'); status(s,'ทุ่นจม! แตะเกี่ยวปลา หรือยกนิ้วขึ้นในภาพ','good'); }
+      } else if (s.phase==='bite') {
+        paintFloat(s,s.land.x+Math.sin(s.clock*15)*3,s.land.y+Math.sin(s.clock*9)*4+9);
+        if (s.phaseTime>7) { setPhase(s,'wait'); status(s,'ปลาปล่อยเหยื่อไปนิด รอให้ทุ่นจมอีกครั้งได้จ้า'); }
+      } else if (s.phase==='fight') fightTick(s,dt,now);
+    }
+    s.frame=requestAnimationFrame(time=>tick(s,time));
+  }
+  function fightTick(s,dt,now) {
+    const assisted=s.pointer?.kind==='hold'||s.keyReeling;
+    const turns=s.turns+(assisted?dt*.95:0); s.turns=0;
+    const phase=C.tickFight(s.fight,turns,dt);
+    if (assisted) { s.angle+=dt*290; s.spool.style.transform=`rotate(${s.angle}deg)`; }
+    s.tension.value=s.fight.tension; s.distance.value=s.fight.progress;
+    s.tension.dataset.risk=s.fight.tension>.76?'high':s.fight.tension>.55?'medium':'low';
+    const mood=s.fight.surge?'surge':s.fight.warning?'warning':'calm';
+    s.scene.dataset.mood=mood; s.host.querySelector('.gf-hud').dataset.mood=mood;
+    if (mood!==s.surgeState) {
+      s.surgeState=mood;
+      const notes={calm:'ปลาสงบแล้ว หมุนช้า ๆ เป็นวงต่อได้จ้า',warning:'ปลากำลังจะดึงแรง เตรียมหยุดหมุน',surge:'ปลากระชาก! พักนิ้ว ปล่อยให้สายคลายก่อน'};
+      status(s,notes[mood],mood==='surge'?'retry':'');
+      if (mood==='surge') { sound('splash'); speak('Släpp lite lina.'); }
+    }
+    if (turns>.005 && now-s.lastReelSound>170) { sound('reel'); s.lastReelSound=now; }
+    const factor=1-s.fight.progress;
+    const x=210+(s.land.x-210)*factor+Math.sin(s.clock*(s.fight.surge?12:3))*factor*9;
+    const y=344+(s.land.y-344)*factor;
+    paintFloat(s,x,y);
+    s.shadow.setAttribute('transform',`translate(${x+13} ${y+12}) scale(${.6+factor*.65})`);
+    s.line.style.stroke=s.fight.tension>.76?'#c16d45':'#eee3b9';
+    if (phase==='broken') {
+      releaseInput(s); setPhase(s,'retry'); sound('break');
+      status(s,'สายขาดแล้ว ลองผูกใหม่และพักตอนปลากระชากได้เลย เหยื่อยังมีจ้า','retry');
+    } else if (phase==='caught') {
+      releaseInput(s); C.startCatch(s.state,s.fishId); s.save(); s.onPractice(); sound('catch'); showCatch(s);
+    }
+  }
+  function showCatch(s) {
+    const fish=C.byId[s.state.pending];
+    if (!fish) return;
+    setPhase(s,'catch');
+    s.host.querySelector('.gf-catch').hidden=false;
+    const alternatives=[fish,...C.fish.filter(item=>item.id!==fish.id).slice((C.fish.indexOf(fish)+1)%5,(C.fish.indexOf(fish)+1)%5+2)];
+    const sorted=alternatives.sort((a,b)=>a.name.localeCompare(b.name,'sv'));
+    s.host.querySelector('.gf-catch').innerHTML=`<div class="gf-catch-art">${A.fish(fish.id)}</div><div class="gf-catch-question"><span class="fb-kicker">ฟังชื่อแล้วหาคำที่ตรงกัน</span><h4>ปลานี้ชื่ออะไรในภาษาสวีเดน?</h4>${replay(fish.sv)}<div class="gf-answer-options">${sorted.map(item=>button('identify',`<span lang="sv">${esc(item.sv)}</span>`,`data-id="${item.id}"`)).join('')}</div><p class="gf-catch-feedback" role="status" aria-live="polite"></p>${button('fish-hint','ดูชื่อปลาและคำแปล')}</div>`;
+    status(s,'ได้ปลาแล้ว ฟังชื่อแล้วเลือกคำให้ตรง จะเก็บลงสมุดให้จ้า','good');
+    speak(fish.sv);
+    s.host.querySelector('.gf-catch').scrollIntoView({block:'nearest',behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+  }
+  function identify(s,id) {
+    if (s.phase!=='catch') return;
+    const fish=C.byId[s.state.pending];
+    const reward=C.answerCatch(s.state,id,window.LearningProgress.today());
+    if (!reward.correct) {
+      s.host.querySelector('.gf-catch-feedback').textContent='ยังไม่ใช่จ้า ฟังอีกครั้งหรือเปิดคำใบ้ได้เลย';
+      speak(fish.sv); return;
+    }
+    const xp=reward.xp?window.GameEngine.StateManager.addXP(reward.xp,{source:'game',allowBooster:false}):0;
+    s.save(); s.onPractice(); s.lastFish=fish;
+    setPhase(s,'identified'); sound('catch');
+    s.host.querySelector('.gf-catch-question').innerHTML=`<span class="fb-kicker">${reward.newFish?'ปลาใหม่ในสมุดของเรา':'ได้ทบทวนคำนี้อีกครั้ง'}</span><h4 lang="sv">${esc(fish.sv)}</h4><p>${esc(fish.th)}</p><p lang="sv">${esc(fish.sentence)}</p><p>${esc(fish.sentenceTh)}</p>${replay(fish.sentence)}<p class="gf-catch-feedback">บันทึกแล้ว${xp?` · +${xp} XP`:''}</p>${button('again','ปล่อยปลาคืนแล้วตกต่อ →','data-primary')}`;
+    status(s,'เก็บชื่อปลาไว้แล้ว ปล่อยกลับน้ำแล้วลองเหยื่ออีกแบบได้จ้า','good');
+    speak(fish.sentence);
+  }
+  function again(s) {
+    if (s.state.pendingSpeech) { talk(s,true); return; }
+    s.host.querySelector('.gf-catch').hidden=true;
+    s.host.querySelector('.gf-album').hidden=true;
+    s.scene.classList.remove('is-splash'); s.scene.dataset.mood=''; s.line.style.stroke='';
+    paintFloat(s,390,255); setPhase(s,'idle');
+    status(s,'ปลาว่ายกลับไปแล้ว เลือกเหยื่อแล้วตวัดนิ้วขึ้นได้จ้า');
+  }
+  function talk(s,voice=false) {
+    if (s.talking || !['idle','identified'].includes(s.phase)) return;
+    releaseInput(s); s.talking=true;
+    const wrapper=s.host.querySelector('.gf-talk-mount');
+    const host=wrapper.querySelector('[data-gf-talk-content]');
+    wrapper.hidden=false;
+    const lesson=lessons[s.lesson%lessons.length];
+    const turns=voice&&s.lastFish?[{line:'Vad fick du?',meaning:'เมื่อกี้ได้ปลาอะไร?',say:`Jag fick ${s.lastFish.sv}.`,sayTh:`ฉันได้${s.lastFish.th}`,
+      word:s.lastFish.name,wordTh:s.lastFish.th,reaction:'Vad fint! Nu simmar den igen.',reactionTh:'ดีจัง ตอนนี้มันกลับไปว่ายน้ำแล้ว'}]:[{line:lesson.prompt,meaning:lesson.meaning,
+      replies:[D.reply(lesson.no,lesson.noTh,'Lyssna en gång till.','ลองฟังอีกครั้งนะ'),D.reply(lesson.yes,lesson.yesTh,lesson.reaction,lesson.reactionTh)],wrong:0}];
+    D.start(host,{label:'คุยง่าย ๆ ริมน้ำ',guest:D.guests[0],portrait:'<span class="gf-maya" aria-hidden="true">👩🏻‍🌾</span>',turns,
+      onDone(){
+        s.talking=false;
+        wrapper.hidden=true;
+        if (voice) C.finishSpeech(s.state);
+        s.onPractice();
+        if (voice) again(s);
+      },
+      onWordFallback(){status(s,'ไม่เป็นไร ฝึกคำเดียวก่อนแล้วตกปลาต่อได้จ้า');}});
+    wrapper.scrollIntoView({block:'nearest',behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+  }
+  function click(s,event) {
+    const target=event.target.closest('[data-gf]');
+    if (!target || target.disabled || s.talking) return;
+    const {gf,id,line}=target.dataset;
+    switch (gf) {
+      case 'listen': speak(line); break;
+      case 'bait': {
+        const bait=C.baits.find(item=>item.id===id);
+        if (!bait || !['idle','retry'].includes(s.phase)) return;
+        s.state.bait=id;
+        s.save();
+        s.host.querySelectorAll('.gf-bait').forEach(item=>item.setAttribute('aria-pressed',String(item===target)));
+        speak(bait.line);
+        status(s,bait.meaning);
+        break;
+      }
+      case 'cast':
+        if (s.phase==='idle') castLine(s,C.cast({x:.35,y:.86},{x:.64,y:.32}));
+        break;
+      case 'hook': hook(s); break;
+      case 'reset':
+        s.fight=null;
+        s.scene.dataset.mood='';
+        s.line.style.stroke='';
+        setPhase(s,'idle');
+        paintFloat(s,390,255);
+        status(s,'ผูกสายใหม่แล้ว ลองค่อย ๆ หมุนและพักตอนปลากระชาก');
+        break;
+      case 'identify': identify(s,id); break;
+      case 'fish-hint': {
+        const fish=C.byId[s.state.pending];
+        if (!fish) return;
+        s.host.querySelector('.gf-catch-feedback').textContent=`${fish.sv} · ${fish.th}`;
+        speak(fish.sv);
+        break;
+      }
+      case 'again': again(s); break;
+      case 'lesson':
+        s.lesson++;
+        setLesson(s);
+        speak(lessons[s.lesson%lessons.length].sv);
+        break;
+      case 'talk': talk(s); break;
+      case 'album': showAlbum(s); break;
+    }
+  }
+  function showAlbum(s) {
+    const album=s.host.querySelector('.gf-album');
+    album.hidden=!album.hidden;
+    const discovered=C.fish.filter(f=>s.state.album?.[f.id]).length;
+    album.innerHTML=`<h4>สมุดปลาของเรา · ${discovered} / ${C.fish.length}</h4><div>${C.fish.map(f=>`<article class="${s.state.album?.[f.id]?'':'is-undiscovered'}">${A.fish(f.id)}<strong lang="sv">${esc(f.sv)}</strong><small>${esc(f.th)}</small>${replay(f.sv)}</article>`).join('')}</div>`;
+  }
+  window.FarmFishing={mount,destroy};
+})();
+
+</script>
+  <script>
 /* The walkable farm, market conversations and mobile workbench. */
 (function () {
   'use strict';
   const C = window.FarmCore, A = window.FarmArt, D = window.MiniGameDialogue, P = window.LearningProgress, G = window.FarmGestures;
   const S = window.FarmMischief, SC = window.FarmMischiefCore;
+  const F = window.FarmFishing;
   const zones = {
     fields:{ th:'แปลงผัก', sv:'odlingen', x:17,y:28, icon:'🌱', note:'เพาะเมล็ด รดน้ำ แล้วเก็บพืชที่โตเต็มที่' },
     yard:{ th:'ลานบ้าน', sv:'gårdsplanen', x:49,y:25, icon:'⚑', note:'หน้าบ้านมีเสาธง และมุมสำหรับแต่งสวน' },
@@ -34312,7 +35066,8 @@ body.app-theme-sunset {
     pond:{ th:'สระเป็ด', sv:'ankdammen', x:81,y:53, icon:'🦆', note:'เป็ดว่ายน้ำในสระ แวะให้อาหารแล้วมองหาไข่' },
     paddock:{ th:'ทุ่งม้า', sv:'hästhagen', x:49,y:51, icon:'🐴', note:'แวะมาหาม้าที่ทุ่งกลางฟาร์ม' },
     workshop:{ th:'โรงช่าง', sv:'verkstaden', x:20,y:77, icon:'✦', note:'แปลงผลผลิตให้เป็นของขาย โม่แป้ง อบขนมปัง และกวนแยม' },
-    market:{ th:'ตลาด', sv:'marknaden', x:79,y:77, icon:'🧺', note:'ฟังคนในหมู่บ้านแล้วจัดตะกร้าตามที่เขาขอ' }
+    market:{ th:'ตลาด', sv:'marknaden', x:79,y:77, icon:'🧺', note:'ฟังคนในหมู่บ้านแล้วจัดตะกร้าตามที่เขาขอ' },
+    pier:{ th:'ท่าตกปลา', sv:'bryggan', x:67,y:10, icon:'🎣', note:'Gong Heng · กุ้งแห้ง · ฟังชื่อปลาแล้วนั่งตกปลาที่ท่าน้ำกันต๊ะ' }
   };
   const tools = {
     seed:{ th:'เพาะเมล็ด', sv:'Så frön.' }, water:{ th:'รดน้ำ', sv:'Vattna plantan.' }, harvest:{ th:'เก็บเกี่ยว', sv:'Skörda det som är moget.' }
@@ -34381,7 +35136,7 @@ body.app-theme-sunset {
     for (const type of ['pointerup','pointercancel','lostpointercapture']) dialog.addEventListener(type, pointerEnd);
     G.install(dialog, { status, sound, moveGoods, advanceGate, isMoving:() => !!walking });
     dialog.addEventListener('close', () => {
-      clearInterval(tick); cancelSwipe(); G.cancel(); S.destroy(); eventInput = null; walking = false;
+      clearInterval(tick); cancelSwipe(); G.cancel(); S.destroy(); F.destroy(); eventInput = null; walking = false;
       D.destroy(); window.SpeechEngine?.stopAudio?.();
       C.leave(state, Date.now()); save();
       window.SmallGames?.renderLobby();
@@ -34406,7 +35161,7 @@ body.app-theme-sunset {
   }
   function map() {
     const place = zones[at];
-    return `<section class="fb-map-section"><div class="fb-map" aria-label="แผนที่สวนเบิร์ช"><img src="${mapImage}" alt="ฟาร์มมองจากด้านบน มีทางเดินเชื่อมแปลงผัก โรงนา คอกหมู ทุ่งม้า สระเป็ด โรงช่าง และตลาด">${Object.keys(zones).map(pin).join('')}<span class="fb-walker" aria-hidden="true" style="--x:${place.x}%;--y:${place.y}%">✦</span></div><p class="fb-map-caption">แตะชื่อสถานที่เพื่อเดินไปตามทางในฟาร์ม</p></section>`;
+    return `<section class="fb-map-section"><div class="fb-map" aria-label="แผนที่สวนเบิร์ช"><img src="${mapImage}" alt="ฟาร์มมองจากด้านบน มีทางเดินเชื่อมแปลงผัก โรงนา คอกหมู ทุ่งม้า สระเป็ด โรงช่าง ตลาด และท่าตกปลาริมทะเลสาบ"><svg class="gf-map-jetty" viewBox="0 0 90 100" aria-hidden="true"><path d="M44 99V25" stroke="#c9b276" stroke-width="13"/><path d="m21 13 39-6 4 51-38 6Z" fill="#ba8b59" stroke="#725037" stroke-width="3"/><path d="m24 24 38-6m-36 18 38-6m-36 18 38-6m-35 18 36-6" fill="none" stroke="#dfbd89" stroke-width="3"/><path d="M19 13v10m39-17v10m-33 47v10m39-17v10" stroke="#644c38" stroke-width="4"/></svg>${Object.keys(zones).map(pin).join('')}<span class="fb-walker" aria-hidden="true" style="--x:${place.x}%;--y:${place.y}%">✦</span></div><p class="fb-map-caption">แตะชื่อสถานที่เพื่อเดินไปตามทางในฟาร์ม</p></section>`;
   }
   function header() {
     const sky = C.sky(state);
@@ -34434,13 +35189,15 @@ body.app-theme-sunset {
   function render(reset = false) {
     if (dialogActive) return;
     S.destroy();
+    F.destroy();
     const scroll = host.scrollTop;
     host.className = 'mg-game-content fb-content';
     const contents = {
       map:() => `${state.event ? notice() : ''}${map()}${lockNote()}${letter()}`,
       fields, market, workshop, yard,
       barn:() => animalZone('barn'), pigs:() => animalZone('pigs'), pond:() => animalZone('pond'), paddock:() => animalZone('paddock'),
-      journal, event:renderEvent, grooming, repair:renderPracticeGate
+      journal, event:renderEvent, grooming, repair:renderPracticeGate,
+      pier:() => '<section class="gf-game" aria-label="Gong Heng · กุ้งแห้ง"></section>'
     };
     host.innerHTML = `${header()}${contents[zone]()}<div class="fb-status" role="status" aria-live="polite" data-tone="${tone}">${esc(message)}</div>${navigation()}`;
     host.scrollTop = reset ? 0 : scroll;
@@ -34448,6 +35205,7 @@ body.app-theme-sunset {
     if (zone === 'event' && state.event?.id === 'sling') {
       S.mount(host.querySelector('.fb-sling-mount'), { round:state.mischiefRound, step:state.event.step, onHit:finishSlingHit });
     }
+    if (zone === 'pier') F.mount(host.querySelector('.gf-game'), { state:state.fishing, save, onPractice:() => { C.mark(state,Date.now()); save(); } });
     if (reset) focus('.fb-place-title h3, .fb-event h3, .fb-letter h3');
   }
 

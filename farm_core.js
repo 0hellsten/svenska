@@ -2,6 +2,7 @@
 (function (root) {
   'use strict';
   const mischief = typeof module === 'object' && module.exports ? require('./farm_mischief_core.js') : root.FarmMischiefCore;
+  const fishing = typeof module === 'object' && module.exports ? require('./farm_fishing_core.js') : root.FarmFishingCore;
   const crops = {
     carrot: { sv:'en morot', plural:'morötter', th:'แครอต', seconds:14, chapter:0, yield:3 },
     potato: { sv:'en potatis', plural:'potatisar', th:'มันฝรั่ง', seconds:19, chapter:1, yield:3 },
@@ -62,7 +63,7 @@
   const WAIT_AWAY = 2 * 60 * 1000;
   const MAX_STOCK = 99;
   const baskets = ['large','small'];
-  const zoneRequirements = { fields:0, yard:0, market:0, barn:1, workshop:2, paddock:3, pond:4, pigs:5 };
+  const zoneRequirements = { fields:0, yard:0, market:0, barn:1, workshop:2, paddock:3, pond:4, pigs:5, pier:1 };
   const int = (value, limit, fallback = 0) => Number.isInteger(value) && value >= 0 ? Math.min(limit, value) : fallback;
   const nowInt = value => Number.isFinite(value) && value >= 0 ? value : 0;
   const known = (catalogue, key) => typeof key === 'string' && Object.hasOwn(catalogue, key);
@@ -102,7 +103,7 @@
       coins:int(source.coins, 999, 0), day:Math.max(1, int(source.day, 999999, 1)), orderIndex,
       decor:Object.keys(decorations).filter(id => Array.isArray(source.decor) && source.decor.includes(id)),
       activity:nowInt(source.activity), checkedActivity:nowInt(source.checkedActivity), leftAt:nowInt(source.leftAt), visits, seen, event, foal,
-      mischiefRound, mischiefBonusDay };
+      mischiefRound, mischiefBonusDay, fishing:fishing.restore(source.fishing) };
   }
 
   function mark(state, now) { state.activity = Math.max(now, state.activity + 1); }
@@ -274,7 +275,7 @@
   const api = { crops, animals, goods, recipes, chapters, decorations, events, foalNames, WAIT_AWAY,
     restore, tend, plotStatus, animalStatus, tendAnimal, canRest, nextDay, sky, craft, hasStock,
     order, orderPlan, orderChange, baskets, basketCount, moveBasket, checkBasket, deliver, expand, decorate,
-    leave, returnVisit, progressEvent, eventSteps, zoneRequirements, trainingLevel, canVisit };
+    leave, returnVisit, progressEvent, eventSteps, zoneRequirements, trainingLevel, canVisit, mark };
   if (typeof module === 'object' && module.exports) module.exports = api;
   else root.FarmCore = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

@@ -10,6 +10,7 @@ Gränssnitt, berättelser, instruktioner och återkoppling är på thai. Svenska
 - Ordalbum: åtta temapaket, tre steg per paket (24 uppgifter). Sex bild–ordpar blir hörövningar. Upp till två extra ord hämtas endast från ett annat paket som eleven redan genomfört. Utan tidigare paket behålls sex par.
 - Zoo: fyra nätter med tre kapitel per natt. Samma illustrerade miljö återbesöks med nytt språkfokus: namn, lägesord, meningar och lyssning. Totalt 48 djurfrågor och tolv lås. Det pågående äventyret sparas; nya nätter öppnas i ordning.
 - Björkbacken: åtta marknadsuppdrag knyter ihop odling, djurskötsel och förädling. Beställningar tränar hörförståelse och antal genom att varorna packas och flyttas mellan två korgar. Efter leveransen följer svarsalternativ, meningsbygge eller tal. Gården sparas i webbläsaren. Varje avklarat språkuppdrag eller fem olika korrekt övade ord räknas som ett steg mot att öppna nya platser. Efter ett aktivt besök och minst två minuters frånvaro kan en sidohändelse dyka upp när spelaren återvänder.
+- Gong Heng vid bryggan öppnas efter ett språksteg. Fingerkast styr var flötet landar. Vevning och pauser styr linans spänning, med en varning före fiskens ryck. Åtta fisknamn tränas genom en sparad fångstfråga, en illustrerad fiskbok och korta samtal. Torkad räka, mask och bröd ingår som beten. Samtalen kopplar bland annat fiskekrok till tavelkrok och fiskelina till sytråd. Var tredje fångst följs av en kort talövning genom den befintliga språkmotorn.
 
 Hjälp, långsamt ljud och översättning är alltid tillåtna. Inga poäng dras av för hjälp i småspelen. Nästa steg öppnas när föregående uppgift är klar; den som behöver hjälp kan fortsätta öva.
 
@@ -21,6 +22,7 @@ Reglerna i `learning_progress.js` delas med huvudappens StateManager.
 - Måttskolan ger 8–12 XP per genomförd lektion, receptens mätsteg ger 12 XP. Frågor och enskilda hällningar ger inga egna belöningar. Samma tak och regler för repetition gäller även här.
 - Björkbackens åtta kapitel ger 10–20 XP inom de vanliga taken. Skörd fyller lagret. Återkommande ordrar och sidohändelser ger gårdsmynt som används till odlingsytor och dekorationer.
 - Slangbellehysset tränar 27 vardagsord över sex sparade omgångar. En avslutad omgång ger tre gårdsmynt och upp till tre XP en gång per kalenderdag inom appens vanliga tak.
+- Fisket ger upp till tre XP efter tre namngivna fångster under samma dag. Belöningen kan ges en gång per dag och följer de gemensamma XP-taken.
 - Upprepad uppgift samma dag: 0 XP. Repetition en senare dag: 2 XP, högst tre olika uppgifter per dag.
 - Högst 60 XP från småspelen per lokal kalenderdag. Hela appen har ett tak på 180 XP och 20 intjänade juveler per dag. Befintliga saldon behålls.
 - Var tredje ny uppgift ger två juveler en gång. Obetalda milstolpsjuveler kan hämtas vid ett senare genomförande när dagsgränsen tillåter det.
@@ -38,7 +40,7 @@ All progression sparas lokalt i webbläsaren. Samma ursprung delar uppgifter och
 
 ## Kontroll
 
-`node --test test_farm.cjs test_kitchen_measures.cjs test_learning_progress.cjs test_mini_games.cjs test_zoo.cjs`
+`node --test test_fishing.cjs test_farm.cjs test_kitchen_measures.cjs test_learning_progress.cjs test_mini_games.cjs test_zoo.cjs`
 
 Bygg de fristående HTML-filerna med `bundle.py`. Browserkontrollen omfattar mobilstorlekar, kompletta spelomgångar, fortsatt progression och den äldre appens `test_suite.html`.
 
