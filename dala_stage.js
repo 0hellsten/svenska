@@ -25,9 +25,7 @@
   }
 
   function gems(amount) {
-    const gem = window.VisualEngine?.getStatIconSVG?.('gem', 17) || '💎';
-    return '<span class="dala-stage-gems"><span class="dala-stage-gem-icon" aria-hidden="true">' +
-      gem + '</span><span>' + amount + '</span></span>';
+    return '<span class="dala-stage-gems">' + window.VisualEngine.getGemAmount(amount) + '</span>';
   }
 
   function stopShow() {
@@ -62,6 +60,11 @@
       else opener?.focus({ preventScroll: true });
     });
     dialog.addEventListener('click', event => {
+      if (event.target === dialog) {
+        const rect = dialog.getBoundingClientRect();
+        if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) dialog.close();
+        return;
+      }
       const target = event.target.closest('button');
       if (!target || !dialog.contains(target)) return;
       if (target.hasAttribute('data-dala-close')) dialog.close();
@@ -94,7 +97,7 @@
           '<button type="button" class="dala-stage-close" data-dala-close aria-label="ปิด / Stäng">' +
             '<span aria-hidden="true">×</span>' +
           '</button>' +
-        '</header>' + content +
+        '</header>' + (screen === 'show' ? content : '<div class="dala-stage-content">' + content + '</div>') +
       '</div>';
     if (!dialog.open) dialog.showModal();
     dialog.querySelector(focusSelector || '[data-dala-close]')?.focus({ preventScroll: true });
@@ -110,7 +113,7 @@
         label(move.nameSv, move.nameTh) + '<span class="dala-stage-action">' + action + '</span>' +
       '</button></li>';
     }).join('');
-    render('menu', label('Wilawans rörelser', 'ท่าทางของวิลาวัลย์'),
+    render('menu', label('Trick med Wilawan', 'ท่าโชว์ของวิลาวัลย์'),
       '<p class="dala-stage-balance">' + label('Dina juveler', 'เพชรของคุณ') + gems(balance()) + '</p>' +
       '<ul class="dala-stage-moves">' + moves + '</ul>' +
       '<button type="button" class="dala-stage-secondary dala-stage-wardrobe-button" data-dala-wardrobe>' +
@@ -197,32 +200,73 @@
     }
   }
 
-  function drawAnimation(clip, image, canvas, accessory) {
-    canvas.width = clip.frameWidth;
-    canvas.height = clip.frameHeight;
+  function loadGarment(accessory) {
+    if (!accessory) return Promise.resolve(null);
+    const image = new Image();
+    image.src = accessory.src;
+    return image.decode().then(() => image);
+  }
+
+  function placeGarment(clip, accessory) {
+    const [x, y, w, h] = accessory.rect;
+    // Source portrait -> unposed atlas coordinates, as authored in render_dala_moves.py.
+    const rect = [28.6 + .43 * x, 65.2 + .43 * y, .43 * w, .43 * h];
+    const [left, top, width, height] = rect;
+    // The baked horse fits inside each frame, but horns and halos sometimes extend past it.
+    let margin = 0;
+    const poses = clip.accessories.map(([torso, head]) => {
+      let pose = torso.map((value, i) => value + accessory.head * (head[i] - value));
+      if (accessory.hanging) {
+        // The handle follows the mouth. Gravity keeps the coffee nearly level.
+        const gx = 28.6 + .43 * accessory.joint[0];
+        const gy = 65.2 + .43 * accessory.joint[1];
+        const xGrip = pose[0] * gx + pose[2] * gy + pose[4];
+        const yGrip = pose[1] * gx + pose[3] * gy + pose[5];
+        const angle = .12 * Math.atan2(pose[1], pose[0]);
+        const cos = Math.cos(angle), sin = Math.sin(angle);
+        pose = [cos, sin, -sin, cos, xGrip - cos * gx + sin * gy, yGrip - sin * gx - cos * gy];
+      }
+      const [a, b, c, d, dx, dy] = pose;
+      for (const xx of [left, left + width]) {
+        for (const yy of [top, top + height]) {
+          const px = a * xx + c * yy + dx;
+          const py = b * xx + d * yy + dy;
+          margin = Math.max(margin, -px, -py, px - clip.frameWidth, py - clip.frameHeight);
+        }
+      }
+      return pose;
+    });
+    return { rect, poses, margin: Math.ceil(margin) };
+  }
+
+  function drawAnimation(clip, image, canvas, accessory, garment) {
+    const layer = garment && placeGarment(clip, accessory);
+    const margin = layer?.margin || 0;
+    canvas.width = clip.frameWidth + 2 * margin;
+    canvas.height = clip.frameHeight + 2 * margin;
+    if (garment) {
+      canvas.dataset.accessory = accessory.id;
+      canvas.style.width = 100 * canvas.width / clip.frameWidth + '%';
+      canvas.style.height = 100 * canvas.height / clip.frameHeight + '%';
+      canvas.style.left = -100 * margin / clip.frameWidth + '%';
+      canvas.style.top = -100 * margin / clip.frameHeight + '%';
+    }
     const paint = canvas.getContext('2d');
     if (!paint) throw new Error('Canvas could not be drawn');
-    let fitted;
-    if (accessory) {
-      const rig = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      rig.setAttribute('viewBox', '0 0 ' + clip.frameWidth + ' ' + clip.frameHeight);
-      rig.setAttribute('aria-hidden', 'true');
-      rig.classList.add('dala-stage-accessory');
-      fitted = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-      fitted.innerHTML = accessory.markup;
-      rig.append(fitted);
-      canvas.after(rig);
-    }
+    paint.translate(margin, margin);
     return frame => {
-      paint.clearRect(0, 0, canvas.width, canvas.height);
+      paint.clearRect(-margin, -margin, canvas.width, canvas.height);
       paint.drawImage(image,
         (frame % clip.columns) * clip.frameWidth,
         Math.floor(frame / clip.columns) * clip.frameHeight,
-        clip.frameWidth, clip.frameHeight, 0, 0, canvas.width, canvas.height
+        clip.frameWidth, clip.frameHeight, 0, 0, clip.frameWidth, clip.frameHeight
       );
-      if (fitted) {
-        const matrix = clip.accessories?.[frame]?.[accessory.anchor === 'head' ? 1 : 0];
-        fitted.setAttribute('transform', matrix ? 'matrix(' + matrix.join(' ') + ')' : '');
+      if (garment) {
+        paint.save();
+        if (accessory.behind) paint.globalCompositeOperation = 'destination-over';
+        paint.transform(...layer.poses[frame]);
+        paint.drawImage(garment, ...layer.rect);
+        paint.restore();
       }
     };
   }
@@ -257,13 +301,13 @@
     );
 
     try {
-      const image = await clipImage(move.id);
+      const accessory = window.VisualEngine?.Mascot?.getStageAccessory?.();
+      const [image, garment] = await Promise.all([clipImage(move.id), loadGarment(accessory)]);
       if (context !== run || !dialog.open) return;
       const clip = window.DalaClips[move.id];
       const art = dialog.querySelector('.dala-stage-horse');
       const canvas = art.querySelector('canvas');
-      const accessory = window.VisualEngine?.Mascot?.getStageAccessory?.();
-      const draw = drawAnimation(clip, image, canvas, accessory);
+      const draw = drawAnimation(clip, image, canvas, accessory, garment);
       dialog.querySelector('.dala-stage-loading').hidden = true;
       canvas.hidden = false;
       art.querySelector('img').hidden = true;

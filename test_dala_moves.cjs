@@ -77,3 +77,19 @@ test('Existing purchases survive the new prices, and only the catalogue price ca
   assert.equal(restored.owns('rear'), false);
   assert.equal(restored.balance(), 1000 - price);
 });
+
+test('Every wardrobe item ships its own WebP and is available in the offline iPhone file', () => {
+  const { window } = startApp();
+  const items = window.GameEngine.MASCOT_ACCESSORIES;
+  const hosted = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
+  const offline = fs.readFileSync(path.join(__dirname, 'svenska_satun_iphone.html'), 'utf8');
+  assert.equal(new Set(items.map(item => item.src)).size, items.length);
+  for (const item of items) {
+    const image = fs.readFileSync(path.join(__dirname, item.src));
+    assert.equal(image.toString('ascii', 8, 12), 'WEBP', item.id);
+    const embedded = 'data:image/webp;base64,' + image.toString('base64');
+    assert.ok(hosted.includes(item.src) || hosted.includes(embedded), item.id + ' missing from Pages');
+    assert.ok(offline.includes(embedded), item.id + ' missing from iPhone file');
+    assert.ok(!offline.includes(item.src), item.id + ' still refers to an external file');
+  }
+});

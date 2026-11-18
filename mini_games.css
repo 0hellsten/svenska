@@ -28,13 +28,13 @@
 
 /* The game dialog is larger than the phone shell on a desktop. */
 .mg-dialog { --mg-ink: #51483c; --mg-muted: #827765; --mg-green: #63816d; --mg-paper: #fcf8ed; width: min(1040px,100vw); max-width: none; height: min(920px,96dvh); max-height: 100dvh; margin: auto; padding: 0; border: 1px solid #d7c9b1; border-radius: 25px; background: var(--mg-paper); color: var(--mg-ink); box-shadow: 0 30px 110px #40352838; overflow: hidden; font-family: var(--font-sv); }
-.mg-dialog::backdrop { background: #423e34a6; backdrop-filter: blur(7px); }
+.mg-dialog::backdrop { background: #312b2dc2; }
 .mg-dialog button { font-family: inherit; cursor: pointer; }
 .mg-dialog button:disabled { cursor: default; }
 .mg-dialog button:focus-visible, .mg-home-link:focus-visible { outline: 3px solid #688a76; outline-offset: 3px; }
 .mg-dialog [hidden] { display: none !important; }
 .mg-dialog-body { display: flex; flex-direction: column; height: 100%; }
-.mg-game-header { padding: 16px 22px; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid #e7deca; flex-shrink: 0; }
+.mg-game-header { padding: max(16px, var(--safe-top)) max(22px, var(--safe-right)) 16px max(22px, var(--safe-left)); display: flex; align-items: center; gap: 14px; border-bottom: 1px solid #e7deca; flex-shrink: 0; background: #fcf8ed; }
 .mg-close, .mg-small-btn { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; border: 1px solid #ded6c4; background: #fffdf5; color: #756854; border-radius: 50%; font-size: 19px; }
 .mg-header-title { flex: 1; }
 .mg-header-title h2 { font: 24px Georgia, serif; letter-spacing: -.5px; }
@@ -195,7 +195,7 @@
 @media (min-width: 650px) { .mg-memory-grid { grid-template-columns: repeat(6,minmax(0,1fr)); gap: 30px 18px; padding-top: 23px; } }
 @media (max-width: 650px) {
   .mg-dialog { width: 100%; height: 100dvh; border-radius: 0; border: 0; }
-  .mg-game-header { padding: calc(env(safe-area-inset-top,0px) + 10px) 13px 10px; gap: 10px; }
+  .mg-game-header { padding: calc(var(--safe-top) + 10px) max(13px, var(--safe-right)) 10px max(13px, var(--safe-left)); gap: 10px; }
   .mg-header-title h2 { font-size: 21px; }
   .mg-header-title p { font-size: 8px; }
   .mg-toggle { padding: 8px; font-size: 10px; }

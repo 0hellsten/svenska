@@ -4,7 +4,10 @@
   // The mesh warps a single painted texture. Each influence fades near its joint
   // so the lacquer and floral detail stay continuous through the movement.
   const VERTEX = `
-    attribute vec2 uv;
+    attribute vec2 texCoord;
+    uniform vec4 rect;  // texture rectangle in the source portrait
+    uniform vec2 joint; // rigid attachment point, or (-1, -1) for the horse
+    uniform bool hanging;
     uniform vec4 frame;
     uniform vec4 body;  // tilt, lift, squash, chest
     uniform vec4 parts; // head, front hoof, tail, ears
@@ -18,9 +21,8 @@
       return pivot + vec2(c * delta.x - s * delta.y, s * delta.x + c * delta.y);
     }
 
-    void main() {
-      paint = uv;
-      vec2 point = uv;
+    vec2 posed(vec2 point, vec2 uv) {
+      float sourceY = point.y;
       float head = (1.0 - smoothstep(.35, .62, uv.x)) * (1.0 - smoothstep(.32, .58, uv.y));
       point = mix(point, turn(point, vec2(.36, .40), parts.x), head);
       float ears = (1.0 - smoothstep(.08, .18, uv.y)) * (1.0 - smoothstep(.31, .46, uv.x));
@@ -41,9 +43,22 @@
       float mouth = (1.0 - smoothstep(.02, .10, distance(uv, vec2(.126, .358)))) * smoothstep(.326, .372, uv.y);
       point.y += face.y * mouth;
       point.x += body.w * (1.0 - smoothstep(.53, .98, uv.y)) * (1.0 - uv.x);
-      point.y += body.z * (.94 - uv.y);
+      point.y += body.z * (.94 - sourceY);
       point = turn(point, vec2(.78, .90), body.x);
       point.y -= body.y;
+      return point;
+    }
+
+    void main() {
+      paint = texCoord;
+      vec2 point = rect.xy + texCoord * rect.zw;
+      if (hanging) {
+        vec2 aspect = vec2(760.0 / 695.0, 1.0);
+        vec2 offset = turn((point - joint) * aspect, vec2(0.), .12 * (body.x + parts.x));
+        point = posed(joint, joint) + offset / aspect;
+      } else {
+        point = posed(point, joint.x < 0.0 ? point : joint);
+      }
       point = frame.xy + point * frame.zw;
       gl_Position = vec4(point.x * 2.0 - 1.0, 1.0 - point.y * 2.0, 0.0, 1.0);
     }
@@ -125,7 +140,7 @@
 
   let mesh;
 
-  function buildRenderer(canvas, image) {
+  function buildRenderer(canvas, image, garment, accessory) {
     const gl = canvas.getContext('webgl', { alpha: true, antialias: true, depth: false, powerPreference: 'low-power' });
     if (!gl) return null;
     const program = gl.createProgram();
@@ -146,22 +161,43 @@
     const vertices = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, vertices);
     gl.bufferData(gl.ARRAY_BUFFER, mesh.coords, gl.STATIC_DRAW);
-    const uv = gl.getAttribLocation(program, 'uv');
+    const uv = gl.getAttribLocation(program, 'texCoord');
     gl.enableVertexAttribArray(uv);
     gl.vertexAttribPointer(uv, 2, gl.FLOAT, false, 0, 0);
     const indices = gl.createBuffer();
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indices);
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, mesh.triangles, gl.STATIC_DRAW);
-    const texture = gl.createTexture();
-    gl.bindTexture(gl.TEXTURE_2D, texture);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-    gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+    function textureFor(artwork) {
+      const texture = gl.createTexture();
+      gl.bindTexture(gl.TEXTURE_2D, texture);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, artwork);
+      return texture;
+    }
+    const layers = [{ texture: textureFor(image), rect: [0, 0, 1, 1], joint: [-1, -1] }];
+    if (garment && accessory) {
+      const [x, y, width, height] = accessory.rect;
+      const [jx, jy] = accessory.joint;
+      const layer = {
+        texture: textureFor(garment),
+        rect: [x / image.naturalWidth, y / image.naturalHeight, width / image.naturalWidth, height / image.naturalHeight],
+        joint: [jx / image.naturalWidth, jy / image.naturalHeight],
+        hanging: accessory.hanging
+      };
+      if (accessory.behind) layers.unshift(layer);
+      else layers.push(layer);
+    }
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
     gl.clearColor(0, 0, 0, 0);
     const frame = gl.getUniformLocation(program, 'frame');
+    const rect = gl.getUniformLocation(program, 'rect');
+    const joint = gl.getUniformLocation(program, 'joint');
+    const hanging = gl.getUniformLocation(program, 'hanging');
     const body = gl.getUniformLocation(program, 'body');
     const parts = gl.getUniformLocation(program, 'parts');
     const face = gl.getUniformLocation(program, 'face');
@@ -186,10 +222,16 @@
       gl.uniform4f(body, tilt, rise, squash, chest);
       gl.uniform4f(parts, head, hoof, tail, ears);
       gl.uniform3f(face, blink, muzzle, farHoof);
-      gl.drawElements(gl.TRIANGLES, mesh.triangles.length, gl.UNSIGNED_SHORT, 0);
+      for (const layer of layers) {
+        gl.bindTexture(gl.TEXTURE_2D, layer.texture);
+        gl.uniform4fv(rect, layer.rect);
+        gl.uniform2fv(joint, layer.joint);
+        gl.uniform1i(hanging, layer.hanging ? 1 : 0);
+        gl.drawElements(gl.TRIANGLES, mesh.triangles.length, gl.UNSIGNED_SHORT, 0);
+      }
     }
     function dispose() {
-      gl.deleteTexture(texture);
+      for (const layer of layers) gl.deleteTexture(layer.texture);
       gl.deleteBuffer(vertices);
       gl.deleteBuffer(indices);
       gl.deleteProgram(program);
@@ -205,7 +247,9 @@
   function mount(wrapper, initial = 'idle') {
     const image = wrapper.querySelector('.dala-horse-image');
     const canvas = wrapper.querySelector('.dala-horse-canvas');
-    const wardrobe = wrapper.querySelector('.dala-wardrobe');
+    const still = wrapper.querySelector('.dala-still');
+    const garment = wrapper.querySelector('.dala-wardrobe');
+    const accessory = garment && window.VisualEngine.Mascot.getStageAccessory();
     let renderer = null;
     let move = 'idle';
     let visible = true;
@@ -215,13 +259,11 @@
     let previous = 0;
     let currentPose = neutral;
     let fallback;
+    let basketSwing;
 
     function applyPose(values) {
       currentPose = values;
       renderer?.draw(values);
-      if (wardrobe) {
-        wardrobe.style.transform = `translateY(${-values[1] * 84}%) rotate(${values[0] * 57.3}deg)`;
-      }
     }
 
     function tick(time) {
@@ -249,6 +291,7 @@
       wrapper.dataset.motion = move;
       started = performance.now();
       fallback?.cancel();
+      basketSwing?.cancel();
       if (request) cancelAnimationFrame(request);
       request = 0;
       if (reduced.matches || !visible) {
@@ -257,13 +300,23 @@
       }
       if (renderer) {
         request = requestAnimationFrame(tick);
-      } else if (move !== 'idle' && image.animate) {
+      } else if (move !== 'idle' && still?.animate) {
         // Keep the painted mascot usable anywhere hardware rendering is unavailable.
+        const basketFrames = [];
         const frames = Array.from({ length: 11 }, (_, index) => {
           const [rotation, rise, squash, , head] = pose(move, index / 10);
-          return { transform: `translateY(${-rise * 88}%) rotate(${(rotation + head * .30) * 57.3}deg) scaleY(${1 - squash})` };
+          const angle = (rotation + head * .30) * 180 / Math.PI;
+          if (accessory?.hanging) basketFrames.push({ transform: `rotate(${-.88 * angle}deg)` });
+          return { transform: `translateY(${-rise * 88}%) rotate(${angle}deg) scaleY(${1 - squash})` };
         });
-        const animation = image.animate(frames, { duration: moves[move], iterations: repeating.has(move) ? Infinity : 1 });
+        const timing = { duration: moves[move], iterations: repeating.has(move) ? Infinity : 1 };
+        const animation = still.animate(frames, timing);
+        if (accessory?.hanging) {
+          const [x, y, w, h] = accessory.rect;
+          const [jx, jy] = accessory.joint;
+          garment.style.transformOrigin = `${100 * (jx - x) / w}% ${100 * (jy - y) / h}%`;
+          basketSwing = garment.animate(basketFrames, timing);
+        }
         fallback = animation;
         animation.onfinish = () => {
           if (fallback === animation) play('idle');
@@ -282,9 +335,10 @@
     function ready() {
       if (disposed || !wrapper.isConnected || !image.naturalWidth) return;
       wrapper.closest('.home-hero-art')?.classList.add('has-animated-mascot');
+      if (garment && !garment.naturalWidth) return;
       if (!reduced.matches && canvas && !renderer) {
         try {
-          renderer = buildRenderer(canvas, image);
+          renderer = buildRenderer(canvas, image, garment, accessory);
         } catch {
           // The still artwork is already in place if texture upload fails.
         }
@@ -314,6 +368,7 @@
     canvas?.addEventListener('webglcontextrestored', ready);
     reduced.addEventListener('change', motionPreferenceChanged);
     image.addEventListener('load', ready, { once: true });
+    garment?.addEventListener('load', ready, { once: true });
     play(initial);
     if (image.complete) ready();
 
@@ -325,10 +380,12 @@
         resize.disconnect();
         reduced.removeEventListener('change', motionPreferenceChanged);
         image.removeEventListener('load', ready);
+        garment?.removeEventListener('load', ready);
         canvas?.removeEventListener('webglcontextlost', contextLost);
         canvas?.removeEventListener('webglcontextrestored', ready);
         cancelAnimationFrame(request);
         fallback?.cancel();
+        basketSwing?.cancel();
         renderer?.dispose();
         mounted.delete(wrapper);
       }

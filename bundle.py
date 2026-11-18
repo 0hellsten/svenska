@@ -1,4 +1,5 @@
 import os
+import re
 import shutil
 import base64
 
@@ -86,7 +87,8 @@ def bundle():
                        "assets/zoo/animals.webp", "assets/farm/map.webp", "assets/farm/fields.webp",
                        "assets/zoo/lobby-cover.webp", "assets/farm/lobby-cover.webp",
                        "assets/wilawan-dala-hero.webp", "assets/wilawan-dala-hero-bg.webp",
-                       "assets/wilawan-dala-horse.webp", "assets/reward-jewels.webp", "assets/reward-moves.webp"):
+                       "assets/wilawan-dala-horse.webp", "assets/reward-jewels.webp", "assets/reward-moves.webp",
+                       "assets/wilawan-jewel.webp"):
         with open(os.path.join(base_dir, asset_path), "rb") as f:
             encoded = base64.b64encode(f.read()).decode("ascii")
         html = html.replace(asset_path, f"data:image/webp;base64,{encoded}")
@@ -104,10 +106,9 @@ def bundle():
 
     html = html.replace('\r\n', '\n').replace('\r', '\n')
 
-    # Pages streams move art on demand. A copied iPhone file needs no companion files.
+    # Pages loads the wardrobe and move art on demand. The portable file embeds both.
     portable_html = html
-    for name in ("wave", "rear", "jump", "bow"):
-        asset_path = f"assets/dala/{name}.webp"
+    for asset_path in sorted(set(re.findall(r"assets/(?:wardrobe|dala)/[a-z0-9_-]+\.webp", html))):
         with open(os.path.join(base_dir, asset_path), "rb") as f:
             encoded = base64.b64encode(f.read()).decode("ascii")
         portable_html = portable_html.replace(asset_path, f"data:image/webp;base64,{encoded}")

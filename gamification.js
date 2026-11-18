@@ -13,8 +13,8 @@
  *      * 🛡️ โล่รักษาสตรีค (Frys Streaken, skyddar mot streak-förlust)
  *      * ⚡ Dubbel-XP Booster (30 minuter 2x XP på allt)
  *      * 🎁 กล่องตัวช่วย / Gåvo-kista (Mystery Box med slumpmässiga storvinster)
- *    - 10 st Maskot-accessoarer i balanserade prisklasser (25–350 💎)
- *      med pixelperfekt centrering direkt på Nong Dalas huvud (x=50)
+ *    - 10 st Maskot-accessoarer i balanserade prisklasser (25–350 juveler)
+ *      med samma renderade tillbehör i garderoben och på hästen
  *    - 6 st Upplåsbara färgteman (inkl. Norrsken & Satun Sunset)
  *    - Samlaralbum med 8 upplåsbara Prestationsmärken (Badges)
  * 3. "MINA ORD"-BANK (1–5 ดาว, dual-speed lyssning & röstträning)
@@ -28,6 +28,7 @@
   const GAME_ENGINE_STORAGE_KEY = 'wilawan_svenska_part5_gamification_v2';
 
   const DALA_MOVES = window.GameEngine.dalaMoves;
+  const jewelAmount = (amount, size) => window.VisualEngine.getGemAmount(amount, size);
 
   function moveBalance() {
     return window.GameEngine.StateManager.state.gems;
@@ -49,7 +50,7 @@
   }
 
   /* ==========================================================================
-     1. MASKOT-ACCESSOARER (10 STYCKEN, CENTRERADE DIREKT PÅ HUVUDET x=50)
+     1. WILAWANS GARDEROB
      ========================================================================== */
 
   const MASCOT_ACCESSORIES = [
@@ -60,19 +61,7 @@
       satunDesc: 'ใส่บนหัวงามจังฮู้ ดอกไม้บานสะพรั่งกลางหน้าร้อน!',
       icon: '🌸',
       costGems: 25,
-      svgOverlay: `
-        <g class="accessory-midsommar">
-          <!-- Grön blomsterkrans tvärs över pannan -->
-          <path d="M 32 28 Q 50 18 68 28" stroke="#166534" stroke-width="3.2" stroke-linecap="round" fill="none"/>
-          <!-- Prästkragar, blåklint och gula smörblommor -->
-          <circle cx="34" cy="27" r="3.2" fill="#FACC15" stroke="#FEF08A" stroke-width="1"/>
-          <circle cx="42" cy="23" r="3.5" fill="#EC4899" stroke="#FCE7F3" stroke-width="1"/>
-          <circle cx="50" cy="20" r="4.2" fill="#3B82F6" stroke="#DBEAFE" stroke-width="1.2"/>
-          <circle cx="50" cy="20" r="1.6" fill="#FACC15"/>
-          <circle cx="58" cy="23" r="3.5" fill="#FACC15" stroke="#FEF08A" stroke-width="1"/>
-          <circle cx="66" cy="27" r="3.2" fill="#EC4899" stroke="#FCE7F3" stroke-width="1"/>
-        </g>
-      `
+      src: 'assets/wardrobe/midsommar.webp'
     },
     {
       id: 'solglasogon',
@@ -81,18 +70,7 @@
       satunDesc: 'ใส่ตรงตาเป๊ะ เท่ระเบิดพร้อมลุยเกาะหลีเป๊ะ!',
       icon: '😎',
       costGems: 30,
-      svgOverlay: `
-        <g class="accessory-shades">
-          <!-- Solglasögon placerade direkt över ögonen (y=34-43, x=34-66) -->
-          <rect x="34" y="33" width="14" height="10" rx="3" fill="#0F172A" stroke="#FACC15" stroke-width="1.8"/>
-          <rect x="52" y="33" width="14" height="10" rx="3" fill="#0F172A" stroke="#FACC15" stroke-width="1.8"/>
-          <!-- Brygga mellan glasen -->
-          <line x1="48" y1="36" x2="52" y2="36" stroke="#FACC15" stroke-width="2.2"/>
-          <!-- Cool spegelglans -->
-          <line x1="36" y1="35" x2="42" y2="41" stroke="#38BDF8" stroke-width="1.5" stroke-linecap="round"/>
-          <line x1="54" y1="35" x2="60" y2="41" stroke="#38BDF8" stroke-width="1.5" stroke-linecap="round"/>
-        </g>
-      `
+      src: 'assets/wardrobe/solglasogon.webp'
     },
     {
       id: 'vintermossa',
@@ -101,16 +79,7 @@
       satunDesc: 'สวมบนหัวอุ่นสบาย หิมะตกแค่ไหนก็ไม่หนาวจ้า',
       icon: '🧶',
       costGems: 35,
-      svgOverlay: `
-        <g class="accessory-beanie">
-          <!-- Stickad mössa direkt på hjässan -->
-          <path d="M 33 22 Q 50 5 67 22 Z" fill="#2563EB" stroke="#1D4ED8" stroke-width="1.6"/>
-          <path d="M 37 17 Q 50 11 63 17" stroke="#93C5FD" stroke-width="1.8" stroke-dasharray="2.5 2" fill="none"/>
-          <rect x="32" y="20" width="36" height="5.5" rx="2.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2"/>
-          <!-- Gul tofs på toppen -->
-          <circle cx="50" cy="5" r="4.5" fill="#FDE047" stroke="#EAB308" stroke-width="1"/>
-        </g>
-      `
+      src: 'assets/wardrobe/vintermossa.webp'
     },
     {
       id: 'fikabricka',
@@ -119,20 +88,7 @@
       satunDesc: 'ถือไว้ข้างตัว จิบโกปี๊แกล้มขนมปังหอมๆ',
       icon: '☕',
       costGems: 45,
-      svgOverlay: `
-        <g class="accessory-fika">
-          <!-- Bricka hålls framför främre hoven (x=62-92, y=68-84) -->
-          <ellipse cx="76" cy="76" rx="16" ry="6" fill="#FDE68A" stroke="#D97706" stroke-width="1.5"/>
-          <!-- Kanelbulle -->
-          <circle cx="69" cy="74" r="4.2" fill="#D97706" stroke="#92400E" stroke-width="1"/>
-          <path d="M 69 74 m-2 0 a 2 2 0 1 0 4 0 a 1.2 1.2 0 1 0 -2.5 0" stroke="#FEF3C7" stroke-width="0.8" fill="none"/>
-          <!-- Röd kaffekopp med ånga -->
-          <rect x="76" y="68" width="8" height="7" rx="1.5" fill="#EF4444" stroke="#991B1B" stroke-width="1"/>
-          <path d="M 84 69.5 C 86.5 69.5 86.5 73.5 84 73.5" stroke="#991B1B" stroke-width="1" fill="none"/>
-          <path d="M 78 66 Q 80 63 78 60" stroke="#94A3B8" stroke-width="1" fill="none" stroke-linecap="round"/>
-          <path d="M 81 66 Q 83 63 81 60" stroke="#94A3B8" stroke-width="1" fill="none" stroke-linecap="round"/>
-        </g>
-      `
+      src: 'assets/wardrobe/fikabricka.webp'
     },
     {
       id: 'halsduk',
@@ -141,14 +97,7 @@
       satunDesc: 'พันรอบคออุ่นๆ ลายพื้นเมืองสวีเดนสุดน่ารัก!',
       icon: '🧣',
       costGems: 50,
-      svgOverlay: `
-        <g class="accessory-scarf">
-          <!-- Varm halsduk virad runt halsen (y=49-62) -->
-          <path d="M 37 49 Q 50 56 63 49 Q 64 54 50 58 Q 36 54 37 49 Z" fill="#EF4444" stroke="#B91C1C" stroke-width="1.4"/>
-          <rect x="52" y="52" width="7" height="14" rx="2" fill="#EF4444" stroke="#B91C1C" stroke-width="1"/>
-          <line x1="53" y1="64" x2="58" y2="64" stroke="#FDE047" stroke-width="1.5"/>
-        </g>
-      `
+      src: 'assets/wardrobe/halsduk.webp'
     },
     {
       id: 'kungakrona',
@@ -157,18 +106,7 @@
       satunDesc: 'มงกุฎทองคำแท้ สวมบนหัวตรงเป๊ะ หรอยแรงระดับราชา!',
       icon: '👑',
       costGems: 65,
-      svgOverlay: `
-        <g class="accessory-crown">
-          <!-- Guldkrona centrerad på huvudet (x=37-63, y=7-22) -->
-          <path d="M 37 22 L 34 11 L 43 16 L 50 8 L 57 16 L 66 11 L 63 22 Z" fill="#FFC800" stroke="#B45309" stroke-width="1.5" stroke-linejoin="round"/>
-          <circle cx="34" cy="10" r="2" fill="#EF4444"/>
-          <circle cx="50" cy="7" r="2.5" fill="#38BDF8"/>
-          <circle cx="66" cy="10" r="2" fill="#EF4444"/>
-          <circle cx="43" cy="20" r="1.5" fill="#10B981"/>
-          <circle cx="50" cy="19" r="1.8" fill="#EC4899"/>
-          <circle cx="57" cy="20" r="1.5" fill="#10B981"/>
-        </g>
-      `
+      src: 'assets/wardrobe/kungakrona.webp'
     },
     {
       id: 'snorkel',
@@ -177,14 +115,7 @@
       satunDesc: 'พร้อมดำน้ำดูปะการังที่เกาะหลีเป๊ะ สดใสอันดามัน!',
       icon: '🤿',
       costGems: 80,
-      svgOverlay: `
-        <g class="accessory-snorkel">
-          <rect x="33" y="32" width="34" height="12" rx="4.5" fill="rgba(56, 189, 248, 0.45)" stroke="#0284C7" stroke-width="2"/>
-          <line x1="50" y1="32" x2="50" y2="44" stroke="#0284C7" stroke-width="1.5"/>
-          <path d="M 64 38 L 71 38 L 71 18 Q 71 11 77 11" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-          <rect x="75" y="9" width="4" height="4" rx="1" fill="#EF4444"/>
-        </g>
-      `
+      src: 'assets/wardrobe/snorkel.webp'
     },
     {
       id: 'viking',
@@ -193,32 +124,16 @@
       satunDesc: 'หมวกเหล็กไวกิ้งโบราณ พร้อมเขาสองข้างสุดทรงพลัง!',
       icon: '🧙‍♂️',
       costGems: 120,
-      svgOverlay: `
-        <g class="accessory-viking">
-          <path d="M 34 23 Q 50 11 66 23 Z" fill="#94A3B8" stroke="#475569" stroke-width="1.8"/>
-          <rect x="33" y="21" width="34" height="4.5" rx="1.5" fill="#64748B"/>
-          <circle cx="50" cy="23" r="2" fill="#FFC800"/>
-          <path d="M 35 20 Q 25 15 21 8 Q 28 14 34 17 Z" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1"/>
-          <path d="M 65 20 Q 75 15 79 8 Q 72 14 66 17 Z" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1"/>
-        </g>
-      `
+      src: 'assets/wardrobe/viking.webp'
     },
     {
       id: 'diamantaura',
       nameSv: 'Diamant-Aura & Stjärnor',
       nameTh: 'ออร่าเพชรประกายดาว (พรีเมียม)',
       satunDesc: 'ประกายดาววิบวับรอบตัว ระดับเพชรแท้สว่างไสว!',
-      icon: '💎',
+      icon: '✨',
       costGems: 200,
-      svgOverlay: `
-        <g class="accessory-diamantaura">
-          <circle cx="50" cy="40" r="28" stroke="#38BDF8" stroke-width="1.5" stroke-dasharray="3 3" fill="none" opacity="0.8"/>
-          <circle cx="50" cy="50" r="42" stroke="#EC4899" stroke-width="1" stroke-dasharray="4 4" fill="none" opacity="0.45"/>
-          <polygon points="50,4 52,10 58,12 52,14 50,20 48,14 42,12 48,10" fill="#38BDF8"/>
-          <polygon points="22,25 24,29 28,30 24,31 22,35 20,31 16,30 20,29" fill="#FACC15"/>
-          <polygon points="78,25 80,29 84,30 80,31 78,35 76,31 72,30 76,29" fill="#A855F7"/>
-        </g>
-      `
+      src: 'assets/wardrobe/diamantaura.webp'
     },
     {
       id: 'guldstatyett',
@@ -227,15 +142,7 @@
       satunDesc: 'รางวัลสูงสุดแห่งเกียรติยศ สำหรับผู้พิชิตภาษาสวีเดน!',
       icon: '🏆',
       costGems: 350,
-      svgOverlay: `
-        <g class="accessory-goldchampion">
-          <circle cx="50" cy="40" r="30" stroke="#FFC800" stroke-width="2.5" fill="none" opacity="0.85"/>
-          <path d="M 44 8 L 50 1 L 56 8 L 50 4 Z" fill="#FFC800" stroke="#B45309" stroke-width="1"/>
-          <circle cx="50" cy="1" r="3" fill="#EF4444"/>
-          <circle cx="20" cy="45" r="3" fill="#FFC800"/>
-          <circle cx="80" cy="45" r="3" fill="#FFC800"/>
-        </g>
-      `
+      src: 'assets/wardrobe/guldstatyett.webp'
     }
   ];
 
@@ -337,7 +244,7 @@
       const owned = Part5State.data.ownedColorThemes.includes(theme.id);
       const active = Part5State.data.activeColorTheme === theme.id;
       const action = active ? uiLabel('Vald', 'เลือกอยู่') : owned ? uiLabel('Använd', 'ใช้สีนี้')
-        : uiLabel(`Köp · ${theme.costGems} 💎`, 'ซื้อพื้นหลัง');
+        : uiLabel(`Köp · ${jewelAmount(theme.costGems)}`, 'ซื้อพื้นหลัง');
       return `<article class="reward-product reward-theme ${active ? 'reward-selected' : ''}">
         <div class="reward-swatch" style="background: ${theme.previewBg}" aria-hidden="true"></div>
         <h3>${uiLabel(theme.nameSv, theme.nameTh)}</h3>
@@ -413,9 +320,9 @@
     },
     {
       id: 'gem_collector',
-      nameSv: 'Juvel-Samlaren (300 💎)',
+      nameSv: 'Juvelsamlaren (300 juveler)',
       nameTh: 'เศรษฐีเพชร 300 เม็ด',
-      icon: '💎',
+      icon: '🏅',
       target: 300,
       rewardGems: 8,
       checkUnlocked: (state, sm) => (sm.state.gems || 0) >= 300
@@ -797,7 +704,7 @@
             </div>
             <div class="arena-card" style="margin: 0; text-align: center; background: var(--emerald-soft); border-color: var(--emerald);">
               <div style="font-size: 0.76rem; font-weight: 800; color: var(--emerald-dark);">รางวัล</div>
-              <div style="font-size: 1.4rem; font-weight: 900; color: var(--emerald-dark);">+${earnedGems} 💎</div>
+              <div style="font-size: 1.4rem; font-weight: 900; color: var(--emerald-dark);">${jewelAmount(`+${earnedGems}`, 24)}</div>
             </div>
           </div>
           <div style="display: flex; gap: 10px; width: 100%; margin-top: 8px;">
@@ -829,7 +736,7 @@
     },
 
     getStarTierInfo(completedCount) {
-      if (completedCount >= 9) return { id: 'Diamant', icon: '💎', labelSv: 'Diamant-Stjärna' };
+      if (completedCount >= 9) return { id: 'Diamant', icon: '🏅', labelSv: 'Diamant-Stjärna' };
       if (completedCount >= 6) return { id: 'Guld', icon: '🥇', labelSv: 'Guld-Stjärna' };
       if (completedCount >= 3) return { id: 'Silver', icon: '🥈', labelSv: 'Silver-Stjärna' };
       return { id: 'Brons', icon: '🥉', labelSv: 'Brons-Stjärna' };
@@ -1187,7 +1094,7 @@
           </div>
           <div style="display: flex; gap: 6px;">
             ${isDoubleXp ? `<span class="satun-badge" style="background: #FEF08A; color: #854D0E;">⚡ 2x XP</span>` : ''}
-            <span class="satun-badge" style="font-size: 0.85rem;">💎 ${gems}</span>
+            <span class="satun-badge" style="font-size: 0.85rem;">${jewelAmount(gems)}</span>
           </div>
         </div>
 
@@ -1338,7 +1245,7 @@
               <div style="font-weight: 900; font-size: 0.84rem;">โล่รักษาสตรีค</div>
               <div class="th-text" style="font-size: 0.72rem; color: var(--text-secondary);">กันสตรีคหลุด (${freezes}/2)</div>
               <button type="button" class="btn-3d btn-blue w-full" data-buy-booster="streak_freeze" style="min-height: 40px; font-size: 0.78rem; padding: 4px;" ${freezes >= 2 ? 'disabled' : ''}>
-                ${freezes >= 2 ? 'ครบแล้ว (2/2)' : '35 💎'}
+                ${freezes >= 2 ? 'ครบแล้ว (2/2)' : jewelAmount(35)}
               </button>
             </div>
 
@@ -1347,7 +1254,7 @@
               <div style="font-weight: 900; font-size: 0.84rem;">XP สองเท่า (30 นาที)</div>
               <div class="th-text" style="font-size: 0.72rem; color: var(--text-secondary);">${isDoubleXp ? 'กำลังใช้อยู่' : 'แต้มคูณสอง'}</div>
               <button type="button" class="btn-3d btn-yellow w-full" data-buy-booster="double_xp" style="min-height: 40px; font-size: 0.78rem; padding: 4px;" ${isDoubleXp ? 'disabled' : ''}>
-                ${isDoubleXp ? '⚡ ใช้อยู่' : '45 💎'}
+                ${isDoubleXp ? '⚡ ใช้อยู่' : jewelAmount(45)}
               </button>
             </div>
 
@@ -1356,7 +1263,7 @@
               <div style="font-weight: 900; font-size: 0.84rem;">กล่องตัวช่วย</div>
               <div class="th-text" style="font-size: 0.72rem; color: var(--text-secondary);">โล่หรือตัวช่วย XP</div>
               <button type="button" class="btn-3d btn-green w-full" data-buy-booster="mystery_box" style="min-height: 40px; font-size: 0.78rem; padding: 4px;">
-                50 💎
+                ${jewelAmount(50)}
               </button>
             </div>
           </div>
@@ -1398,10 +1305,10 @@
                           ? `<span class="satun-badge" style="background: var(--emerald-soft); color: var(--emerald-dark); border-color: var(--emerald);">✅ Klar</span>`
                           : isReady
                           ? `<button type="button" class="btn-3d btn-yellow" data-claim-daily="${q.id}" style="min-height: 44px; padding: 6px 12px; font-size: 0.82rem;">
-                              +${q.rewardGems} 💎 รับรางวัล
+                              ${jewelAmount(`+${q.rewardGems}`)} รับรางวัล
                             </button>`
                           : `<button type="button" class="btn-3d btn-surface" disabled style="min-height: 44px; padding: 6px 12px; font-size: 0.82rem; opacity: 0.5; cursor: not-allowed;">
-                              +${q.rewardGems} 💎
+                              ${jewelAmount(`+${q.rewardGems}`)}
                             </button>`
                       }
                     </div>
@@ -1419,7 +1326,7 @@
             <div style="flex: 1;">
               <div style="display: flex; justify-content: space-between; align-items: center;">
                 <h3 style="font-weight: 900; font-size: 1.05rem;">ตู้เสื้อผ้าของวิลาวัน · 10 แบบ</h3>
-                <span class="satun-badge">💎 ${gems}</span>
+                <span class="satun-badge">${jewelAmount(gems)}</span>
               </div>
               <p class="th-text" style="font-size: 0.83rem; color: var(--text-secondary);">
                 เครื่องประดับสวมบนหัวตรงเป๊ะ น่ารักสวยงามทุกชิ้น!
@@ -1450,9 +1357,8 @@
               const equipped = Part5State.data.equippedAccessory === acc.id;
               return `
                 <div class="wardrobe-item-card ${equipped ? 'equipped' : ''}">
-                  <div class="wardrobe-svg-icon">${window.VisualEngine.getAccessorySVG(acc.id, 46)}</div>
-                  <div style="font-weight: 900; font-size: 0.86rem;">${acc.nameTh}</div>
-                  <div class="th-text" style="font-size: 0.74rem; color: var(--text-secondary);">${acc.nameTh}</div>
+                  <div class="reward-accessory-art" aria-hidden="true">${window.VisualEngine.getAccessoryImage(acc.id)}</div>
+                  <div style="font-weight: 900; font-size: 0.86rem;">${uiLabel(acc.nameSv, acc.nameTh)}</div>
                   <button type="button" class="btn-3d ${
                     equipped ? 'btn-green' : owned ? 'btn-blue' : 'btn-yellow'
                   } w-full" data-wardrobe-acc="${acc.id}" style="min-height: 42px; padding: 4px 8px; font-size: 0.78rem; margin-top: 4px;">
@@ -1461,7 +1367,7 @@
                         ? '✅ ใส่อยู่ (ถอด)'
                         : owned
                         ? '👕 สวมใส่'
-                        : `💎 ${acc.costGems}`
+                        : jewelAmount(acc.costGems)
                     }
                   </button>
                 </div>
@@ -1501,9 +1407,9 @@
                         ? `<span class="satun-badge" style="font-size: 0.68rem; padding: 1px 6px;">✅ รับรางวัลd</span>`
                         : isUnlocked
                         ? `<button type="button" class="btn-3d btn-yellow" data-claim-badge="${b.id}" style="min-height: 34px; padding: 2px 8px; font-size: 0.72rem; margin-top: 3px;">
-                            +${b.rewardGems} 💎 รับรางวัล
+                            ${jewelAmount(`+${b.rewardGems}`)} รับรางวัล
                           </button>`
-                        : `<span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">ยังไม่เปิด (+${b.rewardGems} 💎)</span>`
+                        : `<span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">ยังไม่เปิด (${jewelAmount(`+${b.rewardGems}`)})</span>`
                     }
                   </div>
                 </div>
@@ -1588,8 +1494,8 @@
       if ((sm.state.gems || 0) < b.costGems) {
         window.SpeechEngine?.playSound('retry');
         window.VisualEngine?.Mascot?.say(
-          `Du behöver ${b.costGems} 💎 juveler för ${b.nameTh}!`,
-          `เพชรยังไม่พอนะจ๊ะ (ต้องใช้ ${b.costGems} 💎) ฝึกบทเรียนเพื่อสะสมเพิ่มต๊ะ!`,
+          `Du behöver ${b.costGems} juveler för ${b.nameTh}!`,
+          `เพชรยังไม่พอนะจ๊ะ (ต้องใช้ ${b.costGems} เพชร) ฝึกบทเรียนเพื่อสะสมเพิ่มต๊ะ!`,
           'encourage',
           3500
         );
@@ -1720,7 +1626,7 @@
       window.VisualEngine?.triggerConfetti();
       window.VisualEngine?.Mascot?.say(
         `🏅 Prestationsmärke upplåst: ${b.nameTh}!`,
-        `ปลดล็อกเหรียญตราสำเร็จ! รับ +${earnedGems} 💎!`,
+        `ปลดล็อกเหรียญตราสำเร็จ! รับ +${earnedGems} เพชร!`,
         'celebrating',
         4000
       );
@@ -1767,8 +1673,8 @@
       if ((sm.state.gems || 0) < acc.costGems) {
         window.SpeechEngine?.playSound('retry');
         window.VisualEngine?.Mascot?.say(
-          `Du behöver ${acc.costGems} 💎 juveler!`,
-          `เพชรยังไม่พอนะจ๊ะ (ใช้ ${acc.costGems} 💎) สะสมเพชรเพิ่มได้จากการแข่งขันต๊ะ!`,
+          `Du behöver ${acc.costGems} juveler!`,
+          `เพชรยังไม่พอนะจ๊ะ (ใช้ ${acc.costGems} เพชร) สะสมเพชรเพิ่มได้จากการแข่งขันต๊ะ!`,
           'encourage',
           4000
         );
@@ -1847,12 +1753,17 @@
         document.body.appendChild(this.statsBackdrop);
       }
       this.renderStatsModal();
+      this.statsBackdrop.inert = false;
       this.statsBackdrop.classList.add('open');
+      this.statsBackdrop.querySelector('#btn-close-stats-modal').focus({ preventScroll: true });
+      this.statsBackdrop.onkeydown = e => { if (e.key === 'Escape') this.closeStatsModal(); };
     },
 
     closeStatsModal() {
       if (this.statsBackdrop) {
         this.statsBackdrop.classList.remove('open');
+        this.statsBackdrop.inert = true;
+        document.getElementById('streak-pill')?.focus({ preventScroll: true });
       }
     },
 
@@ -2061,7 +1972,7 @@
           <div class="reward-content">
             <div class="reward-wallet">
               <div>${uiLabel('Dina juveler', 'เพชรของคุณ')}</div>
-              <strong id="shop-gem-balance">${gems}</strong>
+              <strong id="shop-gem-balance">${jewelAmount(gems, 32)}</strong>
             </div>
             <div class="reward-links">
               <button type="button" id="shop-wardrobe-link">
@@ -2072,7 +1983,7 @@
               </button>
             </div>
             <section class="reward-section" aria-labelledby="shop-moves-heading">
-              <h2 id="shop-moves-heading" tabindex="-1">${uiLabel('Wilawans rörelser', 'ท่าทางของวิลาวัลย์')}</h2>
+              <h2 id="shop-moves-heading" tabindex="-1">${uiLabel('Trick med Wilawan', 'ท่าโชว์ของวิลาวัลย์')}</h2>
               ${message ? `<p role="status" class="reward-status">${uiLabel(message.sv, message.th)}</p>` : ''}
               <div class="reward-grid">
                 ${DALA_MOVES.map((move) => {
@@ -2084,9 +1995,9 @@
                     <button type="button" class="reward-action ${owned ? 'reward-play' : ''}"
                       id="btn-shop-act-${move.id}" data-shop-move="${move.id}" aria-describedby="shop-move-${move.id}-name"
                       ${!owned && shortfall ? 'disabled' : ''}>
-                      ${owned ? uiLabel('Spela upp', 'เล่นท่านี้') : uiLabel(`Köp · ${move.costGems} 💎`, 'ซื้อท่านี้')}
+                      ${owned ? uiLabel('Spela upp', 'เล่นท่านี้') : uiLabel(`Köp · ${jewelAmount(move.costGems)}`, 'ซื้อท่านี้')}
                     </button>
-                    ${!owned && shortfall ? `<div class="reward-shortfall">${uiLabel(`Saknar ${shortfall} 💎`, `ขาดอีก ${shortfall} เพชร`)}</div>` : ''}
+                    ${!owned && shortfall ? `<div class="reward-shortfall">${uiLabel(`Saknar ${jewelAmount(shortfall, 15)}`, `ขาดอีก ${shortfall} เพชร`)}</div>` : ''}
                   </article>`;
                 }).join('')}
               </div>
@@ -2113,11 +2024,11 @@
                   const owned = Part5State.data.ownedAccessories.includes(acc.id);
                   const equipped = Part5State.data.equippedAccessory === acc.id;
                   return `<article class="reward-product reward-accessory ${equipped ? 'reward-selected' : ''}">
-                    <div class="reward-accessory-art" aria-hidden="true">${window.VisualEngine.getAccessorySVG(acc.id, 52)}</div>
+                    <div class="reward-accessory-art" aria-hidden="true">${window.VisualEngine.getAccessoryImage(acc.id)}</div>
                     <h3>${uiLabel(acc.nameSv, acc.nameTh)}</h3>
                     <button type="button" class="reward-action" data-shopmodal-acc="${acc.id}" ${owned ? `aria-pressed="${equipped}"` : ''}
                       ${!owned && gems < acc.costGems ? 'disabled' : ''}>
-                      ${equipped ? uiLabel('Ta av', 'ถอดออก') : owned ? uiLabel('Ta på', 'สวมใส่') : uiLabel(`Köp · ${acc.costGems} 💎`, 'ซื้อเครื่องประดับ')}
+                      ${equipped ? uiLabel('Ta av', 'ถอดออก') : owned ? uiLabel('Ta på', 'สวมใส่') : uiLabel(`Köp · ${jewelAmount(acc.costGems)}`, 'ซื้อเครื่องประดับ')}
                     </button>
                   </article>`;
                 }).join('')}
@@ -2130,7 +2041,7 @@
                   <div class="reward-booster-art" aria-hidden="true">${window.VisualEngine.getBoosterSVG(item.id, 42)}</div>
                   <div><h3>${uiLabel(item.nameSv, item.nameTh)}</h3><p>${boosterInfo[item.id].text}</p></div>
                   <button type="button" class="reward-action" data-shopmodal-booster="${item.id}" ${boosterInfo[item.id].limit || gems < item.costGems ? 'disabled' : ''}>
-                    ${boosterInfo[item.id].limit || uiLabel(`${item.costGems} 💎`, 'ซื้อ')}
+                    ${boosterInfo[item.id].limit || uiLabel(jewelAmount(item.costGems), 'ซื้อ')}
                   </button>
                 </article>`).join('')}
               </div>
@@ -2240,12 +2151,17 @@
         document.body.appendChild(this.xpBackdrop);
       }
       this.renderXPModal();
+      this.xpBackdrop.inert = false;
       this.xpBackdrop.classList.add('open');
+      this.xpBackdrop.querySelector('#btn-close-xp-modal').focus({ preventScroll: true });
+      this.xpBackdrop.onkeydown = e => { if (e.key === 'Escape') this.closeXPModal(); };
     },
 
     closeXPModal() {
       if (this.xpBackdrop) {
         this.xpBackdrop.classList.remove('open');
+        this.xpBackdrop.inert = true;
+        document.getElementById('xp-pill')?.focus({ preventScroll: true });
       }
     },
 
@@ -2323,7 +2239,7 @@
                           ? `<span class="satun-badge" style="font-size: 0.7rem; padding: 2px 8px; margin-top: 4px; display: inline-block;">✅ รับแล้ว</span>`
                           : isUnlocked
                           ? `<button type="button" class="btn-3d btn-yellow" data-xpmodal-claim="${b.id}" style="min-height: 36px; padding: 4px 10px; font-size: 0.78rem; margin-top: 4px;">
-                              +${b.rewardGems} 💎 รับรางวัล (ตามเพดานรายวัน)
+                              ${jewelAmount(`+${b.rewardGems}`)} รับรางวัล (ตามเพดานรายวัน)
                             </button>`
                           : `<div style="font-size: 0.74rem; color: var(--text-muted); font-weight: 700; margin-top: 4px;">
                               🔒 ฝึกต่อเพื่อปลดล็อกรางวัลนี้
@@ -2547,7 +2463,7 @@
 
       backdrop.innerHTML = `
         <div class="voice-practice-sheet" role="dialog" aria-label="ฝึกออกเสียง ${item.sv}">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <div class="sheet-header">
             <span class="satun-badge">${uiLabel('Öva uttal', 'ฝึกออกเสียง')}</span>
             <button type="button" class="lesson-close-btn" id="btn-close-voice-modal" aria-label="ปิด">✕</button>
           </div>
@@ -2599,20 +2515,25 @@
         </div>
       `;
 
-      requestAnimationFrame(() => backdrop.classList.add('open'));
+      backdrop.inert = false;
+      backdrop.classList.add('open');
+      backdrop.querySelector('#btn-close-voice-modal').focus({ preventScroll: true });
       window.SpeechEngine.speakSwedish(item.sv, 0.88);
       window.PhoneticBlurHelper?.bindEvents(backdrop);
 
       const closeModal = () => {
         window.SpeechEngine.stopListening();
         backdrop.classList.remove('open');
+        backdrop.inert = true;
         this.renderVocabBank();
+        document.querySelector(`[data-vocab-practice-mic="${CSS.escape(item.id)}"]`)?.focus({ preventScroll: true });
       };
 
       document.getElementById('btn-close-voice-modal')?.addEventListener('click', closeModal);
-      backdrop.addEventListener('click', (e) => {
+      backdrop.onkeydown = e => { if (e.key === 'Escape') closeModal(); };
+      backdrop.onclick = (e) => {
         if (e.target === backdrop) closeModal();
-      });
+      };
 
       document.getElementById('btn-modal-listen-normal')?.addEventListener('click', () => {
         window.SpeechEngine.speakSwedish(item.sv, 0.88);
@@ -2703,7 +2624,11 @@
 
   const WelcomeOnboard = {
     showWelcomeScreen(forceShow = false) {
-      if (Part5State.data.welcomeCompleted && !forceShow) return;
+      if (Part5State.data.welcomeCompleted && !forceShow) {
+        const heading = document.getElementById('welcome-heading');
+        if (heading) heading.innerHTML = uiLabel('Hej igen!', 'ยินดีต้อนรับกลับมา');
+        return;
+      }
 
       let overlay = document.getElementById('ios-welcome-onboard');
       if (!overlay) {

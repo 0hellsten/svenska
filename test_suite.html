@@ -211,8 +211,10 @@
       const boosterFreezeSvg = window.VisualEngine.getBoosterSVG('streak_freeze', 36);
       assert('Visuals: getBoosterSVG returnerar issköld för streak freeze', boosterFreezeSvg && boosterFreezeSvg.includes('<svg'));
 
-      const accCrownSvg = window.VisualEngine.getAccessorySVG('kungakrona', 36);
-      assert('Visuals: getAccessorySVG returnerar kungakrona för garderoben', accCrownSvg && accCrownSvg.includes('<svg'));
+      const crownPreview = document.createElement('div');
+      crownPreview.innerHTML = window.VisualEngine.getAccessoryImage('kungakrona', 36);
+      const crownItem = window.GameEngine.MASCOT_ACCESSORIES.find(item => item.id === 'kungakrona');
+      assert('Visuals: garderoben visar kronans tillbehörsbild', crownPreview.querySelector('img')?.getAttribute('src') === crownItem.src);
 
       // ======================================================================
       // GRUPP 7: Spelmotor, SM-2 SRS & Tävlingslägen (window.GameEngine)
@@ -236,7 +238,7 @@
       assert('Gamification: updateQuestProgress uppdaterar dagliga utmaningar', true);
 
       // Butik & Accessoarer
-      assert('Gamification: MASCOT_ACCESSORIES har 10 artiklar centrerade på huvudet', 
+      assert('Gamification: garderoben har 10 tillbehör',
         window.GameEngine.MASCOT_ACCESSORIES && window.GameEngine.MASCOT_ACCESSORIES.length === 10,
         'Keys: ' + Object.keys(window.GameEngine || {}).join(', ')
       );

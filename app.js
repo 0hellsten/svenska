@@ -3100,7 +3100,7 @@
                     : `<button type="button" class="btn-3d ${isReady ? 'btn-yellow' : 'btn-surface'}" data-claim-quest="${key}" ${
                         !isReady ? 'disabled' : ''
                       } style="min-height: 48px; padding: 8px 12px; font-size: 0.82rem;">
-                        +${q.rewardGems} 💎
+                        ${window.VisualEngine.getGemAmount(`+${q.rewardGems}`)}
                       </button>`
                 }
               </div>

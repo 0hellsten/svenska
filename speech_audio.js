@@ -2049,10 +2049,10 @@
         const msg = customMessage || 'För att röstigenkänningen med Groq Whisper ska fungera behöver du ange din Groq API-nyckel (börjar med gsk_). Nyckeln sparas enbart lokalt i din webbläsare och laddas ALDRIG upp till GitHub.';
 
         modal.innerHTML = `
-          <div class="settings-modal-card" style="max-width: 440px; padding: 22px;">
-            <div style="font-weight: 900; font-size: 1.1rem; color: var(--text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
-              <span>🔑</span>
+          <div class="settings-modal-card" role="dialog" aria-label="Ange Groq API-nyckel" style="max-width: 440px;">
+            <div class="sheet-header">
               <span>Ange Groq API-nyckel</span>
+              <button type="button" class="lesson-close-btn" id="btn-close-groq-key" aria-label="Stäng · ปิด">✕</button>
             </div>
             <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.45; margin-bottom: 12px;">
               ${msg}
@@ -2075,12 +2075,16 @@
           </div>
         `;
 
+        const opener = document.activeElement;
+        modal.inert = false;
         modal.classList.add('open');
         const input = document.getElementById('input-new-groq-key');
         input?.focus();
 
         const close = (val) => {
           modal.classList.remove('open');
+          modal.inert = true;
+          opener?.focus({ preventScroll: true });
           resolve(val);
         };
 
@@ -2095,6 +2099,8 @@
         });
 
         document.getElementById('btn-cancel-groq-key')?.addEventListener('click', () => close(null));
+        document.getElementById('btn-close-groq-key')?.addEventListener('click', () => close(null));
+        modal.onkeydown = e => { if (e.key === 'Escape') close(null); };
       });
     }
 
@@ -2117,8 +2123,8 @@
       const maskedAzure = currentAzure ? `••••••••••••${currentAzure.slice(-6)}` : '';
 
       modal.innerHTML = `
-        <div class="settings-modal-card" style="max-width: 480px; padding: 22px;">
-          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-light); padding-bottom: 10px; margin-bottom: 14px;">
+        <div class="settings-modal-card" role="dialog" aria-label="Hantera API-nycklar" style="max-width: 480px;">
+          <div class="sheet-header">
             <div style="font-weight: 900; font-size: 1.15rem; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
               <span>🔑</span>
               <span>Hantera API-nycklar</span>
@@ -2170,7 +2176,14 @@
 
       modal.classList.add('open');
 
-      const close = () => modal.classList.remove('open');
+      modal.inert = false;
+      modal.querySelector('#btn-close-key-manager-modal').focus({ preventScroll: true });
+      const close = () => {
+        modal.classList.remove('open');
+        modal.inert = true;
+        document.getElementById('btn-open-key-manager')?.focus({ preventScroll: true });
+      };
+      modal.onkeydown = e => { if (e.key === 'Escape') close(); };
       document.getElementById('btn-close-key-manager-modal')?.addEventListener('click', close);
 
       document.getElementById('btn-clear-stored-keys')?.addEventListener('click', () => {
@@ -2462,12 +2475,16 @@
         this.createModalDOM();
       }
       this.populateValues();
-      requestAnimationFrame(() => this.modalBackdrop.classList.add('open'));
+      this.modalBackdrop.inert = false;
+      this.modalBackdrop.classList.add('open');
+      this.modalBackdrop.querySelector('#btn-close-settings-modal').focus({ preventScroll: true });
     },
 
     close() {
       if (this.modalBackdrop) {
         this.modalBackdrop.classList.remove('open');
+        this.modalBackdrop.inert = true;
+        document.getElementById('btn-open-settings')?.focus({ preventScroll: true });
       }
       speechJudgeInstance.stop();
     },
@@ -2476,10 +2493,12 @@
       const backdrop = document.createElement('div');
       backdrop.className = 'settings-modal-backdrop';
       backdrop.id = 'settings-modal-backdrop';
+      backdrop.inert = true;
+      backdrop.onkeydown = e => { if (e.key === 'Escape') this.close(); };
 
       backdrop.innerHTML = `
         <div class="settings-modal-card" role="dialog" aria-labelledby="settings-heading">
-          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-light); padding-bottom: 10px;">
+          <div class="sheet-header">
             <h2 id="settings-heading" style="font-weight: 900; font-size: 1.15rem; color: var(--text-main);">
               <span class="ui-label"><span lang="sv">Ljud och tal</span><small lang="th">ตั้งค่าเสียงและการพูด</small></span>
             </h2>

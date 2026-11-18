@@ -41,31 +41,24 @@
     ]
   };
 
-  // Fit the shop's original accessories to the painted horse's 760 × 695
-  // image, rather than laying them over a square gesture control.
+  // Trimmed art is fitted in the original 760 × 695 horse portrait. The head
+  // joint drives hats and facewear; the collar bends between head and torso.
   const ACCESSORY_FITS = {
-    midsommar: ['head', 182, 96, -13, 2.8, 50, 26],
-    solglasogon: ['head', 184, 156, -19, 2.85, 50, 38],
-    vintermossa: ['head', 207, 86, -10, 3, 50, 24],
-    fikabricka: ['body', 144, 577, 0, 4.05, 76, 74],
-    halsduk: ['head', 226, 267, -27, 4.8, 50, 52],
-    kungakrona: ['head', 208, 81, -11, 3.1, 50, 20],
-    snorkel: ['head', 183, 151, -16, 2.75, 50, 38],
-    viking: ['head', 207, 84, -10, 2.65, 50, 22],
-    diamantaura: ['body', 380, 350, 0, 6.6, 50, 50],
-    guldstatyett: ['body', 380, 350, 0, 7.7, 50, 40]
+    midsommar:    { rect: [126, 64, 166, 56], joint: [203, 90], head: 1 },
+    solglasogon:  { rect: [127, 134, 183, 53], joint: [187, 159], head: 1 },
+    vintermossa:  { rect: [122, -43, 179, 161], joint: [204, 90], head: 1 },
+    fikabricka:   { rect: [12, 241, 173, 157], joint: [98, 248], head: 1, behind: true, hanging: true },
+    halsduk:      { rect: [131, 218, 210, 212], joint: [242, 257], head: .76 },
+    kungakrona:   { rect: [129, 28, 151, 76], joint: [204, 89], head: 1 },
+    snorkel:      { rect: [122, 42, 211, 166], joint: [184, 151], head: 1 },
+    viking:       { rect: [91, -16, 229, 146], joint: [205, 89], head: 1 },
+    diamantaura:  { rect: [0, 235, 754, 371], joint: [436, 350], head: 0, behind: true },
+    guldstatyett: { rect: [-3, -14, 760, 722], joint: [436, 350], head: 0, behind: true }
   };
 
   function fitAccessory(accessory) {
     const fit = accessory && ACCESSORY_FITS[accessory.id];
-    if (!fit) return null;
-    const [anchor, x, y, angle, scale, originX, originY] = fit;
-    const transform = `translate(${x} ${y}) rotate(${angle}) scale(${scale}) translate(${-originX} ${-originY})`;
-    return {
-      id: accessory.id,
-      anchor,
-      artwork: `<g transform="${transform}">${accessory.svgOverlay}</g>`
-    };
+    return fit && accessory.src ? { ...fit, id: accessory.id, src: accessory.src } : null;
   }
 
   const MascotController = {
@@ -74,26 +67,25 @@
 
     getMarkup(size = 72, animated = false) {
       return `<span class="dala-portrait" style="--dala-size:${size}px">
-          <img class="dala-horse-image" src="assets/wilawan-dala-horse.webp" width="760" height="695" alt="วิลาวัลย์" draggable="false">
+          <span class="dala-still">
+            <img class="dala-horse-image" src="assets/wilawan-dala-horse.webp" width="760" height="695" alt="วิลาวัลย์" draggable="false">
+            ${this.getWardrobeMarkup()}
+          </span>
           ${animated ? '<canvas class="dala-horse-canvas" aria-hidden="true"></canvas>' : ''}
-          ${this.getWardrobeMarkup()}
         </span>`;
     },
 
     getWardrobeMarkup() {
-      const accessory = fitAccessory(this.getAccessory?.());
-      return accessory
-        ? `<svg class="dala-wardrobe" viewBox="0 0 760 695" preserveAspectRatio="xMidYMax meet" aria-hidden="true" data-accessory="${accessory.id}">${accessory.artwork}</svg>`
-        : '';
+      const accessory = this.getStageAccessory();
+      if (!accessory) return '';
+      const [x, y, width, height] = accessory.rect;
+      return `<img class="dala-wardrobe" data-accessory="${accessory.id}" ${accessory.behind ? 'data-behind' : ''}
+        src="${accessory.src}" alt="" draggable="false"
+        style="left:${100*x/760}%;top:${100*y/695}%;width:${100*width/760}%;height:${100*height/695}%">`;
     },
 
     getStageAccessory() {
-      const accessory = fitAccessory(this.getAccessory?.());
-      if (!accessory) return null;
-      return {
-        anchor: accessory.anchor,
-        markup: `<svg class="dala-stage-wardrobe" viewBox="0 0 384 384" aria-hidden="true" data-accessory="${accessory.id}"><g transform="translate(28.6 65.2) scale(.43)">${accessory.artwork}</g></svg>`
-      };
+      return fitAccessory(this.getAccessory?.());
     },
 
     setState(newState = 'idle') {
@@ -160,7 +152,7 @@
       if (oldWrapper) window.DalaMotion.unmount(oldWrapper);
       const interactive = containerEl.id !== 'feedback-mascot-container';
       const tag = interactive ? 'button' : 'span';
-      const button = interactive ? 'type="button" aria-haspopup="dialog" aria-label="ท่าทางของวิลาวัลย์"' : 'aria-hidden="true"';
+      const button = interactive ? 'type="button" aria-haspopup="dialog" aria-label="Trick med Wilawan · ท่าโชว์ของวิลาวัลย์"' : 'aria-hidden="true"';
       containerEl.innerHTML = `
         <${tag} class="dala-mascot-wrapper" ${button}>
           ${this.getMarkup(size, true)}
@@ -1101,18 +1093,8 @@
       </svg>
     `,
 
-    // Diamant / Juvel (ersätter 💎)
-    gem: (size = 28) => `
-      <svg viewBox="0 0 32 32" width="${size}" height="${size}" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <polygon points="10,6 22,6 28,13 16,27 4,13" fill="#38BDF8" stroke="#0284C7" stroke-width="1.8" stroke-linejoin="round"/>
-        <polygon points="10,6 16,13 22,6" fill="#BAE6FD"/>
-        <polygon points="4,13 16,13 16,27" fill="#0284C7" opacity="0.4"/>
-        <polygon points="28,13 16,13 16,27" fill="#0369A1" opacity="0.6"/>
-        <polygon points="10,6 16,13 4,13" fill="#E0F2FE"/>
-        <polygon points="22,6 16,13 28,13" fill="#7DD3FC"/>
-        <circle cx="12" cy="10" r="1.5" fill="#FFF"/>
-      </svg>
-    `,
+    gem: (size = 28, alt = '') =>
+      `<img class="wilawan-jewel" src="assets/wilawan-jewel.webp" width="${size}" height="${size}" alt="${alt}" lang="th" decoding="async">`,
 
     // XP Stjärna (ersätter ⭐)
     xp_star: (size = 28) => `
@@ -1762,70 +1744,14 @@
       return IllustrationLibrary.star();
     },
 
-    /**
-     * Accessoar-vektor för Nong Dalas garderob
-     */
-    getAccessorySVG(accessoryId, size = 36) {
-      const map = {
-        midsommar: () => `
-          <svg viewBox="0 0 36 36" width="${size}" height="${size}" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="18" cy="18" r="14" fill="#DCFCE7" stroke="#16A34A" stroke-width="2"/>
-            <circle cx="12" cy="15" r="3" fill="#EC4899"/>
-            <circle cx="18" cy="12" r="3.5" fill="#3B82F6"/>
-            <circle cx="24" cy="15" r="3" fill="#FACC15"/>
-            <circle cx="18" cy="22" r="2.5" fill="#EF4444"/>
-          </svg>
-        `,
-        solglasogon: () => `
-          <svg viewBox="0 0 36 36" width="${size}" height="${size}" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="5" y="13" width="11" height="9" rx="2.5" fill="#0F172A" stroke="#FACC15" stroke-width="1.8"/>
-            <rect x="20" y="13" width="11" height="9" rx="2.5" fill="#0F172A" stroke="#FACC15" stroke-width="1.8"/>
-            <line x1="16" y1="16" x2="20" y2="16" stroke="#FACC15" stroke-width="2"/>
-            <line x1="7" y1="15" x2="11" y2="19" stroke="#38BDF8" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="22" y1="15" x2="26" y2="19" stroke="#38BDF8" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-        `,
-        vintermossa: () => `
-          <svg viewBox="0 0 36 36" width="${size}" height="${size}" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M7 23C7 14 18 8 18 8s11 6 11 15z" fill="#2563EB" stroke="#1D4ED8" stroke-width="1.8"/>
-            <rect x="6" y="21" width="24" height="5" rx="2" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2"/>
-            <circle cx="18" cy="7" r="3.5" fill="#FDE047" stroke="#EAB308" stroke-width="1"/>
-          </svg>
-        `,
-        fikabricka: () => `
-          <svg viewBox="0 0 36 36" width="${size}" height="${size}" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="18" cy="22" rx="14" ry="7" fill="#FDE68A" stroke="#D97706" stroke-width="1.8"/>
-            <circle cx="13" cy="20" r="4" fill="#D97706"/>
-            <rect x="20" y="15" width="7" height="7" rx="1.5" fill="#EF4444"/>
-            <path d="M22 13q1-3 0-5" stroke="#94A3B8" stroke-width="1" stroke-linecap="round" fill="none"/>
-          </svg>
-        `,
-        halsduk: () => `
-          <svg viewBox="0 0 36 36" width="${size}" height="${size}" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M8 14q10 7 20 0l-2 9q-8 5-16 0z" fill="#EF4444" stroke="#B91C1C" stroke-width="1.8"/>
-            <rect x="20" y="17" width="6" height="13" rx="2" fill="#EF4444" stroke="#B91C1C" stroke-width="1"/>
-            <line x1="21" y1="28" x2="25" y2="28" stroke="#FDE047" stroke-width="1.5"/>
-          </svg>
-        `,
-        kungakrona: () => IllustrationLibrary.crown(),
-        snorkel: () => `
-          <svg viewBox="0 0 36 36" width="${size}" height="${size}" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="6" y="13" width="24" height="10" rx="4" fill="#BAE6FD" stroke="#0284C7" stroke-width="1.8"/>
-            <path d="M26 18h4v-10q0-3 3-3" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-          </svg>
-        `,
-        viking: () => `
-          <svg viewBox="0 0 36 36" width="${size}" height="${size}" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M7 23C7 14 18 10 18 10s11 4 11 13z" fill="#94A3B8" stroke="#475569" stroke-width="1.8"/>
-            <path d="M8 19q-7-4-5-10 6 3 6 8z" fill="#FFF" stroke="#94A3B8" stroke-width="1"/>
-            <path d="M28 19q7-4 5-10-6 3-6 8z" fill="#FFF" stroke="#94A3B8" stroke-width="1"/>
-          </svg>
-        `,
-        diamantaura: () => IllustrationLibrary.gem(size),
-        guldstatyett: () => IllustrationLibrary.trophy()
-      };
-      if (map[accessoryId]) return map[accessoryId]();
-      return IllustrationLibrary.star();
+    getGemAmount(amount, size = 18) {
+      return `<span class="jewel-amount">${amount} ${IllustrationLibrary.gem(size, 'เพชร')}</span>`;
+    },
+
+    getAccessoryImage(accessoryId, size = 88) {
+      const item = window.GameEngine?.MASCOT_ACCESSORIES?.find(entry => entry.id === accessoryId);
+      if (!item) return '';
+      return `<img class="wardrobe-product-image" data-accessory-id="${item.id}" src="${item.src}" width="${size}" height="${size}" alt="" decoding="async" loading="lazy">`;
     },
 
     /**

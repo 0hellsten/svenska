@@ -8,7 +8,7 @@
 .ze-cover-moon { position: absolute; right: 25px; top: 25px; width: 30px; color: #e4d5ad; }
 .ze-cover-moon svg { width: 100%; }
 .ze-dialog { --ze-cream:#f2e6c9; --ze-muted:#aebeb7; --ze-gold:#dac18a; --ze-ink:#13292f; --ze-surface:#1b353a; position: fixed; width: min(1440px,98vw); max-width: none; height: 96dvh; max-height: none; padding: 0; margin: auto; border: 1px solid #596554; border-radius: 18px; color: var(--ze-cream); background: var(--ze-ink); box-shadow: 0 24px 120px #040e17a3; overflow: hidden; font-family: var(--font-sv); }
-.ze-dialog::backdrop { background: #08151bdd; backdrop-filter: blur(10px); }
+.ze-dialog::backdrop { background: #08151bdd; }
 .ze-dialog *, .ze-dialog *::before, .ze-dialog *::after { box-sizing: border-box; }
 .ze-dialog button { font-family: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .ze-dialog button:disabled { cursor: default; }
@@ -350,6 +350,15 @@
 
 .ze-dialog { --ze-header-height: 72px; font-family: var(--font-body-th); }
 .ze-header { height: var(--ze-header-height); }
+.ze-dialog .ze-header { padding-inline: max(13px, var(--safe-left)) max(13px, var(--safe-right)); }
+.ze-dialog .ze-header [data-ze="close"] {
+  min-width: 44px;
+  min-height: 44px;
+  flex-shrink: 0;
+  color: #fff9df;
+  background: #2e494b;
+  border-color: #9bada0;
+}
 .ze-brand { min-width: 0; }
 .ze-brand h2, .ze-intro h1, .ze-chapter-row h3, .ze-panel-head h3, .ze-map-stop strong, .ze-reward > strong, .ze-ending h1 { font-family: var(--font-th); font-weight: 500; font-style: normal; line-height: 1.5; letter-spacing: 0; }
 .ze-brand h2 { font-size: 22px; }

@@ -26,26 +26,32 @@ button.dala-mascot-wrapper {
   vertical-align: middle;
   width: var(--dala-size);
   height: var(--dala-size);
+  container-type: size;
 }
 
-.dala-horse-image, .dala-horse-canvas, .dala-wardrobe {
+.dala-still, .dala-horse-image, .dala-horse-canvas, .dala-wardrobe {
   position: absolute;
   display: block;
   pointer-events: none;
   max-width: none;
 }
 
-.dala-horse-image, .dala-wardrobe {
-  left: 3%;
+.dala-still {
+  inset-inline: 0;
   bottom: 4%;
+  margin-inline: auto;
   width: 94%;
-  height: 86%;
+  width: min(94cqw, 94.0432cqh);
+  aspect-ratio: 760 / 695;
+  isolation: isolate;
+  transform-origin: 76% 91%;
 }
 
 .dala-horse-image {
-  object-fit: contain;
-  object-position: center bottom;
-  transform-origin: 76% 91%;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 }
 
 .dala-horse-canvas {
@@ -55,13 +61,11 @@ button.dala-mascot-wrapper {
   visibility: hidden;
 }
 
-.dala-mascot-wrapper[data-renderer="mesh"] .dala-horse-image { visibility: hidden; }
+.dala-mascot-wrapper[data-renderer="mesh"] .dala-still { visibility: hidden; }
 .dala-mascot-wrapper[data-renderer="mesh"] .dala-horse-canvas { visibility: visible; }
 
-.dala-wardrobe {
-  overflow: visible;
-  transform-origin: 75% 89%;
-}
+.dala-wardrobe { z-index: 2; }
+.dala-wardrobe[data-behind] { z-index: 0; }
 
 .home-hero-art #mascot-container,
 .home-hero-art .dala-mascot-wrapper,
@@ -1361,6 +1365,62 @@ body.app-theme-sunset {
   align-items: center;
   border-bottom: 2px solid var(--border-light);
   padding-bottom: 10px;
+}
+
+/* Keep the scrim behind each sheet. Filtering or fading its parent also composites the controls on iOS. */
+:is(.gamification-modal-backdrop, .settings-modal-backdrop, .voice-practice-modal-backdrop, .mystery-box-modal-backdrop, .theme-info-bubble-overlay) {
+  padding: max(10px, var(--safe-top)) max(10px, var(--safe-right)) max(10px, var(--safe-bottom)) max(10px, var(--safe-left));
+  background: rgba(20, 17, 40, .68);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  visibility: hidden;
+  transition: none;
+}
+:is(.gamification-modal-backdrop, .settings-modal-backdrop, .voice-practice-modal-backdrop, .mystery-box-modal-backdrop, .theme-info-bubble-overlay).open { visibility: visible; }
+.gamification-modal-card:not(.reward-store), .settings-modal-card, .voice-practice-sheet, .theme-info-speech-bubble {
+  --sheet-gutter: 18px;
+  min-width: 0;
+  max-height: min(88dvh, 100%);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 var(--sheet-gutter) 16px;
+  scroll-padding-top: 76px;
+}
+.voice-practice-modal-backdrop { padding-bottom: 0; }
+.voice-practice-sheet { max-height: min(90dvh, 100%); padding-bottom: max(16px, var(--safe-bottom)); }
+.gamification-modal-card > *, .settings-modal-card > * { flex-shrink: 0; }
+.gamification-modal-header, .sheet-header, .bubble-header-row {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-inline: calc(-1 * var(--sheet-gutter));
+  padding: 10px var(--sheet-gutter);
+  border-bottom: 1px solid #d8d6e5;
+  background: #faf8ff;
+  color: #25233d;
+}
+:is(.gamification-modal-header, .sheet-header, .bubble-header-row) :is(h2, div, span) {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.sheet-header .lesson-close-btn, .gamification-modal-header .lesson-close-btn, .bubble-header-row .bubble-close-btn, #btn-close-lesson {
+  min-width: 44px;
+  min-height: 44px;
+  flex-shrink: 0;
+  background: #fff;
+  border: 1px solid #acafc4;
+  color: #28243c;
+  box-shadow: 0 1px 2px #1e14391c;
+}
+#lesson-overlay .lesson-header {
+  z-index: 2;
+  background: #fbfaff;
+  padding-inline: max(16px, var(--safe-left)) max(16px, var(--safe-right));
 }
 
 @keyframes flameFlicker {

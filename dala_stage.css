@@ -19,9 +19,48 @@
 }
 
 .dala-stage::backdrop {
-  background: #16142bb8;
-  -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px);
+  background: #15132780;
+}
+
+/* Center within the part of the viewport clear of the status bar and home indicator. */
+.dala-stage[open]:not([data-screen="show"]) {
+  --dialog-top: max(10px, env(safe-area-inset-top, 0px));
+  --dialog-right: max(10px, env(safe-area-inset-right, 0px));
+  --dialog-bottom: max(10px, env(safe-area-inset-bottom, 0px));
+  --dialog-left: max(10px, env(safe-area-inset-left, 0px));
+  position: fixed;
+  inset: var(--dialog-top) var(--dialog-right) var(--dialog-bottom) var(--dialog-left);
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: min(430px, calc(100% - var(--dialog-left) - var(--dialog-right)));
+  max-width: none;
+  height: fit-content;
+  max-height: calc(100vh - var(--dialog-top) - var(--dialog-bottom));
+  max-height: calc(100dvh - var(--dialog-top) - var(--dialog-bottom));
+  overflow: hidden;
+}
+.dala-stage:not([data-screen="show"]) .dala-stage-inner {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 0;
+  gap: 0;
+}
+.dala-stage:not([data-screen="show"]) .dala-stage-header {
+  flex: none;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #7567a6;
+  background: #2a2053;
+}
+.dala-stage-content {
+  display: grid;
+  gap: 12px;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 14px 16px 16px;
 }
 
 .dala-stage .dala-stage-inner {
@@ -70,9 +109,9 @@
   flex: 0 0 auto;
   width: 44px;
   padding: 0;
-  color: #fff;
-  background: #fff1;
-  border: 1px solid var(--dala-stage-line);
+  color: #30214f;
+  background: #fff4e4;
+  border: 1px solid #ffe4a6;
   border-radius: 13px;
   font: 400 1.8rem/1 var(--font-sv);
 }
@@ -99,19 +138,6 @@
   font-weight: 850;
   font-feature-settings: "tnum";
   white-space: nowrap;
-}
-
-.dala-stage .dala-stage-gem-icon {
-  width: 17px;
-  height: 17px;
-  display: inline-grid;
-  place-items: center;
-}
-
-.dala-stage .dala-stage-gem-icon svg {
-  width: 100%;
-  height: 100%;
-  display: block;
 }
 
 .dala-stage .dala-stage-moves {
@@ -267,8 +293,7 @@
   transform-origin: center;
 }
 
-.dala-stage .dala-stage-horse > canvas,
-.dala-stage .dala-stage-accessory {
+.dala-stage .dala-stage-horse > canvas {
   display: block;
   position: absolute;
   inset: 0;
