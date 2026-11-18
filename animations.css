@@ -1444,17 +1444,6 @@ body.app-theme-sunset {
   box-shadow: 0 8px 24px rgba(139, 92, 246, 0.15);
 }
 
-.shop-mascot-stage.stage-magnified {
-  padding: 24px 12px;
-  background: radial-gradient(circle at center, #FFFFFF 0%, #F5F3FF 100%);
-  border: 2.5px solid #7C3AED;
-  box-shadow: 0 12px 35px rgba(124, 58, 237, 0.22);
-}
-
-.shop-mascot-stage.stage-magnified #shopmodal-mascot-click-target {
-  transform: scale(1.04);
-}
-
 .mascot-act-btn {
   transition: transform 0.12s ease, box-shadow 0.15s ease;
   user-select: none;

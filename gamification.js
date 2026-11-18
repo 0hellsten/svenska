@@ -184,6 +184,150 @@
   const uiLabel = (sv, th) =>
     `<span class="ui-label"><span lang="sv">${sv}</span><small lang="th">${th}</small></span>`;
 
+  function practiceAidCards() {
+    const { practiceAids, StateManager } = window.GameEngine;
+    const { gems, ownedPracticeAids } = StateManager.state;
+    return `<p class="practice-aid-note">${uiLabel('Köp en gång och öva när du vill. Börja med hälsningar. Sedan övar du på ord från dina lektioner.', 'ซื้อครั้งเดียว ฝึกได้ทุกเมื่อ เริ่มจากคำทักทาย แล้วทบทวนคำที่เคยฝึกในบทเรียน')}</p>
+      <div class="reward-boosters">${practiceAids.map(aid => {
+        const owned = ownedPracticeAids.includes(aid.id);
+        return `<article class="reward-booster practice-aid">
+          <span class="practice-aid-art practice-aid-art-${aid.id}" aria-hidden="true"></span>
+          <div><h3>${uiLabel(aid.nameSv, aid.nameTh)}</h3><p>${uiLabel(aid.descriptionSv, aid.descriptionTh)}</p></div>
+          <button type="button" class="reward-action ${owned ? 'reward-play' : ''}" data-practice-aid="${aid.id}"
+            ${!owned && gems < aid.costGems ? 'disabled' : ''} ${owned ? 'aria-haspopup="dialog"' : ''}>
+            ${owned ? uiLabel('Öva', 'ฝึกเลย') : uiLabel('Köp ' + jewelAmount(aid.costGems), 'ซื้อ')}
+          </button></article>`;
+      }).join('')}</div><p class="practice-aid-status" role="status"></p>`;
+  }
+
+  function bindPracticeAids(container) {
+    const { StateManager, practiceAids } = window.GameEngine;
+    container.querySelectorAll('[data-practice-aid]').forEach(button => {
+      button.onclick = async () => {
+        const id = button.dataset.practiceAid;
+        const aid = practiceAids.find(item => item.id === id);
+        if (StateManager.state.ownedPracticeAids.includes(id)) {
+          openPracticeAid(aid, button);
+          return;
+        }
+        button.disabled = true;
+        const result = await StateManager.purchasePracticeAid(id);
+        window.GameEngine.UIController.renderTopbar();
+        CompeteAndShopUI.renderCompeteArena();
+        const selector = `[data-practice-aid="${id}"]`;
+        const shopOpen = GamificationModals.shopBackdrop?.classList.contains('open');
+        if (shopOpen) GamificationModals.renderShopModal(container === GamificationModals.shopBackdrop ? selector : null);
+        if (container === GamificationModals.shopBackdrop && !shopOpen) return;
+        container.querySelector(selector)?.focus({ preventScroll: true });
+        container.querySelector('.practice-aid-status').innerHTML = result.ok
+          ? uiLabel(aid.nameSv + ' är upplåst', 'ปลดล็อก' + aid.nameTh + 'แล้ว')
+          : result.reason === 'insufficient-gems'
+          ? uiLabel('Du behöver fler juveler.', 'เพชรของคุณยังไม่พอ')
+          : uiLabel('Köpet kunde inte sparas.', 'บันทึกการซื้อไม่ได้');
+      };
+    });
+  }
+
+  function openPracticeAid(aid, opener) {
+    const { StateManager, SRSManager } = window.GameEngine;
+    if (!StateManager.state.ownedPracticeAids.includes(aid.id)) return;
+    const review = StateManager.state.srsData;
+    const words = window.ContentDB.getAllItems().filter(item => item.type === 'word' && item.th && item.sv);
+    const studied = words.filter(item => review[item.id]?.attemptCount > 0 || review[item.id]?.masteryLevel > 0);
+    const normalize = text => text.normalize('NFC').trim().toLocaleLowerCase('sv').replace(/[.!?]+$/, '').replace(/\s+/g, ' ').trim();
+    const starters = ['hej', 'vi ses', 'tack så mycket', 'god morgon', 'ursäkta'];
+    const pool = studied.length ? studied : words.filter(item => starters.includes(normalize(item.sv)));
+    const deck = [];
+    for (const item of SRSManager._shuffle(pool)) {
+      if (!deck.some(other => other.th === item.th || normalize(other.sv) === normalize(item.sv))) deck.push(item);
+      if (deck.length === 5) break;
+    }
+    const writing = aid.id === 'spelling';
+    let index = 0;
+    const dialog = document.createElement('dialog');
+    dialog.className = 'practice-dialog';
+    dialog.setAttribute('aria-labelledby', 'practice-heading');
+    dialog.innerHTML = `<header><h2 id="practice-heading">${uiLabel(aid.nameSv, aid.nameTh)}</h2>
+      <button type="button" class="reward-close" data-practice-close aria-label="Stäng · ปิด">✕</button></header>
+      <div class="practice-card"></div>`;
+    document.body.append(dialog);
+    dialog.querySelector('[data-practice-close]').onclick = () => dialog.close();
+    dialog.addEventListener('close', () => {
+      dialog.remove();
+      if (opener.isConnected) opener.focus({ preventScroll: true });
+    }, { once: true });
+    dialog.showModal();
+    drawCard();
+
+    function drawCard() {
+      const item = deck[index];
+      const card = dialog.querySelector('.practice-card');
+      if (!item) {
+        card.innerHTML = `<p>${uiLabel('Övningen är klar!', 'ฝึกเสร็จแล้ว!')}</p>
+          <button type="button" class="reward-action reward-play">${uiLabel('Klar', 'เสร็จแล้ว')}</button>`;
+        const finish = card.querySelector('button');
+        finish.onclick = () => dialog.close();
+        finish.focus({ preventScroll: true });
+        return;
+      }
+      card.innerHTML = `<small class="practice-count">${index + 1} / ${deck.length}</small>
+        <p>${writing ? uiLabel('Skriv ordet på svenska.', 'เขียนคำนี้เป็นภาษาสวีเดน') : uiLabel('Säg ordet på svenska.', 'ลองพูดคำนี้เป็นภาษาสวีเดน')}</p>
+        <strong class="practice-prompt" lang="th" tabindex="-1"></strong>
+        ${writing ? `<form><label class="practice-entry">${uiLabel('Ditt svar', 'คำตอบของคุณ')}
+          <input lang="sv" id="practice-answer" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" enterkeyhint="done"></label>
+          <div class="practice-letters">${['å', 'ä', 'ö'].map(letter => `<button type="button" data-letter="${letter}">${letter}</button>`).join('')}</div>
+          <button type="submit" class="reward-action" disabled>${uiLabel('Kolla stavningen', 'ตรวจคำสะกด')}</button></form>` : ''}
+        <p class="practice-result" role="status"></p>
+        <button type="button" class="reward-action reward-play" data-practice-reveal ${writing ? 'hidden' : ''}>
+          ${writing ? uiLabel('Jämför med kursens ord', 'เทียบกับคำในบทเรียน') : uiLabel('Vänd kortet', 'พลิกบัตร')}</button>
+        <div data-practice-back hidden><strong lang="sv" class="practice-word" tabindex="-1"></strong>
+          <button type="button" class="reward-action reward-play" data-practice-listen>${uiLabel('Lyssna', 'ฟังเสียง')}</button>
+          <button type="button" class="reward-action" data-practice-next>${index + 1 < deck.length ? uiLabel('Nästa ord', 'คำถัดไป') : uiLabel('Avsluta', 'จบการฝึก')}</button></div>`;
+      const prompt = card.querySelector('.practice-prompt');
+      prompt.textContent = item.th;
+      prompt.focus({ preventScroll: true });
+      const reveal = card.querySelector('[data-practice-reveal]');
+      const result = card.querySelector('.practice-result');
+      const form = card.querySelector('form');
+      function showSwedish(swedish) {
+        reveal.hidden = true;
+        if (form) form.hidden = true;
+        card.querySelector('[data-practice-back]').hidden = false;
+        const word = card.querySelector('.practice-word');
+        word.textContent = swedish;
+        word.focus({ preventScroll: true });
+        card.querySelector('[data-practice-listen]').onclick = () => window.SpeechEngine.speakSwedish(swedish);
+      }
+      reveal.onclick = () => showSwedish(item.sv);
+      card.querySelector('[data-practice-next]').onclick = () => { index += 1; drawCard(); };
+      if (!form) return;
+      const input = form.querySelector('input');
+      const check = form.querySelector('[type="submit"]');
+      input.oninput = () => { check.disabled = !input.value.trim(); };
+      form.querySelectorAll('[data-letter]').forEach(key => {
+        key.onclick = () => {
+          input.setRangeText(key.dataset.letter, input.selectionStart, input.selectionEnd, 'end');
+          input.oninput();
+          input.focus();
+        };
+      });
+      form.onsubmit = event => {
+        event.preventDefault();
+        if (!input.value.trim()) return;
+        const answer = normalize(input.value);
+        const match = words.find(word => word.th === item.th && normalize(word.sv) === answer);
+        if (match) {
+          result.innerHTML = uiLabel('Rätt stavat!', 'สะกดถูกแล้ว!');
+          showSwedish(match.sv);
+        } else {
+          result.innerHTML = uiLabel('Prova igen eller jämför med ordet i kursen.', 'ลองอีกครั้ง หรือเทียบกับคำในบทเรียน');
+          reveal.hidden = false;
+          input.focus();
+        }
+      };
+    }
+  }
+
   const APP_COLOR_THEMES = [
     {
       id: 'default',
@@ -396,7 +540,7 @@
         pronunChallengeBestScore: 0,
         bossClearedThemes: {},
         ownedAccessories: ['midsommar'],
-        equippedAccessory: null,
+        equippedAccessories: [],
         ownedColorThemes: ['default'],
         activeColorTheme: 'default',
         streakFreezesCount: 1, // Startgåva: 1 st frys!
@@ -415,14 +559,15 @@
           this.data = defaults;
           this.save();
         } else {
-          const parsed = JSON.parse(raw);
+          const { equippedAccessory, ...parsed } = JSON.parse(raw);
+          const owned = Array.isArray(parsed.ownedAccessories) ? parsed.ownedAccessories : defaults.ownedAccessories;
+          const selected = Array.isArray(parsed.equippedAccessories) ? parsed.equippedAccessories : [equippedAccessory];
           this.data = {
             ...defaults,
             ...parsed,
             bossClearedThemes: { ...defaults.bossClearedThemes, ...(parsed.bossClearedThemes || {}) },
-            ownedAccessories: Array.isArray(parsed.ownedAccessories)
-              ? parsed.ownedAccessories
-              : defaults.ownedAccessories,
+            ownedAccessories: [...new Set(owned)],
+            equippedAccessories: MASCOT_ACCESSORIES.filter(acc => owned.includes(acc.id) && selected.includes(acc.id)).map(acc => acc.id),
             ownedColorThemes: Array.isArray(parsed.ownedColorThemes)
               ? parsed.ownedColorThemes
               : defaults.ownedColorThemes,
@@ -549,9 +694,18 @@
 
   function hookMascotWardrobe() {
     if (!window.VisualEngine || !window.VisualEngine.Mascot) return;
-    window.VisualEngine.Mascot.getAccessory = () => (
-      MASCOT_ACCESSORIES.find(accessory => accessory.id === Part5State.data?.equippedAccessory)
-    );
+    window.VisualEngine.Mascot.getAccessories = equippedAccessories;
+  }
+
+  function equippedAccessories() {
+    return MASCOT_ACCESSORIES.filter(acc => Part5State.data.equippedAccessories.includes(acc.id));
+  }
+
+  function outfitLabel() {
+    const items = equippedAccessories();
+    if (!items.length) return uiLabel('Inget tillbehör', 'ยังไม่ได้ใส่เครื่องประดับ');
+    if (items.length > 2) return uiLabel(`${items.length} tillbehör`, `เครื่องประดับ ${items.length} ชิ้น`);
+    return uiLabel(items.map(acc => acc.nameSv).join(', '), items.map(acc => acc.nameTh).join(', '));
   }
 
   /* ==========================================================================
@@ -1230,15 +1384,13 @@
             <div class="arena-icon-badge" style="background: var(--sky-soft); color: var(--sky-dark);">${window.VisualEngine.Library.lightning(28)}</div>
             <div style="flex: 1;">
               <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="font-weight: 900; font-size: 1.05rem;">ตัวช่วยฝึกและกล่องของขวัญ</h3>
+                <h3 style="font-weight: 900; font-size: 1.05rem;">${uiLabel('Extra hjälp', 'ตัวช่วยฝึก')}</h3>
                 <span class="satun-badge">🛡️ ${freezes}/2 โล่</span>
               </div>
-              <p class="th-text" style="font-size: 0.83rem; color: var(--text-secondary);">
-                ใช้เพชรซื้อไอเทมช่วยเหลือที่มีประโยชน์จริง หรือลองเปิดกล่องตัวช่วยฝึก
-              </p>
             </div>
           </div>
 
+          ${practiceAidCards()}
           <div class="booster-grid">
             <div class="booster-item-card">
               <div class="booster-svg-icon">${window.VisualEngine.getBoosterSVG('streak_freeze', 44)}</div>
@@ -1325,28 +1477,25 @@
             <div class="arena-icon-badge" style="background: var(--lavender-soft); color: #7B2CBF;">${window.VisualEngine.Library.ribbon(28)}</div>
             <div style="flex: 1;">
               <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="font-weight: 900; font-size: 1.05rem;">ตู้เสื้อผ้าของวิลาวัน · 10 แบบ</h3>
+                <h3 style="font-weight: 900; font-size: 1.05rem;">${uiLabel('Wilawans garderob', 'ตู้เสื้อผ้าของวิลาวัลย์')}</h3>
                 <span class="satun-badge">${jewelAmount(gems)}</span>
               </div>
               <p class="th-text" style="font-size: 0.83rem; color: var(--text-secondary);">
-                เครื่องประดับสวมบนหัวตรงเป๊ะ น่ารักสวยงามทุกชิ้น!
+                ${uiLabel('Du kan välja flera tillbehör.', 'เลือกใส่เครื่องประดับพร้อมกันได้หลายชิ้น')}
               </p>
             </div>
           </div>
 
           <!-- Förhandsvisning av Nong Dala -->
           <div style="display: flex; align-items: center; gap: 14px; background: var(--surface); border: 2px solid var(--border-light); border-radius: 18px; padding: 10px 14px; margin-bottom: 12px;">
-            <div style="width: 78px; height: 78px; flex-shrink: 0;">
+            <button type="button" id="btn-compete-horse" aria-haspopup="dialog" aria-label="Förstora Wilawan · ขยายรูปวิลาวัลย์">
               ${window.VisualEngine.Mascot.getMarkup(78)}
-            </div>
+              ${uiLabel('Förstora', 'ขยายรูป')}
+            </button>
             <div style="flex: 1;">
-              <div style="font-weight: 900; font-size: 0.94rem;">ของที่วิลาวันใส่อยู่:</div>
+              <div style="font-weight: 900; font-size: 0.94rem;">${uiLabel('Wilawan har på sig', 'เครื่องประดับที่วิลาวัลย์ใส่อยู่')}</div>
               <div class="th-text" style="font-size: 0.85rem; color: #7B2CBF; font-weight: 700;">
-                ${
-                  Part5State.data.equippedAccessory
-                    ? MASCOT_ACCESSORIES.find((a) => a.id === Part5State.data.equippedAccessory)?.nameTh
-                    : 'ยังไม่ได้เลือกของแต่งตัว'
-                }
+                ${outfitLabel()}
               </div>
             </div>
           </div>
@@ -1354,20 +1503,20 @@
           <div class="wardrobe-grid">
             ${MASCOT_ACCESSORIES.map((acc) => {
               const owned = Part5State.data.ownedAccessories.includes(acc.id);
-              const equipped = Part5State.data.equippedAccessory === acc.id;
+              const equipped = Part5State.data.equippedAccessories.includes(acc.id);
               return `
                 <div class="wardrobe-item-card ${equipped ? 'equipped' : ''}">
                   <div class="reward-accessory-art" aria-hidden="true">${window.VisualEngine.getAccessoryImage(acc.id)}</div>
                   <div style="font-weight: 900; font-size: 0.86rem;">${uiLabel(acc.nameSv, acc.nameTh)}</div>
                   <button type="button" class="btn-3d ${
                     equipped ? 'btn-green' : owned ? 'btn-blue' : 'btn-yellow'
-                  } w-full" data-wardrobe-acc="${acc.id}" style="min-height: 42px; padding: 4px 8px; font-size: 0.78rem; margin-top: 4px;">
+                  } w-full" data-wardrobe-acc="${acc.id}" ${owned ? `aria-pressed="${equipped}"` : ''} style="min-height: 44px; padding: 4px 8px; font-size: 0.78rem; margin-top: 4px;">
                     ${
                       equipped
-                        ? '✅ ใส่อยู่ (ถอด)'
+                        ? uiLabel('Ta av', 'ถอดออก')
                         : owned
-                        ? '👕 สวมใส่'
-                        : jewelAmount(acc.costGems)
+                        ? uiLabel('Ta på', 'สวมใส่')
+                        : uiLabel(`Köp · ${jewelAmount(acc.costGems)}`, 'ซื้อเครื่องประดับ')
                     }
                   </button>
                 </div>
@@ -1450,6 +1599,7 @@
         ArenaModes.startSpeedWordMatch();
       });
 
+      bindPracticeAids(competeSection);
       competeSection.querySelectorAll('[data-buy-booster]').forEach((btn) => {
         btn.addEventListener('click', () => {
           const bId = btn.getAttribute('data-buy-booster');
@@ -1464,10 +1614,15 @@
         });
       });
 
+      competeSection.querySelector('#btn-compete-horse').addEventListener('click', (event) => {
+        window.DalaStage.inspect(event.currentTarget);
+      });
+
       competeSection.querySelectorAll('[data-wardrobe-acc]').forEach((btn) => {
         btn.addEventListener('click', () => {
           const accId = btn.getAttribute('data-wardrobe-acc');
-          this.handleAccessoryAction(accId, btn);
+          this.handleAccessoryAction(accId);
+          competeSection.querySelector(`[data-wardrobe-acc="${accId}"]`)?.focus({ preventScroll: true });
         });
       });
 
@@ -1654,14 +1809,17 @@
       this.renderCompeteArena();
     },
 
-    handleAccessoryAction(accId, btnEl) {
+    handleAccessoryAction(accId) {
       const acc = MASCOT_ACCESSORIES.find((a) => a.id === accId);
       if (!acc) return;
       const sm = window.GameEngine.StateManager;
       const owned = Part5State.data.ownedAccessories.includes(accId);
 
       if (owned) {
-        Part5State.data.equippedAccessory = Part5State.data.equippedAccessory === accId ? null : accId;
+        const selected = Part5State.data.equippedAccessories;
+        Part5State.data.equippedAccessories = selected.includes(accId)
+          ? selected.filter(id => id !== accId)
+          : [...selected, accId];
         Part5State.save();
         window.SpeechEngine?.playSound('correct');
         window.VisualEngine?.renderMascot('celebrating');
@@ -1684,7 +1842,7 @@
       sm.state.gems -= acc.costGems;
       sm.save();
       Part5State.data.ownedAccessories.push(accId);
-      Part5State.data.equippedAccessory = accId;
+      Part5State.data.equippedAccessories.push(accId);
       Part5State.save();
 
       window.SpeechEngine?.playSound('fanfare');
@@ -1911,8 +2069,6 @@
     },
 
     // --- 2. WILAWANS BUTIK & GARDEROB (DIAMANTERNA) ---
-    isMascotMagnified: false,
-
     openShopModal({ trigger = document.activeElement, section } = {}) {
       if (!this.shopBackdrop) {
         this.shopBackdrop = document.createElement('div');
@@ -1952,10 +2108,7 @@
       const gems = sm.state.gems || 0;
       const freezes = Part5State.data.streakFreezesCount || 0;
       const isDoubleXp = Part5State.isDoubleXpActive();
-      const isMagnified = Boolean(this.isMascotMagnified);
-      const mascotSize = isMagnified ? 220 : 135;
 
-      const equippedAcc = MASCOT_ACCESSORIES.find((a) => a.id === Part5State.data.equippedAccessory);
       const scrollTop = this.shopBackdrop.querySelector('.gamification-modal-card')?.scrollTop || 0;
       const boosterInfo = {
         streak_freeze: { text: uiLabel(`${freezes} av 2 sparade`, `เก็บไว้ ${freezes} จาก 2 ชิ้น`), limit: freezes >= 2 ? uiLabel('Fullt', 'เต็มแล้ว') : '' },
@@ -1980,6 +2133,9 @@
               </button>
               <button type="button" id="shop-colors-link">
                 ${uiLabel('Bakgrunder', 'พื้นหลัง')}<span aria-hidden="true">↘</span>
+              </button>
+              <button type="button" id="shop-help-link">
+                ${uiLabel('Extra hjälp', 'ตัวช่วยฝึก')}<span aria-hidden="true">↘</span>
               </button>
             </div>
             <section class="reward-section" aria-labelledby="shop-moves-heading">
@@ -2008,21 +2164,21 @@
             </section>
             <section class="reward-section" aria-labelledby="shop-wardrobe-heading">
               <h2 id="shop-wardrobe-heading" tabindex="-1">${uiLabel('Wilawans garderob', 'แต่งตัวให้วิลาวัลย์')}</h2>
-              <div class="shop-mascot-stage reward-wardrobe-stage ${isMagnified ? 'stage-magnified' : ''}" id="shop-mascot-stage">
+              <div class="shop-mascot-stage reward-wardrobe-stage" id="shop-mascot-stage">
                 <div class="reward-equipment">
-                  <strong>${equippedAcc ? uiLabel(equippedAcc.nameSv, equippedAcc.nameTh) : uiLabel('Inget tillbehör', 'ยังไม่ได้ใส่เครื่องประดับ')}</strong>
-                  <button type="button" id="btn-toggle-shop-mascot-zoom" aria-pressed="${isMagnified}">
-                    ${isMagnified ? uiLabel('Gör mindre', 'ย่อรูป') : uiLabel('Förstora', 'ขยายรูป')}
+                  <strong>${outfitLabel()}</strong>
+                  <button type="button" id="btn-toggle-shop-mascot-zoom" data-enlarge-horse aria-haspopup="dialog">
+                    ${uiLabel('Förstora', 'ขยายรูป')}
                   </button>
                 </div>
-                <button type="button" id="shopmodal-mascot-click-target" aria-label="${isMagnified ? 'Gör mindre · ย่อรูป' : 'Förstora · ขยายรูป'}">
-                  <span class="dala-mascot-wrapper" id="shopmodal-mascot-wrapper">${window.VisualEngine.Mascot.getMarkup(mascotSize)}</span>
+                <button type="button" id="shopmodal-mascot-click-target" data-enlarge-horse aria-haspopup="dialog" aria-label="Förstora Wilawan · ขยายรูปวิลาวัลย์">
+                  <span class="dala-mascot-wrapper" id="shopmodal-mascot-wrapper">${window.VisualEngine.Mascot.getMarkup(135)}</span>
                 </button>
               </div>
               <div class="reward-grid">
                 ${MASCOT_ACCESSORIES.map((acc) => {
                   const owned = Part5State.data.ownedAccessories.includes(acc.id);
-                  const equipped = Part5State.data.equippedAccessory === acc.id;
+                  const equipped = Part5State.data.equippedAccessories.includes(acc.id);
                   return `<article class="reward-product reward-accessory ${equipped ? 'reward-selected' : ''}">
                     <div class="reward-accessory-art" aria-hidden="true">${window.VisualEngine.getAccessoryImage(acc.id)}</div>
                     <h3>${uiLabel(acc.nameSv, acc.nameTh)}</h3>
@@ -2035,7 +2191,8 @@
               </div>
             </section>
             <section class="reward-section" aria-labelledby="shop-boosters-heading">
-              <h2 id="shop-boosters-heading">${uiLabel('Extra hjälp', 'ตัวช่วยฝึก')}</h2>
+              <h2 id="shop-boosters-heading" tabindex="-1">${uiLabel('Extra hjälp', 'ตัวช่วยฝึก')}</h2>
+              ${practiceAidCards()}
               <div class="reward-boosters">
                 ${SHOP_BOOSTERS.map((item) => `<article class="reward-booster">
                   <div class="reward-booster-art" aria-hidden="true">${window.VisualEngine.getBoosterSVG(item.id, 42)}</div>
@@ -2057,6 +2214,7 @@
       shopCard.querySelector('#btn-close-shop-modal').addEventListener('click', () => this.closeShopModal());
       shopCard.querySelector('#shop-wardrobe-link').addEventListener('click', () => this.focusShopSection('wardrobe'));
       shopCard.querySelector('#shop-colors-link').addEventListener('click', () => this.focusShopSection('colors'));
+      shopCard.querySelector('#shop-help-link').addEventListener('click', () => this.focusShopSection('boosters'));
       this.shopBackdrop.onclick = (e) => {
         if (e.target === this.shopBackdrop) this.closeShopModal();
       };
@@ -2078,13 +2236,9 @@
         }
       };
 
-      const toggleMascotZoom = (e) => {
-        this.isMascotMagnified = !this.isMascotMagnified;
-        this.renderShopModal(`#${e.currentTarget.id}`);
-        window.SpeechEngine?.playSound?.('tap');
-      };
-      document.getElementById('btn-toggle-shop-mascot-zoom')?.addEventListener('click', toggleMascotZoom);
-      document.getElementById('shopmodal-mascot-click-target')?.addEventListener('click', toggleMascotZoom);
+      shopCard.querySelectorAll('[data-enlarge-horse]').forEach(button => {
+        button.addEventListener('click', () => window.DalaStage.inspect(button));
+      });
 
       shopCard.querySelectorAll('[data-shop-move]').forEach((button) => {
         button.addEventListener('click', async () => {
@@ -2131,6 +2285,7 @@
       });
 
       // Boosters
+      bindPracticeAids(this.shopBackdrop);
       this.shopBackdrop.querySelectorAll('[data-shopmodal-booster]').forEach((btn) => {
         btn.addEventListener('click', (e) => {
           window.VisualEngine?.haptic('light', e.currentTarget);

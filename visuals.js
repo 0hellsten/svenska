@@ -41,25 +41,20 @@
     ]
   };
 
-  // Trimmed art is fitted in the original 760 × 695 horse portrait. The head
-  // joint drives hats and facewear; the collar bends between head and torso.
+  // Fitted to the 760 × 695 portrait, in back-to-front drawing order.
+  // The tray and auras go behind the horse. Facewear sits above the headwear.
   const ACCESSORY_FITS = {
-    midsommar:    { rect: [126, 64, 166, 56], joint: [203, 90], head: 1 },
-    solglasogon:  { rect: [127, 134, 183, 53], joint: [187, 159], head: 1 },
-    vintermossa:  { rect: [122, -43, 179, 161], joint: [204, 90], head: 1 },
+    diamantaura:  { rect: [0, 235, 754, 371], joint: [436, 350], head: 0, behind: true },
+    guldstatyett: { rect: [-3, -14, 760, 722], joint: [436, 350], head: 0, behind: true },
     fikabricka:   { rect: [12, 241, 173, 157], joint: [98, 248], head: 1, behind: true, hanging: true },
     halsduk:      { rect: [131, 218, 210, 212], joint: [242, 257], head: .76 },
-    kungakrona:   { rect: [129, 28, 151, 76], joint: [204, 89], head: 1 },
-    snorkel:      { rect: [122, 42, 211, 166], joint: [184, 151], head: 1 },
+    vintermossa:  { rect: [122, -43, 179, 161], joint: [204, 90], head: 1 },
     viking:       { rect: [91, -16, 229, 146], joint: [205, 89], head: 1 },
-    diamantaura:  { rect: [0, 235, 754, 371], joint: [436, 350], head: 0, behind: true },
-    guldstatyett: { rect: [-3, -14, 760, 722], joint: [436, 350], head: 0, behind: true }
+    kungakrona:   { rect: [129, 28, 151, 76], joint: [204, 89], head: 1 },
+    midsommar:    { rect: [126, 64, 166, 56], joint: [203, 90], head: 1 },
+    snorkel:      { rect: [122, 42, 211, 166], joint: [184, 151], head: 1 },
+    solglasogon:  { rect: [127, 134, 183, 53], joint: [187, 159], head: 1 }
   };
-
-  function fitAccessory(accessory) {
-    const fit = accessory && ACCESSORY_FITS[accessory.id];
-    return fit && accessory.src ? { ...fit, id: accessory.id, src: accessory.src } : null;
-  }
 
   const MascotController = {
     currentState: 'idle',
@@ -76,16 +71,20 @@
     },
 
     getWardrobeMarkup() {
-      const accessory = this.getStageAccessory();
-      if (!accessory) return '';
-      const [x, y, width, height] = accessory.rect;
-      return `<img class="dala-wardrobe" data-accessory="${accessory.id}" ${accessory.behind ? 'data-behind' : ''}
-        src="${accessory.src}" alt="" draggable="false"
-        style="left:${100*x/760}%;top:${100*y/695}%;width:${100*width/760}%;height:${100*height/695}%">`;
+      return this.getStageAccessories().map(accessory => {
+        const [x, y, width, height] = accessory.rect;
+        return `<img class="dala-wardrobe" data-accessory="${accessory.id}" ${accessory.behind ? 'data-behind' : ''}
+          src="${accessory.src}" alt="" draggable="false"
+          style="left:${100*x/760}%;top:${100*y/695}%;width:${100*width/760}%;height:${100*height/695}%">`;
+      }).join('');
     },
 
-    getStageAccessory() {
-      return fitAccessory(this.getAccessory?.());
+    getStageAccessories() {
+      const equipped = this.getAccessories?.() || [];
+      return Object.entries(ACCESSORY_FITS).flatMap(([id, fit]) => {
+        const item = equipped.find(entry => entry.id === id);
+        return item?.src ? [{ ...fit, id, src: item.src }] : [];
+      });
     },
 
     setState(newState = 'idle') {

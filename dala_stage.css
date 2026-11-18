@@ -63,6 +63,34 @@
   padding: 14px 16px 16px;
 }
 
+.dala-stage[open][data-screen="portrait"] {
+  width: min(96vw, calc(100% - var(--dialog-left) - var(--dialog-right)));
+}
+.dala-stage[data-screen="portrait"] .dala-stage-content {
+  display: block;
+  padding: 12px 0 18px;
+  background: radial-gradient(ellipse at 44% 40%, #785b9f, #392652 67%, #241833);
+}
+.dala-zoom-figure {
+  position: relative;
+  overflow: hidden;
+  width: min(90vw, 100%);
+  margin-inline: auto;
+  background: radial-gradient(ellipse 38% 4% at 49% 97%, #21152c7a, transparent);
+}
+.dala-zoom-figure .dala-portrait {
+  position: absolute;
+  width: var(--art-width);
+  height: auto;
+  aspect-ratio: 760 / 695;
+  left: var(--art-left);
+  top: var(--art-top);
+}
+.dala-zoom-figure .dala-still {
+  inset: 0;
+  width: 100%;
+}
+
 .dala-stage .dala-stage-inner {
   display: grid;
   gap: 13px;
@@ -301,13 +329,11 @@
   height: 100%;
 }
 
-.dala-stage .dala-stage-horse > img {
+.dala-stage .dala-stage-horse > .dala-portrait {
   position: absolute;
   inset: 10%;
   width: 80%;
   height: 80%;
-  object-fit: contain;
-  object-position: center bottom;
   opacity: .72;
 }
 

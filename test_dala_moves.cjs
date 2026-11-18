@@ -11,6 +11,7 @@ function startApp(saved = {}) {
   const image = { addEventListener() {} };
   const horse = {
     dataset: {},
+    querySelectorAll: () => [],
     querySelector: selector => selector === '.dala-horse-image' ? image : null
   };
   const document = {
@@ -91,5 +92,51 @@ test('Every wardrobe item ships its own WebP and is available in the offline iPh
     assert.ok(hosted.includes(item.src) || hosted.includes(embedded), item.id + ' missing from Pages');
     assert.ok(offline.includes(embedded), item.id + ' missing from iPhone file');
     assert.ok(!offline.includes(item.src), item.id + ' still refers to an external file');
+  }
+});
+
+test('Study aids are one-time wallet purchases and never buy learning progress', async () => {
+  const { window, saved } = startApp({ gems: 80, totalXP: 14, ownedDalaMoves: ['jump'] });
+  const wallet = window.GameEngine.StateManager;
+  const initialReviews = JSON.stringify(wallet.state.srsData);
+  const [cards, spelling] = window.GameEngine.practiceAids;
+  assert.equal((await wallet.purchasePracticeAid('jump')).ok, false);
+  assert.equal((await wallet.purchaseDalaMove(cards.id)).ok, false);
+  assert.equal((await wallet.purchasePracticeAid(cards.id)).reason, 'purchased');
+  assert.equal((await wallet.purchasePracticeAid(cards.id)).reason, 'already-owned');
+  assert.equal(wallet.state.gems, 80 - cards.costGems);
+  const write = window.localStorage.setItem;
+  window.localStorage.setItem = () => { throw Error('full storage'); };
+  assert.equal((await wallet.purchasePracticeAid(spelling.id)).reason, 'storage-error');
+  assert.equal(wallet.state.gems, 80 - cards.costGems);
+  assert.equal(wallet.state.ownedPracticeAids.includes(spelling.id), false);
+  window.localStorage.setItem = write;
+  assert.equal((await wallet.purchasePracticeAid(spelling.id)).reason, 'purchased');
+  const restored = startApp(saved()).window.GameEngine.StateManager;
+  assert.equal(restored.state.gems, 80 - cards.costGems - spelling.costGems);
+  assert.deepEqual(Array.from(restored.state.ownedPracticeAids), [cards.id, spelling.id]);
+  assert.equal(restored.state.totalXP, 14);
+  assert.equal(JSON.stringify(restored.state.srsData), initialReviews);
+  assert.equal((await startApp({ gems: 0 }).window.GameEngine.StateManager.purchasePracticeAid(cards.id)).reason, 'insufficient-gems');
+});
+
+test('Wardrobe saves migrate a worn item and retain an explicitly empty or multi-item outfit', () => {
+  const { window } = startApp();
+  const wardrobe = window.GameEngine.Part5State;
+  const key = 'wilawan_svenska_part5_gamification_v2';
+  wardrobe.applyColorTheme = () => {};
+  wardrobe.startDailyTrainingClock = () => {};
+  const saved = { ownedAccessories: ['midsommar', 'solglasogon'], equippedAccessory: 'midsommar' };
+  for (const [fields, expected] of [
+    [{}, ['midsommar']],
+    [{ equippedAccessories: [] }, []],
+    [{ equippedAccessories: ['midsommar', 'solglasogon', 'midsommar', 'snorkel', 'unknown'] }, ['midsommar', 'solglasogon']]
+  ]) {
+    window.localStorage.setItem(key, JSON.stringify({ ...saved, ...fields }));
+    wardrobe.load();
+    wardrobe.save();
+    wardrobe.load();
+    assert.deepEqual(Array.from(wardrobe.data.equippedAccessories).sort(), expected);
+    assert.deepEqual(JSON.parse(window.localStorage.getItem(key)).equippedAccessories.sort(), expected);
   }
 });

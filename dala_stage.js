@@ -1,7 +1,6 @@
 (function () {
   'use strict';
 
-  const artworkUrl = 'assets/wilawan-dala-horse.webp';
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const decoded = new Map();
   let dialog;
@@ -123,6 +122,25 @@
     );
   }
 
+  function showPortrait(opener) {
+    openDialog(opener);
+    stopShow();
+    const mascot = window.VisualEngine.Mascot;
+    // Visible edges of the painted horse inside its transparent 760 × 695 source.
+    let left = 73, top = 15, right = 691, bottom = 666;
+    for (const { rect: [x, y, width, height] } of mascot.getStageAccessories()) {
+      left = Math.min(left, x);
+      top = Math.min(top, y);
+      right = Math.max(right, x + width);
+      bottom = Math.max(bottom, y + height);
+    }
+    const width = right - left;
+    const height = bottom - top;
+    const style = `aspect-ratio:${width}/${height};--art-width:${760 / width * 100}%;--art-left:${-left / width * 100}%;--art-top:${-top / height * 100}%`;
+    render('portrait', label('Wilawan', 'วิลาวัลย์'),
+      `<div class="dala-zoom-figure" style="${style}">${mascot.getMarkup()}</div>`);
+  }
+
   function showPurchase(move, error = '') {
     const amount = balance();
     const status = error || (amount < move.costGems
@@ -200,11 +218,11 @@
     }
   }
 
-  function loadGarment(accessory) {
-    if (!accessory) return Promise.resolve(null);
+  async function loadGarment(accessory) {
     const image = new Image();
     image.src = accessory.src;
-    return image.decode().then(() => image);
+    await image.decode();
+    return { accessory, image };
   }
 
   function placeGarment(clip, accessory) {
@@ -239,13 +257,15 @@
     return { rect, poses, margin: Math.ceil(margin) };
   }
 
-  function drawAnimation(clip, image, canvas, accessory, garment) {
-    const layer = garment && placeGarment(clip, accessory);
-    const margin = layer?.margin || 0;
+  function drawAnimation(clip, image, canvas, garments) {
+    const layers = garments.map(({ accessory, image }) => ({
+      ...placeGarment(clip, accessory), image, behind: accessory.behind
+    }));
+    const margin = Math.max(0, ...layers.map(layer => layer.margin));
     canvas.width = clip.frameWidth + 2 * margin;
     canvas.height = clip.frameHeight + 2 * margin;
-    if (garment) {
-      canvas.dataset.accessory = accessory.id;
+    if (garments.length) {
+      canvas.dataset.accessory = garments.map(layer => layer.accessory.id).join(' ');
       canvas.style.width = 100 * canvas.width / clip.frameWidth + '%';
       canvas.style.height = 100 * canvas.height / clip.frameHeight + '%';
       canvas.style.left = -100 * margin / clip.frameWidth + '%';
@@ -254,20 +274,25 @@
     const paint = canvas.getContext('2d');
     if (!paint) throw new Error('Canvas could not be drawn');
     paint.translate(margin, margin);
+    const background = layers.filter(layer => layer.behind);
+    const foreground = layers.filter(layer => !layer.behind);
+    function drawGarments(worn, frame) {
+      for (const layer of worn) {
+        paint.save();
+        paint.transform(...layer.poses[frame]);
+        paint.drawImage(layer.image, ...layer.rect);
+        paint.restore();
+      }
+    }
     return frame => {
       paint.clearRect(-margin, -margin, canvas.width, canvas.height);
+      drawGarments(background, frame);
       paint.drawImage(image,
         (frame % clip.columns) * clip.frameWidth,
         Math.floor(frame / clip.columns) * clip.frameHeight,
         clip.frameWidth, clip.frameHeight, 0, 0, clip.frameWidth, clip.frameHeight
       );
-      if (garment) {
-        paint.save();
-        if (accessory.behind) paint.globalCompositeOperation = 'destination-over';
-        paint.transform(...layer.poses[frame]);
-        paint.drawImage(garment, ...layer.rect);
-        paint.restore();
-      }
+      drawGarments(foreground, frame);
     };
   }
 
@@ -290,7 +315,7 @@
     render('show', label(move.nameSv, move.nameTh),
       '<div class="dala-stage-scene">' +
         '<div class="dala-stage-spotlight" aria-hidden="true"></div>' +
-        '<div class="dala-stage-horse" aria-hidden="true"><img src="' + artworkUrl + '" alt=""><canvas hidden></canvas></div>' +
+        '<div class="dala-stage-horse" aria-hidden="true">' + window.VisualEngine.Mascot.getMarkup() + '<canvas hidden></canvas></div>' +
         '<p class="dala-stage-loading" role="status">' + label('Laddar…', 'กำลังโหลด…') + '</p>' +
       '</div>' +
       '<div class="dala-stage-show-controls">' +
@@ -301,16 +326,16 @@
     );
 
     try {
-      const accessory = window.VisualEngine?.Mascot?.getStageAccessory?.();
-      const [image, garment] = await Promise.all([clipImage(move.id), loadGarment(accessory)]);
+      const accessories = window.VisualEngine.Mascot.getStageAccessories();
+      const [image, garments] = await Promise.all([clipImage(move.id), Promise.all(accessories.map(loadGarment))]);
       if (context !== run || !dialog.open) return;
       const clip = window.DalaClips[move.id];
       const art = dialog.querySelector('.dala-stage-horse');
       const canvas = art.querySelector('canvas');
-      const draw = drawAnimation(clip, image, canvas, accessory, garment);
+      const draw = drawAnimation(clip, image, canvas, garments);
       dialog.querySelector('.dala-stage-loading').hidden = true;
       canvas.hidden = false;
-      art.querySelector('img').hidden = true;
+      art.querySelector('.dala-portrait').hidden = true;
       draw(0);
       // Playback is explicitly requested. Reduced motion only skips the scene transitions.
       const tracks = !reducedMotion.matches && origin?.width ? travelFrames(origin, art.getBoundingClientRect()) : null;
@@ -352,6 +377,7 @@
   }
 
   window.DalaStage = {
+    inspect: showPortrait,
     open(opener) {
       if (!window.WilawanMoves) return false;
       openDialog(opener);

@@ -140,7 +140,7 @@
 
   let mesh;
 
-  function buildRenderer(canvas, image, garment, accessory) {
+  function buildRenderer(canvas, image, garments) {
     const gl = canvas.getContext('webgl', { alpha: true, antialias: true, depth: false, powerPreference: 'low-power' });
     if (!gl) return null;
     const program = gl.createProgram();
@@ -178,19 +178,22 @@
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, artwork);
       return texture;
     }
-    const layers = [{ texture: textureFor(image), rect: [0, 0, 1, 1], joint: [-1, -1] }];
-    if (garment && accessory) {
+    const wornLayers = garments.map(({ garment, accessory }) => {
       const [x, y, width, height] = accessory.rect;
       const [jx, jy] = accessory.joint;
-      const layer = {
+      return {
         texture: textureFor(garment),
         rect: [x / image.naturalWidth, y / image.naturalHeight, width / image.naturalWidth, height / image.naturalHeight],
         joint: [jx / image.naturalWidth, jy / image.naturalHeight],
+        behind: accessory.behind,
         hanging: accessory.hanging
       };
-      if (accessory.behind) layers.unshift(layer);
-      else layers.push(layer);
-    }
+    });
+    const layers = [
+      ...wornLayers.filter(layer => layer.behind),
+      { texture: textureFor(image), rect: [0, 0, 1, 1], joint: [-1, -1] },
+      ...wornLayers.filter(layer => !layer.behind)
+    ];
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
     gl.clearColor(0, 0, 0, 0);
@@ -248,8 +251,11 @@
     const image = wrapper.querySelector('.dala-horse-image');
     const canvas = wrapper.querySelector('.dala-horse-canvas');
     const still = wrapper.querySelector('.dala-still');
-    const garment = wrapper.querySelector('.dala-wardrobe');
-    const accessory = garment && window.VisualEngine.Mascot.getStageAccessory();
+    const garments = window.VisualEngine.Mascot.getStageAccessories().map(accessory => ({
+      accessory,
+      garment: wrapper.querySelector(`.dala-wardrobe[data-accessory="${accessory.id}"]`)
+    })).filter(layer => layer.garment);
+    const basket = garments.find(layer => layer.accessory.hanging);
     let renderer = null;
     let move = 'idle';
     let visible = true;
@@ -306,16 +312,16 @@
         const frames = Array.from({ length: 11 }, (_, index) => {
           const [rotation, rise, squash, , head] = pose(move, index / 10);
           const angle = (rotation + head * .30) * 180 / Math.PI;
-          if (accessory?.hanging) basketFrames.push({ transform: `rotate(${-.88 * angle}deg)` });
+          if (basket) basketFrames.push({ transform: `rotate(${-.88 * angle}deg)` });
           return { transform: `translateY(${-rise * 88}%) rotate(${angle}deg) scaleY(${1 - squash})` };
         });
         const timing = { duration: moves[move], iterations: repeating.has(move) ? Infinity : 1 };
         const animation = still.animate(frames, timing);
-        if (accessory?.hanging) {
-          const [x, y, w, h] = accessory.rect;
-          const [jx, jy] = accessory.joint;
-          garment.style.transformOrigin = `${100 * (jx - x) / w}% ${100 * (jy - y) / h}%`;
-          basketSwing = garment.animate(basketFrames, timing);
+        if (basket) {
+          const [x, y, w, h] = basket.accessory.rect;
+          const [jx, jy] = basket.accessory.joint;
+          basket.garment.style.transformOrigin = `${100 * (jx - x) / w}% ${100 * (jy - y) / h}%`;
+          basketSwing = basket.garment.animate(basketFrames, timing);
         }
         fallback = animation;
         animation.onfinish = () => {
@@ -335,10 +341,10 @@
     function ready() {
       if (disposed || !wrapper.isConnected || !image.naturalWidth) return;
       wrapper.closest('.home-hero-art')?.classList.add('has-animated-mascot');
-      if (garment && !garment.naturalWidth) return;
+      if (garments.some(layer => !layer.garment.naturalWidth)) return;
       if (!reduced.matches && canvas && !renderer) {
         try {
-          renderer = buildRenderer(canvas, image, garment, accessory);
+          renderer = buildRenderer(canvas, image, garments);
         } catch {
           // The still artwork is already in place if texture upload fails.
         }
@@ -368,7 +374,7 @@
     canvas?.addEventListener('webglcontextrestored', ready);
     reduced.addEventListener('change', motionPreferenceChanged);
     image.addEventListener('load', ready, { once: true });
-    garment?.addEventListener('load', ready, { once: true });
+    for (const { garment } of garments) garment.addEventListener('load', ready, { once: true });
     play(initial);
     if (image.complete) ready();
 
@@ -380,7 +386,7 @@
         resize.disconnect();
         reduced.removeEventListener('change', motionPreferenceChanged);
         image.removeEventListener('load', ready);
-        garment?.removeEventListener('load', ready);
+        for (const { garment } of garments) garment.removeEventListener('load', ready);
         canvas?.removeEventListener('webglcontextlost', contextLost);
         canvas?.removeEventListener('webglcontextrestored', ready);
         cancelAnimationFrame(request);

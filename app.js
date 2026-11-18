@@ -1077,6 +1077,15 @@
     { id: 'rear', nameSv: 'Stegra', nameTh: 'ยกขาหน้าคู่', descriptionSv: 'Wilawan reser sig på bakbenen.', descriptionTh: 'วิลาวัลย์ยืนด้วยขาหลังและยกขาหน้าคู่', costGems: 450 }
   ].map(Object.freeze));
 
+  const PRACTICE_AIDS = Object.freeze([
+    { id: 'flashcards', nameSv: 'Vändkort', nameTh: 'บัตรคำ', costGems: 35,
+      descriptionSv: 'Se ordet på thai och säg det på svenska innan du vänder kortet.',
+      descriptionTh: 'ดูคำไทยแล้วพูดเป็นสวีเดนก่อนพลิกบัตร' },
+    { id: 'spelling', nameSv: 'Skriv ur minnet', nameTh: 'ฝึกเขียนจากความจำ', costGems: 45,
+      descriptionSv: 'Se betydelsen på thai och öva på att skriva ordet på svenska.',
+      descriptionTh: 'ดูความหมายภาษาไทย แล้วลองเขียนคำสวีเดนด้วยตัวเอง' }
+  ].map(Object.freeze));
+
   function createDefaultState() {
     return {
       totalXP: 0,
@@ -1084,6 +1093,7 @@
       dailyGoalXP: 60,
       gems: 50,
       ownedDalaMoves: [],
+      ownedPracticeAids: [],
       streakDays: 1,
       lastActiveDate: getTodayISO(),
       selectedTrainingMode: 'mix',
@@ -1126,6 +1136,7 @@
             ...createDefaultState(),
             ...parsed,
             ownedDalaMoves: Array.isArray(parsed.ownedDalaMoves) ? parsed.ownedDalaMoves : [],
+            ownedPracticeAids: PRACTICE_AIDS.filter(aid => Array.isArray(parsed.ownedPracticeAids) && parsed.ownedPracticeAids.includes(aid.id)).map(aid => aid.id),
             dailyGoalXP: 60,
             themeStars: { ...createDefaultState().themeStars, ...(parsed.themeStars || {}) },
             srsData: { ...(parsed.srsData || {}) },
@@ -1174,30 +1185,43 @@
         this.state.gems = Math.max(0, stored.gems + (this.state.gems - this.savedGemBalance));
         this.savedGemBalance = stored.gems;
       }
-      if (Array.isArray(stored.ownedDalaMoves)) {
-        this.state.ownedDalaMoves = [...new Set([...stored.ownedDalaMoves, ...this.state.ownedDalaMoves])];
+      for (const field of ['ownedDalaMoves', 'ownedPracticeAids']) {
+        if (Array.isArray(stored[field])) {
+          this.state[field] = [...new Set([...stored[field], ...this.state[field]])];
+        }
       }
     },
 
     purchaseDalaMove(id) {
+      return this.purchaseUnlock('move', id);
+    },
+
+    purchasePracticeAid(id) {
+      return this.purchaseUnlock('aid', id);
+    },
+
+    purchaseUnlock(kind, id) {
       const result = (ok, reason) => ({ ok, reason, balance: this.state.gems });
-      const move = DALA_MOVES.find(entry => entry.id === id);
-      if (!move) return Promise.resolve(result(false, 'invalid-move'));
+      const catalog = kind === 'aid' ? PRACTICE_AIDS : DALA_MOVES;
+      const field = kind === 'aid' ? 'ownedPracticeAids' : 'ownedDalaMoves';
+      const item = catalog.find(entry => entry.id === id);
+      if (!item) return Promise.resolve(result(false, 'invalid-' + kind));
       const purchase = () => {
         try {
           this.syncWallet();
         } catch (_) {
           return result(false, 'storage-error');
         }
-        const { gems, ownedDalaMoves } = this.state;
-        if (ownedDalaMoves.includes(id)) return result(true, 'already-owned');
-        if (!Number.isSafeInteger(gems) || gems < move.costGems) return result(false, 'insufficient-gems');
+        const gems = this.state.gems;
+        const owned = this.state[field];
+        if (owned.includes(id)) return result(true, 'already-owned');
+        if (!Number.isSafeInteger(gems) || gems < item.costGems) return result(false, 'insufficient-gems');
 
-        this.state.gems -= move.costGems;
-        this.state.ownedDalaMoves = [...ownedDalaMoves, id];
+        this.state.gems -= item.costGems;
+        this.state[field] = [...owned, id];
         if (!this.save()) {
           this.state.gems = gems;
-          this.state.ownedDalaMoves = ownedDalaMoves;
+          this.state[field] = owned;
           return result(false, 'storage-error');
         }
         return result(true, 'purchased');
@@ -3201,6 +3225,7 @@
   Object.assign(window.GameEngine, {
     setUiLabel,
     dalaMoves: DALA_MOVES,
+    practiceAids: PRACTICE_AIDS,
     StateManager,
     SRSManager,
     QuestionGenerator,
