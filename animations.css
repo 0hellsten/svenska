@@ -35,11 +35,14 @@ button.dala-mascot-wrapper {
   max-width: none;
 }
 
-.dala-horse-image {
+.dala-horse-image, .dala-wardrobe {
   left: 3%;
   bottom: 4%;
   width: 94%;
   height: 86%;
+}
+
+.dala-horse-image {
   object-fit: contain;
   object-position: center bottom;
   transform-origin: 76% 91%;
@@ -56,17 +59,9 @@ button.dala-mascot-wrapper {
 .dala-mascot-wrapper[data-renderer="mesh"] .dala-horse-canvas { visibility: visible; }
 
 .dala-wardrobe {
-  inset: 0;
-  width: 100%;
-  height: 100%;
   overflow: visible;
   transform-origin: 75% 89%;
 }
-
-.dala-wardrobe > g { transform: translate(-8px, 2px) scale(.80); }
-.dala-wardrobe[data-accessory="solglasogon"] > g { transform: translate(-7px, 7px) scale(.70); }
-.dala-wardrobe[data-accessory="halsduk"] > g { transform: translate(-3px, 1px) scale(.83); }
-.dala-wardrobe[data-accessory="fikabricka"] > g { transform: translate(-40px, 14px) scale(.86); }
 
 .home-hero-art #mascot-container,
 .home-hero-art .dala-mascot-wrapper,

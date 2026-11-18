@@ -31,6 +31,8 @@
   <link rel="stylesheet" href="farm_fishing.css">
   <link rel="stylesheet" href="game_ui.css">
   <link rel="stylesheet" href="home.css">
+  <link rel="stylesheet" href="dala_stage.css">
+  <link rel="stylesheet" href="rewards.css">
 
 </head>
 <body>
@@ -112,10 +114,15 @@
                 <span id="featured-theme-progress" aria-hidden="true">0%</span>
               </div>
             </div>
-            <button type="button" class="home-lesson-button" id="btn-continue-learning" aria-describedby="featured-theme-title">
-              <span id="featured-theme-action" class="ui-label"><span lang="sv">Börja</span><small lang="th">เริ่มเรียน</small></span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg>
-            </button>
+            <div class="home-hero-actions">
+              <button type="button" class="home-lesson-button" id="btn-continue-learning" aria-describedby="featured-theme-title">
+                <span id="featured-theme-action" class="ui-label"><span lang="sv">Börja</span><small lang="th">เริ่มเรียน</small></span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg>
+              </button>
+              <button type="button" class="home-moves-button" id="btn-dala-moves" aria-haspopup="dialog">
+                <span class="ui-label"><span lang="sv">Wilawans rörelser</span><small lang="th">ท่าทางของวิลาวัลย์</small></span>
+              </button>
+            </div>
           </article>
 
           <div class="home-side-cards">
@@ -324,7 +331,7 @@
         <span class="nav-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24"><path d="M7 3h10v7a5 5 0 0 1-10 0zm0 2H3v2a4 4 0 0 0 4 4m10-6h4v2a4 4 0 0 1-4 4m-5 4v6m-4 0h8"/></svg>
         </span>
-        <span class="ui-label"><span lang="sv">Utmaningar</span><small lang="th">ท้าทาย</small></span>
+        <span class="ui-label"><span lang="sv">Tävla</span><small lang="th">แข่งขัน</small></span>
       </button>
 
       <button type="button" class="nav-tab" data-target="view-vocab" aria-controls="view-vocab">
@@ -460,6 +467,8 @@
   <script src="learning_progress.js"></script>
   <script src="app.js"></script>
   <script src="dala_motion.js"></script>
+  <script src="dala_clips.js"></script>
+  <script src="dala_stage.js"></script>
   <script src="visuals.js"></script>
   <script src="speech_audio.js"></script>
   <script src="database.js"></script>

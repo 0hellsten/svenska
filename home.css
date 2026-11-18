@@ -118,6 +118,28 @@ body.app-theme-aurora #app-shell {
   stroke-linejoin: round;
 }
 
+@media (max-width: 899px) {
+  #app-shell .bottom-nav {
+    gap: 2px;
+    padding: 3px max(6px, var(--safe-right)) max(3px, env(safe-area-inset-bottom, 0px)) max(6px, var(--safe-left));
+  }
+  #app-shell .bottom-nav .nav-tab {
+    min-width: 0;
+    min-height: 44px;
+    flex-direction: row;
+    gap: clamp(3px, 1vw, 8px);
+    padding: 2px;
+    text-align: start;
+  }
+  #app-shell .bottom-nav .nav-tab .nav-icon {
+    width: 18px;
+    height: 18px;
+  }
+  #app-shell .bottom-nav .ui-label { gap: 0; }
+  /* The views already end at the top of the navigation bar. */
+  #app-shell .spa-view { padding-bottom: 22px; }
+}
+
 #app-shell #view-home {
   display: block;
   padding: 14px max(16px, var(--safe-right)) 27px max(16px, var(--safe-left));
@@ -233,6 +255,20 @@ body.app-theme-aurora #app-shell {
   cursor: pointer;
 }
 .home-lesson-button .ui-label { text-align: start; }
+.home-hero-actions { display: flex; align-items: stretch; justify-content: space-between; gap: 9px; width: 100%; }
+.home-moves-button {
+  min-width: 0;
+  min-height: 44px;
+  padding: 6px 10px;
+  border: 1px solid #e1d8ff65;
+  border-radius: 12px;
+  background: #c4a8ff22;
+  color: #fff7ff;
+  font: 700 .74rem var(--font-sv);
+  text-align: start;
+  cursor: pointer;
+}
+.home-moves-button:focus-visible { outline-color: #fff; }
 .home-lesson-button svg, .home-card-chevron, .home-games-arrow svg { width: 18px; height: 18px; flex: 0 0 auto; }
 .home-lesson-button:focus-visible, .home-games-card:focus-visible { outline-color: #fff; }
 
@@ -391,8 +427,4 @@ body.app-theme-aurora #app-shell {
   .topbar-identity img { width: 29px; height: 29px; }
   #app-shell .topbar-stats { gap: 2px; }
   #app-shell .topbar-stats .stat-pill { padding-inline: 4px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .home-hero-art.has-animated-mascot::before { display: block; }
-  .home-hero-art .dala-portrait { opacity: 0; }
 }

@@ -59,7 +59,7 @@
   `;
 
   const moves = {
-    idle: 6400, wave: 1420, rear: 1710, jump: 1200, bow: 1350, blink: 720,
+    idle: 6400, wave: 1420, rear: 1710, jump: 1200, bow: 1350,
     speaking: 980, listening: 1850
   };
   const repeating = new Set(['idle', 'speaking', 'listening']);
@@ -95,9 +95,6 @@
         return [-.045 * bow, 0, .02 * bow, -.03 * bow, -.39 * bow, -.13 * bow,
           .08 * bow, -.02 * bow, .58 * bow, 0, 0];
       }
-      case 'blink':
-        return [0, 0, 0, 0, .035 * beat, 0, 0, .03 * beat,
-          .98 * (lift(t, .13, .23, .36) + lift(t, .47, .57, .71)), 0, 0];
       case 'speaking':
         return [0, 0, .011 * beat, .016, .082 * beat, 0, .045 * beat, .035 * beat,
           0, .017 * (1 + Math.sin(t * 12.566)), 0];
@@ -245,7 +242,10 @@
     }
 
     function play(next) {
-      move = Object.hasOwn(moves, next) ? next : 'idle';
+      // Ambient breathing and speech run during lessons. Tricks require the same
+      // purchase here as on the big stage, including when feedback mounts a new horse.
+      const available = repeating.has(next) || window.WilawanMoves?.owns(next);
+      move = available && Object.hasOwn(moves, next) ? next : 'idle';
       wrapper.dataset.motion = move;
       started = performance.now();
       fallback?.cancel();

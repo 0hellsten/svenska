@@ -314,8 +314,9 @@
       window.VisualEngine.Mascot.mount(testMascotContainer, 72, 'idle');
       const testWrapper = testMascotContainer.querySelector('.dala-mascot-wrapper');
       assert('Maskot: målad bild och rityta för rörelser', !!testWrapper?.querySelector('img.dala-horse-image') && !!testWrapper?.querySelector('canvas'));
-      window.VisualEngine.Mascot.triggerAction('stegra', testMascotContainer);
-      assert('Maskot: stegring startar', testWrapper?.dataset.motion === 'rear');
+      window.VisualEngine.Mascot.setState('streak_fire');
+      const expectedMotion = window.WilawanMoves.owns('rear') ? 'rear' : 'idle';
+      assert('Maskot: streak spelar stegring först efter köp', testWrapper?.dataset.motion === expectedMotion);
       window.DalaMotion.unmount(testWrapper);
       testMascotContainer.remove();
 

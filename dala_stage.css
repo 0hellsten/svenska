@@ -1,0 +1,329 @@
+.dala-stage {
+  --dala-stage-ink: #fbf4ff;
+  --dala-stage-subtle: #d4cee9;
+  --dala-stage-line: #b5a5f044;
+  --dala-stage-gold: #ffda77;
+  color: var(--dala-stage-ink);
+  background: radial-gradient(ellipse at 100% 0, #43308b 0, #241d52 40%, #191638 82%);
+  border: 1px solid var(--dala-stage-line);
+  border-radius: 24px;
+  padding: 0;
+  width: min(430px, calc(100% - 24px));
+  max-height: calc(100vh - 24px);
+  max-height: min(calc(100dvh - 24px), calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom)));
+  overflow: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  box-shadow: 0 18px 74px #110c2b80, inset 0 1px 0 #ffffff29;
+  font-family: var(--font-sv);
+}
+
+.dala-stage::backdrop {
+  background: #16142bb8;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+}
+
+.dala-stage .dala-stage-inner {
+  display: grid;
+  gap: 13px;
+  padding: 18px;
+}
+
+.dala-stage .dala-stage-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.dala-stage .ui-label {
+  text-align: start;
+}
+
+.dala-stage .dala-stage-header h2 {
+  min-width: 0;
+  margin: 0;
+  font: 850 clamp(1.35rem, 6vw, 1.9rem)/1.15 var(--font-sv);
+}
+
+.dala-stage button {
+  min-height: 44px;
+  color: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.dala-stage button:focus-visible {
+  outline: 3px solid #b3e9ff;
+  outline-offset: 2px;
+}
+
+.dala-stage button:disabled {
+  opacity: .64;
+  cursor: default;
+}
+
+.dala-stage .dala-stage-close {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 44px;
+  padding: 0;
+  color: #fff;
+  background: #fff1;
+  border: 1px solid var(--dala-stage-line);
+  border-radius: 13px;
+  font: 400 1.8rem/1 var(--font-sv);
+}
+
+.dala-stage .dala-stage-balance {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 47px;
+  margin: 0;
+  padding: 7px 11px;
+  color: var(--dala-stage-subtle);
+  background: #0e112a59;
+  border-radius: 12px;
+  font-weight: 750;
+}
+
+.dala-stage .dala-stage-gems {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--dala-stage-gold);
+  font-weight: 850;
+  font-feature-settings: "tnum";
+  white-space: nowrap;
+}
+
+.dala-stage .dala-stage-gem-icon {
+  width: 17px;
+  height: 17px;
+  display: inline-grid;
+  place-items: center;
+}
+
+.dala-stage .dala-stage-gem-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.dala-stage .dala-stage-moves {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.dala-stage .dala-stage-move {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 9px;
+  width: 100%;
+  min-height: 57px;
+  padding: 8px 11px;
+  border: 1px solid var(--dala-stage-line);
+  border-radius: 13px;
+  background: #b0a0ff1a;
+  text-align: start;
+  font: 800 1rem/1.15 var(--font-sv);
+}
+
+.dala-stage .dala-stage-move[data-dala-choice="wave"] { background: #73e4dd1d; }
+.dala-stage .dala-stage-move[data-dala-choice="rear"] { background: #eeb77525; }
+.dala-stage .dala-stage-move[data-dala-choice="jump"] { background: #a498ff22; }
+.dala-stage .dala-stage-move[data-dala-choice="bow"] { background: #ed8dc121; }
+
+.dala-stage .dala-stage-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  color: var(--dala-stage-gold);
+  font-size: .87rem;
+}
+
+.dala-stage .dala-stage-secondary,
+.dala-stage .dala-stage-primary {
+  padding: 8px 12px;
+  border: 1px solid var(--dala-stage-line);
+  border-radius: 12px;
+  background: #b0a0ff19;
+  font: 800 .91rem/1.15 var(--font-sv);
+}
+
+.dala-stage .dala-stage-primary {
+  border-color: transparent;
+  color: #322141;
+  background: linear-gradient(125deg, #ffe89e, #ffc564);
+}
+
+.dala-stage .dala-stage-wardrobe-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: start;
+}
+
+.dala-stage .dala-stage-wardrobe-button > [aria-hidden] {
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.dala-stage .dala-stage-description,
+.dala-stage .dala-stage-status {
+  margin: 0;
+  color: var(--dala-stage-subtle);
+  font-size: .94rem;
+}
+
+.dala-stage .dala-stage-status:empty { display: none; }
+
+.dala-stage .dala-stage-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.dala-on-stage #mascot-container .dala-mascot-wrapper {
+  opacity: 0;
+}
+
+/* Keep the shop's scroll position for the return trip, without compositing its blurred sheet. */
+.dala-on-stage #shop-modal-backdrop.open {
+  opacity: 0;
+  pointer-events: none;
+  transition: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.dala-stage[data-screen="show"]::backdrop {
+  background: #100e25;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.dala-stage[data-screen="show"][open] {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: radial-gradient(ellipse at 50% 45%, #4a337f 0%, #21183c 38%, #100e25 73%);
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.dala-stage[data-screen="show"] .dala-stage-inner {
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  width: min(100%, 920px);
+  height: 100%;
+  margin-inline: auto;
+  padding: max(16px, env(safe-area-inset-top)) max(17px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(17px, env(safe-area-inset-left));
+}
+
+.dala-stage .dala-stage-scene {
+  --dala-stage-size: min(70vw, 57vh, calc(100vh - 135px), 610px);
+  --dala-stage-size: min(70vw, 57dvh, calc(100dvh - 135px), 610px);
+  position: relative;
+  display: grid;
+  min-height: 0;
+  place-items: center;
+  isolation: isolate;
+}
+
+.dala-stage .dala-stage-spotlight {
+  position: absolute;
+  z-index: -1;
+  grid-area: 1 / 1;
+  width: var(--dala-stage-size);
+  aspect-ratio: 1;
+  background: radial-gradient(ellipse 51% 12% at 50% 91%, #f4be8b33, #bc6ba511 65%, transparent);
+  pointer-events: none;
+}
+
+.dala-stage .dala-stage-horse {
+  position: relative;
+  grid-area: 1 / 1;
+  width: var(--dala-stage-size);
+  aspect-ratio: 1;
+  filter: drop-shadow(0 13px 22px #0d082d65);
+  pointer-events: none;
+  transform-origin: center;
+}
+
+.dala-stage .dala-stage-horse > canvas,
+.dala-stage .dala-stage-accessory {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.dala-stage .dala-stage-horse > img {
+  position: absolute;
+  inset: 10%;
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+  object-position: center bottom;
+  opacity: .72;
+}
+
+.dala-stage .dala-stage-loading {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: max-content;
+  max-width: calc(100% - 16px);
+  margin: 0 auto;
+  padding: 8px 12px;
+  border: 1px solid var(--dala-stage-line);
+  border-radius: 12px;
+  background: #100e26df;
+}
+
+.dala-stage [hidden] { display: none !important; }
+
+.dala-stage .dala-stage-show-controls {
+  display: flex;
+  justify-content: center;
+}
+
+.dala-stage .dala-stage-show-controls .dala-stage-secondary {
+  padding-inline: 24px;
+}
+
+@media (max-height: 440px) {
+  .dala-stage[data-screen="show"] .dala-stage-inner {
+    gap: 5px;
+    padding-block: max(7px, env(safe-area-inset-top)) max(7px, env(safe-area-inset-bottom));
+  }
+
+  .dala-stage .dala-stage-scene { --dala-stage-size: min(55vw, 58dvh, calc(100dvh - 119px), 610px); }
+}
+
+@media (hover: hover) {
+  .dala-stage .dala-stage-move:hover,
+  .dala-stage .dala-stage-secondary:hover,
+  .dala-stage .dala-stage-close:hover {
+    border-color: #cec1ff;
+  }
+}

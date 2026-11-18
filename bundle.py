@@ -63,11 +63,19 @@ def bundle():
         home_css = f.read()
     html = html.replace('<link rel="stylesheet" href="home.css">',
                         f"<style>\n/* WILAWAN HOME */\n{home_css}\n</style>")
+    with open(os.path.join(base_dir, "dala_stage.css"), "r", encoding="utf-8") as f:
+        dala_stage_css = f.read()
+    html = html.replace('<link rel="stylesheet" href="dala_stage.css">',
+                        f"<style>\n/* WILAWAN MOVE STAGE */\n{dala_stage_css}\n</style>")
+    with open(os.path.join(base_dir, "rewards.css"), "r", encoding="utf-8") as f:
+        rewards_css = f.read()
+    html = html.replace('<link rel="stylesheet" href="rewards.css">',
+                        f"<style>\n/* WILAWAN REWARDS */\n{rewards_css}\n</style>")
     for filename in ("farm_mischief_core.js", "farm_fishing_core.js", "farm_core.js", "learning_progress.js", "mini_games_core.js", "mini_games_art.js", "zoo_core.js",
                      "zoo_art.js", "zoo_escape.js", "kitchen_measures_core.js", "kitchen_measures.js",
                      "mini_games_dialogue.js", "mini_games_hands.js", "farm_art.js", "farm_gestures.js", "farm_mischief_art.js",
                      "farm_mischief.js", "farm_fishing_art.js", "farm_fishing.js", "farm.js", "mini_games.js",
-                     "dala_motion.js"):
+                     "dala_motion.js", "dala_clips.js", "dala_stage.js"):
         with open(os.path.join(base_dir, filename), "r", encoding="utf-8") as f:
             script = f.read()
         html = html.replace(f'<script src="{filename}"></script>',
@@ -78,7 +86,7 @@ def bundle():
                        "assets/zoo/animals.webp", "assets/farm/map.webp", "assets/farm/fields.webp",
                        "assets/zoo/lobby-cover.webp", "assets/farm/lobby-cover.webp",
                        "assets/wilawan-dala-hero.webp", "assets/wilawan-dala-hero-bg.webp",
-                       "assets/wilawan-dala-horse.webp"):
+                       "assets/wilawan-dala-horse.webp", "assets/reward-jewels.webp", "assets/reward-moves.webp"):
         with open(os.path.join(base_dir, asset_path), "rb") as f:
             encoded = base64.b64encode(f.read()).decode("ascii")
         html = html.replace(asset_path, f"data:image/webp;base64,{encoded}")
@@ -96,15 +104,23 @@ def bundle():
 
     html = html.replace('\r\n', '\n').replace('\r', '\n')
 
+    # Pages streams move art on demand. A copied iPhone file needs no companion files.
+    portable_html = html
+    for name in ("wave", "rear", "jump", "bow"):
+        asset_path = f"assets/dala/{name}.webp"
+        with open(os.path.join(base_dir, asset_path), "rb") as f:
+            encoded = base64.b64encode(f.read()).decode("ascii")
+        portable_html = portable_html.replace(asset_path, f"data:image/webp;base64,{encoded}")
+
     out_iphone = os.path.join(base_dir, "svenska_satun_iphone.html")
     with open(out_iphone, "w", encoding="utf-8", newline='\n') as f:
-        f.write(html)
+        f.write(portable_html)
 
     out_index = os.path.join(base_dir, "index.html")
     with open(out_index, "w", encoding="utf-8", newline='\r\n') as f:
         f.write(html)
 
-    print(f"Successfully generated {out_iphone} and {out_index} ({len(html)} chars)")
+    print(f"Successfully generated {out_iphone} ({len(portable_html)} chars) and {out_index} ({len(html)} chars)")
 
 if __name__ == "__main__":
     bundle()

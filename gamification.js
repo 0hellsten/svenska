@@ -27,6 +27,27 @@
 
   const GAME_ENGINE_STORAGE_KEY = 'wilawan_svenska_part5_gamification_v2';
 
+  const DALA_MOVES = window.GameEngine.dalaMoves;
+
+  function moveBalance() {
+    return window.GameEngine.StateManager.state.gems;
+  }
+
+  function ownsMove(id) {
+    return DALA_MOVES.some(entry => entry.id === id) && window.GameEngine.StateManager.state.ownedDalaMoves.includes(id);
+  }
+
+  async function purchaseMove(id) {
+    const result = await window.GameEngine.StateManager.purchaseDalaMove(id);
+    window.GameEngine.UIController.renderTopbar();
+    return result;
+  }
+
+  function playMove(id, trigger) {
+    if (!ownsMove(id)) return false;
+    return window.DalaStage?.play(id, trigger);
+  }
+
   /* ==========================================================================
      1. MASKOT-ACCESSOARER (10 STYCKEN, CENTRERADE DIREKT PÅ HUVUDET x=50)
      ========================================================================== */
@@ -225,24 +246,24 @@
   const SHOP_BOOSTERS = [
     {
       id: 'streak_freeze',
-      nameSv: 'โล่รักษาสตรีค (Frys Streaken)',
-      nameTh: 'น้ำแข็งกันสตรีคหลุด',
+      nameSv: 'Skydda din svit',
+      nameTh: 'ป้องกันสถิติเรียนต่อเนื่อง',
       satunDesc: 'ลืมเข้าเรียนวันไหน สตรีคก็ไม่หลุด! (เก็บได้สูงสุด 2 ชิ้น)',
       icon: '🛡️',
       costGems: 35
     },
     {
       id: 'double_xp',
-      nameSv: 'Dubbel-XP Booster (30 min)',
-      nameTh: 'บูสต์คะแนนคูณสอง (30 นาที)',
+      nameSv: 'Dubbla poäng',
+      nameTh: 'คะแนนคูณสอง',
       satunDesc: 'รับ XP คูณ 2x ทุกบทเรียนและการแข่งขันท่องศัพท์!',
       icon: '⚡',
       costGems: 45
     },
     {
       id: 'mystery_box',
-      nameSv: 'กล่องตัวช่วย / Gåvo-kista',
-      nameTh: 'กล่องสุ่มนำโชค Wilawan',
+      nameSv: 'Hemlig present',
+      nameTh: 'กล่องของขวัญ',
       satunDesc: 'กล่องตัวช่วยฝึก: โล่รักษาวันฝึกหรือตัวช่วย XP 30 นาที ไม่มีรางวัลแต้มก้อนใหญ่',
       icon: '🎁',
       costGems: 50
@@ -253,52 +274,55 @@
      3. APPFÄRGTEMAN (6 STYCKEN, INKLUSIVE NORRSKEN & SUNSET)
      ========================================================================== */
 
+  const uiLabel = (sv, th) =>
+    `<span class="ui-label"><span lang="sv">${sv}</span><small lang="th">${th}</small></span>`;
+
   const APP_COLOR_THEMES = [
     {
       id: 'default',
-      nameSv: 'Dala Solsken (Standard)',
-      nameTh: 'สีครีมอบอุ่นดั้งเดิม',
-      previewBg: 'linear-gradient(135deg, #FFFDF8 0%, #FEF3C7 100%)',
+      nameSv: 'Wilawans färger',
+      nameTh: 'สีของวิลาวัลย์',
+      previewBg: 'radial-gradient(ellipse at 90% 95%, #bef4d9, transparent 64%), linear-gradient(125deg, #dddafa, #b9afff)',
       costGems: 0,
       cssClass: ''
     },
     {
       id: 'andaman',
-      nameSv: 'Satun Andaman Turkos',
-      nameTh: 'ฟ้าทะเลอันดามันสตูล',
-      previewBg: 'linear-gradient(135deg, #F0FDFA 0%, #BAE6FD 100%)',
+      nameSv: 'Andamans hav',
+      nameTh: 'ทะเลอันดามัน',
+      previewBg: 'radial-gradient(ellipse 95% 130% at 115% 140%, #063b82 37%, #0075ac 52%, transparent 53%), radial-gradient(ellipse 120% 110% at 3% 145%, #00a1b0 42%, #56efde 63%, transparent 64%), linear-gradient(115deg, #14769b, #57e5d0 64%, #baffeb)',
       costGems: 35,
       cssClass: 'app-theme-andaman'
     },
     {
       id: 'sunset',
-      nameSv: 'Satun Sunset Coral',
-      nameTh: 'ส้มคอรัลพระอาทิตย์ตกหลีเป๊ะ',
-      previewBg: 'linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%)',
+      nameSv: 'Solnedgång',
+      nameTh: 'แสงยามเย็น',
+      previewBg: 'radial-gradient(ellipse 100% 62% at 78% 135%, #95235b 69%, transparent 70%), radial-gradient(circle at 72% 65%, #fff4b2 0 12%, transparent 13%), linear-gradient(168deg, #a42174 0%, #f05266 45%, #ff9c4b 72%, #ffce70)',
       costGems: 70,
       cssClass: 'app-theme-sunset'
     },
     {
       id: 'rosegold',
-      nameSv: 'Midnattssol Roséguld',
-      nameTh: 'ชมพูโรสโกลด์พระอาทิตย์เที่ยงคืน',
-      previewBg: 'linear-gradient(135deg, #FFF5F7 0%, #FBCFE8 100%)',
+      nameSv: 'Roséguld',
+      nameTh: 'ชมพูโรสโกลด์',
+      previewBg: 'linear-gradient(130deg, #9a2658, #da6990 26%, #ffe6ca 45%, #f1a5a4 53%, #b73575 75%, #ed8fb2)',
       costGems: 55,
       cssClass: 'app-theme-rosegold'
     },
     {
       id: 'dalarna',
-      nameSv: 'Dalarna Skogsgrön',
-      nameTh: 'เขียวธรรมชาติป่าสนสวีเดน',
-      previewBg: 'linear-gradient(135deg, #F4FCE3 0%, #BBF7D0 100%)',
+      nameSv: 'Dalaskogen',
+      nameTh: 'ป่าดอลาร์นา',
+      previewBg: 'linear-gradient(153deg, transparent 64%, #165a50 65%, #07473d), linear-gradient(27deg, #35733e 31%, #68ae60 32% 46%, transparent 47%), linear-gradient(145deg, #b6ec81, #55b978 70%, #279877)',
       costGems: 55,
       cssClass: 'app-theme-dalarna'
     },
     {
       id: 'aurora',
-      nameSv: 'Nordic Aurora Borealis',
-      nameTh: 'แสงเหนือออโรร่ายามค่ำคืน',
-      previewBg: 'linear-gradient(135deg, #0B132B 0%, #1C2541 100%)',
+      nameSv: 'Norrsken',
+      nameTh: 'แสงเหนือ',
+      previewBg: 'radial-gradient(ellipse 135% 100% at -15% 93%, #15284e 29%, #187d87 42%, #52ebba 51%, #27c9b2 55%, transparent 67%), radial-gradient(ellipse 80% 130% at 104% -56%, #34245f 38%, #9974ec 60%, transparent 70%), linear-gradient(132deg, #152344, #51429b 56%, #21264f)',
       costGems: 85,
       cssClass: 'app-theme-aurora'
     }
@@ -307,6 +331,21 @@
   /* ==========================================================================
      4. SAMLARALBUM & PRESTATIONSMÄRKEN (8 ST BADGES)
      ========================================================================== */
+
+  function renderThemeCards(gems, buttonAttribute) {
+    return APP_COLOR_THEMES.map((theme) => {
+      const owned = Part5State.data.ownedColorThemes.includes(theme.id);
+      const active = Part5State.data.activeColorTheme === theme.id;
+      const action = active ? uiLabel('Vald', 'เลือกอยู่') : owned ? uiLabel('Använd', 'ใช้สีนี้')
+        : uiLabel(`Köp · ${theme.costGems} 💎`, 'ซื้อพื้นหลัง');
+      return `<article class="reward-product reward-theme ${active ? 'reward-selected' : ''}">
+        <div class="reward-swatch" style="background: ${theme.previewBg}" aria-hidden="true"></div>
+        <h3>${uiLabel(theme.nameSv, theme.nameTh)}</h3>
+        <button type="button" class="reward-action" ${buttonAttribute}="${theme.id}"
+          ${owned ? `aria-pressed="${active}"` : ''} ${!owned && gems < theme.costGems ? 'disabled' : ''}>${action}</button>
+      </article>`;
+    }).join('');
+  }
 
   const COLLECTIBLE_BADGES = [
     {
@@ -541,6 +580,7 @@
         'app-theme-sunset'
       );
       const found = APP_COLOR_THEMES.find((t) => t.id === themeId);
+      if (found) document.body.style.setProperty('--reward-wallpaper', found.previewBg);
       if (found && found.cssClass) {
         document.body.classList.add(found.cssClass);
       }
@@ -1430,32 +1470,10 @@
           </div>
         </div>
 
-        <!-- 7. APPFÄRGTEMAN -->
-        <div class="arena-card">
-          <div class="arena-card-header">
-            <div class="arena-icon-badge" style="background: var(--sky-soft); color: var(--sky-dark);">${window.VisualEngine.Library.palette(28)}</div>
-            <div style="flex: 1;">
-              <h3 style="font-weight: 900; font-size: 1.05rem;">สีของแอป 6 แบบ</h3>
-            </div>
-          </div>
-          <div class="wardrobe-grid">
-            ${APP_COLOR_THEMES.map((theme) => {
-              const owned = Part5State.data.ownedColorThemes.includes(theme.id);
-              const active = Part5State.data.activeColorTheme === theme.id;
-              return `
-                <div class="wardrobe-item-card ${active ? 'equipped' : ''}">
-                  <div style="width: 44px; height: 26px; border-radius: 8px; background: ${theme.previewBg}; border: 1.5px solid var(--border-medium);"></div>
-                  <div style="font-weight: 900; font-size: 0.84rem;">${theme.nameTh}</div>
-                  <button type="button" class="btn-3d ${
-                    active ? 'btn-green' : owned ? 'btn-blue' : 'btn-yellow'
-                  } w-full" data-color-theme="${theme.id}" style="min-height: 40px; padding: 4px 8px; font-size: 0.76rem; margin-top: 4px;">
-                    ${active ? '✨ ใช้อยู่' : owned ? 'เลือกใช้' : `💎 ${theme.costGems}`}
-                  </button>
-                </div>
-              `;
-            }).join('')}
-          </div>
-        </div>
+        <section class="arena-card" aria-labelledby="arena-palettes-heading">
+          <h2 id="arena-palettes-heading">${uiLabel('Bakgrunder', 'พื้นหลัง')}</h2>
+          <div class="reward-grid">${renderThemeCards(gems, 'data-color-theme')}</div>
+        </section>
 
         <!-- 8. SAMLARALBUM & PRESTATIONSMÄRKEN (8 BADGES) -->
         <div class="arena-card" style="border-color: var(--gold); background: linear-gradient(135deg, #FFFFFF 0%, #FFFBEB 100%);">
@@ -1648,23 +1666,36 @@
       window.SpeechEngine?.playSound('fanfare');
       window.VisualEngine?.triggerConfetti();
 
+      const extraShield = prizeIcon === '🛡️';
       backdrop.innerHTML = `
-        <div class="welcome-onboard-card" style="border-color: #38BDF8;">
-          <div style="font-size: 4rem; animation: trophyBounce 1s infinite;">${prizeIcon}</div>
-          <span class="satun-badge">🎁 เปิดกล่องตัวช่วยของวิลาวันแล้ว</span>
-          <h2 style="font-size: 1.45rem; font-weight: 900; color: var(--emerald-dark);">${prizeTitle}</h2>
-          <p class="th-text" style="font-size: 0.95rem; color: var(--text-secondary);">${prizeDesc}</p>
-          <button type="button" class="btn-3d btn-green w-full" id="btn-close-mystery-box" style="margin-top: 10px;">
-            รับตัวช่วย
-          </button>
+        <div class="reward-prize" role="dialog" aria-modal="true" aria-labelledby="reward-prize-title">
+          <div class="reward-prize-art" aria-hidden="true">${window.VisualEngine.getBoosterSVG(extraShield ? 'streak_freeze' : 'double_xp', 76)}</div>
+          <p>${uiLabel('Din present', 'ของขวัญที่ได้รับ')}</p>
+          <h2 id="reward-prize-title">${uiLabel(extraShield ? 'Ett extra skydd' : 'Dubbla poäng', prizeTitle)}</h2>
+          <div class="reward-prize-description">${uiLabel(extraShield ? 'Skyddet sparas tills du missar en dag.' : 'Du får dubbla XP från lektionerna i 30 minuter.', prizeDesc)}</div>
+          <button type="button" class="reward-action" id="btn-close-mystery-box">${uiLabel('Klart', 'เรียบร้อย')}</button>
         </div>
       `;
 
-      requestAnimationFrame(() => backdrop.classList.add('open'));
-
-      document.getElementById('btn-close-mystery-box')?.addEventListener('click', () => {
+      const fromShop = document.getElementById('shop-modal-backdrop')?.classList.contains('open');
+      const closeButton = document.getElementById('btn-close-mystery-box');
+      backdrop.inert = false;
+      requestAnimationFrame(() => {
+        backdrop.classList.add('open');
+        closeButton.focus({ preventScroll: true });
+      });
+      backdrop.onkeydown = (e) => {
+        if (e.key === 'Tab') e.preventDefault();
+        if (e.key === 'Escape') closeButton.click();
+      };
+      closeButton.addEventListener('click', () => {
         backdrop.classList.remove('open');
+        backdrop.inert = true;
         this.renderCompeteArena();
+        const trigger = fromShop ? '[data-shopmodal-booster="mystery_box"]' : '[data-buy-booster="mystery_box"]';
+        const returnButton = document.querySelector(trigger);
+        const fallback = document.querySelector(fromShop ? '#btn-close-shop-modal' : '.nav-tab.active');
+        (returnButton && !returnButton.disabled ? returnButton : fallback)?.focus({ preventScroll: true });
       });
     },
 
@@ -1971,24 +2002,41 @@
     // --- 2. WILAWANS BUTIK & GARDEROB (DIAMANTERNA) ---
     isMascotMagnified: false,
 
-    openShopModal() {
+    openShopModal({ trigger = document.activeElement, section } = {}) {
       if (!this.shopBackdrop) {
         this.shopBackdrop = document.createElement('div');
         this.shopBackdrop.id = 'shop-modal-backdrop';
         this.shopBackdrop.className = 'gamification-modal-backdrop';
         document.body.appendChild(this.shopBackdrop);
       }
+      if (!this.shopBackdrop.classList.contains('open')) this.shopReturnFocus = trigger;
       this.renderShopModal();
+      this.shopBackdrop.inert = false;
       this.shopBackdrop.classList.add('open');
+      if (section) {
+        this.focusShopSection(section);
+      } else {
+        this.shopBackdrop.querySelector('.reward-store').scrollTop = 0;
+        this.shopBackdrop.querySelector('#reward-title').focus({ preventScroll: true });
+      }
     },
 
     closeShopModal() {
       if (this.shopBackdrop) {
         this.shopBackdrop.classList.remove('open');
+        this.shopBackdrop.inert = true;
+        const target = this.shopReturnFocus?.getClientRects().length ? this.shopReturnFocus : document.getElementById('gems-pill');
+        target?.focus({ preventScroll: true });
       }
     },
 
-    renderShopModal() {
+    focusShopSection(section) {
+      const heading = this.shopBackdrop.querySelector(`#shop-${section}-heading`);
+      heading?.focus({ preventScroll: true });
+      heading?.scrollIntoView({ block: section === 'moves' ? 'nearest' : 'start' });
+    },
+
+    renderShopModal(focusSelector, message) {
       const sm = window.GameEngine.StateManager;
       const gems = sm.state.gems || 0;
       const freezes = Part5State.data.streakFreezesCount || 0;
@@ -1997,209 +2045,156 @@
       const mascotSize = isMagnified ? 220 : 135;
 
       const equippedAcc = MASCOT_ACCESSORIES.find((a) => a.id === Part5State.data.equippedAccessory);
-      const equippedName = equippedAcc ? equippedAcc.nameTh : 'ยังไม่ได้เลือกของแต่งตัว';
-      const equippedDesc = equippedAcc ? equippedAcc.satunDesc : 'Välj en fin hatt eller pynt nedan!';
+      const scrollTop = this.shopBackdrop.querySelector('.gamification-modal-card')?.scrollTop || 0;
+      const boosterInfo = {
+        streak_freeze: { text: uiLabel(`${freezes} av 2 sparade`, `เก็บไว้ ${freezes} จาก 2 ชิ้น`), limit: freezes >= 2 ? uiLabel('Fullt', 'เต็มแล้ว') : '' },
+        double_xp: { text: uiLabel('I 30 minuter', 'นาน 30 นาที'), limit: isDoubleXp ? uiLabel('Aktiv', 'ใช้อยู่') : '' },
+        mystery_box: { text: uiLabel('Ett slumpat hjälpmedel', 'สุ่มตัวช่วยหนึ่งอย่าง') },
+      };
 
       this.shopBackdrop.innerHTML = `
-        <div class="gamification-modal-card" role="dialog" aria-label="Wilawans Butik">
-          <div class="gamification-modal-header">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="font-size: 1.6rem;">🛍️</span>
-              <div>
-                <div style="font-weight: 900; font-size: 1.18rem; color: var(--text-main);">
-                  Wilawans Butik
-                </div>
-                <div class="th-text" style="font-size: 0.78rem; color: var(--text-secondary);">
-                  ร้านของวิลาวัลย์ • แต่งตัวและเปลี่ยนธีมสี
-                </div>
-              </div>
+        <div class="gamification-modal-card reward-store" role="dialog" aria-modal="true" aria-labelledby="reward-title">
+          <header class="reward-header">
+            <h2 id="reward-title" tabindex="-1">${uiLabel('Wilawans butik', 'ร้านของวิลาวัลย์')}</h2>
+            <button type="button" class="reward-close" id="btn-close-shop-modal" aria-label="Stäng butiken · ปิดร้าน">✕</button>
+          </header>
+          <div class="reward-content">
+            <div class="reward-wallet">
+              <div>${uiLabel('Dina juveler', 'เพชรของคุณ')}</div>
+              <strong id="shop-gem-balance">${gems}</strong>
             </div>
-            <button type="button" class="lesson-close-btn" id="btn-close-shop-modal" aria-label="ปิด">✕</button>
-          </div>
-
-          <!-- Saldobanner -->
-          <div style="background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%); border: 2px solid #BAE6FD; border-radius: 20px; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.08);">
-            <div>
-              <div style="font-size: 0.75rem; font-weight: 800; color: #0284C7; text-transform: uppercase; letter-spacing: 0.5px;">Ditt Juvelsaldo</div>
-              <div style="font-size: 1.6rem; font-weight: 900; color: #0369A1;">💎 ${gems} เพชร</div>
+            <div class="reward-links">
+              <button type="button" id="shop-wardrobe-link">
+                ${uiLabel('Garderob', 'แต่งตัว')}<span aria-hidden="true">↘</span>
+              </button>
+              <button type="button" id="shop-colors-link">
+                ${uiLabel('Bakgrunder', 'พื้นหลัง')}<span aria-hidden="true">↘</span>
+              </button>
             </div>
-            <div class="satun-badge" style="background: #FFFFFF; color: #0284C7; border: 1.5px solid #BAE6FD; font-size: 0.8rem;">
-              🛍️ Lull-lull & Teman
-            </div>
-          </div>
-
-          <!-- SEKTION 1: FÄRGTEMAN (6 ST) -->
-          <div style="display: flex; flex-direction: column; gap: 8px;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <div style="font-weight: 900; font-size: 0.98rem; display: flex; align-items: center; gap: 6px;">
-                <span>🎨</span>
-                <span>สีของแอป 6 แบบ</span>
-              </div>
-              <span style="font-size: 0.76rem; color: var(--text-secondary); font-weight: 700;">เปลี่ยนสีได้ทันที</span>
-            </div>
-            <div class="wardrobe-grid">
-              ${APP_COLOR_THEMES.map((theme) => {
-                const owned = Part5State.data.ownedColorThemes.includes(theme.id);
-                const active = Part5State.data.activeColorTheme === theme.id;
-                const canAfford = gems >= theme.costGems;
-                return `
-                  <div class="wardrobe-item-card ${active ? 'equipped' : ''}" style="padding: 10px;">
-                    <div style="width: 100%; height: 32px; border-radius: 10px; background: ${theme.previewBg}; border: 1.5px solid var(--border-medium); margin-bottom: 6px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);"></div>
-                    <div style="font-weight: 900; font-size: 0.82rem; line-height: 1.2;">${theme.nameTh}</div>
-                    <div class="th-text" style="font-size: 0.72rem; color: var(--text-secondary); margin-top: 2px;">${theme.nameTh}</div>
-                    <button type="button" class="btn-3d ${active ? 'btn-green' : owned ? 'btn-blue' : 'btn-yellow'} w-full"
-                      data-shopmodal-theme="${theme.id}"
-                      style="min-height: 38px; padding: 4px 6px; font-size: 0.76rem; margin-top: 6px;"
-                      ${!owned && !canAfford ? 'disabled style="min-height: 38px; padding: 4px 6px; font-size: 0.76rem; margin-top: 6px; opacity:0.55; cursor:not-allowed;"' : ''}>
-                      ${active ? '✨ ใช้อยู่' : owned ? 'เลือกใช้' : `💎 ${theme.costGems} Köp`}
+            <section class="reward-section" aria-labelledby="shop-moves-heading">
+              <h2 id="shop-moves-heading" tabindex="-1">${uiLabel('Wilawans rörelser', 'ท่าทางของวิลาวัลย์')}</h2>
+              ${message ? `<p role="status" class="reward-status">${uiLabel(message.sv, message.th)}</p>` : ''}
+              <div class="reward-grid">
+                ${DALA_MOVES.map((move) => {
+                  const owned = ownsMove(move.id);
+                  const shortfall = Math.max(0, move.costGems - gems);
+                  return `<article class="reward-product reward-move reward-move-${move.id}">
+                    <div class="reward-move-preview" aria-hidden="true"></div>
+                    <h3 id="shop-move-${move.id}-name">${uiLabel(move.nameSv, move.nameTh)}</h3>
+                    <button type="button" class="reward-action ${owned ? 'reward-play' : ''}"
+                      id="btn-shop-act-${move.id}" data-shop-move="${move.id}" aria-describedby="shop-move-${move.id}-name"
+                      ${!owned && shortfall ? 'disabled' : ''}>
+                      ${owned ? uiLabel('Spela upp', 'เล่นท่านี้') : uiLabel(`Köp · ${move.costGems} 💎`, 'ซื้อท่านี้')}
                     </button>
-                  </div>
-                `;
-              }).join('')}
-            </div>
-          </div>
-
-          <!-- SEKTION 2: NONG DALAS LULL-LULL & GARDEROB (10 ST) -->
-          <div style="display: flex; flex-direction: column; gap: 8px;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <div style="font-weight: 900; font-size: 0.98rem; display: flex; align-items: center; gap: 6px;">
-                <span>👑</span>
-                <span>Wilawans Garderob & Styling</span>
+                    ${!owned && shortfall ? `<div class="reward-shortfall">${uiLabel(`Saknar ${shortfall} 💎`, `ขาดอีก ${shortfall} เพชร`)}</div>` : ''}
+                  </article>`;
+                }).join('')}
               </div>
-              <span style="font-size: 0.76rem; color: var(--text-secondary); font-weight: 700;">10 Accessoarer</span>
-            </div>
-
-            <!-- Interaktivt Podium för Wilawan (Större variant & klickbar för zoom) -->
-            <div class="shop-mascot-stage ${isMagnified ? 'stage-magnified' : ''}" id="shop-mascot-stage">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                <div style="text-align: left;">
-                  <div style="font-weight: 800; font-size: 0.75rem; color: var(--text-secondary);">ของที่วิลาวันใส่อยู่:</div>
-                  <div style="font-weight: 900; font-size: 0.92rem; color: #7B2CBF;">${equippedName}</div>
+            </section>
+            <section class="reward-section" aria-labelledby="shop-colors-heading">
+              <h2 id="shop-colors-heading" tabindex="-1">${uiLabel('Bakgrunder', 'พื้นหลัง')}</h2>
+              <div class="reward-grid">${renderThemeCards(gems, 'data-shopmodal-theme')}</div>
+            </section>
+            <section class="reward-section" aria-labelledby="shop-wardrobe-heading">
+              <h2 id="shop-wardrobe-heading" tabindex="-1">${uiLabel('Wilawans garderob', 'แต่งตัวให้วิลาวัลย์')}</h2>
+              <div class="shop-mascot-stage reward-wardrobe-stage ${isMagnified ? 'stage-magnified' : ''}" id="shop-mascot-stage">
+                <div class="reward-equipment">
+                  <strong>${equippedAcc ? uiLabel(equippedAcc.nameSv, equippedAcc.nameTh) : uiLabel('Inget tillbehör', 'ยังไม่ได้ใส่เครื่องประดับ')}</strong>
+                  <button type="button" id="btn-toggle-shop-mascot-zoom" aria-pressed="${isMagnified}">
+                    ${isMagnified ? uiLabel('Gör mindre', 'ย่อรูป') : uiLabel('Förstora', 'ขยายรูป')}
+                  </button>
                 </div>
-                <button type="button" id="btn-toggle-shop-mascot-zoom" class="satun-badge" style="cursor: pointer; background: #F3E8FF; color: #7B2CBF; border-color: #D8B4FE; font-weight: 800; font-size: 0.74rem;">
-                  ${isMagnified ? '🔎 Gör mindre' : '🔍 Förstora Wilawan'}
+                <button type="button" id="shopmodal-mascot-click-target" aria-label="${isMagnified ? 'Gör mindre · ย่อรูป' : 'Förstora · ขยายรูป'}">
+                  <span class="dala-mascot-wrapper" id="shopmodal-mascot-wrapper">${window.VisualEngine.Mascot.getMarkup(mascotSize)}</span>
                 </button>
               </div>
-
-              <!-- Klickbar Maskot (Tryck för att göra henne större eller reagera) -->
-              <div id="shopmodal-mascot-click-target" title="Tryck för att förstora eller se Wilawan reagera!" style="cursor: pointer; display: inline-flex; justify-content: center; align-items: center; margin: 8px 0; transition: transform 0.25s ease;">
-                <div class="dala-mascot-wrapper dala-state-idle" id="shopmodal-mascot-wrapper">
-                  ${window.VisualEngine.Mascot.getMarkup(mascotSize)}
-                </div>
-              </div>
-
-              <div class="th-text" style="font-size: 0.75rem; color: #7C3AED; font-weight: 700; margin-bottom: 8px;">
-                ${isMagnified ? '🌟 Wilawan i full storlek! Tryck på knapparna för att få henne att agera:' : '💡 Tryck på Wilawan för att göra henne större eller testa gesterna:'}
-              </div>
-
-              <!-- Interaktiva knappar: Blinka, Vinka, Stegra -->
-              <div style="display: flex; justify-content: center; gap: 8px;">
-                <button type="button" class="btn-3d btn-surface mascot-act-btn" id="btn-shop-act-blink" style="flex: 1; min-height: 38px; padding: 4px 6px; font-size: 0.8rem; font-weight: 900; border-radius: 12px;">
-                  👁️ Blinka
-                </button>
-                <button type="button" class="btn-3d btn-yellow mascot-act-btn" id="btn-shop-act-wave" style="flex: 1; min-height: 38px; padding: 4px 6px; font-size: 0.8rem; font-weight: 900; border-radius: 12px;">
-                  👋 Vinka
-                </button>
-                <button type="button" class="btn-3d btn-green mascot-act-btn" id="btn-shop-act-rear" style="flex: 1; min-height: 38px; padding: 4px 6px; font-size: 0.8rem; font-weight: 900; border-radius: 12px;">
-                  🐎 Stegra!
-                </button>
-              </div>
-            </div>
-
-            <div class="wardrobe-grid">
-              ${MASCOT_ACCESSORIES.map((acc) => {
-                const owned = Part5State.data.ownedAccessories.includes(acc.id);
-                const equipped = Part5State.data.equippedAccessory === acc.id;
-                const canAfford = gems >= acc.costGems;
-                return `
-                  <div class="wardrobe-item-card ${equipped ? 'equipped' : ''}" style="padding: 10px;">
-                    <div class="wardrobe-svg-icon" style="height: 44px;">${window.VisualEngine.getAccessorySVG(acc.id, 44)}</div>
-                    <div style="font-weight: 900; font-size: 0.82rem; line-height: 1.2;">${acc.nameTh}</div>
-                    <div class="th-text" style="font-size: 0.72rem; color: var(--text-secondary); margin-top: 2px;">${acc.nameTh}</div>
-                    <button type="button" class="btn-3d ${equipped ? 'btn-green' : owned ? 'btn-blue' : 'btn-yellow'} w-full"
-                      data-shopmodal-acc="${acc.id}"
-                      style="min-height: 38px; padding: 4px 6px; font-size: 0.76rem; margin-top: 6px;"
-                      ${!owned && !canAfford ? 'disabled style="min-height: 38px; padding: 4px 6px; font-size: 0.76rem; margin-top: 6px; opacity:0.55; cursor:not-allowed;"' : ''}>
-                      ${equipped ? '✅ ใส่อยู่' : owned ? '👕 สวมใส่' : `💎 ${acc.costGems}`}
+              <div class="reward-grid">
+                ${MASCOT_ACCESSORIES.map((acc) => {
+                  const owned = Part5State.data.ownedAccessories.includes(acc.id);
+                  const equipped = Part5State.data.equippedAccessory === acc.id;
+                  return `<article class="reward-product reward-accessory ${equipped ? 'reward-selected' : ''}">
+                    <div class="reward-accessory-art" aria-hidden="true">${window.VisualEngine.getAccessorySVG(acc.id, 52)}</div>
+                    <h3>${uiLabel(acc.nameSv, acc.nameTh)}</h3>
+                    <button type="button" class="reward-action" data-shopmodal-acc="${acc.id}" ${owned ? `aria-pressed="${equipped}"` : ''}
+                      ${!owned && gems < acc.costGems ? 'disabled' : ''}>
+                      ${equipped ? uiLabel('Ta av', 'ถอดออก') : owned ? uiLabel('Ta på', 'สวมใส่') : uiLabel(`Köp · ${acc.costGems} 💎`, 'ซื้อเครื่องประดับ')}
                     </button>
-                  </div>
-                `;
-              }).join('')}
-            </div>
-          </div>
-
-          <!-- SEKTION 3: BOOSTERS & LYCKOLÅDA -->
-          <div style="display: flex; flex-direction: column; gap: 8px;">
-            <div style="font-weight: 900; font-size: 0.98rem; display: flex; align-items: center; gap: 6px;">
-              <span>⚡</span>
-              <span>ตัวช่วยฝึกและกล่องของขวัญ</span>
-            </div>
-            <div class="booster-grid">
-              <!-- Booster 1: Streak Freeze -->
-              <div class="booster-item-card" style="padding: 10px;">
-                <div class="booster-svg-icon">${window.VisualEngine.getBoosterSVG('streak_freeze', 38)}</div>
-                <div style="font-weight: 900; font-size: 0.82rem;">โล่รักษาสตรีค</div>
-                <div class="th-text" style="font-size: 0.72rem; color: var(--text-secondary);">${freezes}/2 sparade</div>
-                <button type="button" class="btn-3d btn-blue w-full" data-shopmodal-booster="streak_freeze" style="min-height: 36px; font-size: 0.76rem; padding: 2px;" ${freezes >= 2 || gems < 35 ? 'disabled' : ''}>
-                  ${freezes >= 2 ? 'Fullt' : '35 💎'}
-                </button>
+                  </article>`;
+                }).join('')}
               </div>
-
-              <!-- Booster 2: 2x XP -->
-              <div class="booster-item-card" style="padding: 10px;">
-                <div class="booster-svg-icon">${window.VisualEngine.getBoosterSVG('double_xp', 38)}</div>
-                <div style="font-weight: 900; font-size: 0.82rem;">2x XP (30m)</div>
-                <div class="th-text" style="font-size: 0.72rem; color: var(--text-secondary);">${isDoubleXp ? 'ใช้อยู่!' : 'แต้มคูณสอง'}</div>
-                <button type="button" class="btn-3d btn-yellow w-full" data-shopmodal-booster="double_xp" style="min-height: 36px; font-size: 0.76rem; padding: 2px;" ${isDoubleXp || gems < 45 ? 'disabled' : ''}>
-                  ${isDoubleXp ? '⚡ ใช้อยู่' : '45 💎'}
-                </button>
+            </section>
+            <section class="reward-section" aria-labelledby="shop-boosters-heading">
+              <h2 id="shop-boosters-heading">${uiLabel('Extra hjälp', 'ตัวช่วยฝึก')}</h2>
+              <div class="reward-boosters">
+                ${SHOP_BOOSTERS.map((item) => `<article class="reward-booster">
+                  <div class="reward-booster-art" aria-hidden="true">${window.VisualEngine.getBoosterSVG(item.id, 42)}</div>
+                  <div><h3>${uiLabel(item.nameSv, item.nameTh)}</h3><p>${boosterInfo[item.id].text}</p></div>
+                  <button type="button" class="reward-action" data-shopmodal-booster="${item.id}" ${boosterInfo[item.id].limit || gems < item.costGems ? 'disabled' : ''}>
+                    ${boosterInfo[item.id].limit || uiLabel(`${item.costGems} 💎`, 'ซื้อ')}
+                  </button>
+                </article>`).join('')}
               </div>
-
-              <!-- Booster 3: Mystery Box -->
-              <div class="booster-item-card" style="padding: 10px;">
-                <div class="booster-svg-icon">${window.VisualEngine.getBoosterSVG('mystery_box', 38)}</div>
-                <div style="font-weight: 900; font-size: 0.82rem;">กล่องตัวช่วย</div>
-                <div class="th-text" style="font-size: 0.72rem; color: var(--text-secondary);">โล่หรือตัวช่วย XP</div>
-                <button type="button" class="btn-3d btn-green w-full" data-shopmodal-booster="mystery_box" style="min-height: 36px; font-size: 0.76rem; padding: 2px;" ${gems < 50 ? 'disabled' : ''}>
-                  50 💎
-                </button>
-              </div>
-            </div>
+            </section>
           </div>
         </div>
       `;
 
-      // Händelsekopplingar i Wilawans Butik
-      document.getElementById('btn-close-shop-modal')?.addEventListener('click', () => this.closeShopModal());
+      const shopCard = this.shopBackdrop.querySelector('.gamification-modal-card');
+      shopCard.scrollTop = scrollTop;
+      if (focusSelector) shopCard.querySelector(focusSelector)?.focus({ preventScroll: true });
+
+      shopCard.querySelector('#btn-close-shop-modal').addEventListener('click', () => this.closeShopModal());
+      shopCard.querySelector('#shop-wardrobe-link').addEventListener('click', () => this.focusShopSection('wardrobe'));
+      shopCard.querySelector('#shop-colors-link').addEventListener('click', () => this.focusShopSection('colors'));
       this.shopBackdrop.onclick = (e) => {
         if (e.target === this.shopBackdrop) this.closeShopModal();
       };
-
-      // Zoom toggle för Wilawan
-      const toggleMascotZoom = () => {
-        this.isMascotMagnified = !this.isMascotMagnified;
-        this.renderShopModal();
-        if (this.isMascotMagnified) {
-          window.VisualEngine?.Mascot?.triggerAction?.('wave');
-        } else {
-          window.SpeechEngine?.playSound?.('tap');
+      this.shopBackdrop.onkeydown = (e) => {
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          this.closeShopModal();
+        } else if (e.key === 'Tab') {
+          const buttons = shopCard.querySelectorAll('button:not(:disabled)');
+          const first = buttons[0];
+          const last = buttons[buttons.length - 1];
+          if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
         }
+      };
+
+      const toggleMascotZoom = (e) => {
+        this.isMascotMagnified = !this.isMascotMagnified;
+        this.renderShopModal(`#${e.currentTarget.id}`);
+        window.SpeechEngine?.playSound?.('tap');
       };
       document.getElementById('btn-toggle-shop-mascot-zoom')?.addEventListener('click', toggleMascotZoom);
       document.getElementById('shopmodal-mascot-click-target')?.addEventListener('click', toggleMascotZoom);
 
-      // Gester: Blinka, Vinka, Stegra
-      document.getElementById('btn-shop-act-blink')?.addEventListener('click', (e) => {
-        window.VisualEngine?.haptic?.('light', e.currentTarget);
-        window.VisualEngine?.Mascot?.triggerAction?.('blink');
-      });
-      document.getElementById('btn-shop-act-wave')?.addEventListener('click', (e) => {
-        window.VisualEngine?.haptic?.('light', e.currentTarget);
-        window.VisualEngine?.Mascot?.triggerAction?.('wave');
-      });
-      document.getElementById('btn-shop-act-rear')?.addEventListener('click', (e) => {
-        window.VisualEngine?.haptic?.('light', e.currentTarget);
-        window.VisualEngine?.Mascot?.triggerAction?.('rear');
+      shopCard.querySelectorAll('[data-shop-move]').forEach((button) => {
+        button.addEventListener('click', async () => {
+          const moveId = button.dataset.shopMove;
+          if (ownsMove(moveId)) {
+            playMove(moveId, button);
+            return;
+          }
+
+          button.disabled = true;
+          const result = await purchaseMove(moveId);
+          if (!this.shopBackdrop.classList.contains('open')) return;
+          const move = DALA_MOVES.find(entry => entry.id === moveId);
+          const message = result.ok
+            ? { sv: `${move.nameSv} är upplåst`, th: `ปลดล็อกท่า${move.nameTh}แล้ว` }
+            : result.reason === 'insufficient-gems'
+            ? { sv: 'Du behöver fler juveler', th: 'เพชรของคุณยังไม่พอ' }
+            : { sv: 'Köpet kunde inte sparas', th: 'บันทึกการซื้อไม่ได้' };
+          if (result.reason === 'purchased') window.SpeechEngine?.playSound?.('correct');
+          this.renderShopModal(`#btn-shop-act-${moveId}`, message);
+        });
       });
 
       // Färgteman
@@ -2209,7 +2204,7 @@
           const themeId = btn.getAttribute('data-shopmodal-theme');
           CompeteAndShopUI.handleColorThemeAction(themeId);
           window.GameEngine?.UIController?.renderTopbar?.();
-          this.renderShopModal();
+          this.renderShopModal(`[data-shopmodal-theme="${themeId}"]`);
         });
       });
 
@@ -2220,7 +2215,7 @@
           const accId = btn.getAttribute('data-shopmodal-acc');
           CompeteAndShopUI.handleAccessoryAction(accId);
           window.GameEngine?.UIController?.renderTopbar?.();
-          this.renderShopModal();
+          this.renderShopModal(`[data-shopmodal-acc="${accId}"]`);
         });
       });
 
@@ -2387,9 +2382,6 @@
      10. "MINA ORD"-BANK & VÄLKOMSTSKÄRM
      ========================================================================== */
 
-  const vocabLabel = (sv, th) =>
-    `<span class="ui-label"><span lang="sv">${sv}</span><small lang="th">${th}</small></span>`;
-
   const MinaOrdBank = {
     searchTimer: null,
     renderVocabBank({ preserveControls = false } = {}) {
@@ -2410,7 +2402,7 @@
         summaryEl.innerHTML = `
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 10px;">
           <div>
-            <div style="font-weight: 900; font-size: 1rem;">${vocabLabel('Mina ord', 'คำศัพท์ของฉัน')}</div>
+            <div style="font-weight: 900; font-size: 1rem;">${uiLabel('Mina ord', 'คำศัพท์ของฉัน')}</div>
             <div class="th-text" style="font-size: 0.82rem; color: var(--text-secondary);">
               ฝึกแล้ว <strong>${learnedItems.length}</strong> / ${allItems.length} คำ • ระดับ 4–5 ดาว <strong>${masteredItems.length}</strong> คำ
             </div>
@@ -2420,13 +2412,13 @@
 
         <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px;">
           <div style="flex: 1 1 175px; min-width: 0; display: grid; gap: 4px;">
-            <label for="mina-ord-search">${vocabLabel('Sök ord', 'ค้นหาเป็นภาษาสวีเดนหรือภาษาไทย')}</label>
+            <label for="mina-ord-search">${uiLabel('Sök ord', 'ค้นหาเป็นภาษาสวีเดนหรือภาษาไทย')}</label>
             <input type="search" id="mina-ord-search" class="th-text"
               style="width: 100%; min-width: 0; min-height: 44px; padding: 9px 12px; border-radius: 12px; border: 2px solid var(--border-light); font-size: 0.95rem;"
             />
           </div>
           <div style="flex: 1 1 205px; min-width: 0; display: grid; gap: 4px;">
-            <label for="mina-ord-filter">${vocabLabel('Visa', 'เลือกคำที่จะแสดง')}</label>
+            <label for="mina-ord-filter">${uiLabel('Visa', 'เลือกคำที่จะแสดง')}</label>
             <select id="mina-ord-filter" class="th-text" style="width: 100%; min-width: 0; min-height: 44px; padding: 9px 12px; border-radius: 12px; border: 2px solid var(--border-light); font-size: 0.95rem; background: #fff;">
               <option value="all" ${currentFilter === 'all' ? 'selected' : ''}>Alla ord · คำศัพท์ทั้งหมด (${allItems.length})</option>
               <option value="learned" ${currentFilter === 'learned' ? 'selected' : ''}>Övade ord · คำที่เคยฝึก (${learnedItems.length})</option>
@@ -2505,13 +2497,13 @@
 
               <div style="display: flex; gap: 8px;">
                 <button type="button" class="btn-3d btn-blue" data-vocab-normal="${item.id}" style="min-height: 44px; flex: 1; padding: 6px 10px; font-size: 0.82rem;">
-                  ${vocabLabel('Lyssna', 'ฟังปกติ')}
+                  ${uiLabel('Lyssna', 'ฟังปกติ')}
                 </button>
                 <button type="button" class="btn-3d" data-vocab-turtle="${item.id}" style="min-height: 44px; flex: 1; padding: 6px 10px; font-size: 0.82rem; background: var(--lavender-soft); color: #7B2CBF; border-color: #D8B4FE;">
-                  ${vocabLabel('Långsamt', 'ฟังช้า ๆ')}
+                  ${uiLabel('Långsamt', 'ฟังช้า ๆ')}
                 </button>
                 <button type="button" class="btn-3d btn-green" data-vocab-practice-mic="${item.id}" style="min-height: 44px; flex: 1.2; padding: 6px 10px; font-size: 0.82rem;">
-                  ${vocabLabel('Öva uttal', 'ฝึกออกเสียง')}
+                  ${uiLabel('Öva uttal', 'ฝึกออกเสียง')}
                 </button>
               </div>
             </div>
@@ -2556,7 +2548,7 @@
       backdrop.innerHTML = `
         <div class="voice-practice-sheet" role="dialog" aria-label="ฝึกออกเสียง ${item.sv}">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-            <span class="satun-badge">${vocabLabel('Öva uttal', 'ฝึกออกเสียง')}</span>
+            <span class="satun-badge">${uiLabel('Öva uttal', 'ฝึกออกเสียง')}</span>
             <button type="button" class="lesson-close-btn" id="btn-close-voice-modal" aria-label="ปิด">✕</button>
           </div>
 
@@ -2577,10 +2569,10 @@
             </div>
             <div style="display: flex; gap: 8px; margin-top: 10px;">
               <button type="button" class="btn-3d btn-blue" id="btn-modal-listen-normal" style="flex: 1; min-height: 48px; font-size: 0.85rem;">
-                ${vocabLabel('Lyssna', 'ฟังปกติ')}
+                ${uiLabel('Lyssna', 'ฟังปกติ')}
               </button>
               <button type="button" class="btn-3d" id="btn-modal-listen-turtle" style="flex: 1; min-height: 48px; font-size: 0.85rem; background: var(--lavender); color: #fff;">
-                ${vocabLabel('Långsamt', 'ฟังช้า ๆ')}
+                ${uiLabel('Långsamt', 'ฟังช้า ๆ')}
               </button>
             </div>
           </div>
@@ -2588,7 +2580,7 @@
           <div class="mic-stage-box" style="gap: 8px;">
             <button type="button" class="mic-record-btn state-idle" id="btn-modal-mic-start">
               <div class="mic-btn-icon-wrap" id="modal-mic-icon">🎙️</div>
-              <span class="mic-btn-status-label" id="modal-mic-label">${vocabLabel('Säg ordet', 'พูดคำนี้')}</span>
+              <span class="mic-btn-status-label" id="modal-mic-label">${uiLabel('Säg ordet', 'พูดคำนี้')}</span>
             </button>
             <div class="live-hearing-pill" id="modal-hearing-pill">
               <span>👂</span>
@@ -2653,22 +2645,22 @@
             if (state === 'recording') {
               micBtn.classList.add('state-recording');
               if (micIcon) micIcon.textContent = '🔴';
-              if (micLabel) micLabel.innerHTML = vocabLabel('Stoppa', 'แตะเพื่อหยุด');
+              if (micLabel) micLabel.innerHTML = uiLabel('Stoppa', 'แตะเพื่อหยุด');
             } else if (state === 'analyzing') {
               micBtn.classList.add('state-analyzing');
               if (micIcon) micIcon.innerHTML = '<span class="mic-spin-star">⭐</span>';
-              if (micLabel) micLabel.innerHTML = vocabLabel('Bedömer', 'กำลังตรวจเสียง');
+              if (micLabel) micLabel.innerHTML = uiLabel('Bedömer', 'กำลังตรวจเสียง');
             } else {
               micBtn.classList.add('state-idle');
               if (micIcon) micIcon.textContent = '🎙️';
-              if (micLabel) micLabel.innerHTML = vocabLabel('Säg ordet', 'พูดคำนี้');
+              if (micLabel) micLabel.innerHTML = uiLabel('Säg ordet', 'พูดคำนี้');
             }
           },
           onResult: (res) => {
             micBtn.classList.remove('state-recording', 'state-analyzing');
             micBtn.classList.add('state-idle');
             if (micIcon) micIcon.textContent = '🎙️';
-            if (micLabel) micLabel.innerHTML = vocabLabel('Säg ordet', 'พูดคำนี้');
+            if (micLabel) micLabel.innerHTML = uiLabel('Säg ordet', 'พูดคำนี้');
 
             const evalRes = res.evaluation;
             if (hearingText) {
@@ -2822,6 +2814,16 @@
     window.GameEngine?.UIController?.refreshAll?.();
     WelcomeOnboard.showWelcomeScreen(false);
   }
+
+  window.WilawanMoves = Object.freeze({
+    catalog: DALA_MOVES,
+    owns: ownsMove,
+    balance: moveBalance,
+    purchase: purchaseMove,
+    openShop: (trigger) => GamificationModals.openShopModal({ trigger, section: 'moves' }),
+    openWardrobe: (trigger) => GamificationModals.openShopModal({ trigger, section: 'wardrobe' }),
+    play: playMove
+  });
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initPart5);

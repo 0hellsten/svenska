@@ -41,21 +41,59 @@
     ]
   };
 
+  // Fit the shop's original accessories to the painted horse's 760 × 695
+  // image, rather than laying them over a square gesture control.
+  const ACCESSORY_FITS = {
+    midsommar: ['head', 182, 96, -13, 2.8, 50, 26],
+    solglasogon: ['head', 184, 156, -19, 2.85, 50, 38],
+    vintermossa: ['head', 207, 86, -10, 3, 50, 24],
+    fikabricka: ['body', 144, 577, 0, 4.05, 76, 74],
+    halsduk: ['head', 226, 267, -27, 4.8, 50, 52],
+    kungakrona: ['head', 208, 81, -11, 3.1, 50, 20],
+    snorkel: ['head', 183, 151, -16, 2.75, 50, 38],
+    viking: ['head', 207, 84, -10, 2.65, 50, 22],
+    diamantaura: ['body', 380, 350, 0, 6.6, 50, 50],
+    guldstatyett: ['body', 380, 350, 0, 7.7, 50, 40]
+  };
+
+  function fitAccessory(accessory) {
+    const fit = accessory && ACCESSORY_FITS[accessory.id];
+    if (!fit) return null;
+    const [anchor, x, y, angle, scale, originX, originY] = fit;
+    const transform = `translate(${x} ${y}) rotate(${angle}) scale(${scale}) translate(${-originX} ${-originY})`;
+    return {
+      id: accessory.id,
+      anchor,
+      artwork: `<g transform="${transform}">${accessory.svgOverlay}</g>`
+    };
+  }
+
   const MascotController = {
     currentState: 'idle',
     bubbleTimer: null,
-    gestureIndex: 0,
 
     getMarkup(size = 72, animated = false) {
-      const accessory = this.getAccessory?.();
-      const wardrobe = accessory
-        ? `<svg class="dala-wardrobe" viewBox="0 0 100 100" aria-hidden="true" data-accessory="${accessory.id}">${accessory.svgOverlay}</svg>`
-        : '';
       return `<span class="dala-portrait" style="--dala-size:${size}px">
           <img class="dala-horse-image" src="assets/wilawan-dala-horse.webp" width="760" height="695" alt="วิลาวัลย์" draggable="false">
           ${animated ? '<canvas class="dala-horse-canvas" aria-hidden="true"></canvas>' : ''}
-          ${wardrobe}
+          ${this.getWardrobeMarkup()}
         </span>`;
+    },
+
+    getWardrobeMarkup() {
+      const accessory = fitAccessory(this.getAccessory?.());
+      return accessory
+        ? `<svg class="dala-wardrobe" viewBox="0 0 760 695" preserveAspectRatio="xMidYMax meet" aria-hidden="true" data-accessory="${accessory.id}">${accessory.artwork}</svg>`
+        : '';
+    },
+
+    getStageAccessory() {
+      const accessory = fitAccessory(this.getAccessory?.());
+      if (!accessory) return null;
+      return {
+        anchor: accessory.anchor,
+        markup: `<svg class="dala-stage-wardrobe" viewBox="0 0 384 384" aria-hidden="true" data-accessory="${accessory.id}"><g transform="translate(28.6 65.2) scale(.43)">${accessory.artwork}</g></svg>`
+      };
     },
 
     setState(newState = 'idle') {
@@ -108,28 +146,9 @@
       this.say(item.th, item.satun, category);
     },
 
-    /**
-     * Kör en interaktiv gest: 'blink', 'wave' eller 'rear' (stegra)
-     */
     triggerAction(actionName, targetEl = null) {
-      const wrappers = targetEl
-        ? [targetEl.closest('.dala-mascot-wrapper') || targetEl.querySelector('.dala-mascot-wrapper') || targetEl]
-        : Array.from(document.querySelectorAll('.dala-mascot-wrapper'));
-
       const move = actionName === 'stegra' ? 'rear' : actionName;
-      wrappers.forEach(wrapper => window.DalaMotion.play(wrapper, move));
-
-      if (actionName === 'blink') {
-        window.SpeechEngine?.playSound?.('tap');
-        this.say('กระพริบตาสองที น่ารักไหม? ✨', 'กะพริบตาปริบๆ หรอยจัง!', 'happy', 2400);
-      } else if (actionName === 'wave') {
-        window.SpeechEngine?.playSound?.('correct');
-        this.say('สวัสดีจ้า ยินดีต้อนรับสู่ร้านของวิลาวัลย์! 👋', 'โบกมือทักทาย หรอยแรงนิ!', 'correct', 2800);
-      } else if (actionName === 'rear' || actionName === 'stegra') {
-        window.SpeechEngine?.playSound?.('fanfare');
-        window.VisualEngine?.triggerConfetti?.();
-        this.say('ฮี้ๆๆ! ม้าสตูลทรงพลัง กระโดดสองขา! 🐎', 'ยกขาหน้าผงาด เก่งเบอร์นี้!', 'celebrating', 3200);
-      }
+      return window.WilawanMoves?.play(move, targetEl) ?? false;
     },
 
     /**
@@ -141,7 +160,7 @@
       if (oldWrapper) window.DalaMotion.unmount(oldWrapper);
       const interactive = containerEl.id !== 'feedback-mascot-container';
       const tag = interactive ? 'button' : 'span';
-      const button = interactive ? 'type="button" aria-label="แตะวิลาวัลย์เพื่อดูท่าทาง"' : 'aria-hidden="true"';
+      const button = interactive ? 'type="button" aria-haspopup="dialog" aria-label="ท่าทางของวิลาวัลย์"' : 'aria-hidden="true"';
       containerEl.innerHTML = `
         <${tag} class="dala-mascot-wrapper" ${button}>
           ${this.getMarkup(size, true)}
@@ -153,11 +172,9 @@
       window.DalaMotion.mount(wrapper, startingMove);
       if (!interactive) return;
       wrapper.addEventListener('click', () => {
-        const moves = ['wave', 'rear', 'jump', 'bow', 'blink'];
-        const move = moves[this.gestureIndex++ % moves.length];
         window.VisualEngine.haptic('light', containerEl);
         window.SpeechEngine?.playSound?.('tap');
-        window.DalaMotion.play(wrapper, move);
+        window.DalaStage?.open(wrapper);
       });
     }
   };
@@ -1965,6 +1982,9 @@
   function initVisuals() {
     ParticleEngine.init();
     window.VisualEngine.renderMascot('idle');
+    document.getElementById('btn-dala-moves')?.addEventListener('click', event => {
+      window.DalaStage?.open(event.currentTarget);
+    });
     window.VisualEngine.mountTrainingModeIcons();
     setupEngineHooks();
   }

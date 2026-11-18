@@ -1070,12 +1070,20 @@
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
   }
 
+  const DALA_MOVES = Object.freeze([
+    { id: 'wave', nameSv: 'Vinka', nameTh: 'โบกทักทาย', descriptionSv: 'Wilawan hälsar med framhoven.', descriptionTh: 'วิลาวัลย์ยกขาหน้าทักทาย', costGems: 180 },
+    { id: 'bow', nameSv: 'Buga', nameTh: 'โค้งคำนับ', descriptionSv: 'Wilawan sänker huvudet och bugar.', descriptionTh: 'วิลาวัลย์ก้มหัวโค้งคำนับ', costGems: 270 },
+    { id: 'jump', nameSv: 'Hoppa', nameTh: 'กระโดด', descriptionSv: 'Wilawan tar sats och hoppar.', descriptionTh: 'วิลาวัลย์ย่อตัวแล้วกระโดด', costGems: 360 },
+    { id: 'rear', nameSv: 'Stegra', nameTh: 'ยกขาหน้าคู่', descriptionSv: 'Wilawan reser sig på bakbenen.', descriptionTh: 'วิลาวัลย์ยืนด้วยขาหลังและยกขาหน้าคู่', costGems: 450 }
+  ].map(Object.freeze));
+
   function createDefaultState() {
     return {
       totalXP: 0,
       dailyXP: 0,
       dailyGoalXP: 60,
       gems: 50,
+      ownedDalaMoves: [],
       streakDays: 1,
       lastActiveDate: getTodayISO(),
       selectedTrainingMode: 'mix',
@@ -1107,6 +1115,7 @@
 
   const StateManager = {
     state: createDefaultState(),
+    savedGemBalance: null,
 
     load() {
       try {
@@ -1116,6 +1125,7 @@
           this.state = {
             ...createDefaultState(),
             ...parsed,
+            ownedDalaMoves: Array.isArray(parsed.ownedDalaMoves) ? parsed.ownedDalaMoves : [],
             dailyGoalXP: 60,
             themeStars: { ...createDefaultState().themeStars, ...(parsed.themeStars || {}) },
             srsData: { ...(parsed.srsData || {}) },
@@ -1132,6 +1142,7 @@
       } catch (_) {
         this.state = createDefaultState();
       }
+      this.savedGemBalance = this.state.gems;
       for (const [id, reward] of Object.entries({ xp_50: 3, lessons_1: 4, turtle_3: 3 })) this.state.competition.quests[id].rewardGems = reward;
       this._checkDayRollover();
       this.save();
@@ -1139,8 +1150,67 @@
 
     save() {
       try {
+        this.syncWallet();
         localStorage.setItem(STORAGE_KEY, JSON.stringify(this.state));
-      } catch (_) {}
+        this.savedGemBalance = this.state.gems;
+        return true;
+      } catch (_) {
+        return false;
+      }
+    },
+
+    syncWallet() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      let stored;
+      try {
+        stored = JSON.parse(raw);
+      } catch (_) {
+        return;
+      }
+      if (!stored) return;
+      if (Number.isSafeInteger(stored.gems) && Number.isSafeInteger(this.savedGemBalance)) {
+        // Keep this tab's pending gem change without overwriting another tab's purchase.
+        this.state.gems = Math.max(0, stored.gems + (this.state.gems - this.savedGemBalance));
+        this.savedGemBalance = stored.gems;
+      }
+      if (Array.isArray(stored.ownedDalaMoves)) {
+        this.state.ownedDalaMoves = [...new Set([...stored.ownedDalaMoves, ...this.state.ownedDalaMoves])];
+      }
+    },
+
+    purchaseDalaMove(id) {
+      const result = (ok, reason) => ({ ok, reason, balance: this.state.gems });
+      const move = DALA_MOVES.find(entry => entry.id === id);
+      if (!move) return Promise.resolve(result(false, 'invalid-move'));
+      const purchase = () => {
+        try {
+          this.syncWallet();
+        } catch (_) {
+          return result(false, 'storage-error');
+        }
+        const { gems, ownedDalaMoves } = this.state;
+        if (ownedDalaMoves.includes(id)) return result(true, 'already-owned');
+        if (!Number.isSafeInteger(gems) || gems < move.costGems) return result(false, 'insufficient-gems');
+
+        this.state.gems -= move.costGems;
+        this.state.ownedDalaMoves = [...ownedDalaMoves, id];
+        if (!this.save()) {
+          this.state.gems = gems;
+          this.state.ownedDalaMoves = ownedDalaMoves;
+          return result(false, 'storage-error');
+        }
+        return result(true, 'purchased');
+      };
+      if (!navigator.locks) return Promise.resolve(purchase());
+      return navigator.locks.request(`${STORAGE_KEY}:moves`, async () => {
+        const outcome = purchase();
+        if (outcome.reason === 'purchased') {
+          // Let the browser distribute the localStorage write before the next tab takes the lock.
+          await new Promise(resolve => setTimeout(resolve, 25));
+        }
+        return outcome;
+      }).catch(() => result(false, 'storage-error'));
     },
 
     _checkDayRollover() {
@@ -3130,11 +3200,18 @@
   // Exponera kärnmoduler på window.GameEngine för enkel integration i Del 2–5
   Object.assign(window.GameEngine, {
     setUiLabel,
+    dalaMoves: DALA_MOVES,
     StateManager,
     SRSManager,
     QuestionGenerator,
     LessonController,
     UIController
+  });
+
+  window.addEventListener('storage', (event) => {
+    if (event.key !== STORAGE_KEY || !event.newValue) return;
+    StateManager.syncWallet();
+    UIController.renderTopbar();
   });
 
   // Starta applikationen när DOM är redo
