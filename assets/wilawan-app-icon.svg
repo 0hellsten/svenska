@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Wilawan">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#1b388d"/>
+      <stop offset=".57" stop-color="#4d55c5"/>
+      <stop offset="1" stop-color="#8f67df"/>
+    </linearGradient>
+    <radialGradient id="glow">
+      <stop stop-color="#b3e9ff" stop-opacity=".64"/>
+      <stop offset="1" stop-color="#b3e9ff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="tile" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#7993ff"/>
+      <stop offset=".52" stop-color="#4f6ce9"/>
+      <stop offset="1" stop-color="#3348b8"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#fff4ad"/>
+      <stop offset=".55" stop-color="#ffd55e"/>
+      <stop offset="1" stop-color="#f8a63e"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%">
+      <feDropShadow dx="0" dy="20" stdDeviation="17" flood-color="#14215d" flood-opacity=".4"/>
+    </filter>
+  </defs>
+  <rect width="512" height="512" fill="url(#sky)"/>
+  <circle cx="396" cy="92" r="220" fill="url(#glow)"/>
+  <circle cx="88" cy="456" r="148" fill="url(#glow)" opacity=".5"/>
+  <path d="M0 83C102 7 260 13 512 63" fill="none" stroke="#fff" stroke-opacity=".13" stroke-width="25"/>
+  <rect x="91" y="94" width="330" height="330" rx="88" fill="#1c2c82" opacity=".42" transform="translate(0 11)"/>
+  <rect x="91" y="94" width="330" height="330" rx="88" fill="url(#tile)" stroke="#dce9ff" stroke-opacity=".8" stroke-width="4" filter="url(#shadow)"/>
+  <path d="M129 176c15-35 43-56 90-64h124" fill="none" stroke="#fff" stroke-opacity=".34" stroke-linecap="round" stroke-width="13"/>
+  <path d="M158 205l35 122 63-97 63 97 35-122" fill="none" stroke="#fffaf0" stroke-linejoin="round" stroke-linecap="round" stroke-width="36"/>
+  <path d="M158 205l35 122 63-97 63 97 35-122" fill="none" stroke="#fff" stroke-opacity=".36" stroke-linejoin="round" stroke-linecap="round" stroke-width="8" transform="translate(0 -7)"/>
+  <path d="m393 86 11 28 29 10-29 10-11 29-10-29-29-10 29-10z" fill="url(#gold)" stroke="#fff4bb" stroke-width="3"/>
+  <circle cx="115" cy="390" r="12" fill="#7ce4de"/>
+  <path d="M117 366v-12m0 72v-12m-24-24H81m72 0h-12" stroke="#b9fff2" stroke-linecap="round" stroke-width="7"/>
+</svg>

@@ -3,568 +3,96 @@
    Levande maskot (Nong Dala), animerat bildbibliotek & partikelsystem
    ========================================================================== */
 
-/* --------------------------------------------------------------------------
-   1. MASKOT (NONG DALA) — 6 ANIMERADE TILLSTÅND
-   -------------------------------------------------------------------------- */
-
+/* Painted Dala horse with a textured motion layer and a static fallback. */
 .dala-mascot-wrapper {
   position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  user-select: none;
-  cursor: pointer;
+  display: inline-grid;
+  place-items: center;
+  border: 0;
+  background: none;
+  padding: 0;
+  vertical-align: middle;
+  color: inherit;
 }
 
-.dala-svg {
+button.dala-mascot-wrapper {
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.dala-portrait {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  width: var(--dala-size);
+  height: var(--dala-size);
+}
+
+.dala-horse-image, .dala-horse-canvas, .dala-wardrobe {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  max-width: none;
+}
+
+.dala-horse-image {
+  left: 3%;
+  bottom: 4%;
+  width: 94%;
+  height: 86%;
+  object-fit: contain;
+  object-position: center bottom;
+  transform-origin: 76% 91%;
+}
+
+.dala-horse-canvas {
+  inset: 0;
   width: 100%;
   height: 100%;
-  display: block;
+  visibility: hidden;
+}
+
+.dala-mascot-wrapper[data-renderer="mesh"] .dala-horse-image { visibility: hidden; }
+.dala-mascot-wrapper[data-renderer="mesh"] .dala-horse-canvas { visibility: visible; }
+
+.dala-wardrobe {
+  inset: 0;
+  width: 100%;
+  height: 100%;
   overflow: visible;
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.08));
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: 75% 89%;
 }
 
-.dala-mascot-wrapper:active .dala-svg {
-  transform: scale(0.94);
-}
-
-/* --- TILLSTÅND A: IDLE (Blinkar, gungar mjukt, öronen vickar) --- */
-.dala-state-idle .dala-body-group {
-  animation: dalaSway 3.2s ease-in-out infinite;
-  transform-origin: 50% 95%;
-}
-
-.dala-state-idle .dala-eye-lid {
-  animation: dalaBlink 3.8s infinite;
-  transform-origin: center;
-}
-
-.dala-state-idle .dala-ear-left {
-  animation: dalaEarTwitchLeft 4.2s ease-in-out infinite 0.5s;
-  transform-origin: 32% 28%;
-}
-
-.dala-state-idle .dala-ear-right {
-  animation: dalaEarTwitchRight 4.2s ease-in-out infinite 0.9s;
-  transform-origin: 68% 28%;
-}
-
-.dala-state-idle .dala-tail {
-  animation: dalaTailWag 2.6s ease-in-out infinite;
-  transform-origin: 20% 75%;
-}
-
-@keyframes dalaSway {
-  0%, 100% {
-    transform: rotate(0deg) translateY(0);
-  }
-  30% {
-    transform: rotate(-1.8deg) translateY(-1px);
-  }
-  70% {
-    transform: rotate(1.8deg) translateY(0.5px);
-  }
-}
-
-@keyframes dalaBlink {
-  0%, 92%, 98%, 100% {
-    transform: scaleY(1);
-  }
-  95% {
-    transform: scaleY(0.08);
-  }
-}
-
-@keyframes dalaEarTwitchLeft {
-  0%, 88%, 100% {
-    transform: rotate(0deg);
-  }
-  92% {
-    transform: rotate(-9deg);
-  }
-  96% {
-    transform: rotate(4deg);
-  }
-}
-
-@keyframes dalaEarTwitchRight {
-  0%, 86%, 100% {
-    transform: rotate(0deg);
-  }
-  90% {
-    transform: rotate(10deg);
-  }
-  95% {
-    transform: rotate(-4deg);
-  }
-}
-
-@keyframes dalaTailWag {
-  0%, 100% {
-    transform: rotate(0deg);
-  }
-  50% {
-    transform: rotate(-12deg);
-  }
-}
-
-/* --- TILLSTÅND B: SPEAKING (Munnen rör sig rytmiskt & huvudet nickar) --- */
-.dala-state-speaking .dala-body-group {
-  animation: dalaHeadBob 0.38s ease-in-out infinite alternate;
-  transform-origin: 50% 85%;
-}
-
-.dala-state-speaking .dala-mouth-open {
-  animation: dalaTalkMouth 0.22s ease-in-out infinite alternate;
-  transform-origin: 50% 55%;
-}
-
-@keyframes dalaHeadBob {
-  0% { transform: translateY(0) rotate(0deg); }
-  100% { transform: translateY(-2.5px) rotate(1.2deg); }
-}
-
-@keyframes dalaTalkMouth {
-  0% { transform: scaleY(0.4) scaleX(0.85); opacity: 0.9; }
-  100% { transform: scaleY(1.3) scaleX(1.1); opacity: 1; }
-}
-
-/* --- TILLSTÅND C: LISTENING (Lutar framåt, förstorat öra, ljudvågor) --- */
-.dala-state-listening .dala-body-group {
-  animation: dalaListenLean 1.4s ease-in-out infinite alternate;
-  transform-origin: 40% 90%;
-}
-
-.dala-state-listening .dala-ear-right {
-  animation: dalaEarListenExpand 0.7s ease-in-out infinite alternate;
-  transform-origin: 68% 28%;
-}
-
-.dala-state-listening .dala-listen-waves {
-  opacity: 1;
-}
-
-.dala-state-listening .dala-listen-wave-ring {
-  animation: dalaWaveExpand 1.2s cubic-bezier(0.1, 0.8, 0.3, 1) infinite;
-  transform-origin: 75% 26%;
-}
-
-.dala-state-listening .dala-listen-wave-ring:nth-child(2) {
-  animation-delay: 0.38s;
-}
-
-@keyframes dalaListenLean {
-  0% { transform: rotate(5deg) scale(1.02) translateX(2px); }
-  100% { transform: rotate(8.5deg) scale(1.05) translateX(3px); }
-}
-
-@keyframes dalaEarListenExpand {
-  0% { transform: scale(1.1) rotate(6deg); }
-  100% { transform: scale(1.32) rotate(14deg); }
-}
-
-@keyframes dalaWaveExpand {
-  0% { transform: scale(0.6); opacity: 0.9; }
-  100% { transform: scale(1.7); opacity: 0; }
-}
-
-/* --- TILLSTÅND D: CELEBRATING (Hoppar högt, stjärnögon, glada armar) --- */
-.dala-state-celebrating .dala-body-group {
-  animation: dalaJumpJoy 0.55s cubic-bezier(0.28, 0.84, 0.42, 1) infinite alternate;
-  transform-origin: 50% 95%;
-}
-
-.dala-state-celebrating .dala-eyes-happy {
-  display: block !important;
-}
-
-.dala-state-celebrating .dala-eyes-normal {
-  display: none !important;
-}
-
-.dala-state-celebrating .dala-sparkles-cluster {
-  opacity: 1;
-  animation: dalaSparkleSpin 1.4s linear infinite;
-  transform-origin: 50% 30%;
-}
-
-@keyframes dalaJumpJoy {
-  0% { transform: translateY(0) scaleY(0.92) scaleX(1.05); }
-  40% { transform: translateY(-16px) scaleY(1.08) scaleX(0.95); }
-  100% { transform: translateY(-22px) rotate(3deg) scaleY(1.04) scaleX(0.98); }
-}
-
-@keyframes dalaSparkleSpin {
-  0% { transform: rotate(0deg) scale(0.85); opacity: 0.7; }
-  50% { transform: rotate(180deg) scale(1.15); opacity: 1; }
-  100% { transform: rotate(360deg) scale(0.85); opacity: 0.7; }
-}
-
-/* --- TILLSTÅND E: ENCOURAGING (Vinkar mjukt, visar hjärta, tröstande) --- */
-.dala-state-encouraging .dala-body-group {
-  animation: dalaGentleComfort 1.8s ease-in-out infinite alternate;
-  transform-origin: 50% 90%;
-}
-
-.dala-state-encouraging .dala-arm-wave {
-  animation: dalaWaveHoof 0.85s ease-in-out infinite alternate;
-  transform-origin: 28% 58%;
-}
-
-.dala-state-encouraging .dala-heart-float {
-  opacity: 1;
-  animation: dalaHeartPulse 1.2s ease-in-out infinite;
-  transform-origin: 50% 20%;
-}
-
-@keyframes dalaGentleComfort {
-  0% { transform: rotate(-3deg) translateY(0); }
-  100% { transform: rotate(3deg) translateY(-2px); }
-}
-
-@keyframes dalaWaveHoof {
-  0% { transform: rotate(-14deg); }
-  100% { transform: rotate(22deg); }
-}
-
-@keyframes dalaHeartPulse {
-  0%, 100% { transform: scale(0.9) translateY(0); opacity: 0.85; }
-  50% { transform: scale(1.22) translateY(-6px); opacity: 1; }
-}
-
-/* --- TILLSTÅND F: STREAK FIRE (Solglasögon, eldslågor, combo 5+) --- */
-.dala-state-streak_fire .dala-body-group {
-  animation: dalaFireFrenzy 0.32s ease-in-out infinite alternate;
-  transform-origin: 50% 90%;
-}
-
-.dala-state-streak_fire .dala-sunglasses {
-  display: block !important;
-  opacity: 1 !important;
-  animation: dalaShadesSlide 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-
-.dala-state-streak_fire .dala-fire-flames {
-  opacity: 1;
-  animation: dalaFlameLick 0.28s ease-in-out infinite alternate;
-  transform-origin: 50% 90%;
-}
-
-@keyframes dalaFireFrenzy {
-  0% { transform: translateY(0) scale(1.02); filter: drop-shadow(0 0 10px rgba(255, 122, 0, 0.4)); }
-  100% { transform: translateY(-4px) scale(1.05); filter: drop-shadow(0 0 16px rgba(255, 75, 75, 0.65)); }
-}
-
-@keyframes dalaShadesSlide {
-  0% { transform: translateY(-24px) scale(0.6); opacity: 0; }
-  100% { transform: translateY(0) scale(1); opacity: 1; }
-}
-
-@keyframes dalaFlameLick {
-  0% { transform: scaleY(0.92) scaleX(0.96) rotate(-2deg); opacity: 0.85; }
-  100% { transform: scaleY(1.18) scaleX(1.04) rotate(2deg); opacity: 1; }
-}
-
-/* --- INTERAKTIVA GESTER: BLINKA, VINKA, STEGRA --- */
-.dala-action-blink .dala-eye-lid {
-  animation: dalaBlinkTwice 0.75s ease-in-out !important;
-  transform-origin: 50% 38%;
-}
-
-.dala-action-blink .dala-body-group {
-  animation: dalaBlinkHeadNod 0.75s ease-in-out !important;
-  transform-origin: 50% 90%;
-}
-
-@keyframes dalaBlinkTwice {
-  0%, 100% { transform: scaleY(1); }
-  22%, 38% { transform: scaleY(0.08); }
-  55% { transform: scaleY(1); }
-  72%, 88% { transform: scaleY(0.08); }
-}
-
-@keyframes dalaBlinkHeadNod {
-  0%, 100% { transform: rotate(0deg) translateY(0); }
-  35% { transform: rotate(3deg) translateY(2px); }
-  70% { transform: rotate(-2deg) translateY(1px); }
-}
-
-.dala-action-wave .dala-arm-wave {
-  animation: dalaVigorousWave 1.4s ease-in-out !important;
-  transform-origin: 30% 60%;
-}
-
-.dala-action-wave .dala-body-group {
-  animation: dalaHappyTilt 1.4s ease-in-out !important;
-  transform-origin: 50% 90%;
-}
+.dala-wardrobe > g { transform: translate(-8px, 2px) scale(.80); }
+.dala-wardrobe[data-accessory="solglasogon"] > g { transform: translate(-7px, 7px) scale(.70); }
+.dala-wardrobe[data-accessory="halsduk"] > g { transform: translate(-3px, 1px) scale(.83); }
+.dala-wardrobe[data-accessory="fikabricka"] > g { transform: translate(-40px, 14px) scale(.86); }
 
-.dala-action-wave .dala-eyes-happy {
-  display: block !important;
+.home-hero-art #mascot-container,
+.home-hero-art .dala-mascot-wrapper,
+.home-hero-art .dala-portrait {
+  width: 100%;
+  height: 100%;
 }
 
-.dala-action-wave .dala-eyes-normal {
-  display: none !important;
-}
-
-@keyframes dalaVigorousWave {
-  0% { transform: rotate(0deg); }
-  15% { transform: rotate(-28deg); }
-  30% { transform: rotate(38deg); }
-  45% { transform: rotate(-24deg); }
-  60% { transform: rotate(34deg); }
-  75% { transform: rotate(-18deg); }
-  90% { transform: rotate(26deg); }
-  100% { transform: rotate(0deg); }
-}
-
-@keyframes dalaHappyTilt {
-  0%, 100% { transform: rotate(0deg) scale(1); }
-  25% { transform: rotate(-6deg) scale(1.04); }
-  75% { transform: rotate(5deg) scale(1.04); }
-}
-
-/* ==========================================================================
-   INTERAKTIV GEST: STEGRA (Upprätt mäktig stegring med stampande framben)
-   ========================================================================== */
-
-.dala-action-rear .dala-body-group {
-  animation: dalaHorseRear 1.9s cubic-bezier(0.25, 1, 0.5, 1) !important;
-  transform-origin: 50% 92%;
-}
-
-/* Dölj sido-viftande armen så enbart de 2 riktiga frambenen syns och stampar */
-.dala-action-rear .dala-arm-wave {
-  opacity: 0 !important;
-  transition: opacity 0.15s ease;
-}
-
-/* Bakbenen förankrar och parerar mot marken */
-.dala-action-rear .dala-hind-legs {
-  animation: dalaHindLegsBrace 1.9s cubic-bezier(0.25, 1, 0.5, 1) !important;
-  transform-box: fill-box;
-  transform-origin: 50% 100%;
-}
-
-/* Vänster framben: Lyfter högt & stampar rytmiskt i luften */
-.dala-action-rear .dala-leg-front-left {
-  animation: dalaFrontLegLeftStamp 1.9s cubic-bezier(0.25, 1, 0.5, 1) !important;
-  transform-box: fill-box;
-  transform-origin: 50% 0%;
-}
-
-/* Höger framben: Stampar i motfas med gyllene hov i luften */
-.dala-action-rear .dala-leg-front-right {
-  animation: dalaFrontLegRightStamp 1.9s cubic-bezier(0.25, 1, 0.5, 1) !important;
-  transform-box: fill-box;
-  transform-origin: 50% 0%;
-}
-
-/* Glada triumferande ögon (^ ^) vid stegring */
-.dala-action-rear .dala-eyes-happy {
-  display: block !important;
-}
-
-.dala-action-rear .dala-eyes-normal {
-  display: none !important;
-}
-
-/* Gnistrande stjärnor och konfetti runt maskoten */
-.dala-action-rear .dala-sparkles-cluster {
-  opacity: 1 !important;
-  animation: dalaSparkleSpin 1.9s linear !important;
-}
-
-/* Spetsade öron vid stegring */
-.dala-action-rear .dala-ear-left {
-  animation: dalaRearEarLeft 1.9s ease-in-out !important;
-  transform-box: fill-box;
-  transform-origin: 30% 70%;
-}
-
-.dala-action-rear .dala-ear-right {
-  animation: dalaRearEarRight 1.9s ease-in-out !important;
-  transform-box: fill-box;
-  transform-origin: 70% 70%;
-}
-
-/* --- KEYFRAMES FÖR STEGRING (UPPRÄTT & STOLT, EJ SIDOGUNG) --- */
-@keyframes dalaHorseRear {
-  0% {
-    transform: translateY(0) scale(1) rotate(0deg);
-  }
-  12% {
-    /* Samla kraft / böj bakbenen inför språnget */
-    transform: translateY(3px) scale(1.02, 0.95) rotate(0deg);
-  }
-  24% {
-    /* Reser sig uppåt rakt mot betraktaren */
-    transform: translateY(-16px) scale(1.05, 1.12) rotate(-2deg);
-  }
-  36% {
-    /* Hög ståtlig stegring, bröstet skjuts fram */
-    transform: translateY(-24px) scale(1.08, 1.18) rotate(2deg);
-  }
-  48% {
-    /* Balanserar stolt på bakbenen */
-    transform: translateY(-26px) scale(1.1, 1.2) rotate(-2deg);
-  }
-  60% {
-    /* Toppnivå: rak, reslig och mäktig */
-    transform: translateY(-27px) scale(1.1, 1.22) rotate(1.5deg);
-  }
-  72% {
-    /* Behåller lyftet medan frambenen stampar klart */
-    transform: translateY(-24px) scale(1.08, 1.18) rotate(-1deg);
-  }
-  82% {
-    /* Snabbt nerslag mot marken */
-    transform: translateY(-6px) scale(1.03, 1.05) rotate(0deg);
-  }
-  86% {
-    /* Markisättning / kraftig hovsmäll med svikt */
-    transform: translateY(3px) scale(1.06, 0.92) rotate(0deg);
-  }
-  92% {
-    /* Elastisk återstuds */
-    transform: translateY(-2px) scale(0.98, 1.02) rotate(0deg);
-  }
-  100% {
-    transform: translateY(0) scale(1) rotate(0deg);
-  }
-}
-
-/* --- KEYFRAMES: VÄNSTER FRAMBEN STAMPAR I LUFTEN --- */
-@keyframes dalaFrontLegLeftStamp {
-  0% {
-    transform: translateY(0) rotate(0deg) scale(1);
-  }
-  12% {
-    transform: translateY(2px) rotate(0deg) scale(1);
-  }
-  22% {
-    /* Börjar lyfta från marken */
-    transform: translateY(-14px) rotate(-16deg) scale(0.95);
-  }
-  32% {
-    /* STAMP 1: Kammar högt upp mot bringan */
-    transform: translateY(-24px) rotate(-24deg) scale(0.92);
-  }
-  42% {
-    /* STAMP 2: Trycker neråt & stampar med gyllene hoven */
-    transform: translateY(-8px) rotate(14deg) scale(1.08, 1.12);
-  }
-  52% {
-    /* STAMP 3: Kammar högt upp igen */
-    transform: translateY(-26px) rotate(-24deg) scale(0.92);
-  }
-  62% {
-    /* STAMP 4: Nytt kraftfullt tramp/stamp nedåt */
-    transform: translateY(-8px) rotate(14deg) scale(1.08, 1.12);
-  }
-  72% {
-    /* Kulmen: Högt lyft tillsammans med höger hov */
-    transform: translateY(-22px) rotate(-18deg) scale(0.95);
-  }
-  82% {
-    /* Rusar ned mot marken */
-    transform: translateY(-4px) rotate(-4deg) scale(1.02);
-  }
-  86% {
-    /* Nedslag i marken med dämpning */
-    transform: translateY(3px) rotate(0deg) scaleY(0.88) scaleX(1.08);
-  }
-  92% {
-    transform: translateY(-1px) rotate(0deg) scale(1);
-  }
-  100% {
-    transform: translateY(0) rotate(0deg) scale(1);
-  }
-}
-
-/* --- KEYFRAMES: HÖGER FRAMBEN STAMPAR I MOTFAS --- */
-@keyframes dalaFrontLegRightStamp {
-  0% {
-    transform: translateY(0) rotate(0deg) scale(1);
-  }
-  12% {
-    transform: translateY(2px) rotate(0deg) scale(1);
-  }
-  22% {
-    /* Börjar lyfta (stampar först nedåt) */
-    transform: translateY(-8px) rotate(12deg) scale(0.98);
-  }
-  32% {
-    /* STAMP 1: Höger hov stampar kraftfullt framåt/neråt */
-    transform: translateY(-8px) rotate(14deg) scale(1.08, 1.12);
-  }
-  42% {
-    /* STAMP 2: Dras uppåt mot bringan i kammarläge */
-    transform: translateY(-24px) rotate(-22deg) scale(0.92);
-  }
-  52% {
-    /* STAMP 3: Kraftfullt tramp/stamp nedåt */
-    transform: translateY(-8px) rotate(14deg) scale(1.08, 1.12);
-  }
-  62% {
-    /* STAMP 4: Dras uppåt mot bringan */
-    transform: translateY(-26px) rotate(-22deg) scale(0.92);
-  }
-  72% {
-    /* Kulmen: Båda hovarna lyfts triumferande */
-    transform: translateY(-20px) rotate(14deg) scale(0.95);
-  }
-  82% {
-    /* Rusar ned mot marken */
-    transform: translateY(-4px) rotate(4deg) scale(1.02);
-  }
-  86% {
-    /* Nedslag i marken med dämpning */
-    transform: translateY(3px) rotate(0deg) scaleY(0.88) scaleX(1.08);
-  }
-  92% {
-    transform: translateY(-1px) rotate(0deg) scale(1);
-  }
-  100% {
-    transform: translateY(0) rotate(0deg) scale(1);
-  }
-}
+.home-hero-art #mascot-container { filter: drop-shadow(0 6px 7px #13082c65); }
+.home-hero-art .dala-mascot-wrapper { min-width: 44px; min-height: 44px; }
 
-/* --- KEYFRAMES: BAKBEN FÖRANKRAR MOT MARKEN --- */
-@keyframes dalaHindLegsBrace {
-  0% {
-    transform: translateY(0) scaleY(1);
-  }
-  12% {
-    transform: translateY(0) scaleY(0.86);
-  }
-  24% {
-    transform: translateY(0) scaleY(1.16);
-  }
-  36%, 48%, 60%, 72% {
-    transform: translateY(0) scaleY(1.22);
-  }
-  86% {
-    transform: translateY(0) scaleY(0.85);
-  }
-  92% {
-    transform: translateY(0) scaleY(1.03);
-  }
-  100% {
-    transform: translateY(0) scaleY(1);
-  }
+.home-hero-art .dala-speech-bubble-container {
+  position: absolute;
+  inset: auto 12px 10px auto;
+  max-width: min(76%, 265px);
+  pointer-events: none;
+  color: var(--text-main);
 }
 
-/* Öron som spetsas i glädje */
-@keyframes dalaRearEarLeft {
-  0%, 100% { transform: rotate(0deg); }
-  30%, 70% { transform: rotate(-12deg) scale(1.05); }
+.home-hero-art .dala-speech-bubble-container::before,
+.home-hero-art .dala-speech-bubble-container::after {
+  display: none;
 }
 
-@keyframes dalaRearEarRight {
-  0%, 100% { transform: rotate(0deg); }
-  30%, 70% { transform: rotate(12deg) scale(1.05); }
+@media (prefers-reduced-motion: reduce) {
+  .dala-speech-bubble-container { animation: none; }
 }
 
 /* --------------------------------------------------------------------------

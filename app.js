@@ -10,6 +10,13 @@
 
   const STORAGE_KEY = 'wilawan_svenska_satun_v1';
 
+  function setUiLabel(element, sv, th) {
+    const label = element?.matches('.ui-label') ? element : element?.querySelector('.ui-label');
+    if (!label) return;
+    label.querySelector('[lang="sv"]').textContent = sv;
+    label.querySelector('[lang="th"]').textContent = th;
+  }
+
   /* ==========================================================================
      1. KROK 1: window.ContentDB (Innehållsdatabas & API för kommande moduler)
      ========================================================================== */
@@ -17,8 +24,8 @@
   const INITIAL_THEMES = [
     {
       id: 'greetings',
-      titleSv: 'Hälsningar & Artighet',
-      titleTh: 'การทักทายและมารยาท',
+      titleSv: 'Hej och tack',
+      titleTh: 'สวัสดีและขอบคุณ',
       satunNote: 'แหลงทักทายหรอยๆ (Hälsa varmt)',
       icon: '👋',
       accent: '#58CC02',
@@ -26,8 +33,8 @@
     },
     {
       id: 'fika_food',
-      titleSv: 'Mat & Svensk Fika',
-      titleTh: 'อาหารและวัฒนธรรมฟีก้า',
+      titleSv: 'Mat och fika',
+      titleTh: 'อาหารและฟีก้า',
       satunNote: 'ของกินหรอยจังฮู้ (Gott att äta)',
       icon: '☕',
       accent: '#FF9600',
@@ -35,8 +42,8 @@
     },
     {
       id: 'everyday',
-      titleSv: 'Vardag & Hemmet',
-      titleTh: 'ชีวิตประจำวันและบ้าน',
+      titleSv: 'Hemma och i vardagen',
+      titleTh: 'ที่บ้านและชีวิตประจำวัน',
       satunNote: 'อยู่บ้านสบายใจ (Trivas hemma)',
       icon: '🏡',
       accent: '#1CB0F6',
@@ -44,7 +51,7 @@
     },
     {
       id: 'family_love',
-      titleSv: 'Familj & Känslor',
+      titleSv: 'Familj och känslor',
       titleTh: 'ครอบครัวและความรู้สึก',
       satunNote: 'รักกันพันพรือ (Kärlek & omtanke)',
       icon: '❤️',
@@ -53,7 +60,7 @@
     },
     {
       id: 'shopping_numbers',
-      titleSv: 'Siffror & Handla',
+      titleSv: 'Siffror och att handla',
       titleTh: 'ตัวเลขและการซื้อของ',
       satunNote: 'ไปหลาดซื้อของ (Gå till marknaden)',
       icon: '🛍️',
@@ -62,8 +69,8 @@
     },
     {
       id: 'weather_time',
-      titleSv: 'Väder & Årstider',
-      titleTh: 'สภาพอากาศและเวลา',
+      titleSv: 'Väder och årstider',
+      titleTh: 'อากาศและฤดูกาล',
       satunNote: 'วันนี้อากาศพันพรือ (Hur är vädret?)',
       icon: '⛅',
       accent: '#FFC800',
@@ -72,7 +79,7 @@
   ];
 
   const INITIAL_ITEMS = [
-    // --- TEMA 1: HÄLSNINGAR & ARTIGHET ---
+    // --- TEMA 1: HEJ OCH TACK ---
     {
       id: 'gr_hej',
       themeId: 'greetings',
@@ -1072,6 +1079,7 @@
       streakDays: 1,
       lastActiveDate: getTodayISO(),
       selectedTrainingMode: 'mix',
+      lastPlayedThemeId: null,
       unlockedThemes: ['greetings', 'fika_food', 'everyday', 'family_love', 'shopping_numbers', 'weather_time'],
       themeStars: {
         greetings: 0,
@@ -1653,9 +1661,12 @@
     selectedTokens: [],
     pronunciationPassed: false,
     sprintState: null,
+    returnFocusElement: null,
 
     startThemeLesson(themeId) {
       this.themeId = themeId;
+      StateManager.state.lastPlayedThemeId = themeId;
+      StateManager.save();
       const mode = StateManager.state.selectedTrainingMode || 'mix';
       const queue = QuestionGenerator.buildLessonQueue(themeId, mode);
       this.startCustomQueue(queue, { themeId, mode });
@@ -1686,12 +1697,15 @@
       this.options = options;
 
       const overlay = document.getElementById('lesson-overlay');
+      if (!overlay.classList.contains('open')) this.returnFocusElement = document.activeElement;
+      overlay.removeAttribute('inert');
       overlay.classList.add('open');
       overlay.setAttribute('aria-hidden', 'false');
 
       document.getElementById('lesson-bottom-bar').style.display = 'block';
       this.hideFeedbackSheet();
       this.renderCurrentQuestion();
+      document.getElementById('btn-close-lesson')?.focus({ preventScroll: true });
     },
 
     closeLesson() {
@@ -1701,7 +1715,13 @@
       const overlay = document.getElementById('lesson-overlay');
       overlay.classList.remove('open');
       overlay.setAttribute('aria-hidden', 'true');
+      overlay.setAttribute('inert', '');
       UIController.refreshAll();
+      const restore = this.returnFocusElement?.isConnected && this.returnFocusElement !== document.body
+        ? this.returnFocusElement
+        : document.querySelector(`[data-start-theme="${this.themeId}"]`) || document.querySelector('.nav-tab.active');
+      restore?.focus({ preventScroll: true });
+      this.returnFocusElement = null;
     },
 
     updateHeaderProgress() {
@@ -1709,6 +1729,11 @@
       const pct = Math.round((this.currentIndex / total) * 100);
       const fill = document.getElementById('lesson-progress-fill');
       if (fill) fill.style.width = `${pct}%`;
+      const track = document.querySelector('#lesson-overlay .lesson-progress-track');
+      if (track) {
+        track.setAttribute('aria-valuenow', String(pct));
+        track.setAttribute('aria-valuetext', `${Math.min(this.currentIndex, this.queue.length)} จาก ${this.queue.length} ข้อ`);
+      }
 
       const comboPill = document.getElementById('lesson-combo-pill');
       if (comboPill) comboPill.textContent = `🔥 ${this.combo}x`;
@@ -1731,7 +1756,7 @@
 
       const checkBtn = document.getElementById('btn-check-answer');
       checkBtn.disabled = true;
-      checkBtn.textContent = 'ตรวจคำตอบ';
+      setUiLabel(checkBtn, 'Kolla svaret', 'ตรวจคำตอบ');
       document.getElementById('lesson-bottom-bar').style.display =
         q.type === 'matching_sprint' ? 'none' : 'block';
 
@@ -1754,6 +1779,8 @@
       } else if (q.type === 'concept_quiz') {
         this._renderConceptQuiz(stage, q);
       }
+      stage.scrollTop = 0;
+      stage.focus({ preventScroll: true });
     },
 
     // --- 4a: BILD + LJUD -> 4 VAL ---
@@ -2482,24 +2509,26 @@
       const continueBtn = document.getElementById('btn-feedback-continue');
       const replayBtn = document.getElementById('btn-feedback-replay');
 
+      sheet.removeAttribute('inert');
       sheet.classList.remove('state-correct', 'state-retry');
 
       if (isCorrect) {
         sheet.classList.add('state-correct');
         titleEl.innerHTML = '✅ หรอยจังฮู้ เก่งมาก!';
         continueBtn.className = 'btn-3d btn-green w-full';
-        continueBtn.textContent = 'ไปต่อเลย';
+        setUiLabel(continueBtn, 'Nästa', 'ข้อต่อไป');
         continueBtn.onclick = () => {
           this.currentIndex += 1;
           this.renderCurrentQuestion();
         };
       } else {
         sheet.classList.add('state-retry');
-        titleEl.innerHTML = '🧡 เกือบถูกแล้ว ลองอีกครั้งจ้า • เกือบถูกแล้ว ลองใหม่นะจ๊ะ';
+        titleEl.textContent = '🧡 เกือบถูกแล้ว ลองอีกครั้งจ้า';
         continueBtn.className = 'btn-3d btn-warm w-full';
-        continueBtn.textContent = 'ลองอีกครั้ง';
+        setUiLabel(continueBtn, 'Prova igen', 'ลองอีกครั้ง');
         continueBtn.onclick = () => {
           this.hideFeedbackSheet();
+          document.getElementById('lesson-stage')?.focus({ preventScroll: true });
         };
       }
 
@@ -2509,16 +2538,25 @@
       };
 
       sheet.classList.add('visible');
+      continueBtn.focus({ preventScroll: true });
     },
 
     hideFeedbackSheet() {
       const sheet = document.getElementById('feedback-sheet');
-      if (sheet) sheet.classList.remove('visible');
+      if (sheet) {
+        sheet.classList.remove('visible');
+        sheet.setAttribute('inert', '');
+      }
     },
 
     renderLessonComplete() {
       const fill = document.getElementById('lesson-progress-fill');
       if (fill) fill.style.width = '100%';
+      const track = document.querySelector('#lesson-overlay .lesson-progress-track');
+      if (track) {
+        track.setAttribute('aria-valuenow', '100');
+        track.setAttribute('aria-valuetext', 'จบบทเรียนแล้ว');
+      }
       document.getElementById('lesson-bottom-bar').style.display = 'none';
 
       // Uppdatera ดาว för temat och daglig utmaning
@@ -2567,7 +2605,7 @@
           </div>
 
           <button type="button" class="btn-3d btn-green w-full" id="btn-finish-lesson-home" style="margin-top: 8px;">
-            กลับหน้าแรก • กลับหน้าแรก
+            <span class="ui-label"><span lang="sv">Till startsidan</span><small lang="th">กลับหน้าแรก</small></span>
           </button>
         </div>
       `;
@@ -2575,6 +2613,7 @@
       document.getElementById('btn-finish-lesson-home')?.addEventListener('click', () => {
         this.closeLesson();
       });
+      stage.focus({ preventScroll: true });
     }
   };
 
@@ -2583,11 +2622,37 @@
      ========================================================================== */
 
   const UIController = {
+    infoBubbleReturnFocus: null,
     init() {
       StateManager.load();
       window.VisualEngine.renderMascot('happy');
+      this.syncTrainingModeSelection();
       this.bindGlobalEvents();
       this.refreshAll();
+    },
+
+    syncTrainingModeSelection() {
+      const buttons = [...document.querySelectorAll('#training-mode-selector .mode-pill-btn')];
+      const savedMode = StateManager.state.selectedTrainingMode;
+      const mode = buttons.some((button) => button.dataset.mode === savedMode) ? savedMode : 'mix';
+      if (mode !== savedMode) {
+        StateManager.state.selectedTrainingMode = mode;
+        StateManager.save();
+      }
+      buttons.forEach((button) => {
+        const selected = button.dataset.mode === mode;
+        button.classList.toggle('active', selected);
+        button.setAttribute('aria-pressed', String(selected));
+      });
+      const feedback = document.getElementById('selected-mode-feedback');
+      const modeNames = {
+        mix: ['Blandat', 'ฝึกผสม'],
+        words: ['Ord', 'คำศัพท์'],
+        sentences: ['Meningar', 'ประโยค'],
+        listen: ['Lyssna', 'ฟังเสียง'],
+        speak: ['Prata', 'พูดออกเสียง']
+      };
+      setUiLabel(feedback, ...modeNames[mode]);
     },
 
     bindGlobalEvents() {
@@ -2598,11 +2663,19 @@
           window.SpeechEngine.playSound('tap');
           window.VisualEngine.haptic('light', tab);
 
-          document.querySelectorAll('.nav-tab').forEach((t) => t.classList.remove('active'));
-          tab.classList.add('active');
+          document.querySelectorAll('.nav-tab').forEach((item) => {
+            const active = item === tab;
+            item.classList.toggle('active', active);
+            if (active) item.setAttribute('aria-current', 'page');
+            else item.removeAttribute('aria-current');
+          });
 
-          document.querySelectorAll('.spa-view').forEach((v) => v.classList.remove('active-view'));
-          document.getElementById(targetId)?.classList.add('active-view');
+          document.querySelectorAll('.spa-view').forEach((view) => {
+            const active = view.id === targetId;
+            view.classList.toggle('active-view', active);
+            view.setAttribute('aria-hidden', String(!active));
+            view.toggleAttribute('inert', !active);
+          });
 
           this.refreshAll();
         });
@@ -2617,13 +2690,7 @@
           window.SpeechEngine.playSound('tap');
           window.VisualEngine.haptic('light', btn);
 
-          document.querySelectorAll('#training-mode-selector .mode-pill-btn').forEach((b) => {
-            b.classList.remove('active');
-            b.setAttribute('aria-selected', 'false');
-          });
-          btn.classList.add('active');
-          btn.setAttribute('aria-selected', 'true');
-
+          this.syncTrainingModeSelection();
           this.renderThemesGrid();
         });
       });
@@ -2633,6 +2700,14 @@
         window.SpeechEngine.playSound('tap');
         window.VisualEngine.haptic('light', e.currentTarget);
         LessonController.startSRSReviewLesson();
+      });
+
+      document.getElementById('btn-continue-learning')?.addEventListener('click', (event) => {
+        const themeId = event.currentTarget.dataset.themeId;
+        if (!themeId) return;
+        window.SpeechEngine.playSound('tap');
+        window.VisualEngine.haptic('light', event.currentTarget);
+        LessonController.startThemeLesson(themeId);
       });
 
       // Lektionsknappar
@@ -2705,8 +2780,35 @@
       document.getElementById('btn-theme-bubble-speak')?.addEventListener('click', (e) => {
         e.stopPropagation();
         window.VisualEngine?.haptic?.('light', e.currentTarget);
-        const thaiSpeech = 'วิธีเก็บวงแหวนให้ครบ 100 เปอร์เซ็นต์ ฝึกสะสมดาวให้ครบทุกคำในหมวดจนได้ 5 ดาว แวะมาฝึกซ้ำเรื่อยๆ ในแต่ละวัน และพิชิตบอสประจำหมวดเพื่อรับเหรียญทองค่ะ สู้ๆ นะคะ';
+        const thaiSpeech = 'วิธีฝึกให้ครบ 100 เปอร์เซ็นต์ ฝึกสะสมดาวให้ครบทุกคำในหมวดจนได้ 5 ดาว แวะมาฝึกซ้ำเรื่อยๆ ในแต่ละวัน และพิชิตบอสประจำหมวดเพื่อรับเหรียญทองค่ะ สู้ๆ นะคะ';
         window.SpeechEngine?.speakThai?.(thaiSpeech);
+      });
+
+      document.addEventListener('keydown', (event) => {
+        const infoBubble = document.getElementById('theme-info-bubble-overlay');
+        const lesson = document.getElementById('lesson-overlay');
+        const dialog = infoBubble?.classList.contains('open') ? infoBubble
+          : lesson?.classList.contains('open') ? lesson : null;
+        if (!dialog) return;
+        if (event.key === 'Escape') {
+          event.preventDefault();
+          if (dialog === infoBubble) this.closeThemeInfoBubble();
+          else LessonController.closeLesson();
+          return;
+        }
+        if (event.key !== 'Tab') return;
+        const focusable = [...dialog.querySelectorAll('button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), [tabindex="0"]')]
+          .filter((element) => !element.closest('[inert]') && element.getClientRects().length);
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && (document.activeElement === first || !dialog.contains(document.activeElement))) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && (document.activeElement === last || !dialog.contains(document.activeElement))) {
+          event.preventDefault();
+          first.focus();
+        }
       });
     },
 
@@ -2715,8 +2817,11 @@
       if (!overlay) return;
       window.SpeechEngine?.playSound?.('tap');
       window.VisualEngine?.haptic?.('light', overlay);
+      this.infoBubbleReturnFocus = document.activeElement;
+      overlay.removeAttribute('inert');
       overlay.classList.add('open');
       overlay.setAttribute('aria-hidden', 'false');
+      document.getElementById('btn-close-theme-bubble')?.focus({ preventScroll: true });
     },
 
     closeThemeInfoBubble() {
@@ -2724,15 +2829,44 @@
       if (!overlay) return;
       overlay.classList.remove('open');
       overlay.setAttribute('aria-hidden', 'true');
+      overlay.setAttribute('inert', '');
       window.SpeechEngine?.stopAudio?.();
+      if (this.infoBubbleReturnFocus?.isConnected && this.infoBubbleReturnFocus !== document.body) {
+        this.infoBubbleReturnFocus.focus({ preventScroll: true });
+      } else {
+        document.getElementById('btn-theme-info-circle')?.focus({ preventScroll: true });
+      }
+      this.infoBubbleReturnFocus = null;
     },
 
     refreshAll() {
       this.renderTopbar();
       this.renderSRSStatus();
       this.renderThemesGrid();
+      this.renderFeaturedLesson();
       this.renderCompeteView();
       this.renderVocabView();
+    },
+
+    renderFeaturedLesson() {
+      const themes = window.ContentDB.getThemes();
+      const button = document.getElementById('btn-continue-learning');
+      if (!button || !themes.length) return;
+
+      const progressFor = (theme) => SRSManager.getThemeProgressPercent(theme.id);
+      const lastPlayed = themes.find((entry) => entry.id === StateManager.state.lastPlayedThemeId);
+      const theme = (lastPlayed && progressFor(lastPlayed) < 100 ? lastPlayed : null) || themes.find((entry) => {
+        const progress = progressFor(entry);
+        return progress > 0 && progress < 100;
+      }) || themes.find((entry) => progressFor(entry) < 100) || themes[0];
+      const progress = progressFor(theme);
+      const titleSv = theme.shortTitleSv || theme.titleSv;
+      setUiLabel(document.getElementById('featured-theme-title'), titleSv, theme.titleTh);
+      document.getElementById('featured-theme-meter').value = progress;
+      document.getElementById('featured-theme-progress').textContent = `${progress}%`;
+      const action = progress > 0 ? ['Fortsätt', 'ฝึกต่อ'] : ['Börja', 'เริ่มเรียน'];
+      setUiLabel(document.getElementById('featured-theme-action'), ...action);
+      button.dataset.themeId = theme.id;
     },
 
     renderTopbar() {
@@ -2763,12 +2897,15 @@
       const due = SRSManager.getDueItems('all');
       const countEl = document.getElementById('srs-due-count');
       const textEl = document.getElementById('srs-status-text');
-      if (countEl) countEl.textContent = due.length;
+      if (countEl) {
+        countEl.textContent = due.length;
+        countEl.hidden = !due.length;
+      }
       if (textEl) {
         textEl.textContent =
           due.length > 0
-            ? 'คำศัพท์ถึงเวลาทบทวน'
-            : 'ทบทวนครบแล้ว! ฝึกเพิ่มเพื่อสะสมดาวได้เลย';
+            ? 'คำพร้อมทบทวน'
+            : 'ฝึกคำศัพท์เพิ่มเติมได้เลย';
       }
     },
 
@@ -2777,14 +2914,6 @@
       if (!grid) return;
 
       const themes = window.ContentDB.getThemes();
-      const mode = StateManager.state.selectedTrainingMode || 'mix';
-      const modeNames = {
-        mix: 'ฝึกผสม',
-        words: 'ฝึกคำศัพท์',
-        sentences: 'เรียงประโยค',
-        listen: 'ฝึกฟัง',
-        speak: 'ฝึกพูด'
-      };
 
       grid.innerHTML = themes
         .map((theme) => {
@@ -2798,14 +2927,16 @@
             .map((idx) => `<span class="star-slot ${idx <= starsEarned ? 'earned' : ''}">★</span>`)
             .join('');
 
-          const cleanTitle = theme.titleTh;
+          const titleSv = theme.shortTitleSv || theme.titleSv;
+          const titleTh = theme.titleTh;
           const cleanSatun = theme.shortSatun || theme.satunNote;
+          const [actionSv, actionTh] = progressPct === 100 ? ['Öva igen', 'ทบทวน']
+            : progressPct > 0 ? ['Fortsätt', 'ฝึกต่อ'] : ['Börja', 'เริ่มเรียน'];
 
           return `
             <article class="theme-card theme-unlocked" style="--theme-accent: ${theme.accent};" data-theme-id="${theme.id}">
               <div class="theme-col-left">
                 <div class="theme-ring-wrapper">
-                  ${window.VisualEngine.createProgressRingSVG(progressPct, theme.accent)}
                   <div class="theme-icon-inner">${window.VisualEngine.getThemeIconSVG(theme.id)}</div>
                 </div>
               </div>
@@ -2813,23 +2944,28 @@
               <div class="theme-col-center">
                 <div class="theme-top-meta">
                   <span class="theme-chapter-chip">หมวด ${theme.order}</span>
-                  <div class="theme-stars-row" aria-label="${starsEarned} จาก 3 ดาว">
-                    ${starsHTML}
-                  </div>
-                  <span class="theme-status-chip">${progressPct}%</span>
+                  <button type="button" class="theme-status-chip" aria-label="${titleTh}: ${progressPct}% · วิธีเก็บให้ครบ 100%">${progressPct}%</button>
                 </div>
 
-                <h3 class="theme-title-sv">${cleanTitle}</h3>
+                <h3 class="theme-title-sv ui-label" id="theme-title-${theme.id}"><span lang="sv">${titleSv}</span><small lang="th">${titleTh}</small></h3>
 
 
                 <div class="theme-meta-tags">
                   <span class="theme-satun-note">🌴 ${cleanSatun}</span>
                 </div>
+                <div class="theme-progress-row">
+                  <div class="theme-progress-track" role="progressbar" aria-label="ความคืบหน้า: ${titleTh}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${progressPct}">
+                    <span style="width: ${progressPct}%;"></span>
+                  </div>
+                  <div class="theme-stars-row" aria-label="${starsEarned} จาก 3 ดาว">
+                    ${starsHTML}
+                  </div>
+                </div>
               </div>
 
               <div class="theme-col-right">
-                <button type="button" class="btn-3d ${progressPct === 100 ? 'btn-yellow' : 'btn-green'} theme-start-btn" data-start-theme="${theme.id}">
-                  ${progressPct === 100 ? '⭐ ทบทวน' : progressPct > 0 ? 'เล่นต่อ ›' : 'เริ่ม ›'}
+                <button type="button" class="btn-3d ${progressPct === 100 ? 'btn-yellow' : 'btn-green'} theme-start-btn" data-start-theme="${theme.id}" aria-describedby="theme-title-${theme.id}">
+                  <span class="ui-label"><span lang="sv">${actionSv}</span><small lang="th">${actionTh}</small></span>
                 </button>
               </div>
             </article>
@@ -2846,8 +2982,8 @@
         });
       });
 
-      // Klick på framstegsring eller procent-chip öppnar också 100%-info
-      grid.querySelectorAll('.theme-ring-wrapper, .theme-status-chip').forEach((el) => {
+      // Procent-chip öppnar förklaringen; illustrationen startar lektionen.
+      grid.querySelectorAll('.theme-status-chip').forEach((el) => {
         el.addEventListener('click', (e) => {
           e.stopPropagation();
           UIController.openThemeInfoBubble();
@@ -2993,6 +3129,7 @@
 
   // Exponera kärnmoduler på window.GameEngine för enkel integration i Del 2–5
   Object.assign(window.GameEngine, {
+    setUiLabel,
     StateManager,
     SRSManager,
     QuestionGenerator,

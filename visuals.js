@@ -44,186 +44,28 @@
   const MascotController = {
     currentState: 'idle',
     bubbleTimer: null,
-    activeMascotElements: new Set(),
+    gestureIndex: 0,
 
-    /**
-     * Genererar fullständig inline-SVG för Nong Dala med alla lager och delar
-     */
-    getSVG(size = 72, state = 'idle') {
-      return `
-        <svg class="dala-svg" width="${size}" height="${size}" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wilawan maskot">
-          <defs>
-            <radialGradient id="dalaShine" cx="50%" cy="30%" r="60%">
-              <stop offset="0%" stop-color="#FF6B55" />
-              <stop offset="60%" stop-color="#EE3B24" />
-              <stop offset="100%" stop-color="#B81A07" />
-            </radialGradient>
-            <linearGradient id="antlerGold" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#FFE066" />
-              <stop offset="100%" stop-color="#D49A00" />
-            </linearGradient>
-            <radialGradient id="fireAura" cx="50%" cy="80%" r="55%">
-              <stop offset="0%" stop-color="#FFC800" stop-opacity="0.9" />
-              <stop offset="50%" stop-color="#FF4B4B" stop-opacity="0.6" />
-              <stop offset="100%" stop-color="#FF0000" stop-opacity="0" />
-            </radialGradient>
-          </defs>
-
-          <!-- TILLSTÅND F: ELDSLÅGOR (STREAK FIRE) -->
-          <g class="dala-fire-flames" style="opacity: 0; pointer-events: none;">
-            <circle cx="50" cy="55" r="42" fill="url(#fireAura)" />
-            <path d="M 32 85 Q 26 50 38 40 Q 42 60 48 45 Q 56 65 62 42 Q 74 58 68 85 Z" fill="#FF7A00" opacity="0.8" />
-            <path d="M 38 85 Q 34 58 44 50 Q 50 68 55 52 Q 62 70 64 85 Z" fill="#FFC800" opacity="0.9" />
-          </g>
-
-          <!-- TILLSTÅND C: LYSSTNANDE LJUDVÅGOR RUNT ÖRAT -->
-          <g class="dala-listen-waves" style="opacity: 0; pointer-events: none;">
-            <circle class="dala-listen-wave-ring" cx="74" cy="24" r="8" stroke="#1CB0F6" stroke-width="2.5" fill="none" />
-            <circle class="dala-listen-wave-ring" cx="74" cy="24" r="14" stroke="#58CC02" stroke-width="2" fill="none" />
-            <circle class="dala-listen-wave-ring" cx="74" cy="24" r="20" stroke="#FFC800" stroke-width="1.5" fill="none" />
-          </g>
-
-          <!-- TILLSTÅND D: STJÄRNOR & KONFETTI (CELEBRATING) -->
-          <g class="dala-sparkles-cluster" style="opacity: 0; pointer-events: none;">
-            <path d="M 16 26 L 19 20 L 25 23 L 20 27 L 22 33 L 17 29 L 11 31 L 14 25 Z" fill="#FFC800" />
-            <path d="M 82 24 L 85 18 L 91 21 L 86 25 L 88 31 L 83 27 L 77 29 L 80 23 Z" fill="#58CC02" />
-            <circle cx="28" cy="14" r="2.5" fill="#1CB0F6" />
-            <circle cx="72" cy="12" r="3" fill="#CE82FF" />
-          </g>
-
-          <!-- TILLSTÅND E: TRÖSTANDE PULSERANDE HJÄRTA (ENCOURAGING) -->
-          <g class="dala-heart-float" style="opacity: 0; pointer-events: none;">
-            <path d="M 50 16 C 50 16, 43 7, 36 12 C 29 17, 32 26, 50 36 C 68 26, 71 17, 64 12 C 57 7, 50 16, 50 16 Z" fill="#FF4B4B" filter="drop-shadow(0 2px 4px rgba(255,75,75,0.4))" />
-          </g>
-
-          <!-- HUVUDKROPP (DALAHÄST / ÄLG HYBRID) -->
-          <g class="dala-body-group">
-            <!-- Svans -->
-            <path class="dala-tail" d="M 22 72 Q 12 70 14 78 Q 20 84 26 77 Z" fill="#A81504" />
-
-            <!-- Bakben (Förankrade mot marken vid stegring) -->
-            <g class="dala-hind-legs">
-              <!-- Vänster bakben & hov -->
-              <rect class="dala-leg-hind-left" x="25" y="74" width="9" height="18" rx="4.5" fill="#B81A07" />
-              <rect class="dala-hoof-hind-left" x="25" y="87" width="9" height="5" rx="2" fill="#FFC800" />
-              <!-- Höger bakben & hov -->
-              <rect class="dala-leg-hind-right" x="68" y="74" width="9" height="18" rx="4.5" fill="#B81A07" />
-              <rect class="dala-hoof-hind-right" x="68" y="87" width="9" height="5" rx="2" fill="#FFC800" />
-            </g>
-
-            <!-- Kropp (Rund, go och kramvänlig) -->
-            <ellipse class="dala-torso" cx="50" cy="66" rx="28" ry="20" fill="url(#dalaShine)" />
-
-            <!-- Framben (Aktiva & stampande vid stegring) -->
-            <g class="dala-front-legs">
-              <!-- Vänster framben & hov -->
-              <g class="dala-leg-front-left">
-                <rect class="dala-leg-front-stem-left" x="36" y="76" width="9" height="16" rx="4.5" fill="#D62711" />
-                <rect class="dala-hoof-front-left" x="36" y="87" width="9" height="5" rx="2" fill="#FFC800" />
-              </g>
-              <!-- Höger framben & hov -->
-              <g class="dala-leg-front-right">
-                <rect class="dala-leg-front-stem-right" x="58" y="76" width="9" height="16" rx="4.5" fill="#D62711" />
-                <rect class="dala-hoof-front-right" x="58" y="87" width="9" height="5" rx="2" fill="#FFC800" />
-              </g>
-            </g>
-
-            <!-- Sydthailändsk Batik-sadel / Dala Kurbits mönster -->
-            <path d="M 36 56 Q 50 63 64 56 C 66 68 34 68 36 56 Z" fill="#FFFDF8" stroke="#0077B6" stroke-width="1.8" />
-            <!-- Kurbits slingor (Sverige möter Satun) -->
-            <path d="M 43 59 Q 50 56 57 59" stroke="#E63946" stroke-width="2" stroke-linecap="round" fill="none" />
-            <circle cx="50" cy="62" r="2.2" fill="#FFC800" />
-            <circle cx="44" cy="63" r="1.5" fill="#58CC02" />
-            <circle cx="56" cy="63" r="1.5" fill="#58CC02" />
-
-            <!-- Älg-horn (Svensk älgkrona i mini-format, söt & gyllene) -->
-            <g class="dala-antlers">
-              <!-- Vänster horn -->
-              <path d="M 38 24 Q 30 14 22 18 Q 28 24 35 27 Z" fill="url(#antlerGold)" />
-              <path d="M 28 17 Q 24 8 20 12" stroke="#D49A00" stroke-width="2.5" stroke-linecap="round" />
-              <!-- Höger horn -->
-              <path d="M 62 24 Q 70 14 78 18 Q 72 24 65 27 Z" fill="url(#antlerGold)" />
-              <path d="M 72 17 Q 76 8 80 12" stroke="#D49A00" stroke-width="2.5" stroke-linecap="round" />
-            </g>
-
-            <!-- Hals & Huvud -->
-            <path d="M 40 54 L 38 34 Q 50 26 62 34 L 60 54 Z" fill="url(#dalaShine)" />
-            <circle cx="50" cy="40" r="18" fill="url(#dalaShine)" />
-
-            <!-- Öron (Vänster och Höger) -->
-            <path class="dala-ear-left" d="M 33 27 Q 27 15 36 18 Z" fill="#EE3B24" stroke="#FFE066" stroke-width="1.5" />
-            <path class="dala-ear-right" d="M 67 27 Q 73 15 64 18 Z" fill="#EE3B24" stroke="#FFE066" stroke-width="1.5" />
-
-            <!-- Satun Dala-blomma (ดอกดาหลา สีชมพูสดใสบนหูขวา) -->
-            <g class="dala-flower" transform="translate(62, 18) scale(0.65)">
-              <circle cx="0" cy="0" r="7" fill="#FF2A7A" />
-              <circle cx="-5" cy="-3" r="5" fill="#FF65A3" />
-              <circle cx="5" cy="-3" r="5" fill="#FF65A3" />
-              <circle cx="0" cy="-6" r="5" fill="#FFA5C8" />
-              <circle cx="0" cy="0" r="3.5" fill="#FFD700" />
-            </g>
-
-            <!-- Kurbits-pannband (Traditionell Dala-dekor) -->
-            <path d="M 38 32 Q 50 28 62 32" stroke="#FFF" stroke-width="2.8" stroke-linecap="round" fill="none" />
-            <circle cx="44" cy="30" r="1.6" fill="#1CB0F6" />
-            <circle cx="50" cy="29" r="1.8" fill="#FFC800" />
-            <circle cx="56" cy="30" r="1.6" fill="#58CC02" />
-
-            <!-- KINDRODNAD (Blyg & glad charm) -->
-            <ellipse cx="37" cy="45" rx="3.5" ry="2" fill="#FF8FA3" opacity="0.8" />
-            <ellipse cx="63" cy="45" rx="3.5" ry="2" fill="#FF8FA3" opacity="0.8" />
-
-            <!-- ÖGON: NORMALA (Blinkar i idle) -->
-            <g class="dala-eyes-normal">
-              <ellipse class="dala-eye-lid" cx="42" cy="38" rx="4" ry="4.5" fill="#1F2421" />
-              <ellipse class="dala-eye-lid" cx="58" cy="38" rx="4" ry="4.5" fill="#1F2421" />
-              <circle cx="43.5" cy="36.5" r="1.6" fill="#FFFFFF" />
-              <circle cx="59.5" cy="36.5" r="1.6" fill="#FFFFFF" />
-            </g>
-
-            <!-- ÖGON: GLADA BÅGAR (^ ^ för celebrating / rätt svar) -->
-            <g class="dala-eyes-happy" style="display: none;">
-              <path d="M 38 40 Q 42 33 46 40" stroke="#1F2421" stroke-width="3" stroke-linecap="round" fill="none" />
-              <path d="M 54 40 Q 58 33 62 40" stroke="#1F2421" stroke-width="3" stroke-linecap="round" fill="none" />
-            </g>
-
-            <!-- TILLSTÅND F: COOL SOLGLASÖGON (STREAK FIRE) -->
-            <g class="dala-sunglasses" style="display: none; opacity: 0;">
-              <path d="M 33 34 L 67 34 L 64 43 Q 50 46 36 43 Z" fill="#18181B" stroke="#FFC800" stroke-width="1.8" />
-              <line x1="38" y1="36" x2="46" y2="41" stroke="#FFFFFF" stroke-width="1.4" opacity="0.7" />
-              <line x1="54" y1="36" x2="62" y2="41" stroke="#FFFFFF" stroke-width="1.4" opacity="0.7" />
-            </g>
-
-            <!-- NOS & MUN (Söt mule med uttryck) -->
-            <ellipse cx="50" cy="48" rx="7.5" ry="4.5" fill="#FCE7D6" />
-            <circle cx="47.5" cy="47" r="1" fill="#7C2D12" />
-            <circle cx="52.5" cy="47" r="1" fill="#7C2D12" />
-            <!-- Standard leende -->
-            <path class="dala-mouth-smile" d="M 47 49 Q 50 52 53 49" stroke="#7C2D12" stroke-width="1.6" stroke-linecap="round" fill="none" />
-            <!-- Öppen mun (Speaking) -->
-            <ellipse class="dala-mouth-open" cx="50" cy="50" rx="3.5" ry="2.5" fill="#B91C1C" stroke="#7C2D12" stroke-width="1" />
-
-            <!-- VINKANDE ARM / HOV (ENCOURAGING) -->
-            <g class="dala-arm-wave">
-              <path d="M 30 62 Q 22 55 24 48 Q 28 47 34 54 Z" fill="#D62711" />
-              <ellipse cx="23" cy="48" rx="3" ry="2" fill="#FFC800" />
-            </g>
-          </g>
-        </svg>
-      `;
+    getMarkup(size = 72, animated = false) {
+      const accessory = this.getAccessory?.();
+      const wardrobe = accessory
+        ? `<svg class="dala-wardrobe" viewBox="0 0 100 100" aria-hidden="true" data-accessory="${accessory.id}">${accessory.svgOverlay}</svg>`
+        : '';
+      return `<span class="dala-portrait" style="--dala-size:${size}px">
+          <img class="dala-horse-image" src="assets/wilawan-dala-horse.webp" width="760" height="695" alt="วิลาวัลย์" draggable="false">
+          ${animated ? '<canvas class="dala-horse-canvas" aria-hidden="true"></canvas>' : ''}
+          ${wardrobe}
+        </span>`;
     },
 
-    /**
-     * Sätt maskotens tillstånd på alla aktiva maskot-containrar i DOM
-     */
     setState(newState = 'idle') {
       this.currentState = newState;
-      const validStates = ['idle', 'speaking', 'listening', 'celebrating', 'encouraging', 'streak_fire'];
-      const appliedClass = validStates.includes(newState) ? `dala-state-${newState}` : 'dala-state-idle';
-
-      document.querySelectorAll('.dala-mascot-wrapper').forEach((wrapper) => {
-        validStates.forEach((st) => wrapper.classList.remove(`dala-state-${st}`));
-        wrapper.classList.add(appliedClass);
+      const move = {
+        speaking: 'speaking', listening: 'listening', celebrating: 'jump',
+        encouraging: 'bow', streak_fire: 'rear'
+      }[newState] || 'idle';
+      document.querySelectorAll('.dala-mascot-wrapper').forEach(wrapper => {
+        if (wrapper.dataset.motion !== move) window.DalaMotion.play(wrapper, move);
       });
     },
 
@@ -274,19 +116,8 @@
         ? [targetEl.closest('.dala-mascot-wrapper') || targetEl.querySelector('.dala-mascot-wrapper') || targetEl]
         : Array.from(document.querySelectorAll('.dala-mascot-wrapper'));
 
-      wrappers.forEach((w) => {
-        if (!w) return;
-        w.classList.remove('dala-action-blink', 'dala-action-wave', 'dala-action-rear');
-        void w.offsetWidth;
-        const cls = actionName === 'stegra' ? 'dala-action-rear' : `dala-action-${actionName}`;
-        w.classList.add(cls);
-
-        const durations = { blink: 850, wave: 1500, rear: 1900, stegra: 1900 };
-        const dur = durations[actionName] || 1200;
-        setTimeout(() => {
-          w.classList.remove(cls);
-        }, dur);
-      });
+      const move = actionName === 'stegra' ? 'rear' : actionName;
+      wrappers.forEach(wrapper => window.DalaMotion.play(wrapper, move));
 
       if (actionName === 'blink') {
         window.SpeechEngine?.playSound?.('tap');
@@ -306,18 +137,27 @@
      */
     mount(containerEl, size = 68, initialState = 'idle') {
       if (!containerEl) return;
+      const oldWrapper = containerEl.querySelector('.dala-mascot-wrapper');
+      if (oldWrapper) window.DalaMotion.unmount(oldWrapper);
+      const interactive = containerEl.id !== 'feedback-mascot-container';
+      const tag = interactive ? 'button' : 'span';
+      const button = interactive ? 'type="button" aria-label="แตะวิลาวัลย์เพื่อดูท่าทาง"' : 'aria-hidden="true"';
       containerEl.innerHTML = `
-        <div class="dala-mascot-wrapper dala-state-${initialState}" title="วิลาวัลย์ (Wilawan) • แตะเพื่อคุยกัน!">
-          ${this.getSVG(size, initialState)}
-        </div>
+        <${tag} class="dala-mascot-wrapper" ${button}>
+          ${this.getMarkup(size, true)}
+        </${tag}>
       `;
 
-      containerEl.querySelector('.dala-mascot-wrapper')?.addEventListener('click', () => {
+      const wrapper = containerEl.querySelector('.dala-mascot-wrapper');
+      const startingMove = { celebrating: 'jump', encouraging: 'bow', streak_fire: 'rear' }[initialState] || 'idle';
+      window.DalaMotion.mount(wrapper, startingMove);
+      if (!interactive) return;
+      wrapper.addEventListener('click', () => {
+        const moves = ['wave', 'rear', 'jump', 'bow', 'blink'];
+        const move = moves[this.gestureIndex++ % moves.length];
         window.VisualEngine.haptic('light', containerEl);
-        window.SpeechEngine.playSound('tap');
-        this.setState('celebrating');
-        this.speakRandomQuote('greeting');
-        setTimeout(() => this.setState('idle'), 2500);
+        window.SpeechEngine?.playSound?.('tap');
+        window.DalaMotion.play(wrapper, move);
       });
     }
   };
@@ -1660,6 +1500,90 @@
      5. INTEGRATION MED WINDOW.VISUALENGINE & SYSTEMKROKAR
      ========================================================================== */
 
+  // Large, illustrated badges for the ten lesson worlds. Each badge carries
+  // its own colour and highlights so it remains legible on a saturated card.
+  const THEME_WORLD_BADGES = {
+    greetings: {
+      colors: ['#7DEAB5', '#1EBA8F'], object: ['#FFE4A6', '#FFAD65'],
+      art: `<path d="M30 68V46c0-4 5-5 7-2V31c0-5 7-5 7 0v12-19c0-5 7-5 7 0v19-16c0-5 7-5 7 0v17-11c0-5 7-5 7 0v21c0 11-9 19-20 19z" fill="url(#world-greetings-object)" stroke="#BD6541" stroke-width="2.5" stroke-linejoin="round"/><path d="M30 57l-6-8c-4-5-10 0-7 5l13 16" fill="url(#world-greetings-object)" stroke="#BD6541" stroke-width="2.5" stroke-linejoin="round"/><path d="M33 65c8 5 18 6 26 1" stroke="#FFF4CE" stroke-width="3" stroke-linecap="round" opacity=".8"/><path d="M19 29c4-7 11-9 16-8M17 40c2-3 4-5 7-6" stroke="#FFF" stroke-width="3" stroke-linecap="round" opacity=".9"/><path d="M33 72h28v9H33z" fill="#4058DC"/>`
+    },
+    family_love: {
+      colors: ['#FF9DB5', '#F54D77'], object: ['#FF788E', '#D72D64'],
+      art: `<path d="M48 72S19 53 19 34c0-10 11-17 20-12 5 2 8 7 9 9 1-2 4-7 9-9 9-5 20 2 20 12 0 19-29 38-29 38z" fill="url(#world-family_love-object)" stroke="#B62960" stroke-width="2.5"/><path d="M28 31c4-7 11-8 16-2" stroke="#FFE0EA" stroke-width="5" stroke-linecap="round" opacity=".8"/><path d="M61 56c-4 4-8 7-12 10" stroke="#FFB7CE" stroke-width="3" stroke-linecap="round" opacity=".8"/><path d="M16 20l2 5 5 2-5 2-2 5-2-5-5-2 5-2zM77 53l2 4 4 2-4 2-2 4-2-4-4-2 4-2z" fill="#FFF1C0"/>`
+    },
+    supermarket: {
+      colors: ['#76DBFF', '#1C9DE6'], object: ['#5FC7FF', '#2875D8'],
+      art: `<path d="M22 30h8l7 34h31l7-25H33" fill="none" stroke="#20538D" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M34 40h39l-5 21H39z" fill="url(#world-supermarket-object)" stroke="#20538D" stroke-width="2.5"/><path d="M40 44h27" stroke="#D7F4FF" stroke-width="3" stroke-linecap="round"/><circle cx="42" cy="72" r="5" fill="#274481" stroke="#B7EDFF" stroke-width="2"/><circle cx="65" cy="72" r="5" fill="#274481" stroke="#B7EDFF" stroke-width="2"/><circle cx="47" cy="35" r="7" fill="#F45B66" stroke="#AD364A" stroke-width="2"/><path d="M46 27c2-4 4-5 7-5" stroke="#2E9566" stroke-width="3" stroke-linecap="round"/><path d="M59 33l6-7 7 10" fill="#FFE27E" stroke="#D79B3F" stroke-width="2"/>`
+    },
+    fika_food: {
+      colors: ['#FFE19A', '#F6A952'], object: ['#FFFDF4', '#E8D7BB'],
+      art: `<ellipse cx="44" cy="70" rx="29" ry="5" fill="#A95E33" opacity=".3"/><path d="M18 42h43l-4 24c-1 6-8 10-18 10S22 72 21 66z" fill="url(#world-fika_food-object)" stroke="#8C5D53" stroke-width="2.5"/><path d="M60 45c18-2 18 22-2 22" fill="none" stroke="#FFF9E9" stroke-width="7"/><path d="M60 45c18-2 18 22-2 22" fill="none" stroke="#8C5D53" stroke-width="2.5"/><ellipse cx="39" cy="43" rx="21" ry="6" fill="#784733" stroke="#4B2F2B" stroke-width="2"/><path d="M28 28c-4-6 4-9 1-15M44 29c-4-6 4-9 1-15" fill="none" stroke="#FFF" stroke-width="3" stroke-linecap="round" opacity=".8"/><path d="M63 29c5-6 14-4 15 3 1 7-7 12-13 7-4-3-5-7-2-10z" fill="#C57B42" stroke="#875034" stroke-width="2"/><path d="M69 29c6-1 7 6 2 7-4 1-5-4-2-4" fill="none" stroke="#6F3D2B" stroke-width="2"/>`
+    },
+    everyday: {
+      colors: ['#FFC9A2', '#F37669'], object: ['#FF8181', '#C94153'],
+      art: `<path d="M19 44l29-25 29 25" fill="none" stroke="#672F53" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M27 43h42v33H27z" fill="url(#world-everyday-object)" stroke="#8D3E53" stroke-width="2.5"/><path d="M19 45l29-25 29 25z" fill="#674FBA" stroke="#443A87" stroke-width="2.5" stroke-linejoin="round"/><rect x="35" y="51" width="12" height="12" rx="2" fill="#BCEFFF" stroke="#496CB1" stroke-width="2"/><path d="M41 52v10M35 57h12" stroke="#FFF" stroke-width="1.5"/><path d="M54 54h10v22H54z" fill="#FFE5A3" stroke="#A45B4C" stroke-width="2"/><circle cx="61" cy="65" r="1.5" fill="#A45B4C"/><path d="M62 20v-9h8v16" fill="#F7D7C6" stroke="#8D3E53" stroke-width="2"/>`
+    },
+    weather_time: {
+      colors: ['#A6D8FF', '#528CF1'], object: ['#FFE777', '#FFB935'],
+      art: `<circle cx="51" cy="35" r="18" fill="url(#world-weather_time-object)" stroke="#DD8B32" stroke-width="2.5"/><path d="M51 9v7M51 54v7M25 35h7M70 35h7M32 16l5 5M65 49l5 5M70 16l-5 5" stroke="#FFF0A8" stroke-width="4" stroke-linecap="round"/><path d="M20 65c-5-12 4-22 15-22 5-12 22-12 27 1 12-2 20 8 17 18-1 8-7 12-16 12H33c-7 0-11-3-13-9z" fill="#F8FDFF" stroke="#85A8D6" stroke-width="2.5"/><path d="M27 56c6-8 14-9 19-7" stroke="#FFF" stroke-width="4" stroke-linecap="round"/><path d="M37 77l-3 6M58 77l-3 6" stroke="#4EACF5" stroke-width="3" stroke-linecap="round"/>`
+    },
+    shopping_numbers: {
+      colors: ['#D2ADFF', '#9664E8'], object: ['#FFF5CD', '#FBC45E'],
+      art: `<circle cx="48" cy="48" r="28" fill="url(#world-shopping_numbers-object)" stroke="#6E4EB2" stroke-width="3"/><circle cx="48" cy="48" r="21" fill="#FFFDF9" stroke="#C9B2E9" stroke-width="2"/><path d="M48 32v17l12 7" stroke="#574899" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="48" cy="48" r="4" fill="#EF6781"/><path d="M48 24v4M48 68v4M24 48h4M68 48h4" stroke="#8165BA" stroke-width="3" stroke-linecap="round"/><circle cx="70" cy="24" r="10" fill="#FF7794" stroke="#B43E6A" stroke-width="2"/><path d="M67 24h6M70 21v6" stroke="#FFF" stroke-width="2" stroke-linecap="round"/>`
+    },
+    city_transport: {
+      colors: ['#8DE5E9', '#1FB7C6'], object: ['#66C7E9', '#2875B7'],
+      art: `<path d="M30 19h36c8 0 12 6 12 14v28c0 6-5 10-10 10H28c-6 0-10-4-10-10V33c0-8 4-14 12-14z" fill="url(#world-city_transport-object)" stroke="#24577A" stroke-width="2.5"/><rect x="25" y="28" width="46" height="22" rx="5" fill="#C7F2FF" stroke="#24577A" stroke-width="2"/><path d="M47 29v20" stroke="#6DB9DB" stroke-width="2"/><path d="M29 33h14M52 33h14" stroke="#FFF" stroke-width="3" stroke-linecap="round"/><circle cx="31" cy="59" r="5" fill="#FFE789"/><circle cx="65" cy="59" r="5" fill="#FFE789"/><path d="M30 69v8M66 69v8" stroke="#283E63" stroke-width="5" stroke-linecap="round"/><path d="M42 15h12" stroke="#F1FFFF" stroke-width="3" stroke-linecap="round"/>`
+    },
+    sfi_smalltalk: {
+      colors: ['#A4EDB7', '#40BF77'], object: ['#FEFAFF', '#D8D4FF'],
+      art: `<path d="M18 28c0-10 12-17 26-17s26 7 26 17-12 17-26 17l-15 10 3-13c-8-3-14-8-14-14z" fill="url(#world-sfi_smalltalk-object)" stroke="#548673" stroke-width="2.5"/><path d="M34 40c-3 4-5 8-5 15" stroke="#FFF" stroke-width="3" stroke-linecap="round"/><path d="M37 29h2M47 29h2M57 29h2" stroke="#6D64BC" stroke-width="5" stroke-linecap="round"/><path d="M41 51c0-8 9-13 20-13s20 5 20 13-9 13-20 13l-11 8 2-11c-6-2-11-6-11-10z" fill="#59B6E8" stroke="#2874B4" stroke-width="2.5"/><path d="M55 51h2M64 51h2" stroke="#FFF" stroke-width="4" stroke-linecap="round"/>`
+    },
+    real_dialogs: {
+      colors: ['#FFDF8D', '#F4A84E'], object: ['#FFE5B8', '#FFAF78'],
+      art: `<path d="M20 19h56c5 0 8 4 8 8v25c0 5-3 8-8 8H54L40 75V60H20c-5 0-8-3-8-8V27c0-4 3-8 8-8z" fill="#FFF9ED" stroke="#B8764E" stroke-width="2.5"/><circle cx="36" cy="40" r="12" fill="url(#world-real_dialogs-object)" stroke="#AD6A4B" stroke-width="2"/><circle cx="61" cy="40" r="12" fill="#78CBE8" stroke="#3987B7" stroke-width="2"/><circle cx="32" cy="37" r="1.5" fill="#60384B"/><circle cx="39" cy="37" r="1.5" fill="#60384B"/><path d="M32 43c2 3 6 3 8 0" stroke="#9D4B5D" stroke-width="2" stroke-linecap="round"/><circle cx="57" cy="37" r="1.5" fill="#285C77"/><circle cx="64" cy="37" r="1.5" fill="#285C77"/><path d="M57 43c2 3 6 3 8 0" stroke="#285C77" stroke-width="2" stroke-linecap="round"/><path d="M28 26c7-6 12-4 17 0M54 26c6-5 12-5 16 0" stroke="#FFF" stroke-width="3" stroke-linecap="round" opacity=".7"/>`
+    }
+  };
+
+  const renderThemeWorldBadge = (themeId, size = 96) => {
+    const badge = THEME_WORLD_BADGES[themeId];
+    if (!badge) return IllustrationLibrary.star();
+    const key = `world-${themeId}`;
+    return `<svg class="theme-world-art" width="${size}" height="${size}" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <linearGradient id="${key}-bg" x1="12" y1="8" x2="80" y2="88" gradientUnits="userSpaceOnUse"><stop stop-color="${badge.colors[0]}"/><stop offset="1" stop-color="${badge.colors[1]}"/></linearGradient>
+        <linearGradient id="${key}-object" x1="25" y1="20" x2="69" y2="75" gradientUnits="userSpaceOnUse"><stop stop-color="${badge.object[0]}"/><stop offset="1" stop-color="${badge.object[1]}"/></linearGradient>
+      </defs>
+      <rect x="6" y="10" width="84" height="82" rx="24" fill="#1A2A5D" opacity=".18"/>
+      <rect x="6" y="5" width="84" height="82" rx="24" fill="url(#${key}-bg)" stroke="#FFF" stroke-width="2"/>
+      <path d="M10 30C16 14 28 9 49 9h14C35 19 29 35 10 42z" fill="#FFF" opacity=".24"/>
+      <path d="M13 69c18 10 50 12 70-3" stroke="#FFF" stroke-width="3" stroke-linecap="round" opacity=".18"/>
+      <g style="filter:drop-shadow(0 4px 2px rgba(26,39,74,.25))">${badge.art}</g>
+      <path d="M78 10l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#FFF" opacity=".86"/>
+    </svg>`;
+  };
+
+  const TRAINING_MODE_BADGES = {
+    mix: { colors: ['#8C7CFF', '#4B56E9'], art: `<path d="M36 54l12-34 12 34 18 7-18 5-12 17-12-17-18-5z" fill="#FFE182" stroke="#D18B28" stroke-width="2.5" stroke-linejoin="round"/><path d="M48 25l6 28-6 20-6-20z" fill="#FFF6C9" opacity=".6"/><circle cx="29" cy="28" r="5" fill="#79F0E1"/><circle cx="70" cy="33" r="4" fill="#FF8EC8"/>` },
+    words: { colors: ['#82DBFF', '#2595EC'], art: `<rect x="23" y="18" width="50" height="61" rx="8" fill="#FFF9EB" stroke="#2E6CAB" stroke-width="2.5"/><path d="M29 18v61" stroke="#7BCBEB" stroke-width="3"/><rect x="35" y="27" width="30" height="23" rx="4" fill="#ABEBFF"/><circle cx="44" cy="35" r="4" fill="#FFD66A"/><path d="M37 45l9-8 7 6 5-4 6 6" fill="#54C994"/><path d="M37 59h26M37 67h20" stroke="#6593B7" stroke-width="3" stroke-linecap="round"/>` },
+    sentences: { colors: ['#FFDC8B', '#F1A840'], art: `<rect x="16" y="24" width="29" height="22" rx="6" fill="#FFF6E0" stroke="#AA7042" stroke-width="2.5"/><rect x="51" y="24" width="29" height="22" rx="6" fill="#DFF6FF" stroke="#477EA6" stroke-width="2.5"/><rect x="27" y="55" width="42" height="22" rx="6" fill="#D9F8CE" stroke="#5B9961" stroke-width="2.5"/><path d="M25 35h12M59 35h12M37 66h22" stroke="#F5A75C" stroke-width="3" stroke-linecap="round"/><path d="M47 34h3M47 64h-3" stroke="#BD7292" stroke-width="3" stroke-linecap="round"/>` },
+    listen: { colors: ['#D4A9FF', '#8E5DE7'], art: `<path d="M24 52V44c0-17 10-28 24-28s24 11 24 28v8" fill="none" stroke="#FFF3FF" stroke-width="10" stroke-linecap="round"/><path d="M25 48v-6c0-14 9-24 23-24s23 10 23 24v6" fill="none" stroke="#5C48B8" stroke-width="3"/><rect x="16" y="45" width="16" height="30" rx="7" fill="#6A4CCB" stroke="#DFD2FF" stroke-width="2.5"/><rect x="64" y="45" width="16" height="30" rx="7" fill="#6A4CCB" stroke="#DFD2FF" stroke-width="2.5"/><path d="M39 51c-5 4-5 9 0 13M47 47c-8 6-8 15 0 21" fill="none" stroke="#FFF" stroke-width="3" stroke-linecap="round"/>` },
+    speak: { colors: ['#9AEABB', '#2ABA86'], art: `<rect x="37" y="15" width="22" height="43" rx="11" fill="#FFF7D5" stroke="#3A8C65" stroke-width="2.5"/><path d="M42 23h12M42 31h12M42 39h12" stroke="#88D9A2" stroke-width="2.5" stroke-linecap="round"/><path d="M28 43c0 15 8 24 20 24s20-9 20-24" fill="none" stroke="#E9FFF2" stroke-width="5" stroke-linecap="round"/><path d="M48 67v12M35 79h26" stroke="#2B7769" stroke-width="5" stroke-linecap="round"/><path d="M19 32c-4 5-4 13 0 18M77 32c4 5 4 13 0 18" fill="none" stroke="#FFF" stroke-width="3" stroke-linecap="round"/>` }
+  };
+
+  const renderTrainingModeBadge = (mode, size = 72) => {
+    const badge = TRAINING_MODE_BADGES[mode];
+    if (!badge) return '';
+    return `<svg class="training-mode-art" width="${size}" height="${size}" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs><linearGradient id="mode-${mode}-bg" x1="8" y1="5" x2="83" y2="84" gradientUnits="userSpaceOnUse"><stop stop-color="${badge.colors[0]}"/><stop offset="1" stop-color="${badge.colors[1]}"/></linearGradient></defs>
+      <rect x="6" y="10" width="84" height="81" rx="25" fill="#192658" opacity=".18"/>
+      <rect x="6" y="5" width="84" height="81" rx="25" fill="url(#mode-${mode}-bg)" stroke="#FFF" stroke-width="2"/>
+      <path d="M11 28c7-12 18-18 37-18h14C44 21 25 30 11 38z" fill="#FFF" opacity=".25"/>
+      <g style="filter:drop-shadow(0 3px 2px rgba(24,36,77,.26))">${badge.art}</g>
+      <path d="M79 11l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#FFF" opacity=".87"/>
+    </svg>`;
+  };
+
   // Koppla samman den nya grafiska motorn med befintliga window.VisualEngine
   window.VisualEngine = Object.assign(window.VisualEngine || {}, {
     Mascot: MascotController,
@@ -1695,8 +1619,8 @@
       if (sv.includes('äpple') || sv.includes('frukt')) return IllustrationLibrary.apple();
       if (sv.includes('ost')) return IllustrationLibrary.cheese();
       if (sv.includes('kaffe') || sv.includes('fika') || sv.includes('kopp')) return IllustrationLibrary.coffee();
-      if (sv.includes('bulle') || sv.includes('kanelbulle')) return IllustrationLibrary.cinnamon_bun();
-      if (sv.includes('te')) return IllustrationLibrary.tea();
+      if (sv.includes('bulle')) return IllustrationLibrary.bun();
+      if (/\b(?:te|teet|tekopp)\b/.test(sv)) return IllustrationLibrary.coffee();
       if (sv.includes('vatten') || sv.includes('dricka')) return IllustrationLibrary.water();
       if (sv.includes('jacka') || sv.includes('kläder') || sv.includes('varm')) return IllustrationLibrary.jacket();
       if (sv.includes('buss') || sv.includes('tåg') || sv.includes('resa') || sv.includes('bil')) return IllustrationLibrary.bus();
@@ -1710,7 +1634,7 @@
       if (sv.includes('sol') || sv.includes('varmt')) return IllustrationLibrary.sun();
       if (sv.includes('regn') || sv.includes('regnar')) return IllustrationLibrary.rain();
       if (sv.includes('snö') || sv.includes('kallt') || sv.includes('vinter')) return IllustrationLibrary.snow();
-      if (sv.includes('moln') || sv.includes('blåsigt')) return IllustrationLibrary.cloud();
+      if (sv.includes('moln') || sv.includes('blåsigt')) return IllustrationLibrary.theme_weather();
       if (sv.includes('hus') || sv.includes('hem') || sv.includes('lägenhet') || sv.includes('kök') || sv.includes('rum')) return IllustrationLibrary.home();
       if (sv.includes('älska') || sv.includes('kärlek') || sv.includes('saknar') || sv.includes('hjärta')) return IllustrationLibrary.heart();
       if (sv.includes('tack')) return IllustrationLibrary.heart_hands();
@@ -1746,23 +1670,19 @@
     /**
      * Vektorikon för de 10 temana i temaväljaren
      */
-    getThemeIconSVG(themeId, size = 48) {
-      const map = {
-        greetings: IllustrationLibrary.theme_greetings,
-        family_love: IllustrationLibrary.theme_love,
-        supermarket: IllustrationLibrary.theme_supermarket,
-        fika_food: IllustrationLibrary.theme_fika,
-        everyday: IllustrationLibrary.theme_home,
-        weather_time: IllustrationLibrary.theme_weather,
-        shopping_numbers: IllustrationLibrary.theme_numbers,
-        city_transport: IllustrationLibrary.theme_city,
-        sfi_smalltalk: IllustrationLibrary.theme_chat,
-        real_dialogs: IllustrationLibrary.theme_dialogues
-      };
-      if (map[themeId]) {
-        return map[themeId]();
-      }
-      return IllustrationLibrary.star();
+    getThemeIconSVG(themeId, size = 96) {
+      return renderThemeWorldBadge(themeId, size);
+    },
+
+    getTrainingModeIconSVG(mode, size = 72) {
+      return renderTrainingModeBadge(mode, size);
+    },
+
+    mountTrainingModeIcons() {
+      document.querySelectorAll('#training-mode-selector .mode-pill-btn').forEach((button) => {
+        const target = button.querySelector('.mode-pill-svg');
+        if (target) target.innerHTML = renderTrainingModeBadge(button.dataset.mode);
+      });
     },
 
     /**
@@ -2045,6 +1965,7 @@
   function initVisuals() {
     ParticleEngine.init();
     window.VisualEngine.renderMascot('idle');
+    window.VisualEngine.mountTrainingModeIcons();
     setupEngineHooks();
   }
 

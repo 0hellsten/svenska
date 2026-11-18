@@ -55,10 +55,19 @@ def bundle():
     with open(os.path.join(base_dir, "farm_fishing.css"), "r", encoding="utf-8") as f:
         fishing_css = f.read()
     html = html.replace('<link rel="stylesheet" href="farm_fishing.css">', f"<style>\n/* GONG HENG */\n{fishing_css}\n</style>")
+    with open(os.path.join(base_dir, "game_ui.css"), "r", encoding="utf-8") as f:
+        game_ui_css = f.read()
+    html = html.replace('<link rel="stylesheet" href="game_ui.css">',
+                        f"<style>\n/* WILAWAN GAME UI */\n{game_ui_css}\n</style>")
+    with open(os.path.join(base_dir, "home.css"), "r", encoding="utf-8") as f:
+        home_css = f.read()
+    html = html.replace('<link rel="stylesheet" href="home.css">',
+                        f"<style>\n/* WILAWAN HOME */\n{home_css}\n</style>")
     for filename in ("farm_mischief_core.js", "farm_fishing_core.js", "farm_core.js", "learning_progress.js", "mini_games_core.js", "mini_games_art.js", "zoo_core.js",
                      "zoo_art.js", "zoo_escape.js", "kitchen_measures_core.js", "kitchen_measures.js",
                      "mini_games_dialogue.js", "mini_games_hands.js", "farm_art.js", "farm_gestures.js", "farm_mischief_art.js",
-                     "farm_mischief.js", "farm_fishing_art.js", "farm_fishing.js", "farm.js", "mini_games.js"):
+                     "farm_mischief.js", "farm_fishing_art.js", "farm_fishing.js", "farm.js", "mini_games.js",
+                     "dala_motion.js"):
         with open(os.path.join(base_dir, filename), "r", encoding="utf-8") as f:
             script = f.read()
         html = html.replace(f'<script src="{filename}"></script>',
@@ -66,10 +75,26 @@ def bundle():
 
     # Keep the painted game locations self-contained in both exports.
     for asset_path in ("assets/zoo/forest.webp", "assets/zoo/wetland.webp", "assets/zoo/greenhouse.webp",
-                       "assets/zoo/animals.webp", "assets/farm/map.webp", "assets/farm/fields.webp"):
+                       "assets/zoo/animals.webp", "assets/farm/map.webp", "assets/farm/fields.webp",
+                       "assets/zoo/lobby-cover.webp", "assets/farm/lobby-cover.webp",
+                       "assets/wilawan-dala-hero.webp", "assets/wilawan-dala-hero-bg.webp",
+                       "assets/wilawan-dala-horse.webp"):
         with open(os.path.join(base_dir, asset_path), "rb") as f:
             encoded = base64.b64encode(f.read()).decode("ascii")
         html = html.replace(asset_path, f"data:image/webp;base64,{encoded}")
+
+    # The portable exports should keep their app artwork when opened alone.
+    for asset_path, mime_type in (
+        ("assets/wilawan-app-icon.svg", "image/svg+xml"),
+        ("assets/wilawan-icon-180.png", "image/png"),
+        ("assets/wilawan-icon-192.png", "image/png"),
+        ("assets/wilawan-icon-512.png", "image/png"),
+    ):
+        with open(os.path.join(base_dir, asset_path), "rb") as f:
+            encoded = base64.b64encode(f.read()).decode("ascii")
+        html = html.replace(asset_path, f"data:{mime_type};base64,{encoded}")
+
+    html = html.replace('\r\n', '\n').replace('\r', '\n')
 
     out_iphone = os.path.join(base_dir, "svenska_satun_iphone.html")
     with open(out_iphone, "w", encoding="utf-8", newline='\n') as f:

@@ -450,7 +450,7 @@
         pronunChallengeBestScore: 0,
         bossClearedThemes: {},
         ownedAccessories: ['midsommar'],
-        equippedAccessory: 'midsommar',
+        equippedAccessory: null,
         ownedColorThemes: ['default'],
         activeColorTheme: 'default',
         streakFreezesCount: 1, // Startgåva: 1 st frys!
@@ -544,6 +544,17 @@
       if (found && found.cssClass) {
         document.body.classList.add(found.cssClass);
       }
+      const browserBarColors = {
+        default: '#243D94',
+        andaman: '#0D718F',
+        sunset: '#BD536C',
+        rosegold: '#A34887',
+        dalarna: '#215E69',
+        aurora: '#112850'
+      };
+      document.querySelector('meta[name="theme-color"]')?.setAttribute(
+        'content', browserBarColors[themeId] || browserBarColors.default
+      );
       this.save();
     },
 
@@ -591,21 +602,9 @@
 
   function hookMascotWardrobe() {
     if (!window.VisualEngine || !window.VisualEngine.Mascot) return;
-    const origGetSVG = window.VisualEngine.Mascot.getSVG.bind(window.VisualEngine.Mascot);
-
-    window.VisualEngine.Mascot.getSVG = function (size = 110, state = 'idle') {
-      const rawSvg = origGetSVG(size, state);
-      const eqId = Part5State.data?.equippedAccessory;
-      if (!eqId) return rawSvg;
-      const acc = MASCOT_ACCESSORIES.find((a) => a.id === eqId);
-      if (!acc) return rawSvg;
-
-      // Injicera accessoaren inuti kroppsgruppen på Nong Dala
-      return rawSvg.replace(
-        /<\/g>\s*<\/svg>\s*$/,
-        `  <g class="dala-equipped-accessory">${acc.svgOverlay}</g>\n        </g>\n      </svg>`
-      );
-    };
+    window.VisualEngine.Mascot.getAccessory = () => (
+      MASCOT_ACCESSORIES.find(accessory => accessory.id === Part5State.data?.equippedAccessory)
+    );
   }
 
   /* ==========================================================================
@@ -1143,7 +1142,7 @@
       competeSection.innerHTML = `
         <div class="section-header" style="margin-bottom: 12px;">
           <div>
-            <h2 class="section-title" style="font-size: 1.25rem;">🏆 กิจกรรมท้าทาย ตัวช่วย และของแต่งตัว</h2>
+            <h2 class="section-title" style="font-size: 1.25rem;"><span class="ui-label"><span lang="sv">Utmaningar</span><small lang="th">กิจกรรมท้าทาย</small></span></h2>
             <p class="section-subtitle">ท้าดวล 3 รูปแบบ • ไอเทมบูสเตอร์ • ร้านแต่งตัว & เหรียญรางวัล</p>
           </div>
           <div style="display: flex; gap: 6px;">
@@ -1158,7 +1157,7 @@
             <div class="arena-icon-badge" style="background: var(--sky-soft); color: var(--sky-dark);">${window.VisualEngine.getArenaIconSVG('sprint')}</div>
             <div style="flex: 1;">
               <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="font-weight: 900; font-size: 1.05rem;">1. ตอบไวใน 60 วินาที</h3>
+                <h3 style="font-weight: 900; font-size: 1.05rem;"><span class="ui-label"><span lang="sv">Svara på tid</span><small lang="th">ตอบไวใน 60 วินาที</small></span></h3>
                 <span class="satun-badge">+2s & 5x Combo</span>
               </div>
               <p class="th-text" style="font-size: 0.84rem; color: var(--text-secondary); margin-top: 2px;">
@@ -1171,7 +1170,7 @@
             <span style="color: #B45309; font-weight: 900;">${sprintBest} คะแนน (${Part5State.data.sprint60BestWords || 0} ข้อถูก)</span>
           </div>
           <button type="button" class="btn-3d btn-blue w-full" id="btn-start-sprint60">
-            ⚡ เริ่มเลย!
+            <span class="ui-label"><span lang="sv">Börja</span><small lang="th">เริ่มเลย</small></span>
           </button>
         </div>
 
@@ -1181,7 +1180,7 @@
             <div class="arena-icon-badge" style="background: var(--emerald-soft); color: var(--emerald-dark);">${window.VisualEngine.getArenaIconSVG('voice')}</div>
             <div style="flex: 1;">
               <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="font-weight: 900; font-size: 1.05rem;">2. ฝึกออกเสียง 10 ข้อ</h3>
+                <h3 style="font-weight: 900; font-size: 1.05rem;"><span class="ui-label"><span lang="sv">Öva uttal</span><small lang="th">ฝึกออกเสียง</small></span></h3>
                 <span class="satun-badge">🌟 ${starTier}</span>
               </div>
               <p class="th-text" style="font-size: 0.84rem; color: var(--text-secondary); margin-top: 2px;">
@@ -1204,7 +1203,7 @@
             </div>
           </div>
           <button type="button" class="btn-3d btn-green w-full" id="btn-start-pronun-challenge">
-            🎙️ ท้าดวลไมค์
+            <span class="ui-label"><span lang="sv">Börja prata</span><small lang="th">เริ่มฝึกพูด</small></span>
           </button>
         </div>
 
@@ -1214,7 +1213,7 @@
             <div class="arena-icon-badge" style="background: var(--gold-soft); color: #92400E;">${window.VisualEngine.getArenaIconSVG('boss')}</div>
             <div style="flex: 1;">
               <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="font-weight: 900; font-size: 1.05rem;">3. ทบทวนประจำหมวด 10 ข้อ</h3>
+                <h3 style="font-weight: 900; font-size: 1.05rem;"><span class="ui-label"><span lang="sv">Öva ett ämne</span><small lang="th">ทบทวนตามหัวข้อ</small></span></h3>
                 <span class="satun-badge">🏅 ${clearedBossCount}/${themes.length} Guld</span>
               </div>
               <p class="th-text" style="font-size: 0.84rem; color: var(--text-secondary); margin-top: 2px;">
@@ -1223,6 +1222,7 @@
             </div>
           </div>
           <div style="margin-bottom: 10px;">
+            <label for="boss-theme-select" class="ui-label"><span lang="sv">Välj ämne</span><small lang="th">เลือกหัวข้อ</small></label>
             <select id="boss-theme-select" class="th-text" style="width: 100%; padding: 10px 12px; border-radius: 14px; border: 2px solid var(--gold); background: #fff; font-weight: 800; font-size: 0.92rem;">
               ${themes
                 .map((t) => {
@@ -1235,7 +1235,7 @@
             </select>
           </div>
           <button type="button" class="btn-3d btn-yellow w-full" id="btn-start-theme-boss">
-            👑 ดวลไฟนอล
+            <span class="ui-label"><span lang="sv">Börja öva</span><small lang="th">เริ่มฝึก</small></span>
           </button>
         </div>
 
@@ -1245,7 +1245,7 @@
             <div class="arena-icon-badge" style="background: var(--lavender-soft); color: #7B2CBF; font-size: 1.5rem; display: flex; align-items: center; justify-content: center;">🇸🇪</div>
             <div style="flex: 1;">
               <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="font-weight: 900; font-size: 1.05rem;">4. คำศัพท์วัฒนธรรมและสังคม</h3>
+                <h3 style="font-weight: 900; font-size: 1.05rem;"><span class="ui-label"><span lang="sv">Ord om Sverige</span><small lang="th">คำศัพท์เกี่ยวกับสวีเดน</small></span></h3>
                 <span class="satun-badge" style="background: #EDE9FE; color: #6D28D9;">🇸🇪 10 คำสำคัญ</span>
               </div>
               <p class="th-text" style="font-size: 0.84rem; color: var(--text-secondary); margin-top: 2px;">
@@ -1254,7 +1254,7 @@
             </div>
           </div>
           <button type="button" class="btn-3d w-full" id="btn-start-culture-boss" style="min-height: 48px; background: #8B5CF6; color: #fff; border-color: #7C3AED; box-shadow: 0 4px 0 #6D28D9;">
-            🇸🇪 ลุยคำศัพท์วัฒนธรรม
+            <span class="ui-label"><span lang="sv">Börja öva</span><small lang="th">เริ่มฝึก</small></span>
           </button>
         </div>
 
@@ -1264,7 +1264,7 @@
             <div class="arena-icon-badge" style="background: #FCE7F3; color: #DB2777; font-size: 1.5rem; display: flex; align-items: center; justify-content: center;">⚡</div>
             <div style="flex: 1;">
               <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="font-weight: 900; font-size: 1.05rem;">5. จับคู่คำอย่างรวดเร็ว</h3>
+                <h3 style="font-weight: 900; font-size: 1.05rem;"><span class="ui-label"><span lang="sv">Para ihop ord</span><small lang="th">จับคู่คำศัพท์</small></span></h3>
                 <span class="satun-badge" style="background: #FCE7F3; color: #BE185D;">⚡ 3 รอบ</span>
               </div>
               <p class="th-text" style="font-size: 0.84rem; color: var(--text-secondary); margin-top: 2px;">
@@ -1273,7 +1273,7 @@
             </div>
           </div>
           <button type="button" class="btn-3d w-full" id="btn-start-speed-match" style="min-height: 48px; background: #EC4899; color: #fff; border-color: #DB2777; box-shadow: 0 4px 0 #BE185D;">
-            ⚡ เริ่มจับคู่ด่วน
+            <span class="ui-label"><span lang="sv">Börja</span><small lang="th">เริ่มเลย</small></span>
           </button>
         </div>
 
@@ -1390,7 +1390,7 @@
           <!-- Förhandsvisning av Nong Dala -->
           <div style="display: flex; align-items: center; gap: 14px; background: var(--surface); border: 2px solid var(--border-light); border-radius: 18px; padding: 10px 14px; margin-bottom: 12px;">
             <div style="width: 78px; height: 78px; flex-shrink: 0;">
-              ${window.VisualEngine.Mascot.getSVG(78, 'celebrating')}
+              ${window.VisualEngine.Mascot.getMarkup(78)}
             </div>
             <div style="flex: 1;">
               <div style="font-weight: 900; font-size: 0.94rem;">ของที่วิลาวันใส่อยู่:</div>
@@ -2084,7 +2084,7 @@
               <!-- Klickbar Maskot (Tryck för att göra henne större eller reagera) -->
               <div id="shopmodal-mascot-click-target" title="Tryck för att förstora eller se Wilawan reagera!" style="cursor: pointer; display: inline-flex; justify-content: center; align-items: center; margin: 8px 0; transition: transform 0.25s ease;">
                 <div class="dala-mascot-wrapper dala-state-idle" id="shopmodal-mascot-wrapper">
-                  ${window.VisualEngine.Mascot.getSVG(mascotSize, 'idle')}
+                  ${window.VisualEngine.Mascot.getMarkup(mascotSize)}
                 </div>
               </div>
 
@@ -2387,8 +2387,12 @@
      10. "MINA ORD"-BANK & VÄLKOMSTSKÄRM
      ========================================================================== */
 
+  const vocabLabel = (sv, th) =>
+    `<span class="ui-label"><span lang="sv">${sv}</span><small lang="th">${th}</small></span>`;
+
   const MinaOrdBank = {
-    renderVocabBank() {
+    searchTimer: null,
+    renderVocabBank({ preserveControls = false } = {}) {
       const listContainer = document.getElementById('vocab-list-container');
       const summaryEl = document.getElementById('vocab-mastery-summary');
       if (!listContainer || !summaryEl) return;
@@ -2402,10 +2406,11 @@
       const currentFilter = Part5State.data.vocabFilter || 'all';
       const searchQuery = (Part5State.data.vocabSearchQuery || '').trim().toLowerCase();
 
-      summaryEl.innerHTML = `
+      if (!preserveControls || !summaryEl.querySelector('#mina-ord-search')) {
+        summaryEl.innerHTML = `
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 10px;">
           <div>
-            <div style="font-weight: 900; font-size: 1rem;">🌟 คำศัพท์ของฉัน · ทบทวนและฝึกพูด</div>
+            <div style="font-weight: 900; font-size: 1rem;">${vocabLabel('Mina ord', 'คำศัพท์ของฉัน')}</div>
             <div class="th-text" style="font-size: 0.82rem; color: var(--text-secondary);">
               ฝึกแล้ว <strong>${learnedItems.length}</strong> / ${allItems.length} คำ • ระดับ 4–5 ดาว <strong>${masteredItems.length}</strong> คำ
             </div>
@@ -2414,26 +2419,43 @@
         </div>
 
         <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px;">
-          <input
-            type="search"
-            id="mina-ord-search"
-            placeholder="🔍 ค้นหาคำ på svenska eller thai..."
-            value="${Part5State.data.vocabSearchQuery || ''}"
-            class="th-text"
-            style="flex: 1; min-width: 180px; padding: 9px 12px; border-radius: 12px; border: 2px solid var(--border-light); font-size: 0.86rem; font-weight: 700;"
-          />
-          <select id="mina-ord-filter" class="th-text" style="padding: 9px 12px; border-radius: 12px; border: 2px solid var(--border-light); font-size: 0.85rem; font-weight: 800; background: #fff;">
-            <option value="all" ${currentFilter === 'all' ? 'selected' : ''}>📚 คำศัพท์ทั้งหมด (${allItems.length})</option>
-            <option value="learned" ${currentFilter === 'learned' ? 'selected' : ''}>⭐ คำที่เคยฝึก (${learnedItems.length})</option>
-            <option value="sentences" ${currentFilter === 'sentences' ? 'selected' : ''}>💬 เฉพาะประโยค</option>
-            ${themes.map((t) => `<option value="${t.id}" ${currentFilter === t.id ? 'selected' : ''}>${t.icon} ${t.titleTh}</option>`).join('')}
-          </select>
+          <div style="flex: 1 1 175px; min-width: 0; display: grid; gap: 4px;">
+            <label for="mina-ord-search">${vocabLabel('Sök ord', 'ค้นหาเป็นภาษาสวีเดนหรือภาษาไทย')}</label>
+            <input type="search" id="mina-ord-search" class="th-text"
+              style="width: 100%; min-width: 0; min-height: 44px; padding: 9px 12px; border-radius: 12px; border: 2px solid var(--border-light); font-size: 0.95rem;"
+            />
+          </div>
+          <div style="flex: 1 1 205px; min-width: 0; display: grid; gap: 4px;">
+            <label for="mina-ord-filter">${vocabLabel('Visa', 'เลือกคำที่จะแสดง')}</label>
+            <select id="mina-ord-filter" class="th-text" style="width: 100%; min-width: 0; min-height: 44px; padding: 9px 12px; border-radius: 12px; border: 2px solid var(--border-light); font-size: 0.95rem; background: #fff;">
+              <option value="all" ${currentFilter === 'all' ? 'selected' : ''}>Alla ord · คำศัพท์ทั้งหมด (${allItems.length})</option>
+              <option value="learned" ${currentFilter === 'learned' ? 'selected' : ''}>Övade ord · คำที่เคยฝึก (${learnedItems.length})</option>
+              <option value="sentences" ${currentFilter === 'sentences' ? 'selected' : ''}>Meningar · ประโยค</option>
+              ${themes.map((t) => `<option value="${t.id}" ${currentFilter === t.id ? 'selected' : ''}>${t.shortTitleSv || t.titleSv.replace(/^\d+\.\s*/, '')} · ${t.titleTh}</option>`).join('')}
+            </select>
+          </div>
         </div>
       `;
 
+        const searchInput = summaryEl.querySelector('#mina-ord-search');
+        searchInput.value = Part5State.data.vocabSearchQuery || '';
+        searchInput.addEventListener('input', (event) => {
+          Part5State.data.vocabSearchQuery = event.target.value;
+          clearTimeout(this.searchTimer);
+          this.searchTimer = setTimeout(() => this.renderVocabBank({ preserveControls: true }), 120);
+        });
+
+        summaryEl.querySelector('#mina-ord-filter')?.addEventListener('change', (event) => {
+          clearTimeout(this.searchTimer);
+          Part5State.data.vocabFilter = event.target.value;
+          Part5State.save();
+          this.renderVocabBank();
+        });
+      }
+
       let filtered = allItems;
       if (currentFilter === 'learned') {
-        filtered = learnedItems.length > 0 ? learnedItems : allItems;
+        filtered = learnedItems;
       } else if (currentFilter === 'sentences') {
         filtered = allItems.filter((i) => i.kind === 'sentence');
       } else if (currentFilter !== 'all') {
@@ -2449,7 +2471,11 @@
         );
       }
 
-      listContainer.innerHTML = filtered
+      const emptyMessage = currentFilter === 'learned' && !learnedItems.length && !searchQuery
+        ? 'ยังไม่มีคำที่เคยฝึก เริ่มบทเรียนแรกแล้วกลับมาดูคำของเราได้นะจ๊ะ'
+        : 'ไม่พบคำที่ค้นหา ลองใช้คำอื่นหรือเปลี่ยนหมวดดูนะจ๊ะ';
+
+      listContainer.innerHTML = filtered.length ? filtered
         .map((item) => {
           const rec = srs.getRecord(item.id);
           const starCount = Math.min(5, Math.max(0, rec.masteryLevel));
@@ -2462,7 +2488,7 @@
               <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;">
                 <div style="flex: 1;">
                   <div style="font-weight: 900; font-size: 1.05rem; color: var(--text-main);">
-                    ${item.emoji || '✨'} ${item.sv}
+                    ${item.emoji || '✨'} <span lang="sv">${item.sv}</span>
                     <span class="th-text" style="font-size: 0.82rem; font-weight: 700; color: var(--sky-dark);">
                       (${item.phonetic})
                     </span>
@@ -2479,30 +2505,19 @@
 
               <div style="display: flex; gap: 8px;">
                 <button type="button" class="btn-3d btn-blue" data-vocab-normal="${item.id}" style="min-height: 44px; flex: 1; padding: 6px 10px; font-size: 0.82rem;">
-                  🔊 ฟังปกติ
+                  ${vocabLabel('Lyssna', 'ฟังปกติ')}
                 </button>
                 <button type="button" class="btn-3d" data-vocab-turtle="${item.id}" style="min-height: 44px; flex: 1; padding: 6px 10px; font-size: 0.82rem; background: var(--lavender-soft); color: #7B2CBF; border-color: #D8B4FE;">
-                  🐢 ฟังช้า ๆ
+                  ${vocabLabel('Långsamt', 'ฟังช้า ๆ')}
                 </button>
                 <button type="button" class="btn-3d btn-green" data-vocab-practice-mic="${item.id}" style="min-height: 44px; flex: 1.2; padding: 6px 10px; font-size: 0.82rem;">
-                  🎙️ ฝึกออกเสียง
+                  ${vocabLabel('Öva uttal', 'ฝึกออกเสียง')}
                 </button>
               </div>
             </div>
           `;
         })
-        .join('');
-
-      document.getElementById('mina-ord-search')?.addEventListener('input', (e) => {
-        Part5State.data.vocabSearchQuery = e.target.value;
-        this.renderVocabBank();
-      });
-
-      document.getElementById('mina-ord-filter')?.addEventListener('change', (e) => {
-        Part5State.data.vocabFilter = e.target.value;
-        Part5State.save();
-        this.renderVocabBank();
-      });
+        .join('') : `<div class="vocab-empty-state" role="status">${emptyMessage}</div>`;
 
       listContainer.querySelectorAll('[data-vocab-normal]').forEach((btn) => {
         btn.addEventListener('click', () => {
@@ -2539,9 +2554,9 @@
       const mouthGuide = window.SpeechEngine.PhoneticEvaluator.getMouthGuideForTarget(item);
 
       backdrop.innerHTML = `
-        <div class="voice-practice-sheet" role="dialog" aria-label="ฝึกออกเสียง på ${item.sv}">
+        <div class="voice-practice-sheet" role="dialog" aria-label="ฝึกออกเสียง ${item.sv}">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-            <span class="satun-badge">🎙️ ฝึกพูดจากคำศัพท์ของฉัน</span>
+            <span class="satun-badge">${vocabLabel('Öva uttal', 'ฝึกออกเสียง')}</span>
             <button type="button" class="lesson-close-btn" id="btn-close-voice-modal" aria-label="ปิด">✕</button>
           </div>
 
@@ -2551,7 +2566,7 @@
                 ${window.VisualEngine.getIllustrationSVG(item)}
               </div>
               <div style="text-align: left;">
-                <div class="pronun-sv-phrase" style="font-size: 1.4rem;">${item.sv}</div>
+                <div class="pronun-sv-phrase" lang="sv" style="font-size: 1.4rem;">${item.sv}</div>
                 <div style="margin-top: 4px;">
                   ${window.PhoneticBlurHelper ? window.PhoneticBlurHelper.renderHtml(item) : `<div class="pronun-phonetic-pill">คำอ่าน: ${item.phonetic}</div>`}
                 </div>
@@ -2562,18 +2577,18 @@
             </div>
             <div style="display: flex; gap: 8px; margin-top: 10px;">
               <button type="button" class="btn-3d btn-blue" id="btn-modal-listen-normal" style="flex: 1; min-height: 48px; font-size: 0.85rem;">
-                🔊 ฟังปกติ (0.88x)
+                ${vocabLabel('Lyssna', 'ฟังปกติ')}
               </button>
               <button type="button" class="btn-3d" id="btn-modal-listen-turtle" style="flex: 1; min-height: 48px; font-size: 0.85rem; background: var(--lavender); color: #fff;">
-                🐢 ฟังช้า ๆ (0.60x)
+                ${vocabLabel('Långsamt', 'ฟังช้า ๆ')}
               </button>
             </div>
           </div>
 
           <div class="mic-stage-box" style="gap: 8px;">
-            <button type="button" class="mic-record-btn state-idle" id="btn-modal-mic-start" aria-label="Tryck och prata">
+            <button type="button" class="mic-record-btn state-idle" id="btn-modal-mic-start">
               <div class="mic-btn-icon-wrap" id="modal-mic-icon">🎙️</div>
-              <span class="mic-btn-status-label" id="modal-mic-label">ฟังฉันพูด</span>
+              <span class="mic-btn-status-label" id="modal-mic-label">${vocabLabel('Säg ordet', 'พูดคำนี้')}</span>
             </button>
             <div class="live-hearing-pill" id="modal-hearing-pill">
               <span>👂</span>
@@ -2638,22 +2653,22 @@
             if (state === 'recording') {
               micBtn.classList.add('state-recording');
               if (micIcon) micIcon.textContent = '🔴';
-              if (micLabel) micLabel.innerHTML = 'กำลังฟัง…<br>(แตะเพื่อหยุด)';
+              if (micLabel) micLabel.innerHTML = vocabLabel('Stoppa', 'แตะเพื่อหยุด');
             } else if (state === 'analyzing') {
               micBtn.classList.add('state-analyzing');
               if (micIcon) micIcon.innerHTML = '<span class="mic-spin-star">⭐</span>';
-              if (micLabel) micLabel.innerHTML = 'Tänker...';
+              if (micLabel) micLabel.innerHTML = vocabLabel('Bedömer', 'กำลังตรวจเสียง');
             } else {
               micBtn.classList.add('state-idle');
               if (micIcon) micIcon.textContent = '🎙️';
-              if (micLabel) micLabel.textContent = 'ฟังฉันพูด';
+              if (micLabel) micLabel.innerHTML = vocabLabel('Säg ordet', 'พูดคำนี้');
             }
           },
           onResult: (res) => {
             micBtn.classList.remove('state-recording', 'state-analyzing');
             micBtn.classList.add('state-idle');
             if (micIcon) micIcon.textContent = '🎙️';
-            if (micLabel) micLabel.textContent = 'ฟังฉันพูด';
+            if (micLabel) micLabel.innerHTML = vocabLabel('Säg ordet', 'พูดคำนี้');
 
             const evalRes = res.evaluation;
             if (hearingText) {
@@ -2709,7 +2724,7 @@
       overlay.innerHTML = `
         <div class="welcome-onboard-card" role="dialog" aria-label="ยินดีต้อนรับวิลาวัน">
           <div style="width: 108px; height: 108px;">
-            ${window.VisualEngine.Mascot.getSVG(108, 'celebrating')}
+            ${window.VisualEngine.Mascot.getMarkup(108)}
           </div>
           <span class="satun-badge">🌴 ยินดีต้อนรับสู่ Svenska från Grunden (Satun Edition)</span>
           <h1 style="font-size: 1.45rem; font-weight: 900; color: var(--text-main); line-height: 1.25;">
@@ -2719,7 +2734,7 @@
             แอปฝึกพูดสวีเดนสำหรับคนใต้ (สำเนียงสตูล) 💛 เสียงอ่านชัดเจน โหมดเต่าพูดช้า 🐢 พร้อม AI ตรวจการออกเสียง และตัวช่วยฟังคำพูดเพื่อฝึกออกเสียง
           </p>
           <button type="button" class="btn-3d btn-green w-full" id="btn-unlock-ios-start" style="font-size: 1.02rem; min-height: 58px;">
-            🔊 เปิดเสียงแล้วเริ่มเลย!
+            <span class="ui-label"><span lang="sv">Sätt på ljudet och börja</span><small lang="th">เปิดเสียงแล้วเริ่มเลย!</small></span>
           </button>
         </div>
       `;

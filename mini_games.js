@@ -9,24 +9,27 @@
   const STORAGE_KEY = 'wilawan_small_games_v1';
   const $ = (selector, parent = document) => parent.querySelector(selector);
   const escape = value => String(value).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+  const label = (sv, th) => `<span class="ui-label"><span lang="sv">${escape(sv)}</span><small lang="th">${escape(th)}</small></span>`;
   const speaker = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 8q5 4 0 8m3-11q7 7 0 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   const games = [
-    { id: 'zoo', title: 'กุญแจแห่งรัตติกาล', subtitle: 'ความลับในสวนสัตว์ยามค่ำ',
-      description: 'สวนสัตว์ปิดแล้ว ตามหาสัตว์ที่ซ่อนอยู่ 12 ตัว อ่านบันทึกของซิกเน และไขปริศนา 3 ด่านเพื่อหาทางออก',
-      tags: ['เกมหาทางออก', '4 คืน · 12 บท', 'ค้นหาและไขปริศนา'] },
-    { id: 'farm', title: 'สวนเบิร์ช', subtitle: 'ฟาร์มเล็ก ๆ ของเรา',
-      description: 'เดินตามแผนที่ไปดูหมู เป็ด และม้า ปลูกผัก ทำของขาย และฝึกคุยกับเพื่อนบ้าน กลับมาอีกทีอาจมีเรื่องใหม่รออยู่',
-      tags: ['ฟาร์มที่บันทึกไว้', '8 บท', 'ปลูก · ดูแล · ค้าขาย'] },
-    { id: 'kitchen', title: 'ครัวเล็กของวิลาวัน', subtitle: 'ฝึกคำศัพท์ผ่านขนมอร่อย ๆ',
-      description: 'ฟังชื่อวัตถุดิบภาษาสวีเดน แล้วลากของที่ถูกลงชาม เลือกจาก 29 อย่างเพื่ออบขนม 8 สูตร พร้อมเรียนชั่งน้ำหนัก ตวงปริมาตร และอ่านปริมาณเป็นสวีเดนกันต๊ะ',
-      tags: ['อาหารและขนม', 'ลากแล้วเรียนรู้', '8 สูตร · โรงเรียนตวงวัด'] },
-    { id: 'cafe', title: 'รับอะไรดีคะ?', subtitle: 'ฝึกสั่งอาหารเป็นภาษาสวีเดน',
-      description: 'มาเป็นเจ้าของคาเฟ่กัน ฟังลูกค้าสั่งเป็นภาษาสวีเดน แล้วจัดขนมและเครื่องดื่มให้ถูกชนิดและจำนวน',
-      tags: ['ประโยคใช้จริง', 'ฝึกฟังและนับจำนวน', '6 วัน · ลูกค้า 39 คน'] },
-    { id: 'memory', title: 'ภาพนี้คู่กับคำไหน', subtitle: 'จับคู่ภาพแล้วจำคำใหม่',
-      description: 'เปิดการ์ดรูปภาพกับคำสวีเดนให้เป็นคู่ ฟังเสียงอ่านและฝึกจำคำศัพท์หลายหมวด รอบสุดท้ายมีคำเก่ากลับมาทบทวน ค่อย ๆ เล่นได้เลยจ้า',
-      tags: ['รูปภาพและคำศัพท์', 'ฝึกจำและออกเสียง', '8 ชุด · 24 ภารกิจ'] }
+    { id: 'zoo', titleSv: 'Nattnyckeln', title: 'กุญแจแห่งรัตติกาล', subtitle: 'ความลับในสวนสัตว์ยามค่ำ',
+      description: 'ตามหาสัตว์ที่ซ่อนอยู่ แล้วไขปริศนาเป็นภาษาสวีเดน',
+      cover: 'assets/zoo/lobby-cover.webp', unit: 'คืน' },
+    { id: 'farm', titleSv: 'Björkbacken', title: 'สวนเบิร์ช', subtitle: 'ฟาร์มเล็ก ๆ ของเรา',
+      description: 'ปลูกผัก ดูแลสัตว์ และฝึกคุยกับเพื่อนบ้าน',
+      cover: 'assets/farm/lobby-cover.webp', unit: 'บท' },
+    { id: 'kitchen', titleSv: 'Wilawans lilla kök', title: 'ครัวเล็กของวิลาวัน', subtitle: 'ฝึกคำศัพท์ผ่านขนมอร่อย ๆ',
+      description: 'ฟังชื่อวัตถุดิบ ชั่งตวง แล้วลองทำขนม' },
+    { id: 'cafe', titleSv: 'Vad vill du ha?', title: 'รับอะไรดีคะ?', subtitle: 'ฝึกสั่งอาหารเป็นภาษาสวีเดน',
+      description: 'ฟังออร์เดอร์ แล้วจัดขนมกับเครื่องดื่มให้ลูกค้า' },
+    { id: 'memory', titleSv: 'Vilket ord passar?', title: 'ภาพนี้คู่กับคำไหน', subtitle: 'จับคู่ภาพแล้วจำคำใหม่',
+      description: 'จับคู่รูปกับคำสวีเดน แล้วฟังเสียงเพื่อทบทวน' }
   ];
+  const stageLabels = ['Lär dig orden', 'Kom ihåg orden', 'Lyssna och förstå', 'Mät och väg'];
+  const packLabels = {
+    home: 'Saker runt oss', baking: 'I köket', fruit: 'Frukt och bär', food: 'Mat',
+    fika: 'Fika', pantry: 'I skafferiet', forest: 'Djur i skog och vatten', tropical: 'Djur i växthuset'
+  };
   let saved = readSaved();
   let dialog, content, current, returnFocus, selected = null, dragging = null, suppressClick = false;
   let timers = new Set();
@@ -83,23 +86,58 @@
     return `<div class="mg-game-progress"><span>${escape(label)}</span><div class="mg-progress-track" role="progressbar" aria-label="ความคืบหน้าของรอบนี้" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${done}"><div class="mg-progress-fill" style="width:${100 * done / total}%"></div></div><span>${done} / ${total}</span></div>`;
   }
   function feedbackHTML(text) { return `<div id="mg-feedback" class="mg-feedback" role="status" aria-live="polite" aria-atomic="true">${text}</div>`; }
+  function modeLabel() {
+    return saved.mode === 'listen'
+      ? label('Bara lyssna', 'ฝึกฟังอย่างเดียว')
+      : label('Läs och lyssna', 'อ่านพร้อมฟัง');
+  }
+
+  function lobbyCard(game) {
+    const cover = game.cover
+      ? `<img class="mg-card-art" src="${game.cover}" width="960" height="480" alt="" decoding="async">`
+      : A.cover(game.id);
+    return `<article class="mg-game-card mg-game-card--${game.id}" data-game-card="${game.id}">
+      <div class="mg-card-media" aria-hidden="true">${cover}</div>
+      <div class="mg-card-copy">
+        <h2><button type="button" data-open-game="${game.id}" aria-describedby="mg-description-${game.id} mg-progress-${game.id}">${label(game.titleSv, game.title)}</button></h2>
+        <p id="mg-description-${game.id}">${game.description}</p>
+        <div class="mg-card-footer">
+          <span id="mg-progress-${game.id}" class="mg-card-progress"></span>
+          <span class="mg-card-meter" aria-hidden="true"><span></span></span>
+          <span class="mg-card-arrow" aria-hidden="true">↗</span>
+        </div>
+      </div>
+    </article>`;
+  }
 
   function renderLobby() {
     const lobby = $('#small-games-lobby');
     if (!lobby) return;
     lobby.lang = 'th';
-    const rank = P.levelInfo(P.state().totalXP || 0, P.state()), all = P.stats(P.state());
-    lobby.innerHTML = `<div class="mg-lobby"><div class="mg-lobby-intro"><span class="mg-eyebrow">ค่อย ๆ ฝึก วันละนิด</span><h1>เล่นไป เรียนสวีเดนไป</h1><p class="mg-lobby-lead">ไขปริศนา ทำขนม หรือเปิดร้านกาแฟ<br>ฟังคำสวีเดนแล้วลงมือเล่น มีภาษาไทยคอยบอกวิธีทุกขั้นตอน</p><div class="mg-lobby-sub"><span>ไม่จับเวลา</span><span>ฟังเสียงสวีเดนได้</span><span>มีคำแปลไทย</span></div></div>${rankCard(rank, all)}${games.map(game => {
-      const course = P.stats(P.state(), game.id);
-      const cover = game.id === 'farm' ? window.FarmGame.cover() : A.cover(game.id);
-      return `<button type="button" class="mg-game-card" data-open-game="${game.id}">${cover}<div class="mg-card-copy"><span class="mg-eyebrow">${game.subtitle}</span><div class="mg-card-heading"><h2>${game.title}</h2><span class="mg-card-arrow" aria-hidden="true">↗</span></div><p>${game.description}</p><div class="mg-card-meta">${game.tags.map(tag => `<span>${tag}</span>`).join('')}<span>✓ ${course.completed} / ${course.total} ภารกิจ</span></div></div></button>`;
-    }).join('')}<p class="mg-hub-note">ลองผิดลองใหม่ได้ตามสบายต๊ะ<br>เล่นจบแต่ละรอบแล้ว มีคำศัพท์พร้อมเสียงให้ทบทวนอีกครั้ง</p></div>`;
+    if (!$('.mg-lobby', lobby)) {
+      lobby.innerHTML = `<div class="mg-lobby">
+        <header class="mg-library-heading">
+          <h1>${label('Spel', 'เกม')}</h1><p>ฝึกภาษาสวีเดนผ่านการเล่น</p>
+        </header>
+        ${games.map(lobbyCard).join('')}
+        <div class="mg-lobby-rank"></div>
+      </div>`;
+    }
+    const state = P.state();
+    for (const game of games) {
+      const card = $(`[data-game-card="${game.id}"]`, lobby);
+      const { completed, total } = P.stats(state, game.id);
+      $('.mg-card-progress', card).textContent = `${completed} / ${total} ${game.unit || 'ภารกิจ'}`;
+      $('.mg-card-meter > span', card).style.width = `${total ? Math.min(100, completed / total * 100) : 0}%`;
+    }
+    const rank = $('.mg-lobby-rank', lobby);
+    const rankDetailsOpen = $('details', rank)?.open;
+    rank.innerHTML = rankCard(P.levelInfo(state.totalXP || 0, state), P.stats(state));
+    $('details', rank).open = Boolean(rankDetailsOpen);
   }
   function init() {
     try { P.migrate(P.state(), saved, JSON.parse(localStorage.getItem('wilawan_nattnyckeln_v1') || '{}')); window.GameEngine?.StateManager?.save(); } catch (_) {}
     renderLobby();
-    const homeCard = $('#mg-home-shortcut');
-    if (homeCard) homeCard.innerHTML = '<span aria-hidden="true">✳</span><span><strong>มาเล่นเกมฝึกภาษากัน</strong><small>ดูแลฟาร์ม ไขปริศนาสวนสัตว์ และทำขนม</small></span><span aria-hidden="true">↗</span>';
     document.addEventListener('click', event => {
       const card = event.target.closest('[data-open-game]');
       if (card) open(card.dataset.openGame, card);
@@ -126,7 +164,17 @@
     current = { gameId, revealed: false, finished: false };
     if (!P.unlocked(P.state(), missionId())) { saved.stage = 0; saved.cafeLevel = 0; saved.measureLesson = MC.lessons.find(l=>P.unlocked(P.state(),`kitchen:measure:${l.id}`)&&!P.done(P.state(),`kitchen:measure:${l.id}`))?.id || MC.lessons[0].id; persist(); }
     const game = games.find(entry => entry.id === gameId);
-    dialog.innerHTML = `<div class="mg-dialog-body"><header class="mg-game-header"><button type="button" class="mg-close" data-action="close" aria-label="กลับไปเลือกเกม" title="ย้อนกลับ">←</button><div class="mg-header-title"><h2 id="mg-dialog-title">${game.title}</h2><p>${game.subtitle}</p></div><button type="button" class="mg-toggle" data-action="thai" aria-pressed="${saved.thai}" aria-label="แสดงคำแปลไทยของคำที่กำลังฝึก">คำแปล</button><button type="button" class="mg-toggle" data-action="mode" aria-pressed="${saved.mode === 'listen'}" aria-label="โหมดฝึกฟัง">${saved.mode === 'listen' ? 'ฝึกฟังอย่างเดียว' : 'อ่านพร้อมฟัง'}</button></header><div class="mg-game-content"></div></div>`;
+    dialog.innerHTML = `<div class="mg-dialog-body">
+      <header class="mg-game-header">
+        <button type="button" class="mg-close" data-action="close"><span aria-hidden="true">←</span>${label('Tillbaka', 'ย้อนกลับ')}</button>
+        <div class="mg-header-title"><h2 id="mg-dialog-title">${label(game.titleSv, game.title)}</h2><p>${game.subtitle}</p></div>
+        <div class="mg-header-actions">
+          <button type="button" class="mg-toggle" data-action="thai" aria-pressed="${saved.thai}">${label('Visa översättning', 'แสดงคำแปล')}</button>
+          <button type="button" class="mg-toggle" data-action="mode" aria-pressed="${saved.mode === 'listen'}">${modeLabel()}</button>
+        </div>
+      </header>
+      <div class="mg-game-content"></div>
+    </div>`;
     content = $('.mg-game-content', dialog);
     dialog.classList.toggle('mg-show-th', saved.thai);
     if (!dialog.open) dialog.showModal();
@@ -142,7 +190,7 @@
     return current.gameId === 'kitchen' ? `kitchen:${saved.recipe}:${saved.stage}` : current.gameId === 'memory' ? `memory:${saved.pack}:${saved.stage}` : `cafe:${saved.cafeLevel}`;
   }
   function rankCard(rank, all) {
-    return `<section class="mg-course-card"><span class="mg-eyebrow">เส้นทางของเรา · ${all.completed} / ${all.total} ภารกิจ</span><h2>${rank.current.icon} ระดับ ${rank.current.level} · ${rank.current.titleTh}</h2><p>${rank.requirement}</p><progress max="100" value="${rank.progressPct}" aria-label="ความคืบหน้าระดับถัดไป"></progress><details><summary>แต้มและระดับคิดอย่างไร?</summary><p>ภารกิจใหม่ได้ 8–36 XP ครั้งเดียว การทบทวนต่างวันได้ 2 XP สูงสุด 3 ภารกิจต่อวัน เกมรวมไม่เกิน 60 XP ต่อวัน ครบทุก 3 ภารกิจใหม่ได้ 2 เพชร ทั้งแอปรวมไม่เกิน 180 XP และ 20 เพชรต่อวัน ใช้คำใบ้ได้โดยไม่หักแต้ม ระดับดูทั้งภารกิจหรือคำที่ฝึกถูก และจำนวนวันที่ฝึก ไม่ใช่คะแนนสอบภาษา</p></details></section>`;
+    return `<section class="mg-course-card"><div class="mg-course-top"><span class="mg-course-icon" aria-hidden="true">${rank.current.icon}</span><div><span class="mg-eyebrow">เส้นทางของเรา · ${all.completed} / ${all.total} ภารกิจ</span><h2>ระดับ ${rank.current.level} · ${rank.current.titleTh}</h2></div></div><div class="mg-course-progress-label"><span>สู่ระดับถัดไป</span><strong>${rank.progressPct}%</strong></div><progress max="100" value="${rank.progressPct}" aria-label="ความคืบหน้าระดับถัดไป"></progress><p>${rank.requirement}</p><details><summary>แต้มและระดับคิดอย่างไร?</summary><p>ภารกิจใหม่ได้ 8–36 XP ครั้งเดียว การทบทวนต่างวันได้ 2 XP สูงสุด 3 ภารกิจต่อวัน เกมรวมไม่เกิน 60 XP ต่อวัน ครบทุก 3 ภารกิจใหม่ได้ 2 เพชร ทั้งแอปรวมไม่เกิน 180 XP และ 20 เพชรต่อวัน ใช้คำใบ้ได้โดยไม่หักแต้ม ระดับดูทั้งภารกิจหรือคำที่ฝึกถูก และจำนวนวันที่ฝึก ไม่ใช่คะแนนสอบภาษา</p></details></section>`;
   }
   function recipeArt(recipe) { return A.recipe(recipe.id); }
   function renderSetup() {
@@ -157,15 +205,15 @@
       memory: ['อัลบั้มคำศัพท์ 8 ชุด', 'แต่ละชุดมี 3 ขั้น อ่านพร้อมภาพ นึกความหมายโดยซ่อนคำแปล แล้วฟังเสียง พร้อมคำเก่าจากชุดที่เคยฝึก ถ้ายังไม่มีชุดก่อนหน้า จะฝึก 6 คู่นี้ก่อน เปิดการ์ด 2 ใบเพื่อจับคู่ภาพกับคำ', 'เชื่อมภาพกับคำและเสียง แล้วทบทวนคำจากชุดก่อนหน้า']
     }, intro = intros[game.id];
     let choices = '';
-    if (game.id === 'kitchen') choices = `<div class="mg-recipe-options">${Object.values(C.recipes).map(r => `<button type="button" class="mg-recipe-choice" data-action="recipe" data-recipe="${r.id}" aria-pressed="${saved.recipe === r.id}">${recipeArt(r)}<strong>${r.th}</strong><small>${P.stats(P.state()).total && [0,1,2,3].filter(i => P.done(P.state(), `kitchen:${r.id}:${i}`)).length} / 4 ขั้น</small></button>`).join('')}</div>`;
-    if (game.id === 'memory') choices = `<div class="mg-pack-options">${C.memoryPacks.map(pack => `<button type="button" data-action="pack" data-pack="${pack.id}" aria-pressed="${saved.pack === pack.id}"><strong>${pack.th}</strong><small>${[0,1,2].filter(i => P.done(P.state(), `memory:${pack.id}:${i}`)).length} / 3 ขั้น</small></button>`).join('')}</div>`;
-    if (game.id === 'cafe') choices = `<div class="mg-course-options">${C.cafeRounds.map((round, i) => `<button type="button" data-action="cafe-level" data-level="${i}" aria-pressed="${saved.cafeLevel === i}" ${P.unlocked(P.state(), `cafe:${i}`) ? '' : 'disabled'}><strong>${P.done(P.state(), `cafe:${i}`) ? '✓ ' : ''}${round.th}</strong><small>${round.count} คน · ${round.goal}</small></button>`).join('')}</div>`;
-    else choices += `<div class="mg-course-options">${(game.id === 'kitchen' ? P.kitchenStages : P.stages).map(stage => { const id = game.id === 'kitchen' ? `kitchen:${saved.recipe}:${stage.id}` : `memory:${saved.pack}:${stage.id}`; return `<button type="button" data-action="stage" data-stage="${stage.id}" aria-pressed="${saved.stage === stage.id}" ${P.unlocked(P.state(), id) ? '' : 'disabled'}><strong>${P.done(P.state(), id) ? '✓ ' : ''}${stage.id + 1}. ${stage.th}</strong><small>${stage.detail}</small></button>`; }).join('')}</div>`;
+    if (game.id === 'kitchen') choices = `<div class="mg-recipe-options">${Object.values(C.recipes).map(r => `<button type="button" class="mg-recipe-choice" data-action="recipe" data-recipe="${r.id}" aria-pressed="${saved.recipe === r.id}">${recipeArt(r)}<strong>${label(r.id === 'cookies' ? 'Chokladkakor' : r.name, r.th)}</strong><small>${P.stats(P.state()).total && [0,1,2,3].filter(i => P.done(P.state(), `kitchen:${r.id}:${i}`)).length} / 4 ขั้น</small></button>`).join('')}</div>`;
+    if (game.id === 'memory') choices = `<div class="mg-pack-options">${C.memoryPacks.map(pack => `<button type="button" data-action="pack" data-pack="${pack.id}" aria-pressed="${saved.pack === pack.id}"><strong>${label(packLabels[pack.id], pack.th)}</strong><small>${[0,1,2].filter(i => P.done(P.state(), `memory:${pack.id}:${i}`)).length} / 3 ขั้น</small></button>`).join('')}</div>`;
+    if (game.id === 'cafe') choices = `<div class="mg-course-options">${C.cafeRounds.map((round, i) => `<button type="button" data-action="cafe-level" data-level="${i}" aria-pressed="${saved.cafeLevel === i}" ${P.unlocked(P.state(), `cafe:${i}`) ? '' : 'disabled'}><strong>${label(`${P.done(P.state(), `cafe:${i}`) ? '✓ ' : ''}Dag ${i + 1}`, round.th)}</strong><small>${round.count} คน · ${round.goal}</small></button>`).join('')}</div>`;
+    else choices += `<div class="mg-course-options">${(game.id === 'kitchen' ? P.kitchenStages : P.stages).map(stage => { const id = game.id === 'kitchen' ? `kitchen:${saved.recipe}:${stage.id}` : `memory:${saved.pack}:${stage.id}`; return `<button type="button" data-action="stage" data-stage="${stage.id}" aria-pressed="${saved.stage === stage.id}" ${P.unlocked(P.state(), id) ? '' : 'disabled'}><strong>${label(`${P.done(P.state(), id) ? '✓ ' : ''}${stage.id + 1}. ${stageLabels[stage.id]}`, stage.th)}</strong><small>${stage.detail}</small></button>`; }).join('')}</div>`;
     const mission = missionId(), available = P.unlocked(P.state(), mission), finished = P.done(P.state(), mission);
-    content.innerHTML = `<div class="mg-setup">${A.garland()}${game.id === 'kitchen' ? kitchenAreas() : ''}<span class="mg-eyebrow">${course.completed} / ${course.total} ภารกิจ</span><h3>${intro[0]}</h3><p class="mg-setup-lead">${intro[1]}</p><p class="mg-learning-goal"><strong>เกมนี้ฝึกอะไร?</strong> ${intro[2]}</p>${choices}<p class="mg-mode-description">${available ? finished ? 'ทบทวนได้เสมอ การเล่นภารกิจเดิมซ้ำวันนี้ไม่เพิ่มแต้ม' : `ภารกิจใหม่ · รางวัลครั้งแรก ${P.byId[mission].xp} XP ภายใต้เพดานประจำวัน` : 'ทำขั้นก่อนหน้าให้จบก่อน แล้วขั้นนี้จะเปิดเองจ้า'}</p><button type="button" class="mg-primary" data-action="start" ${available ? '' : 'disabled'}>เริ่มภารกิจนี้ →</button><p class="mg-mode-description">ไม่จับเวลา เปิดคำแปลและฟังซ้ำที่ความเร็ว 1× ได้เสมอ</p></div>`;
+    content.innerHTML = `<div class="mg-setup">${A.garland()}${game.id === 'kitchen' ? kitchenAreas() : ''}<span class="mg-eyebrow">${course.completed} / ${course.total} ภารกิจ</span><h3>${intro[0]}</h3><p class="mg-setup-lead">${intro[1]}</p><p class="mg-learning-goal"><strong>เกมนี้ฝึกอะไร?</strong> ${intro[2]}</p>${choices}<p class="mg-mode-description">${available ? finished ? 'ทบทวนได้เสมอ การเล่นภารกิจเดิมซ้ำวันนี้ไม่เพิ่มแต้ม' : `ภารกิจใหม่ · รางวัลครั้งแรก ${P.byId[mission].xp} XP ภายใต้เพดานประจำวัน` : 'ทำขั้นก่อนหน้าให้จบก่อน แล้วขั้นนี้จะเปิดเองจ้า'}</p><button type="button" class="mg-primary" data-action="start" ${available ? '' : 'disabled'}>${label('Börja spela', 'เริ่มเล่น')}</button><p class="mg-mode-description">ไม่จับเวลา เปิดคำแปลและฟังซ้ำที่ความเร็ว 1× ได้เสมอ</p></div>`;
   }
   function kitchenAreas() {
-    return `<div class="km-area-tabs" role="group" aria-label="เลือกส่วนของครัว"><button type="button" data-action="kitchen-area" data-area="recipes" aria-pressed="${saved.kitchenArea !== 'measures'}">สมุดสูตรขนม · 8 สูตร</button><button type="button" data-action="kitchen-area" data-area="measures" aria-pressed="${saved.kitchenArea === 'measures'}">โรงเรียนตวงวัด · ${MC.lessons.length} บท</button></div>`;
+    return `<div class="km-area-tabs" role="group" aria-label="เลือกส่วนของครัว"><button type="button" data-action="kitchen-area" data-area="recipes" aria-pressed="${saved.kitchenArea !== 'measures'}">${label('Baka', 'ทำขนม')}</button><button type="button" data-action="kitchen-area" data-area="measures" aria-pressed="${saved.kitchenArea === 'measures'}">${label('Mät och väg', 'ตวงและชั่ง')}</button></div>`;
   }
   function measureTasks() {
     return saved.kitchenArea === 'measures' ? MC.lessons.find(l=>l.id === saved.measureLesson).tasks : MC.recipeTasks(C.recipes[saved.recipe],C.byId);
@@ -173,7 +221,8 @@
   function renderMeasureSetup() {
     dialog.querySelectorAll('.mg-toggle').forEach(button=>button.hidden=true);
     const lesson=MC.lessons.find(l=>l.id===saved.measureLesson),mission=missionId(),available=P.unlocked(P.state(),mission),resume=M.resumable(mission,lesson.tasks);
-    content.innerHTML=`<div class="mg-setup km-school-setup">${A.garland()}${kitchenAreas()}<span class="mg-eyebrow">เรียนแล้ว ${MC.lessons.filter(l=>P.done(P.state(),`kitchen:measure:${l.id}`)).length} / ${MC.lessons.length} บท</span><h3>ตวงเป็น ชั่งเป็น<br>อ่านสูตรสวีเดนได้</h3><p class="mg-setup-lead">เริ่มจากชื่อหน่วย แล้วค่อยเปลี่ยนหน่วย ใช้ช้อนตวง ตั้งศูนย์เครื่องชั่ง อ่านเศษส่วน และปรับสูตร มี 8 ข้อต่อบท ใช้สมุดช่วยได้เสมอต๊ะ</p><div class="mg-course-options">${MC.lessons.map(l=>`<button type="button" data-action="measure-lesson" data-lesson="${l.id}" aria-pressed="${l.id===saved.measureLesson}" ${P.unlocked(P.state(),`kitchen:measure:${l.id}`)?'':'disabled'}><strong>${P.done(P.state(),`kitchen:measure:${l.id}`)?'✓ ':''}${l.th}</strong><small>${l.goal} · ${l.tasks.length} ข้อ</small></button>`).join('')}</div><p class="mg-learning-goal">${lesson.intro}</p><button type="button" class="mg-primary" data-action="start" ${available?'':'disabled'}>${resume?'เล่นต่อจากที่บันทึกไว้':'เริ่มบทนี้'} →</button><p class="mg-mode-description">${P.done(P.state(),mission)?'ทบทวนได้เสมอ เล่นซ้ำวันนี้ไม่เพิ่มแต้ม':`รางวัลครั้งแรก ${P.byId[mission].xp} XP ตามเพดานรายวัน`} · ปิดครัวแล้วกลับมาเรียนต่อได้</p>${M.referenceHTML()}</div>`;
+    const startLabel = resume ? label('Fortsätt', 'เล่นต่อ') : label('Börja öva', 'เริ่มฝึก');
+    content.innerHTML=`<div class="mg-setup km-school-setup">${A.garland()}${kitchenAreas()}<span class="mg-eyebrow">เรียนแล้ว ${MC.lessons.filter(l=>P.done(P.state(),`kitchen:measure:${l.id}`)).length} / ${MC.lessons.length} บท</span><h3>ตวงเป็น ชั่งเป็น<br>อ่านสูตรสวีเดนได้</h3><p class="mg-setup-lead">เริ่มจากชื่อหน่วย แล้วค่อยเปลี่ยนหน่วย ใช้ช้อนตวง ตั้งศูนย์เครื่องชั่ง อ่านเศษส่วน และปรับสูตร มี 8 ข้อต่อบท ใช้สมุดช่วยได้เสมอต๊ะ</p><div class="mg-course-options">${MC.lessons.map(l=>`<button type="button" data-action="measure-lesson" data-lesson="${l.id}" aria-pressed="${l.id===saved.measureLesson}" ${P.unlocked(P.state(),`kitchen:measure:${l.id}`)?'':'disabled'}><strong>${P.done(P.state(),`kitchen:measure:${l.id}`)?'✓ ':''}${l.th}</strong><small>${l.goal} · ${l.tasks.length} ข้อ</small></button>`).join('')}</div><p class="mg-learning-goal">${lesson.intro}</p><button type="button" class="mg-primary" data-action="start" ${available?'':'disabled'}>${startLabel}</button><p class="mg-mode-description">${P.done(P.state(),mission)?'ทบทวนได้เสมอ เล่นซ้ำวันนี้ไม่เพิ่มแต้ม':`รางวัลครั้งแรก ${P.byId[mission].xp} XP ตามเพดานรายวัน`} · ปิดครัวแล้วกลับมาเรียนต่อได้</p>${M.referenceHTML()}</div>`;
   }
   function startMeasureGame() {
     const recipe=saved.kitchenArea === 'recipes'?C.recipes[saved.recipe]:null;
@@ -202,7 +251,7 @@
       saved.mode = button.dataset.mode || (saved.mode === 'read' ? 'listen' : 'read');
       current.revealed = false; persist();
       const toggle = $('[data-action="mode"]', dialog);
-      toggle.textContent = saved.mode === 'listen' ? 'ฝึกฟังอย่างเดียว' : 'อ่านพร้อมฟัง';
+      toggle.innerHTML = modeLabel();
       toggle.setAttribute('aria-pressed', String(saved.mode === 'listen'));
       if (current.screen === 'setup') renderSetup();
       else if (current.screen === 'game') { renderGame(); speakPrompt(); }

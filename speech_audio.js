@@ -2478,19 +2478,21 @@
       backdrop.id = 'settings-modal-backdrop';
 
       backdrop.innerHTML = `
-        <div class="settings-modal-card" role="dialog" aria-label="ตั้งค่าเสียงและการพูด">
+        <div class="settings-modal-card" role="dialog" aria-labelledby="settings-heading">
           <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-light); padding-bottom: 10px;">
-            <div style="font-weight: 900; font-size: 1.15rem; color: var(--text-main);">
-              ⚙️ ตั้งค่าเสียงและการพูด
-            </div>
-            <button type="button" class="lesson-close-btn" id="btn-close-settings-modal" aria-label="ปิด">✕</button>
+            <h2 id="settings-heading" style="font-weight: 900; font-size: 1.15rem; color: var(--text-main);">
+              <span class="ui-label"><span lang="sv">Ljud och tal</span><small lang="th">ตั้งค่าเสียงและการพูด</small></span>
+            </h2>
+            <button type="button" class="lesson-close-btn" id="btn-close-settings-modal" style="width: auto; min-width: 56px; padding: 4px 9px; font-size: 0.87rem;">
+              <span class="ui-label"><span lang="sv">Stäng</span><small lang="th">ปิด</small></span>
+            </button>
           </div>
 
           <!-- Val av taligenkänningsmotor (Inga API-nycklar visas för användaren) -->
           <div>
-            <label style="font-weight: 900; font-size: 0.88rem; display: block; margin-bottom: 6px;">
-              🎙️ เลือกระบบฟังและตรวจเสียงพูด:
-            </label>
+            <h3 style="font-weight: 900; font-size: 0.88rem; margin-bottom: 6px;">
+              <span class="ui-label"><span lang="sv">Välj hur appen lyssnar</span><small lang="th">เลือกระบบตรวจเสียงพูด</small></span>
+            </h3>
 
             <div style="display: flex; flex-direction: column; gap: 8px;">
               <!-- 1. Groq Whisper -->
@@ -2518,7 +2520,7 @@
               <!-- 3. iOS Inbyggd Diktering -->
               <div class="settings-engine-radio-card" id="card-engine-webkit">
                 <div style="display: flex; align-items: center; justify-content: space-between;">
-                  <span style="font-weight: 900; font-size: 0.95rem;">📱 ระบบเสียงพูดของ iOS</span>
+                  <span class="ui-label" style="font-weight: 900; font-size: 0.95rem;"><span lang="sv">iOS taligenkänning</span><small lang="th">ระบบเสียงพูดของ iOS</small></span>
                   <span class="satun-badge">ในอุปกรณ์</span>
                 </div>
                 <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 4px; line-height: 1.4;">
@@ -2530,36 +2532,35 @@
 
           <!-- Val av taltempo för uppspelning (Standard 0.88x, Snabbt 1.0x eller เร็วขึ้น 1.15x) -->
           <div>
-            <label style="font-weight: 900; font-size: 0.88rem; display: block; margin-bottom: 6px;">
-              ⚡ ความเร็วเสียงสวีเดน:
-            </label>
+            <h3 style="font-weight: 900; font-size: 0.88rem; margin-bottom: 6px;">
+              <span class="ui-label"><span lang="sv">Hur snabbt ska rösten prata?</span><small lang="th">ความเร็วเสียงสวีเดน</small></span>
+            </h3>
             <div style="display: flex; gap: 8px;">
               <button type="button" class="settings-speed-btn" id="btn-speed-088" data-speed="0.88" style="flex: 1;">
-                <div style="font-size: 0.95rem; font-weight: 900;">🐢 0.88x</div>
-                <div style="font-size: 0.72rem; font-weight: 700; opacity: 0.85; margin-top: 2px;">ช้า สบาย ๆ</div>
+                <span class="ui-label"><span lang="sv">Långsamt</span><small lang="th">ช้า · 0.88×</small></span>
               </button>
               <button type="button" class="settings-speed-btn" id="btn-speed-100" data-speed="1.0" style="flex: 1;">
-                <div style="font-size: 0.95rem; font-weight: 900;">⚡ 1.0x</div>
-                <div style="font-size: 0.72rem; font-weight: 700; opacity: 0.85; margin-top: 2px;">ความเร็วปกติ</div>
+                <span class="ui-label"><span lang="sv">Normalt</span><small lang="th">ปกติ · 1.0×</small></span>
               </button>
               <button type="button" class="settings-speed-btn" id="btn-speed-115" data-speed="1.15" style="flex: 1;">
-                <div style="font-size: 0.95rem; font-weight: 900;">🚀 1.15x</div>
-                <div style="font-size: 0.72rem; font-weight: 700; opacity: 0.85; margin-top: 2px;">เร็วขึ้น</div>
+                <span class="ui-label"><span lang="sv">Snabbt</span><small lang="th">เร็วขึ้น · 1.15×</small></span>
               </button>
             </div>
           </div>
 
           <!-- Testpanel: Högtalare & Mikrofon -->
           <div style="background: var(--surface-muted); border-radius: 16px; padding: 14px; border: 2px solid var(--border-light);">
-            <div style="font-weight: 900; font-size: 0.86rem; margin-bottom: 8px;">
-              🎛️ ทดสอบเสียงและไมโครโฟน:
-            </div>
+            <h3 style="font-weight: 900; font-size: 0.86rem; margin-bottom: 8px;">
+              <span class="ui-label"><span lang="sv">Testa ljudet</span><small lang="th">ทดสอบลำโพงและไมโครโฟน</small></span>
+            </h3>
             <div style="display: flex; gap: 8px;">
               <button type="button" class="btn-3d btn-blue" id="btn-test-speaker" style="flex: 1; min-height: 48px; font-size: 0.82rem; display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
-                <span class="audio-btn-icon">${window.VisualEngine ? window.VisualEngine.getAudioIconSVG('speaker', 18) : '🔊'}</span> ทดสอบลำโพง
+                <span class="audio-btn-icon" aria-hidden="true">${window.VisualEngine ? window.VisualEngine.getAudioIconSVG('speaker', 18) : '🔊'}</span>
+                <span class="ui-label"><span lang="sv">Testa ljud</span><small lang="th">ทดสอบลำโพง</small></span>
               </button>
               <button type="button" class="btn-3d btn-green" id="btn-test-mic" style="flex: 1; min-height: 48px; font-size: 0.82rem; display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
-                <span class="audio-btn-icon" id="test-mic-icon">${window.VisualEngine ? window.VisualEngine.Library.microphone() : '🎙️'}</span> <span id="test-mic-label">ทดสอบไมโครโฟน</span>
+                <span class="audio-btn-icon" id="test-mic-icon" aria-hidden="true">${window.VisualEngine ? window.VisualEngine.Library.microphone() : '🎙️'}</span>
+                <span class="ui-label" id="test-mic-label"><span lang="sv">Testa mikrofon</span><small lang="th">ทดสอบไมโครโฟน</small></span>
               </button>
             </div>
             <div id="settings-test-status" style="font-size: 0.82rem; font-weight: 700; color: var(--text-main); margin-top: 10px; text-align: center; min-height: 24px; line-height: 1.4;"></div>
@@ -2568,14 +2569,15 @@
           <!-- Hantera API-nycklar (Skyddat lokalt i webbläsaren) -->
           <div style="margin-top: 2px;">
             <button type="button" class="btn-3d btn-surface w-full" id="btn-open-key-manager" style="min-height: 42px; font-size: 0.84rem; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 8px;">
-              <span>🔑</span> <span>จัดการการเชื่อมต่อเสียง (Groq / Azure)</span>
+              <span aria-hidden="true">🔑</span>
+              <span class="ui-label"><span lang="sv">Anslut Groq eller Azure</span><small lang="th">จัดการการเชื่อมต่อเสียง</small></span>
             </button>
             <div id="key-manager-status-indicator" style="font-size: 0.74rem; color: var(--text-secondary); text-align: center; margin-top: 4px; font-weight: 700;"></div>
           </div>
 
           <!-- Spara-knapp -->
           <button type="button" class="btn-3d btn-green w-full" id="btn-save-settings" style="min-height: 52px; font-size: 1rem; margin-top: 4px;">
-            💾 บันทึกการตั้งค่า
+            <span class="ui-label"><span lang="sv">Spara</span><small lang="th">บันทึกการตั้งค่า</small></span>
           </button>
         </div>
       `;
@@ -2645,8 +2647,8 @@
       document.getElementById('btn-test-speaker')?.addEventListener('click', () => {
         const statusEl = document.getElementById('settings-test-status');
         const curRate = selectedSpeed || AudioPlayer.getSpeechRate();
-        const speedText = curRate >= 1.1 ? 'extra snabbt (1.15x)' : curRate >= 0.95 ? 'snabbt (1.0x)' : 'standard (0.88x)';
-        if (statusEl) statusEl.innerHTML = `🔊 Spelar upp i ${speedText}...`;
+        const speedText = curRate >= 1.1 ? 'เร็วขึ้น (1.15×)' : curRate >= 0.95 ? 'ปกติ (1.0×)' : 'ช้า (0.88×)';
+        if (statusEl) statusEl.textContent = `🔊 กำลังเล่นเสียงที่ความเร็ว ${speedText}…`;
         AudioPlayer.speakSwedish('Hej! Nu fungerar högtalaren med valt taltempo.', curRate, () => {
           if (statusEl) statusEl.innerHTML = `<span style="color: #166534;">✅ ลำโพงทำงานแล้วที่ความเร็ว ${speedText}!</span>`;
         });
@@ -2665,7 +2667,7 @@
         }
 
         SoundFX.playSound('tap');
-        if (micLabel) micLabel.textContent = 'กำลังฟัง…';
+        if (micLabel) window.GameEngine.setUiLabel(micLabel, 'Lyssnar…', 'กำลังฟัง…');
         if (micBtn) {
           micBtn.style.background = '#EF4444';
           micBtn.style.borderColor = '#DC2626';
@@ -2675,7 +2677,7 @@
         }
 
         const resetBtnUI = () => {
-          if (micLabel) micLabel.textContent = 'ทดสอบไมโครโฟน';
+          if (micLabel) window.GameEngine.setUiLabel(micLabel, 'Testa mikrofon', 'ทดสอบไมโครโฟน');
           if (micBtn) {
             micBtn.style.background = '';
             micBtn.style.borderColor = '';
@@ -2685,7 +2687,7 @@
         speechJudgeInstance.start('Hej', {
           onStateChange: (state) => {
             if (state === 'analyzing') {
-              if (statusEl) statusEl.innerHTML = '<span style="color: #0284C7; font-weight: 800;">⭐ Analyserar mikrofonsignal...</span>';
+              if (statusEl) statusEl.innerHTML = '<span style="color: #0284C7; font-weight: 800;">⭐ กำลังตรวจสอบเสียงจากไมโครโฟน…</span>';
             }
           },
           onAudioLevel: (lvl) => {
@@ -2941,7 +2943,7 @@
           if (lessonCtrl) lessonCtrl.pronunciationPassed = true;
           if (checkBtn) {
             checkBtn.disabled = false;
-            checkBtn.textContent = 'ไปต่อเลย';
+            window.GameEngine.setUiLabel(checkBtn, 'Nästa', 'ข้อต่อไป');
           }
         }
 
@@ -3081,7 +3083,7 @@
         if (lessonCtrl) lessonCtrl.pronunciationPassed = true;
         if (checkBtn) {
           checkBtn.disabled = false;
-          checkBtn.textContent = 'ไปต่อเลย';
+          window.GameEngine.setUiLabel(checkBtn, 'Nästa', 'ข้อต่อไป');
         }
 
         evalSlot.innerHTML = `
